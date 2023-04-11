@@ -179,9 +179,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 2
-  type: 2
-  rare: 1
-  name: "\uBCFC\uD39C"
+  type: 0
+  rare: 0
+  name: "\uB9CC\uB144\uD544"
+  count: 1
+  weaponAttackSpeedPercent: 0
+  weaponAttackRangePercent: 0
+  ItemStat:
+    attackPower: 0
+    skillPower: 0
+    basicAttackPower: 0
+    defense: 0
+    attackSpeed: 0
+    coolDown: 0
+    criticalPercent: 0
+    criticalDamage: 0
+    moveSpeed: 0
+    visionRange: 0
+    attackRange: 0
+    damageReduce: 0
+    tenacity: 0
+    armorReduce: 0
+    lifeSteel: 0
+    extraHp: 0
+    extraStamina: 0
+    hpRegen: 0
+    staminaRegen: 0
 --- !u!1 &4241629657752191588
 GameObject:
   m_ObjectHideFlags: 0

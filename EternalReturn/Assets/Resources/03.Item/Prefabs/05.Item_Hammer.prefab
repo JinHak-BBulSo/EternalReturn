@@ -86,6 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 852382394849408519}
   - component: {fileID: 852382394849408518}
+  - component: {fileID: 3954114888114664057}
   m_Layer: 0
   m_Name: 05.Item_Hammer
   m_TagString: Untagged
@@ -161,6 +162,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3954114888114664057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852382394849408632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff7cfbcc645e024b9d3c8c77b88b92b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 5
+  type: 3
+  rare: 0
+  name: "\uB9DD\uCE58"
+  count: 1
+  weaponAttackSpeedPercent: 0
+  weaponAttackRangePercent: 0
+  foodIncrease: 0
+  ItemStat:
+    attackPower: 16
+    skillPower: 0
+    basicAttackPower: 0
+    defense: 0
+    attackSpeed: 0
+    coolDown: 0
+    criticalPercent: 0
+    criticalDamage: 0
+    moveSpeed: 0
+    visionRange: 0
+    attackRange: 0
+    damageReduce: 0
+    tenacity: 0
+    armorReduce: 0
+    lifeSteel: 0
+    extraHp: 0
+    extraStamina: 0
+    hpRegen: 0
+    staminaRegen: 0
 --- !u!1 &852382395040833414
 GameObject:
   m_ObjectHideFlags: 0

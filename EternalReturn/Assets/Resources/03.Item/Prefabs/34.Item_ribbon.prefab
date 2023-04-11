@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7567753242853611800}
   - component: {fileID: 7567753242853611807}
+  - component: {fileID: -2074590869528864420}
   m_Layer: 0
   m_Name: 34.Item_ribbon
   m_TagString: Untagged
@@ -85,6 +86,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-2074590869528864420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7567753242853611801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff7cfbcc645e024b9d3c8c77b88b92b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 34
+  type: 18
+  rare: 0
+  name: "\uB9AC\uBCF8"
+  count: 0
+  weaponAttackSpeedPercent: 0
+  weaponAttackRangePercent: 0
+  foodIncrease: 0
+  ItemStat:
+    attackPower: 0
+    skillPower: 0
+    basicAttackPower: 0
+    defense: 0
+    attackSpeed: 0
+    coolDown: 0
+    criticalPercent: 0
+    criticalDamage: 0
+    moveSpeed: 0
+    visionRange: 0
+    attackRange: 0
+    damageReduce: 0
+    tenacity: 0
+    armorReduce: 0
+    lifeSteel: 5
+    extraHp: 0
+    extraStamina: 0
+    hpRegen: 0
+    staminaRegen: 0
 --- !u!1 &7567753243441513411
 GameObject:
   m_ObjectHideFlags: 0
