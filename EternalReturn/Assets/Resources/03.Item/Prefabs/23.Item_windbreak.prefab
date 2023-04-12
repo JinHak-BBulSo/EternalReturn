@@ -86,6 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4549859253607518686}
   - component: {fileID: 4549859253607518685}
+  - component: {fileID: -6606831280740899699}
   m_Layer: 0
   m_Name: 23.Item_windbreak
   m_TagString: Untagged
@@ -161,6 +162,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-6606831280740899699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549859253607518687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff7cfbcc645e024b9d3c8c77b88b92b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 23
+  type: 15
+  rare: 0
+  name: "\uBC14\uB78C\uB9C9\uC774"
+  count: 1
+  weaponAttackSpeedPercent: 0
+  weaponAttackRangePercent: 0
+  foodIncrease: 0
+  ItemStat:
+    attackPower: 4
+    skillPower: 0
+    basicAttackPower: 0
+    defense: 3
+    attackSpeed: 0
+    coolDown: 0
+    criticalPercent: 0
+    criticalDamage: 0
+    moveSpeed: 0
+    visionRange: 0
+    attackRange: 0
+    damageReduce: 0
+    tenacity: 0
+    armorReduce: 0
+    lifeSteel: 0
+    extraHp: 0
+    extraStamina: 0
+    hpRegen: 0
+    staminaRegen: 0
 --- !u!1 &4549859254784533195
 GameObject:
   m_ObjectHideFlags: 0

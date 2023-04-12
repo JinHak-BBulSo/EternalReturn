@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2513827127016247899
 RectTransform:
   m_ObjectHideFlags: 0
@@ -176,8 +176,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   type: 1
-  rare: 1
+  rare: 0
   name: "\uAC00\uC704"
+  count: 1
+  weaponAttackSpeedPercent: 0
+  weaponAttackRangePercent: 0
+  foodIncrease: 0
+  ItemStat:
+    attackPower: 5
+    skillPower: 0
+    basicAttackPower: 0
+    defense: 0
+    attackSpeed: 0
+    coolDown: 0
+    criticalPercent: 0
+    criticalDamage: 0
+    moveSpeed: 0
+    visionRange: 0
+    attackRange: 0
+    damageReduce: 0
+    tenacity: 0
+    armorReduce: 0
+    lifeSteel: 0
+    extraHp: 0
+    extraStamina: 0
+    hpRegen: 0
+    staminaRegen: 0
 --- !u!1 &2513827127216802650
 GameObject:
   m_ObjectHideFlags: 0

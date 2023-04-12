@@ -244,6 +244,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7555936543759317512}
   - component: {fileID: 7555936543759317513}
+  - component: {fileID: 2757386233342412778}
   m_Layer: 0
   m_Name: 14.Item_archery
   m_TagString: Untagged
@@ -319,3 +320,43 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2757386233342412778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7555936543759317510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff7cfbcc645e024b9d3c8c77b88b92b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 14
+  type: 9
+  rare: 0
+  name: "\uC591\uAD81"
+  count: 1
+  weaponAttackSpeedPercent: 0
+  weaponAttackRangePercent: 0
+  foodIncrease: 0
+  ItemStat:
+    attackPower: 11
+    skillPower: 0
+    basicAttackPower: 0
+    defense: 0
+    attackSpeed: 0
+    coolDown: 0
+    criticalPercent: 0
+    criticalDamage: 0
+    moveSpeed: 0
+    visionRange: 0
+    attackRange: 0
+    damageReduce: 0
+    tenacity: 0
+    armorReduce: 0
+    lifeSteel: 0
+    extraHp: 0
+    extraStamina: 0
+    hpRegen: 0
+    staminaRegen: 0

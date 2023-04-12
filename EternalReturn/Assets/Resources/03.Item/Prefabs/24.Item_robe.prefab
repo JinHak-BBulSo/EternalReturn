@@ -244,6 +244,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3047980857083309823}
   - component: {fileID: 3047980857083309816}
+  - component: {fileID: -6915927504969106401}
   m_Layer: 0
   m_Name: 24.Item_robe
   m_TagString: Untagged
@@ -319,3 +320,43 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-6915927504969106401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3047980857083309822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff7cfbcc645e024b9d3c8c77b88b92b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 24
+  type: 15
+  rare: 0
+  name: "\uC2B9\uBCF5"
+  count: 1
+  weaponAttackSpeedPercent: 0
+  weaponAttackRangePercent: 0
+  foodIncrease: 0
+  ItemStat:
+    attackPower: 0
+    skillPower: 0
+    basicAttackPower: 0
+    defense: 5
+    attackSpeed: 0
+    coolDown: 5
+    criticalPercent: 0
+    criticalDamage: 0
+    moveSpeed: 0
+    visionRange: 0
+    attackRange: 0
+    damageReduce: 0
+    tenacity: 0
+    armorReduce: 0
+    lifeSteel: 0
+    extraHp: 0
+    extraStamina: 0
+    hpRegen: 0
+    staminaRegen: 0
