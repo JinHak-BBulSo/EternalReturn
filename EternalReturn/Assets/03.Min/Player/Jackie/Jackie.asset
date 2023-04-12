@@ -12,21 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7acfe1fe97737ac4991eaab1e07e278b, type: 3}
   m_Name: Jackie
   m_EditorClassIdentifier: 
-  attackPower: 0
-  skillPower: 0
-  basicAttackPower: 0
-  defense: 0
-  attackSpeed: 0
-  coolDown: 0
-  critical: 0
-  moveSpeed: 0
-  visionRange: 0
-  attackRange: 0
-  damgeReduce: 0
-  tenacity: 0
-  armorReduce: 0
-  lifeSteel: 0
-  extraHp: 0
-  extraStamina: 0
-  hpRegen: 0
-  staminaRegen: 0
+  hp: 880
+  stamina: 430
+  attackPower: 39
+  defense: 31
+  attackSpeed: 0.08
+  moveSpeed: 3.5
+  visionRange: 8
+  attackRange: 1.85
+  hpRegen: 1.275
+  staminaRegen: 2.1
