@@ -7,15 +7,29 @@ public class PlayerBase : MonoBehaviour
     public CharaterData charaterData = default;
     public PlayerStat playerStat = default;
     public Transform attackRange = default;
+    public bool isAttackAble = true;
+    public bool isMove = false;
+    private Vector3 destination = default;
+    public Animator playerAni = default;
+
 
     private void Start()
     {
+        playerAni = gameObject.GetComponent<Animator>();
         InitStat();
     }
 
     private void Update()
     {
         ShowAttackRange(playerStat.attackRange);
+        if (Input.GetMouseButtonDown(1))
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+            {
+                SetDestination(hit.point);
+            }
+        }
     }
 
     // 스탯 초기값 할당
@@ -62,11 +76,12 @@ public class PlayerBase : MonoBehaviour
     {
 
     }
-
-
-    private void Attack(PlayerStat playerStat_)
+    public virtual void Attack()
     {
-        // 애니메이션 실행
+        if (isAttackAble)
+        {
+            // 애니메이션 실행
+        }
     }
 
     protected virtual void ShowAttackRange(float attackRange_)
@@ -78,14 +93,48 @@ public class PlayerBase : MonoBehaviour
         }
     }
 
-    private void Rest()
+
+
+    public void Move()
+    {
+        if (isMove)
+        {
+            if (Vector3.Distance(destination, transform.position) <= 0.1f)
+            {
+                isMove = false;
+                return;
+            }
+            var dir = destination - transform.position;
+            // transform.LookAt(destination);
+            Quaternion viewRoate = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Slerp(transform.rotation, viewRoate, 6f * Time.deltaTime);
+            transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
+        }
+    }
+
+    private void SetDestination(Vector3 dest_)
+    {
+        destination = dest_;
+        isMove = true;
+    }
+
+
+
+    public void Rest()
     {
         playerStat.nowHp += playerStat.maxHp * 10f;
     }
 
-    private IEnumerator MotionDelay(float attackDelay_)
+    private void AttackEnd()
+    {
+        StartCoroutine(MotionDelay(playerStat.attackSpeed));
+    }
+
+    IEnumerator MotionDelay(float attackDelay_)
     {
         // 공격불가 시간
+        isAttackAble = false;
         yield return new WaitForSeconds(attackDelay_);
+        isAttackAble = true;
     }
 }
