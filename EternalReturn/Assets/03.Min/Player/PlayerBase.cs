@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerBase : MonoBehaviour
 {
+    private PlayerController playerController = default;
     public CharaterData charaterData = default;
     public PlayerStat playerStat = default;
     public Transform attackRange = default;
@@ -11,17 +12,19 @@ public class PlayerBase : MonoBehaviour
     public bool isMove = false;
     private Vector3 destination = default;
     public Animator playerAni = default;
+    public int attackType = 0;
 
 
     private void Start()
     {
+        playerController = GetComponent<PlayerController>();
         playerAni = gameObject.GetComponent<Animator>();
         InitStat();
     }
 
     private void Update()
     {
-        ShowAttackRange(playerStat.attackRange);
+        ShowAttackRange();
         if (Input.GetMouseButtonDown(1))
         {
             RaycastHit hit;
@@ -78,18 +81,27 @@ public class PlayerBase : MonoBehaviour
     }
     public virtual void Attack()
     {
-        if (isAttackAble)
+        switch (attackType)
         {
-            // 애니메이션 실행
+            case 0:
+                playerAni.SetBool("isAttack", true);
+                playerAni.SetFloat("AttackType", attackType);
+                attackType = 1;
+                break;
+            case 1:
+                playerAni.SetBool("isAttack", true);
+                playerAni.SetFloat("AttackType", attackType);
+                attackType = 0;
+                break;
         }
     }
 
-    protected virtual void ShowAttackRange(float attackRange_)
+    protected virtual void ShowAttackRange()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
             attackRange.gameObject.SetActive(true);
-            attackRange.localScale = new Vector3(0.01f * attackRange_ * 2f, 0.01f * attackRange_ * 2f, 0.01f);
+            attackRange.localScale = new Vector3(0.01f * playerStat.attackRange * 4f, 0.01f * playerStat.attackRange * 4f, 0.01f);
         }
     }
 
@@ -127,7 +139,9 @@ public class PlayerBase : MonoBehaviour
 
     private void AttackEnd()
     {
+        playerController.ChangeState(new PlayerIdle());
         StartCoroutine(MotionDelay(playerStat.attackSpeed));
+
     }
 
     IEnumerator MotionDelay(float attackDelay_)
