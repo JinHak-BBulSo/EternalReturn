@@ -24,5 +24,10 @@ public class PlayerIdle : IPlayerState
         {
             playerController.ChangeState(new PlayerMove());
         }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            playerController.ChangeState(new PlayerAttack());
+        }
     }
 }
