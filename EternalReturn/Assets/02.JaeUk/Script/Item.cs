@@ -13,8 +13,21 @@ public class Item : MonoBehaviour
     public float weaponAttackRangePercent;
     public float foodIncrease;
     public Stat ItemStat = new Stat();
+    public float craftTime = 0;
     private void Start()
     {
+        switch (rare)
+        {
+            case 1:
+                craftTime = 1f;
+                break;
+            case 2:
+                craftTime = 2f;
+                break;
+            case 3:
+                craftTime = 4f;
+                break;
+        }
         switch (type)
         {
             case 1:
@@ -68,6 +81,10 @@ public class Item : MonoBehaviour
             case 13:
                 weaponAttackSpeedPercent = 0.61f;
                 weaponAttackRangePercent = 1.25f;
+                break;
+            case 19:
+                weaponAttackSpeedPercent = 0.485f;
+                weaponAttackRangePercent = 1.45f;
                 break;
             default:
                 weaponAttackSpeedPercent = 0;

@@ -101,7 +101,7 @@ MonoBehaviour:
   id: 64
   type: 9
   rare: 1
-  name: "\uC7A5"
+  name: "\uC7A5\uAD81"
   count: 1
   weaponAttackSpeedPercent: 0
   weaponAttackRangePercent: 0
@@ -126,6 +126,7 @@ MonoBehaviour:
     extraStamina: 0
     hpRegen: 0
     staminaRegen: 0
+  craftTime: 0
 --- !u!1 &4595376656302196326
 GameObject:
   m_ObjectHideFlags: 0
