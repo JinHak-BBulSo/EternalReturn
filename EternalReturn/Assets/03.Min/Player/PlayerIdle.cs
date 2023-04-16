@@ -8,7 +8,6 @@ public class PlayerIdle : IPlayerState
     public void StateEnter(PlayerController controller_)
     {
         this.playerController = controller_;
-        // 애니메이션 실행
     }
     public void StateExit()
     {
@@ -22,12 +21,57 @@ public class PlayerIdle : IPlayerState
     {
         if (playerController.player.isMove)
         {
+            playerController.player.playerAni.SetBool("isAttack", false);
             playerController.ChangeState(new PlayerMove());
         }
 
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) && playerController.player.isAttackAble)
         {
             playerController.ChangeState(new PlayerAttack());
         }
+
+        if (!playerController.player.skill_Q_Cooltime)
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                playerController.ChangeState(new PlayerSkill_Q());
+            }
+        }
+
+        if (!playerController.player.skill_W_Cooltime)
+        {
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                playerController.ChangeState(new PlayerSkill_W());
+            }
+        }
+
+        if (!playerController.player.skill_E_Cooltime)
+        {
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                playerController.ChangeState(new PlayerSkill_E());
+            }
+        }
+
+        if (!playerController.player.skill_R_Cooltime)
+        {
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                playerController.ChangeState(new PlayerSkill_R());
+            }
+        }
+
+        if (!playerController.player.skill_D_Cooltime)
+        {
+
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                playerController.ChangeState(new PlayerSkill_D());
+            }
+        }
+
     }
 }
