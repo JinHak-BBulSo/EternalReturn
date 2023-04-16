@@ -36,6 +36,7 @@ public class MonsterController : MonoBehaviour
     public PlayerController targetPlayer = default;
 
     protected bool isInSkillUse = false;
+    private int accountPlayerCount = 0;
 
     void Start()
     {
@@ -47,7 +48,7 @@ public class MonsterController : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.acceleration = 100f;
         navMeshAgent.angularSpeed = 180f;
-        //navMeshAgent.speed = monster.moveSpeed;
+        // navMeshAgent.speed = monster.moveSpeed;
         navMeshAgent.enabled = true;
 
         IMonsterState idle = new MonsterIdle();
@@ -98,13 +99,20 @@ public class MonsterController : MonoBehaviour
 
     private void UpdateState()
     {
-        if(targetPlayer == null)
+        if(targetPlayer == null && accountPlayerCount == 0)
         {
             return;
         }
         else
         {
+            if(accountPlayerCount != 0 && targetPlayer == null)
+            {
+                monsterStateMachine.SetState(monsterStateDic[MonsterState.BEWARE]);
+            }
+            else if(accountPlayerCount != 0 && targetPlayer != null)
+            {
 
+            }
         }
     }
 

@@ -4,19 +4,19 @@ using UnityEngine;
 
 public interface IMonsterState
 {
-    void StateEnter(MonsterController monsterCtrl_)
+    public void StateEnter(MonsterController monsterCtrl_)
     { 
 
     }
-    void StateFixedUpdate() 
+    public void StateFixedUpdate() 
     { 
 
     }
-    void StateUpdate()
+    public void StateUpdate()
     {
 
     }
-    void StateExit()
+    public void StateExit()
     {
 
     }

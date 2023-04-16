@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class MonsterDie : IMonsterState
 {
-    // Start is called before the first frame update
-    void Start()
+    private MonsterController monsterController = default;
+    public void StateEnter(MonsterController monsterCtrl_)
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    }
+    public void StateFixedUpdate()
     {
-        
+
+    }
+    public void StateUpdate()
+    {
+
+    }
+    public void StateExit()
+    {
+
     }
 }
