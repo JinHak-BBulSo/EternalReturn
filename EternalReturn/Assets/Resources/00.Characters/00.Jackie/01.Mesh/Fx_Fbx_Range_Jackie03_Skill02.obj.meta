@@ -3,7 +3,12 @@ guid: 00934e108d2db6a4eaebf497f89185bc
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Fx_Fbx_Range_Jackie03_Skill02_0Mat
+    second: {fileID: 2100000, guid: eb5358bca7d68134c90e1b7a59c3ba39, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
