@@ -102,10 +102,11 @@ MonoBehaviour:
   type: 10
   rare: 3
   name: "\uC77C\uB809\uD2B8\uB860 \uBE14\uB77C\uC2A4\uD130"
-  count: 1
+  count: 0
   weaponAttackSpeedPercent: 0
   weaponAttackRangePercent: 0
   foodIncrease: 0
+  maxCount: 1
   ItemStat:
     attackPower: 77
     skillPower: 0
@@ -126,6 +127,7 @@ MonoBehaviour:
     extraStamina: 0
     hpRegen: 0
     staminaRegen: 0
+  craftTime: 0
 --- !u!1 &2590892578746642561
 GameObject:
   m_ObjectHideFlags: 0

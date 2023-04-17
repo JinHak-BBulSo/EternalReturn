@@ -2,6 +2,8 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 public class CSVReader
@@ -10,6 +12,10 @@ public class CSVReader
     {
         List<string[]> list = new List<string[]>();
         TextAsset data = Resources.Load<TextAsset>(file);
+
+
+
+
         string[] arrayLaw = data.text.Split("#end");
         for (int i = 0; i < arrayLaw.Length - 1; i++)
         {
@@ -19,68 +25,109 @@ public class CSVReader
         return list;
     }
 }
-// public class CSVLoad
-// {
-//     string path = "ItemCombine.csv";
-//     List<Dictionary<string, object>> CSVlist;
-//     public void LoadCSVFile()
-//     {
 
-//         CSVlist = CSVReader.Read(path);
+public class ItemDefine
+{
+    public int itemId_1; // 하위 아이템 A
+    public int itemId_2; // 하위 아이템 B
+    public ItemDefine(int a, int b)
+    {
+        itemId_1 = a;
+        itemId_2 = b;
+    }
+    public ItemDefine()
+    {
 
-//         for (int i = 0; i < CSVlist.Count; i++)
-//         {
-//             Debug.Log("KeyValue" + CSVlist[i]["KeyValue"]);
-//         }
+    }
 
-//     }
-// }
+    public bool ComparerItem(ItemDefine a, ItemDefine b)
+    {
+        if (a.itemId_1 == b.itemId_1 && a.itemId_2 == b.itemId_2)
+        {
+            return false;
+
+        }
+        else
+        {
+            return true;
+        }
+    }
+    public ItemDefine FineInferiorItemId(Dictionary<ItemDefine, int> dic, int i)
+    {
+
+        return dic.FirstOrDefault(x => x.Value == i).Key;
+    }
+}
 public class ItemCombineLoad : MonoBehaviour
 {
-    string path = "ItemCombine";
-
-    private Dictionary<int, int> itemCombineList;
-    public int[,] itemCombineKeyArray = new int[500, 500];
+    public List<GameObject> itemList;
+    string combinePath = "ItemCombine";
+    string itemPath = "ItemList";
+    public ItemDefine itemDefine;
+    private Dictionary<ItemDefine, int> itemCombineDictionary;
+    // public int[,] itemCombineKeyArray = new int[300, 300];
 
     // Start is called before the first frame update
-    private void Awake()
+    private void Start()
     {
-        List<string[]> CSVlist = CSVReader.Read(path);
-        // for (var i = 0; i < CSVlist.Count; i++)
-        // {
-        //     Debug.Log(CSVlist[i][0]);
-        //     Debug.Log(CSVlist[i][1]);
-        //     Debug.Log(CSVlist[i][2]);
-        //     Debug.Log(CSVlist[i][3]);
-        // }
+        List<string[]> combineList = CSVReader.Read(combinePath);
+        List<string[]> itemListCSV = CSVReader.Read(itemPath);
+        itemCombineDictionary = new Dictionary<ItemDefine, int>();
+        object[] ItemLoadObjs = Resources.LoadAll("03.Item/Prefabs");
+        List<ItemStat> ItemWishList = new List<ItemStat>();
 
-        itemCombineList = new Dictionary<int, int>();
-        for (int i = 0; i < 177; i++)
+        for (int i = 0; i < combineList.Count; i++)
         {
-            itemCombineKeyArray[int.Parse(CSVlist[i][1]), int.Parse(CSVlist[i][2])] = i;
-            itemCombineList.Add(i, int.Parse(CSVlist[i][3]));
+            itemDefine = new ItemDefine(int.Parse(combineList[i][1]), int.Parse(combineList[i][2]));
+            itemCombineDictionary.Add(itemDefine, int.Parse(combineList[i][3]));
         }
 
-        for (int i = 0; i < 178; i++)
-        {
-            for (int j = 0; j < 178; j++)
-            {
-                if (itemCombineList[i] == 0)
-                {
 
-                }
-                else
-                {
-                    Debug.Log(itemCombineList[itemCombineKeyArray[i, j]]);
-                }
-            }
+
+        ItemManager.Instance.itemCombineDictionary = itemCombineDictionary;
+
+
+        for (int i = 0; i < itemList.Count; i++)
+        {
+            ItemManager.Instance.itemList.Add(itemList[i].GetComponent<Item>());
+            ItemManager.Instance.itemList[i].item = new ItemStat(float.Parse(itemListCSV[i][0]), float.Parse(itemListCSV[i][1]), float.Parse(itemListCSV[i][2]),
+            float.Parse(itemListCSV[i][3]), float.Parse(itemListCSV[i][4]), float.Parse(itemListCSV[i][5]), float.Parse(itemListCSV[i][6]), float.Parse(itemListCSV[i][7]),
+            float.Parse(itemListCSV[i][8]), float.Parse(itemListCSV[i][9]), float.Parse(itemListCSV[i][10]), float.Parse(itemListCSV[i][11]), float.Parse(itemListCSV[i][12]),
+            float.Parse(itemListCSV[i][13]), float.Parse(itemListCSV[i][14]), float.Parse(itemListCSV[i][15]), float.Parse(itemListCSV[i][16]), float.Parse(itemListCSV[i][17]),
+            float.Parse(itemListCSV[i][18]), int.Parse(itemListCSV[i][19]), int.Parse(itemListCSV[i][20]), int.Parse(itemListCSV[i][21]), itemListCSV[i][22], int.Parse(itemListCSV[i][23]),
+            int.Parse(itemListCSV[i][24]), int.Parse(itemListCSV[i][25]));
+
+
         }
+        ItemWishList.Add(AddItem(132));
+        ItemWishList.Add(AddItem(102));
+        ItemWishList.Add(AddItem(171));
+        ItemWishList.Add(AddItem(148));
+        ItemWishList.Add(AddItem(187));
+        ItemWishList.Add(AddItem(81));
+
+        ItemManager.Instance.itemWishList = ItemWishList;
+
+
+
+        for (int i = 0; i < ItemManager.Instance.itemWishList.Count; i++)
+        {
+            ItemManager.Instance.AddInferiorList(ItemWishList[i].id);
+        }
+        for (int i = 0; i < ItemManager.Instance.itemInferiorList.Count; i++)
+        {
+            Debug.Log($"Item id: {ItemManager.Instance.itemInferiorList[i].name}, Count  :{ItemManager.Instance.itemInferiorList[i].count}");
+        }
+
 
     }
-
+    public ItemStat AddItem(int i)
+    {
+        ItemStat item = new ItemStat();
+        item = ItemManager.Instance.itemList[i].item;
+        return item;
+    }
     // Update is called once per frame
-    void Update()
-    {
 
-    }
+
 }

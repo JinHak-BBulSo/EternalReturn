@@ -336,10 +336,11 @@ MonoBehaviour:
   type: 9
   rare: 0
   name: "\uC591\uAD81"
-  count: 1
+  count: 0
   weaponAttackSpeedPercent: 0
   weaponAttackRangePercent: 0
   foodIncrease: 0
+  maxCount: 1
   ItemStat:
     attackPower: 11
     skillPower: 0
@@ -360,3 +361,4 @@ MonoBehaviour:
     extraStamina: 0
     hpRegen: 0
     staminaRegen: 0
+  craftTime: 0

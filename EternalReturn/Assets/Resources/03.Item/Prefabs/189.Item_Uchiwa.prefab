@@ -340,6 +340,7 @@ MonoBehaviour:
   weaponAttackSpeedPercent: 0
   weaponAttackRangePercent: 0
   foodIncrease: 0
+  maxCount: 1
   ItemStat:
     attackPower: 0
     skillPower: 30
@@ -360,3 +361,4 @@ MonoBehaviour:
     extraStamina: 0
     hpRegen: 0
     staminaRegen: 70
+  craftTime: 0

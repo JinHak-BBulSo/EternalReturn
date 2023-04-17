@@ -336,10 +336,11 @@ MonoBehaviour:
   type: 19
   rare: 0
   name: "\uBE75"
-  count: 6
+  count: 0
   weaponAttackSpeedPercent: 0
   weaponAttackRangePercent: 0
   foodIncrease: 300
+  maxCount: 6
   ItemStat:
     attackPower: 0
     skillPower: 0
@@ -360,3 +361,4 @@ MonoBehaviour:
     extraStamina: 0
     hpRegen: 0
     staminaRegen: 0
+  craftTime: 0
