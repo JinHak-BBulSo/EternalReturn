@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterStateMachine : MonoBehaviour
+public class MonsterStateMachine
 {
     private MonsterController monsterController = default;
     public delegate void MonsterStateHandler(IMonsterState state_);

@@ -7,7 +7,10 @@ public class MonsterDie : IMonsterState
     private MonsterController monsterController = default;
     public void StateEnter(MonsterController monsterCtrl_)
     {
-
+        this.monsterController = monsterCtrl_;
+        monsterController.monsterState = MonsterController.MonsterState.DIE;
+        monsterController.monster.Die();
+        monsterController.CallCoroutine(EraseMonster());
     }
     public void StateFixedUpdate()
     {
@@ -20,5 +23,11 @@ public class MonsterDie : IMonsterState
     public void StateExit()
     {
 
+    }
+
+    IEnumerator EraseMonster()
+    {
+        yield return new WaitForSeconds(60);
+        monsterController.gameObject.SetActive(false);
     }
 }

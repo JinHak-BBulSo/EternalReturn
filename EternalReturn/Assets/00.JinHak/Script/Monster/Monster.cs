@@ -1,17 +1,15 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
+using System.Linq;
 using UnityEngine;
 
 public class Monster : MonoBehaviour, IHitHandler
 {
-    [SerializeField]
-    private MonsterStatus monsterStatus = default;
+    public MonsterStatus monsterStatus = default;
     private MonsterController monsterController;
-    [SerializeField]
+
     private MonsterSpawnPoint spawnPoint = default;
+    public GameObject monsterBattleArea = default;
 
     public string monsterName = default;
     [SerializeField]
@@ -19,28 +17,44 @@ public class Monster : MonoBehaviour, IHitHandler
     
     public bool isSkillAble = false;
     public bool isAttackAble = false;
-    public Debuff monsterDebuff = default;
+    public bool isBattleAreaOut = false;
 
-    private float 
-    
-    void Start()
+    public bool[] applyDebuffCheck = new bool[10];      // 해당 디버프가 걸렸는지 체크
+    public float[] debuffContinousTime = new float[10]; // 디버프 유지 시간
+    public float[] debuffDelayTime = new float[10];     // 디버프 틱 간격
+    public float[] debuffRemainTime = new float[10];    // 디버프 남은 시간
+    public float[] debuffDamage = new float[10];        // 디버프 데미지
+    public Queue<float>[] debuffDamageQueues = new Queue<float>[10];
+    public List<float>[] debuffRemainList = new List<float>[10];
+
+    private PlayerBase firstAttackPlayer = default;
+
+    void Awake()
     {
         monsterController = GetComponent<MonsterController>();
-        spawnPoint = transform.parent.GetComponent<MonsterSpawnPoint>();
-        monsterDebuff = GetComponent<Debuff>();
+        spawnPoint = transform.GetChild(1).GetComponent<MonsterSpawnPoint>();
+        monsterBattleArea = spawnPoint.transform.GetChild(0).gameObject;
+
+        monsterStatus = new MonsterStatus();
 
         if (spawnPoint != null)
         {
             spawnPoint.monster = this;
         }
 
-        SetStatus();
-        Appear();
+        monsterController.AwakeOrder();
     }
 
-    void Update()
+    void OnEnable()
     {
+        spawnPoint.enterPlayer -= EnterPlayer;
+        spawnPoint.enterPlayer += EnterPlayer;
 
+        spawnPoint.exitPlayer -= ExitPlayer;
+        spawnPoint.exitPlayer += ExitPlayer;
+
+        Appear();
+        SetStatus();
     }
     
     protected virtual void SetStatus()
@@ -64,20 +78,15 @@ public class Monster : MonoBehaviour, IHitHandler
     {
         monsterController.monsterAni.SetBool("isAttack", true);
     }
-    
-    public virtual void Move()
-    {
-        monsterController.monsterAni.SetBool("isMove", true);
-    }
-
     public virtual void Recall()
     {
-
+        isBattleAreaOut = true;
+        monsterController.monsterAni.SetBool("isMove", true);
     }
 
     public virtual void Beware()
     {
-
+        monsterController.monsterAni.SetBool("isBeware", true);
     }
 
     public virtual void Skill()
@@ -96,27 +105,30 @@ public class Monster : MonoBehaviour, IHitHandler
 
     public void Die()
     {
-
+        monsterController.monsterAni.SetTrigger("Die");
     }
 
     public virtual void ExitAttack()
     {
+        DamageMessage dm = new DamageMessage(gameObject, monsterStatus.attackPower);
+        monsterController.targetPlayer.TakeDamage(dm);
         monsterController.monsterAni.SetBool("isAttack", false);
     }
 
     public virtual void ExitSkill()
     {
-
+        monsterController.monsterAni.SetBool("isSkill", false);
     }
 
     public virtual void ExitBeware()
     {
-
+        monsterController.monsterAni.SetBool("isBeware", false);
     }
     
     public virtual void ExitRecall()
     {
-
+        isBattleAreaOut = false;
+        monsterController.monsterAni.SetBool("isMove", false);
     }
 
     /// <summary>
@@ -131,19 +143,12 @@ public class Monster : MonoBehaviour, IHitHandler
     /// <param name="message"></param>
     public void TakeDamage(DamageMessage message)
     {
-        if (message.debuffIndex == -1)
+        if(firstAttackPlayer == default)
         {
-            monsterStatus.nowHp -= (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
+            firstAttackPlayer = message.causer.GetComponent<PlayerBase>();
+            monsterController.targetPlayer = firstAttackPlayer;
         }
-        else
-        {
-            StartCoroutine(IHitHandler.ContinousDamage(message, monsterDebuff, message.debuffIndex));
-        }
-    }
-
-    public void TakeSolidDamage(DamageMessage message)
-    {
-        monsterStatus.nowHp -= message.damageAmount;
+        monsterStatus.nowHp -= (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
     }
 
     /// <summary>
@@ -156,25 +161,76 @@ public class Monster : MonoBehaviour, IHitHandler
     /// <param name="continuousTime_"></param> // 지속 시간 출혈은 5초
     /// <param name="debuff_"></param> // 몬스터의 디버프
     /// <returns></returns>
-    IEnumerator IHitHandler.ContinousDamage(DamageMessage message, Debuff debuff_, int debuffIndex)
+    public void TakeSolidDamage(DamageMessage message)
     {
-        float time = 0;
+        monsterStatus.nowHp -= message.damageAmount;
+    }
+
+
+    public void TakeSolidDamage(DamageMessage message, float damageAmount)
+    {
+        monsterStatus.nowHp -= damageAmount;
+    }
+
+    /// <summary>
+    /// debuffIndex의 순서
+    /// 0 = 출혈, 1 = 독, 2 = 스턴, 3 = 속박
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="debuffIndex_"></param>
+    /// <returns></returns>
+    public IEnumerator ContinousDamage(DamageMessage message, int debuffIndex_)
+    {
         // 이미 상태이상이 걸린 경우
-        if (debuff_.applyDebuffCheck[debuffIndex])
+        if (applyDebuffCheck[debuffIndex_])
         {
-            debuff_.continousTime[debuffIndex] = 0;
-            yield break;
+            debuffRemainTime[debuffIndex_] = debuffContinousTime[debuffIndex_];
         }
         // 상태이상이 걸려있지 않은 경우
         else
         {
-            float delay_ = debuff_.debuffDelayTime[debuffIndex];
-            while (time > debuff_.continousTime[debuffIndex])
+            // 상태이상 남은 시간 기록
+            debuffRemainTime[debuffIndex_] = debuffContinousTime[debuffIndex_];
+            // 상태이상 데미지를 저장
+            debuffDamage[debuffIndex_] = message.damageAmount;
+
+            // 상태이상 틱 간격
+            float delayTime_ = 0;
+
+            //float resetDamageCount = 0;
+
+            while (debuffRemainTime[debuffIndex_] > 0)
             {
-                TakeDamage(message);
-                yield return new WaitForSeconds(delay_);
-                debuff_.continousTime[debuffIndex] += delay_;
+                // 프레임마다 틱타임 계산
+                delayTime_ += Time.deltaTime;
+
+                // 프레임마다 지속시간 감소
+                debuffRemainTime[debuffIndex_] -= Time.deltaTime;
+                // 프레임마다 리셋시간 증가
+                //resetDamageCount += Time.deltaTime;
+
+                // 딜레이 시간이 다 되었을시 대미지를 입힘
+                if(delayTime_ > debuffDelayTime[debuffIndex_])
+                {
+                    TakeSolidDamage(message, debuffDamage[debuffIndex_]);
+                    delayTime_ = 0;
+                }
+
+                yield return null;
             }
+
+            // 지속 종료시 리셋
+            debuffRemainTime[debuffIndex_] = 0;
+            debuffDamage[debuffIndex_] = 0;
         }
+    }
+
+    public void EnterPlayer()
+    {
+        monsterController.encountPlayerCount++;
+    }
+    public void ExitPlayer()
+    {
+        monsterController.encountPlayerCount--;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class MonsterMove : IMonsterState
 {
     private MonsterController monsterController = default;
+
     public void StateEnter(MonsterController monsterCtrl_)
     {
         this.monsterController = monsterCtrl_;
@@ -27,8 +28,17 @@ public class MonsterMove : IMonsterState
     private IEnumerator Move()
     {
         monsterController.monsterAni.SetBool("isMove", true);
-
-
-        yield return null;
+        while (true)
+        {
+            if (monsterController.monster.monsterStatus.attackRange >
+                Vector3.Distance(monsterController.transform.position, monsterController.targetPlayer.transform.position))
+            {
+                monsterController.monsterAni.SetBool("isMove", false);
+                yield break;
+            }
+            monsterController.transform.LookAt(monsterController.targetPlayer.transform);
+            monsterController.transform.Translate(monsterController.transform.forward * Time.deltaTime);
+            yield return null;
+        }
     }
 }

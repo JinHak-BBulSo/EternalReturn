@@ -5,24 +5,25 @@ using UnityEngine.EventSystems;
 
 public class MonsterAttack : IMonsterState
 {
-
-    void IMonsterState.StateEnter(MonsterController monsterCtrl_)
+    private MonsterController monsterController = default;
+    public void StateEnter(MonsterController monsterCtrl_)
     {
-        throw new System.NotImplementedException();
+        this.monsterController = monsterCtrl_;
+        monsterController.monsterState = MonsterController.MonsterState.ATTACk;
+        monsterController.monster.Attack();
     }
 
-    void IMonsterState.StateFixedUpdate()
+    public void StateFixedUpdate()
     {
-        throw new System.NotImplementedException();
+        
     }
 
-    void IMonsterState.StateUpdate()
+    public void StateUpdate()
     {
-        throw new System.NotImplementedException();
+        
     }
-
-    void IMonsterState.StateExit()
+    public void StateExit()
     {
-        throw new System.NotImplementedException();
+        monsterController.monster.ExitAttack();
     }
 }

@@ -7,20 +7,18 @@ public class DamageMessage
     public GameObject causer;
     public float damageAmount;
     public int debuffIndex;
-    public Debuff debuff;
-    public DamageMessage(GameObject causer, float damageAmount, Debuff debuff_ = default, int debuffIndex = -1)
+    public DamageMessage(GameObject causer, float damageAmount, int debuffIndex = -1)
     {
         this.causer = causer;
         this.damageAmount = damageAmount;
-        this.debuff = debuff_;
         this.debuffIndex = debuffIndex;
     }
 }
 public interface IHitHandler
 {
     public void TakeDamage(DamageMessage message);
-    public void TakeSolidDamage(DamageMessage message);
-
-    IEnumerator ContinousDamage(DamageMessage message,Debuff debuff_, int debuffIndex_);
-
+    // public void TakeDamage(DamageMessage message, float damageAmount);
+    //public void TakeSolidDamage(DamageMessage message);
+    //public void TakeSolidDamage(DamageMessage message, float damageAmount);
+    //IEnumerator ContinousDamage(DamageMessage message, int debuffIndex_);
 }
