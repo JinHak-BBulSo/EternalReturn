@@ -2,38 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBase : MonoBehaviour
+public class PlayerBase : MonoBehaviour, IHitHandler
 {
     private PlayerController playerController = default;
     private Vector3 destination = default;
-
+    [SerializeField]
+    protected GameObject weapon = default;
     public Transform attackRange = default;
     public GameObject Skill_Q_Range = default;
     public CharaterData charaterData = default;
-
     public PlayerStat playerStat = default;
+    [HideInInspector]
+    public Animator playerAni = default;
     public bool isAttackAble = true;
     public bool isMove = false;
-    public Animator playerAni = default;
-    public Animation playerAnimation = default;
-
     public int attackType = 0;
-
-
-
+    public bool isAttackRangeShow = false;
     public bool[] skillCooltimes = new bool[5];
 
-    private void Start()
+
+
+
+    protected virtual void Start()
     {
         playerController = GetComponent<PlayerController>();
         playerAni = gameObject.GetComponent<Animator>();
         InitStat();
     }
 
-    private void Update()
+    protected virtual void Update()
     {
 
         ShowAttackRange();
+        DisableAttackRange();
         if (Input.GetMouseButtonDown(1))
         {
             RaycastHit hit;
@@ -147,8 +148,22 @@ public class PlayerBase : MonoBehaviour
         {
             attackRange.gameObject.SetActive(true);
             attackRange.localScale = new Vector3(0.01f * playerStat.attackRange * 4f, 0.01f * playerStat.attackRange * 4f, 0.01f);
+            isAttackRangeShow = true;
         }
     }
+
+    protected virtual void DisableAttackRange()
+    {
+        if (isAttackRangeShow)
+        {
+            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+            {
+                attackRange.gameObject.SetActive(false);
+            }
+        }
+    }
+
+
 
     public void Move()
     {
@@ -190,4 +205,19 @@ public class PlayerBase : MonoBehaviour
     public virtual void Skill_D() { }
 
     public virtual void Skill_T() { }
+
+    public void TakeDamage(DamageMessage message)
+    {
+        playerStat.nowHp -= message.damageAmount;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
+        IHitHandler test = other.GetComponent<IHitHandler>();
+        if (test != null)
+        {
+            test.TakeDamage(dm);
+        }
+    }
 }
