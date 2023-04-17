@@ -9,34 +9,19 @@ public class PlayerBase : MonoBehaviour
 
     public Transform attackRange = default;
     public GameObject Skill_Q_Range = default;
-    [SerializeField]
     public CharaterData charaterData = default;
-    [SerializeField]
 
     public PlayerStat playerStat = default;
-
-    [SerializeField]
-
     public bool isAttackAble = true;
-    [SerializeField]
-
     public bool isMove = false;
-    [SerializeField]
-
     public Animator playerAni = default;
-    [SerializeField]
-
     public Animation playerAnimation = default;
-    [SerializeField]
 
     public int attackType = 0;
 
 
-    public bool skill_Q_Cooltime = false;
-    public bool skill_W_Cooltime = false;
-    public bool skill_E_Cooltime = false;
-    public bool skill_R_Cooltime = false;
-    public bool skill_D_Cooltime = false;
+
+    public bool[] skillCooltimes = new bool[5];
 
     private void Start()
     {

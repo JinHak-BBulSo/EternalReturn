@@ -5,8 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerStat : Stat
 {
-    public float maxHp;
-    public float nowHp;
+
     public float maxStamina;
     public float nowStamina;
     public PlayerExp playerExp = new PlayerExp(920f, 500f);

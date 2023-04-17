@@ -3,19 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Stat
+public class Stat : BaseStat
 {
-    public float attackPower;
     public float skillPower;
     public float basicAttackPower;
-    public float defense;
-    public float attackSpeed;
     public float coolDown;
     public float criticalPercent;
     public float criticalDamage;
-    public float moveSpeed;
     public float visionRange;
-    public float attackRange;
     public float damageReduce;
     public float tenacity;
     public float armorReduce;
