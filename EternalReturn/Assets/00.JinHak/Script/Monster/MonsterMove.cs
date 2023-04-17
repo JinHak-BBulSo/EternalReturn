@@ -9,7 +9,7 @@ public class MonsterMove : IMonsterState
     {
         this.monsterController = monsterCtrl_;
         monsterController.monsterState = MonsterController.MonsterState.MOVE;
-
+        monsterController.CallCoroutine(Move());
     }
     public void StateFixedUpdate()
     {

@@ -36,7 +36,7 @@ public class MonsterController : MonoBehaviour
     public PlayerController targetPlayer = default;
 
     protected bool isInSkillUse = false;
-    private int accountPlayerCount = 0;
+    private int encountPlayerCount = 0;
 
     void Start()
     {
@@ -99,17 +99,17 @@ public class MonsterController : MonoBehaviour
 
     private void UpdateState()
     {
-        if(targetPlayer == null && accountPlayerCount == 0)
+        if(targetPlayer == null && encountPlayerCount == 0)
         {
             return;
         }
         else
         {
-            if(accountPlayerCount != 0 && targetPlayer == null)
+            if(encountPlayerCount != 0 && targetPlayer == null)
             {
                 monsterStateMachine.SetState(monsterStateDic[MonsterState.BEWARE]);
             }
-            else if(accountPlayerCount != 0 && targetPlayer != null)
+            else if(encountPlayerCount != 0 && targetPlayer != null)
             {
 
             }

@@ -1,25 +1,35 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviour, IHitHandler
 {
     [SerializeField]
     private MonsterStatus monsterStatus = default;
     private MonsterController monsterController;
+    [SerializeField]
+    private MonsterSpawnPoint spawnPoint = default;
 
     public string monsterName = default;
+    [SerializeField]
+    private MonsterData monsterData;
     
     public bool isSkillAble = false;
     public bool isAttackAble = false;
-
-    // 영역 내 플레이어 캐싱
-     
-
+    
     void Start()
     {
         monsterController = GetComponent<MonsterController>();
+        spawnPoint = transform.parent.GetComponent<MonsterSpawnPoint>();
+
+        if (spawnPoint != null)
+        {
+            spawnPoint.monster = this;
+        }
+
         SetStatus();
+        Appear();
     }
 
     void Update()
@@ -29,7 +39,13 @@ public class Monster : MonoBehaviour
     
     protected virtual void SetStatus()
     {
-        
+        monsterStatus.maxHp = monsterData.Hp;
+        monsterStatus.nowHp = monsterStatus.maxHp;
+        monsterStatus.defense = monsterData.Defense;
+        monsterStatus.attackPower = monsterData.AttackPower;
+        monsterStatus.attackSpeed = monsterData.AttackSpeed;
+        monsterStatus.attackRange = monsterData.AttackRange;
+        monsterStatus.moveSpeed = monsterData.MoveSpeed;
 
         isSkillAble = true;
     }
@@ -45,7 +61,7 @@ public class Monster : MonoBehaviour
     
     public virtual void Move()
     {
-
+        monsterController.monsterAni.SetBool("isMove", true);
     }
 
     public virtual void Recall()
@@ -63,6 +79,15 @@ public class Monster : MonoBehaviour
         /* each monster override using */
     }
 
+    public virtual void Appear()
+    {
+        monsterController.monsterAni.SetTrigger("Appear");
+    }
+    public virtual void ExitAppear()
+    {
+        monsterController.monsterAni.SetTrigger("EndAppear");
+    }
+
     public void Die()
     {
 
@@ -75,5 +100,20 @@ public class Monster : MonoBehaviour
 
     public virtual void ExitSkill()
     {
+
+    }
+
+    public virtual void ExitBeware()
+    {
+
+    }
+    
+    public virtual void ExitRecall()
+    {
+
+    }
+    public void HitDamage(float targetHp_, float power_)
+    {
+        throw new System.NotImplementedException();
     }
 }

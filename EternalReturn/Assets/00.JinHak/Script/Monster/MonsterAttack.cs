@@ -1,27 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MonsterAttack : IMonsterState
 {
-    private MonsterController monsterController;
 
-    void StateEnter(MonsterController monsterCtrl_)
+    void IMonsterState.StateEnter(MonsterController monsterCtrl_)
     {
-        this.monsterController = monsterCtrl_;
-        monsterCtrl_.monsterState = MonsterController.MonsterState.ATTACk;
-        monsterCtrl_.monster.Attack();
+        throw new System.NotImplementedException();
     }
-    void StateFixedUpdate()
-    {
 
-    }
-    void StateUpdate()
+    void IMonsterState.StateFixedUpdate()
     {
+        throw new System.NotImplementedException();
+    }
 
-    }
-    void StateExit()
+    void IMonsterState.StateUpdate()
     {
-        
+        throw new System.NotImplementedException();
+    }
+
+    void IMonsterState.StateExit()
+    {
+        throw new System.NotImplementedException();
     }
 }

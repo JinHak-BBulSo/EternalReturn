@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IHitHandler
 {
-    public void HitDamage(BaseStat targetStat_, float power_) { }
+    public void HitDamage(float targetHp_, float power_);
 }
