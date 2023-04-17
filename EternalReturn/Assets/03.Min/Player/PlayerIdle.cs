@@ -30,7 +30,7 @@ public class PlayerIdle : IPlayerState
             playerController.ChangeState(new PlayerAttack());
         }
 
-        if (!playerController.player.skill_Q_Cooltime)
+        if (!playerController.player.skillCooltimes[0])
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
@@ -38,7 +38,7 @@ public class PlayerIdle : IPlayerState
             }
         }
 
-        if (!playerController.player.skill_W_Cooltime)
+        if (!playerController.player.skillCooltimes[1])
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
@@ -46,7 +46,7 @@ public class PlayerIdle : IPlayerState
             }
         }
 
-        if (!playerController.player.skill_E_Cooltime)
+        if (!playerController.player.skillCooltimes[2])
         {
 
             if (Input.GetKeyDown(KeyCode.E))
@@ -55,7 +55,7 @@ public class PlayerIdle : IPlayerState
             }
         }
 
-        if (!playerController.player.skill_R_Cooltime)
+        if (!playerController.player.skillCooltimes[3])
         {
 
             if (Input.GetKeyDown(KeyCode.R))
@@ -64,7 +64,7 @@ public class PlayerIdle : IPlayerState
             }
         }
 
-        if (!playerController.player.skill_D_Cooltime)
+        if (!playerController.player.skillCooltimes[4])
         {
 
             if (Input.GetKeyDown(KeyCode.D))

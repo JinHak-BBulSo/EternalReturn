@@ -4,22 +4,28 @@ using UnityEngine;
 
 public class Jackie : PlayerBase
 {
+    private List<PlayerBase> enemyPlayers = new List<PlayerBase>();
+    [SerializeField]
+    private MeshCollider QMeshCol = default;
+    protected override void Start()
+    {
+        base.Start();
+        QMeshCol = Skill_Q_Range.transform.GetChild(0).GetChild(0).GetComponent<MeshCollider>();
+    }
     public override void Skill_Q()
     {
         base.Skill_Q();
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 0);
         Skill_Q_Range.SetActive(true);
-        StartCoroutine(SkillCooltime(skill_Q_Cooltime, 9f));
+        StartCoroutine(SkillCooltime(0, 9f));
     }
 
-
-
-    IEnumerator SkillCooltime(bool skill_, float cooltime_)
+    // (9f - ((skillLevel - 1) * 0.5) *  playerStat.coolDown)
+    IEnumerator SkillCooltime(int skillType_, float cooltime_)
     {
-        skill_ = true;
+        skillCooltimes[skillType_] = true;
         yield return new WaitForSeconds(cooltime_);
-        skill_ = false;
+        skillCooltimes[skillType_] = false;
     }
-
 }
