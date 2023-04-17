@@ -5,17 +5,11 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
     [SerializeField]
-    MonsterStatus monsterStatus = default;
+    private MonsterStatus monsterStatus = default;
     private MonsterController monsterController;
 
     public string monsterName = default;
-    public int maxHp;
-    public int nowHp;
-    public int def;
-    public int power;
-    public float moveSpeed;
-    public float attackSpeed;
-    public int level;
+    
     public bool isSkillAble = false;
     public bool isAttackAble = false;
 
@@ -35,15 +29,7 @@ public class Monster : MonoBehaviour
     
     protected virtual void SetStatus()
     {
-        maxHp = monsterStatus.Hp;
-        nowHp = maxHp;
-
-        def = monsterStatus.Def;
-        power = monsterStatus.Power;
-        monsterName = monsterStatus.MonsterName;
-
-        moveSpeed = monsterStatus.MoveSpeed;
-        attackSpeed = monsterStatus.AttackSpeed;
+        
 
         isSkillAble = true;
     }
