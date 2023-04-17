@@ -5,15 +5,38 @@ using UnityEngine;
 public class PlayerBase : MonoBehaviour
 {
     private PlayerController playerController = default;
-    public CharaterData charaterData = default;
-    public PlayerStat playerStat = default;
-    public Transform attackRange = default;
-    public bool isAttackAble = true;
-    public bool isMove = false;
     private Vector3 destination = default;
+
+    public Transform attackRange = default;
+    public GameObject Skill_Q_Range = default;
+    [SerializeField]
+    public CharaterData charaterData = default;
+    [SerializeField]
+
+    public PlayerStat playerStat = default;
+
+    [SerializeField]
+
+    public bool isAttackAble = true;
+    [SerializeField]
+
+    public bool isMove = false;
+    [SerializeField]
+
     public Animator playerAni = default;
+    [SerializeField]
+
+    public Animation playerAnimation = default;
+    [SerializeField]
+
     public int attackType = 0;
 
+
+    public bool skill_Q_Cooltime = false;
+    public bool skill_W_Cooltime = false;
+    public bool skill_E_Cooltime = false;
+    public bool skill_R_Cooltime = false;
+    public bool skill_D_Cooltime = false;
 
     private void Start()
     {
@@ -24,6 +47,7 @@ public class PlayerBase : MonoBehaviour
 
     private void Update()
     {
+
         ShowAttackRange();
         if (Input.GetMouseButtonDown(1))
         {
@@ -33,6 +57,7 @@ public class PlayerBase : MonoBehaviour
                 SetDestination(hit.point);
             }
         }
+
     }
 
     // 스탯 초기값 할당
@@ -81,19 +106,54 @@ public class PlayerBase : MonoBehaviour
     }
     public virtual void Attack()
     {
+        playerAni.SetFloat("MotionSpeed", playerStat.attackSpeed);
         switch (attackType)
         {
             case 0:
                 playerAni.SetBool("isAttack", true);
                 playerAni.SetFloat("AttackType", attackType);
-                attackType = 1;
+                playerController.ChangeState(new PlayerIdle());
                 break;
             case 1:
                 playerAni.SetBool("isAttack", true);
                 playerAni.SetFloat("AttackType", attackType);
+                playerController.ChangeState(new PlayerIdle());
+                break;
+        }
+    }
+
+    private void SkillEnd()
+    {
+        playerController.ChangeState(new PlayerIdle());
+    }
+    private void AttackEnd()
+    {
+        isAttackAble = false;
+        AnimatorStateInfo currentAnimationState = playerAni.GetCurrentAnimatorStateInfo(0);
+        float delay_ = currentAnimationState.length - currentAnimationState.length * currentAnimationState.normalizedTime;
+        switch (attackType)
+        {
+            case 0:
+                attackType = 1;
+                break;
+            case 1:
                 attackType = 0;
                 break;
         }
+        StartCoroutine(MotionDelay(delay_));
+    }
+
+    private void AttackAniEnd()
+    {
+        playerAni.SetBool("isAttack", false);
+    }
+
+    IEnumerator MotionDelay(float delay_)
+    {
+        // 공격불가 시간
+        Debug.Log(delay_);
+        yield return new WaitForSeconds(delay_);
+        isAttackAble = true;
     }
 
     protected virtual void ShowAttackRange()
@@ -105,8 +165,6 @@ public class PlayerBase : MonoBehaviour
         }
     }
 
-
-
     public void Move()
     {
         if (isMove)
@@ -117,7 +175,6 @@ public class PlayerBase : MonoBehaviour
                 return;
             }
             var dir = destination - transform.position;
-            // transform.LookAt(destination);
             Quaternion viewRoate = Quaternion.LookRotation(dir);
             transform.rotation = Quaternion.Slerp(transform.rotation, viewRoate, 6f * Time.deltaTime);
             transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
@@ -134,21 +191,18 @@ public class PlayerBase : MonoBehaviour
 
     public void Rest()
     {
-        playerStat.nowHp += playerStat.maxHp * 10f;
+        playerStat.nowHp += playerStat.maxHp * 0.1f;
     }
 
-    private void AttackEnd()
-    {
-        playerController.ChangeState(new PlayerIdle());
-        StartCoroutine(MotionDelay(playerStat.attackSpeed));
+    public virtual void Skill_Q() { }
 
-    }
+    public virtual void Skill_W() { }
 
-    IEnumerator MotionDelay(float attackDelay_)
-    {
-        // 공격불가 시간
-        isAttackAble = false;
-        yield return new WaitForSeconds(attackDelay_);
-        isAttackAble = true;
-    }
+    public virtual void Skill_E() { }
+
+    public virtual void Skill_R() { }
+
+    public virtual void Skill_D() { }
+
+    public virtual void Skill_T() { }
 }

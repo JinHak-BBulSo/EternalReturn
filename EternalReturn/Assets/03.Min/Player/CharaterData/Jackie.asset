@@ -16,7 +16,7 @@ MonoBehaviour:
   stamina: 430
   attackPower: 39
   defense: 31
-  attackSpeed: 0.08
+  attackSpeed: 0.56
   moveSpeed: 3.5
   visionRange: 8
   attackRange: 1.85
