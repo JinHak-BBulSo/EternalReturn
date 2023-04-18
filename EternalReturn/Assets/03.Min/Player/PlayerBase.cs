@@ -208,7 +208,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     public void TakeDamage(DamageMessage message)
     {
-        playerStat.nowHp -= message.damageAmount;
+        playerStat.nowHp = playerStat.nowHp - ((message.damageAmount - playerStat.defense) * (100 - playerStat.damageReduce) / 100);
     }
 
     private void OnTriggerEnter(Collider other)
