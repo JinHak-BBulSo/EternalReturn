@@ -1,27 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MonsterAttack : IMonsterState
 {
-    private MonsterController monsterController;
-
-    void StateEnter(MonsterController monsterCtrl_)
+    private MonsterController monsterController = default;
+    public void StateEnter(MonsterController monsterCtrl_)
     {
         this.monsterController = monsterCtrl_;
-        monsterCtrl_.monsterState = MonsterController.MonsterState.ATTACk;
-        monsterCtrl_.monster.Attack();
+        monsterController.monsterState = MonsterController.MonsterState.ATTACk;
+        monsterController.monster.Attack();
     }
-    void StateFixedUpdate()
-    {
 
-    }
-    void StateUpdate()
-    {
-
-    }
-    void StateExit()
+    public void StateFixedUpdate()
     {
         
+    }
+
+    public void StateUpdate()
+    {
+        
+    }
+    public void StateExit()
+    {
+        monsterController.monster.ExitAttack();
     }
 }

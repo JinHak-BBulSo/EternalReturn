@@ -32,24 +32,24 @@ public class MonsterController : MonoBehaviour
     public Rigidbody monsterRigid = default;
     public Animator monsterAni = default;
     public AudioSource monsterAudio = default;
-    public NavMeshAgent navMeshAgent = default;
-    public PlayerController targetPlayer = default;
+    //public NavMeshAgent navMeshAgent = default;
+    public PlayerBase targetPlayer = default;
 
     protected bool isInSkillUse = false;
-    private int accountPlayerCount = 0;
+    public int encountPlayerCount = 0;
 
-    void Start()
+    public void AwakeOrder()
     {
         // Component Set
         monsterRigid = GetComponent<Rigidbody>();
         monsterAni = GetComponent<Animator>();
         monsterAudio = GetComponent<AudioSource>();
 
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        /*navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.acceleration = 100f;
         navMeshAgent.angularSpeed = 180f;
-        // navMeshAgent.speed = monster.moveSpeed;
-        navMeshAgent.enabled = true;
+        navMeshAgent.speed = monster.moveSpeed;
+        navMeshAgent.enabled = true;*/
 
         IMonsterState idle = new MonsterIdle();
         IMonsterState move = new MonsterMove();
@@ -80,6 +80,7 @@ public class MonsterController : MonoBehaviour
         {
             UpdateState();
         }
+        monsterStateMachine.DoUpdate();
     }
 
     private void FixedUpdate()
@@ -99,19 +100,30 @@ public class MonsterController : MonoBehaviour
 
     private void UpdateState()
     {
-        if(targetPlayer == null && accountPlayerCount == 0)
+        if (monster.isBattleAreaOut)
         {
-            return;
+            monsterStateMachine.SetState(monsterStateDic[MonsterState.RECALL]);
+        }
+        if(targetPlayer == null && encountPlayerCount == 0)
+        {
+            monsterStateMachine.SetState(monsterStateDic[MonsterState.IDLE]);
         }
         else
         {
-            if(accountPlayerCount != 0 && targetPlayer == null)
+            if(encountPlayerCount != 0 && targetPlayer == null)
             {
                 monsterStateMachine.SetState(monsterStateDic[MonsterState.BEWARE]);
             }
-            else if(accountPlayerCount != 0 && targetPlayer != null)
+            else if(encountPlayerCount != 0 && targetPlayer != null)
             {
-
+                if (Vector3.Distance(targetPlayer.transform.position, this.transform.position) > monster.monsterStatus.attackRange)
+                {
+                    monsterStateMachine.SetState(monsterStateDic[MonsterState.MOVE]);
+                }
+                else
+                {
+                    monsterStateMachine.SetState(monsterStateDic[MonsterState.ATTACk]);
+                }
             }
         }
     }

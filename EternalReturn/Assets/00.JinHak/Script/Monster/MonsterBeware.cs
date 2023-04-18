@@ -7,7 +7,9 @@ public class MonsterBeware : IMonsterState
     private MonsterController monsterController = default;
     public void StateEnter(MonsterController monsterCtrl_)
     {
-
+        this.monsterController = monsterCtrl_;
+        monsterController.monsterState = MonsterController.MonsterState.BEWARE;
+        monsterController.monster.Beware();
     }
     public void StateFixedUpdate()
     {
@@ -19,6 +21,6 @@ public class MonsterBeware : IMonsterState
     }
     public void StateExit()
     {
-
+        monsterController.monster.ExitBeware();
     }
 }
