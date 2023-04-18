@@ -38,6 +38,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         playerController = GetComponent<PlayerController>();
         playerAni = GetComponent<Animator>();
         playerNav = GetComponent<NavMeshAgent>();
+        playerNav.updateRotation = true;
         InitStat();
     }
 
@@ -46,16 +47,25 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
         ShowAttackRange();
         DisableAttackRange();
+
         if (Input.GetMouseButtonDown(1))
         {
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
             {
-                playerNav.SetDestination(hit.point);
+                NavMeshHit navHit;
+                if (NavMesh.SamplePosition(hit.point, out navHit, 1.0f, NavMesh.AllAreas))
+                {
+                    playerNav.SetDestination(navHit.position);
+                    playerNav.enabled = true;
+                    isMove = true;
+                    playerNav.speed = playerStat.moveSpeed;
+                }
             }
         }
 
     }
+
 
 
 
@@ -176,23 +186,45 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         }
     }
 
+    public void MoveCheck()
+    {
+        if (playerNav.enabled)
+        {
+            if (playerNav.remainingDistance <= playerNav.stoppingDistance)
+            {
+                playerNav.enabled = false;
+            }
+        }
+        else
+        {
+            playerNav.enabled = true;
+            playerNav.SetDestination(destination);
+        }
+    }
 
-
-    // public void Move()
-    // {
-    //     if (isMove)
-    //     {
-    //         if (Vector3.Distance(destination, transform.position) <= 0.1f)
-    //         {
-    //             isMove = false;
-    //             return;
-    //         }
-    //         // var dir = destination - transform.position;
-    //         // Quaternion viewRoate = Quaternion.LookRotation(dir);
-    //         // transform.rotation = Quaternion.Slerp(transform.rotation, viewRoate, 6f * Time.deltaTime);
-    //         // transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
-    //     }
-    // }
+    public void Move()
+    {
+        if (playerNav.enabled)
+        {
+            if (playerNav.remainingDistance <= playerNav.stoppingDistance)
+            {
+                playerNav.enabled = false;
+                isMove = false;
+            }
+        }
+        // if (isMove)
+        // {
+        //     if (Vector3.Distance(destination, transform.position) <= 0.1f)
+        //     {
+        //         isMove = false;
+        //         return;
+        //     }
+        //     // var dir = destination - transform.position;
+        //     // Quaternion viewRoate = Quaternion.LookRotation(dir);
+        //     // transform.rotation = Quaternion.Slerp(transform.rotation, viewRoate, 6f * Time.deltaTime);
+        //     // transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
+        // }
+    }
 
     // private void SetDestination(Vector3 dest_)
     // {
