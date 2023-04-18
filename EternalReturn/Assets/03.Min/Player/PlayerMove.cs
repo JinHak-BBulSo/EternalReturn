@@ -22,7 +22,7 @@ public class PlayerMove : IPlayerState
 
     public void StateUpdate()
     {
-        //playerController.player.Move();
+        playerController.player.Move();
         if (!playerController.player.isMove)
         {
             playerController.ChangeState(new PlayerIdle());

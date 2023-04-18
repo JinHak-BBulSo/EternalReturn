@@ -29,7 +29,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public float[] debuffDamage = new float[10];        // 디버프 데미지
     public Queue<float>[] debuffDamageQueues = new Queue<float>[10];
     public List<float>[] debuffRemainList = new List<float>[10];
-
+    NavMeshPath path = new NavMeshPath();
 
 
 
@@ -38,9 +38,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         playerController = GetComponent<PlayerController>();
         playerAni = GetComponent<Animator>();
         playerNav = GetComponent<NavMeshAgent>();
-        playerNav.updateRotation = true;
         InitStat();
+
     }
+    
 
     protected virtual void Update()
     {
@@ -51,16 +52,22 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         if (Input.GetMouseButtonDown(1))
         {
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
             {
                 NavMeshHit navHit;
-                if (NavMesh.SamplePosition(hit.point, out navHit, 1.0f, NavMesh.AllAreas))
+                if(NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
                 {
-                    playerNav.SetDestination(navHit.position);
-                    playerNav.enabled = true;
-                    isMove = true;
-                    playerNav.speed = playerStat.moveSpeed;
+                    Debug.Log(navHit.position);
+                    //SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
+                    destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);
+                    playerNav.CalculatePath(destination, path);
                 }
+                else
+                {
+
+                }
+
+                //SetDestination(hit.point);
             }
         }
 
@@ -204,33 +211,40 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     public void Move()
     {
-        if (playerNav.enabled)
+        //if (playerNav.enabled)
+        //{
+        //    float distance = Vector3.Distance(
+        //        new Vector3(transform.position.x, 0, transform.position.y),
+        //        new Vector3(destination.x, 0, destination.y)
+        //        );
+        //    if (distance <= playerNav.stoppingDistance)
+        //    {
+        //        Debug.Log("도착");
+        //        playerNav.enabled = false;
+        //        isMove = false;
+        //        playerNav.ResetPath();
+        //    }
+        //}
+        if (isMove)
         {
-            if (playerNav.remainingDistance <= playerNav.stoppingDistance)
+            if (Vector3.Distance(destination, transform.position) <= 0.1f)
             {
-                playerNav.enabled = false;
                 isMove = false;
+                return;
             }
+            var dir = destination - transform.position;
+            Quaternion viewroate = Quaternion.LookRotation(dir);
+            viewroate = Quaternion.Euler(transform.rotation.x, viewroate.eulerAngles.y, transform.rotation.z);
+            transform.rotation = Quaternion.Slerp(transform.rotation, viewroate, 6f * Time.deltaTime);
+            transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
         }
-        // if (isMove)
-        // {
-        //     if (Vector3.Distance(destination, transform.position) <= 0.1f)
-        //     {
-        //         isMove = false;
-        //         return;
-        //     }
-        //     // var dir = destination - transform.position;
-        //     // Quaternion viewRoate = Quaternion.LookRotation(dir);
-        //     // transform.rotation = Quaternion.Slerp(transform.rotation, viewRoate, 6f * Time.deltaTime);
-        //     // transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
-        // }
     }
 
-    // private void SetDestination(Vector3 dest_)
-    // {
-    //     destination = dest_;
-    //     isMove = true;
-    // }
+    private void SetDestination(Vector3 dest_)
+    {
+        destination = dest_;
+        isMove = true;
+    }
 
 
 
