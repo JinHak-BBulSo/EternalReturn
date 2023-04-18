@@ -225,6 +225,12 @@ public class Monster : MonoBehaviour, IHitHandler
         }
     }
 
+    IEnumerator ContinousDamageEnd(float debuffContinousTime_, int debuffIndex_, float debuffDamage_)
+    {
+        yield return new WaitForSeconds(debuffContinousTime_);
+        debuffDamage[debuffIndex_] -= debuffDamage_;
+    }
+
     public void EnterPlayer()
     {
         monsterController.encountPlayerCount++;
