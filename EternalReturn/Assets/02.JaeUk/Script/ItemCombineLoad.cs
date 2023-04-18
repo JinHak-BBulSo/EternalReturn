@@ -2,7 +2,6 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -26,38 +25,6 @@ public class CSVReader
     }
 }
 
-public class ItemDefine
-{
-    public int itemId_1; // 하위 아이템 A
-    public int itemId_2; // 하위 아이템 B
-    public ItemDefine(int a, int b)
-    {
-        itemId_1 = a;
-        itemId_2 = b;
-    }
-    public ItemDefine()
-    {
-
-    }
-
-    public bool ComparerItem(ItemDefine a, ItemDefine b)
-    {
-        if (a.itemId_1 == b.itemId_1 && a.itemId_2 == b.itemId_2)
-        {
-            return false;
-
-        }
-        else
-        {
-            return true;
-        }
-    }
-    public ItemDefine FineInferiorItemId(Dictionary<ItemDefine, int> dic, int i)
-    {
-
-        return dic.FirstOrDefault(x => x.Value == i).Key;
-    }
-}
 public class ItemCombineLoad : MonoBehaviour
 {
     public List<GameObject> itemList;
@@ -86,7 +53,6 @@ public class ItemCombineLoad : MonoBehaviour
 
         ItemManager.Instance.itemCombineDictionary = itemCombineDictionary;
 
-
         for (int i = 0; i < itemList.Count; i++)
         {
             ItemManager.Instance.itemList.Add(itemList[i].GetComponent<Item>());
@@ -107,7 +73,7 @@ public class ItemCombineLoad : MonoBehaviour
         ItemWishList.Add(AddItem(81));
 
         ItemManager.Instance.itemWishList = ItemWishList;
-
+        ItemManager.Instance.inventory.Add(itemList[122].GetComponent<Item>());
 
 
         for (int i = 0; i < ItemManager.Instance.itemWishList.Count; i++)
@@ -116,18 +82,21 @@ public class ItemCombineLoad : MonoBehaviour
         }
         for (int i = 0; i < ItemManager.Instance.itemInferiorList.Count; i++)
         {
-            Debug.Log($"Item id: {ItemManager.Instance.itemInferiorList[i].name}, Count  :{ItemManager.Instance.itemInferiorList[i].count}");
+            // Debug.Log($"Item id: {ItemManager.Instance.itemInferiorList[i].name}, Count  :{ItemManager.Instance.itemInferiorList[i].count}");
         }
 
 
     }
+
     public ItemStat AddItem(int i)
     {
         ItemStat item = new ItemStat();
         item = ItemManager.Instance.itemList[i].item;
         return item;
     }
-    // Update is called once per frame
-
 
 }
+// Update is called once per frame
+
+
+

@@ -6,10 +6,12 @@ public class ItemManager : SingleTonBase<ItemManager>
 {
     private ItemDefine itemDefine = new ItemDefine();
     public List<Item> itemList = new List<Item>();
+    [SerializeField]
     public Dictionary<ItemDefine, int> itemCombineDictionary = new Dictionary<ItemDefine, int>();
     public List<ItemStat> itemWishList = new List<ItemStat>();
     public List<ItemStat> itemInferiorList = new List<ItemStat>();
-    public List<ItemStat> inventory = new List<ItemStat>();
+    public List<Item> combineAbleList = new List<Item>();
+    public List<Item> inventory = new List<Item>();
 
 
     protected override void Awake()
