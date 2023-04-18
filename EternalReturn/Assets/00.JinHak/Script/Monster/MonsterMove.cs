@@ -18,7 +18,7 @@ public class MonsterMove : IMonsterState
     }
     public void StateUpdate()
     {
-
+        monsterController.navMeshAgent.SetDestination(monsterController.targetPlayer.transform.position);
     }
     public void StateExit()
     {
@@ -36,8 +36,6 @@ public class MonsterMove : IMonsterState
                 monsterController.monsterAni.SetBool("isMove", false);
                 yield break;
             }
-            monsterController.transform.LookAt(monsterController.targetPlayer.transform);
-            monsterController.transform.Translate(monsterController.transform.forward * Time.deltaTime);
             yield return null;
         }
     }

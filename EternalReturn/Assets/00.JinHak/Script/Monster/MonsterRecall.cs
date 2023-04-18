@@ -17,7 +17,7 @@ public class MonsterRecall : IMonsterState
     }
     public void StateUpdate()
     {
-
+        monsterController.navMeshAgent.SetDestination(monsterController.monster.monsterBattleArea.transform.position);
     }
     public void StateExit()
     {
@@ -34,10 +34,6 @@ public class MonsterRecall : IMonsterState
                 monsterController.monster.ExitRecall();
                 yield break;
             }
-
-            monsterController.transform.LookAt(monsterController.monster.monsterBattleArea.transform);
-            monsterController.transform.Translate(monsterController.transform.forward * Time.deltaTime);
-            yield return null;
         }
     }
 }

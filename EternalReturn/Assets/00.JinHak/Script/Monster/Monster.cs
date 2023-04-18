@@ -32,8 +32,8 @@ public class Monster : MonoBehaviour, IHitHandler
     void Awake()
     {
         monsterController = GetComponent<MonsterController>();
-        spawnPoint = transform.GetChild(1).GetComponent<MonsterSpawnPoint>();
-        monsterBattleArea = spawnPoint.transform.GetChild(0).gameObject;
+        spawnPoint = transform.parent.GetComponent<MonsterSpawnPoint>();
+        monsterBattleArea = spawnPoint.transform.GetChild(1).gameObject;
 
         monsterStatus = new MonsterStatus();
 
@@ -150,6 +150,10 @@ public class Monster : MonoBehaviour, IHitHandler
         }
         monsterStatus.nowHp -= (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
     }
+    public void TakeDamage(DamageMessage message, float damageAmount)
+    {
+        throw new System.NotImplementedException();
+    }
 
     /// <summary>
     /// 출혈 데미지를 입히는 함수
@@ -184,6 +188,8 @@ public class Monster : MonoBehaviour, IHitHandler
         // 이미 상태이상이 걸린 경우
         if (applyDebuffCheck[debuffIndex_])
         {
+            StartCoroutine(ContinousDamageEnd(debuffContinousTime[debuffIndex_], debuffIndex_, message.damageAmount));
+            debuffDamage[debuffIndex_] += message.damageAmount;
             debuffRemainTime[debuffIndex_] = debuffContinousTime[debuffIndex_];
         }
         // 상태이상이 걸려있지 않은 경우
@@ -196,8 +202,7 @@ public class Monster : MonoBehaviour, IHitHandler
 
             // 상태이상 틱 간격
             float delayTime_ = 0;
-
-            //float resetDamageCount = 0;
+            StartCoroutine(ContinousDamageEnd(debuffContinousTime[debuffIndex_], debuffIndex_, message.damageAmount));
 
             while (debuffRemainTime[debuffIndex_] > 0)
             {
@@ -238,5 +243,5 @@ public class Monster : MonoBehaviour, IHitHandler
     public void ExitPlayer()
     {
         monsterController.encountPlayerCount--;
-    }
+    }  
 }

@@ -32,7 +32,7 @@ public class MonsterController : MonoBehaviour
     public Rigidbody monsterRigid = default;
     public Animator monsterAni = default;
     public AudioSource monsterAudio = default;
-    //public NavMeshAgent navMeshAgent = default;
+    public NavMeshAgent navMeshAgent = default;
     public PlayerBase targetPlayer = default;
 
     protected bool isInSkillUse = false;
@@ -45,11 +45,11 @@ public class MonsterController : MonoBehaviour
         monsterAni = GetComponent<Animator>();
         monsterAudio = GetComponent<AudioSource>();
 
-        /*navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.acceleration = 100f;
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.acceleration = 0;
         navMeshAgent.angularSpeed = 180f;
-        navMeshAgent.speed = monster.moveSpeed;
-        navMeshAgent.enabled = true;*/
+        navMeshAgent.speed = monster.monsterStatus.moveSpeed;
+        navMeshAgent.enabled = true;
 
         IMonsterState idle = new MonsterIdle();
         IMonsterState move = new MonsterMove();
