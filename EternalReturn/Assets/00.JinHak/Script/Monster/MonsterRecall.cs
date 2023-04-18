@@ -26,14 +26,16 @@ public class MonsterRecall : IMonsterState
 
     IEnumerator Recall()
     {
+        monsterController.monsterAni.SetBool("isMove", true);
+        monsterController.navMeshAgent.SetDestination(monsterController.targetPlayer.transform.position);
         while (true)
         {
-            monsterController.monsterAni.SetBool("isMove", true);
             if (Vector3.Distance(monsterController.transform.position, monsterController.monster.monsterBattleArea.transform.position) < 0.1f)
             {
                 monsterController.monster.ExitRecall();
                 yield break;
             }
+            yield return null;
         }
     }
 }

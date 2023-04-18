@@ -29,9 +29,6 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public float[] debuffDamage = new float[10];        // 디버프 데미지
     public Queue<float>[] debuffDamageQueues = new Queue<float>[10];
     public List<float>[] debuffRemainList = new List<float>[10];
-    NavMeshPath path = new NavMeshPath();
-
-
 
     protected virtual void Start()
     {
@@ -60,7 +57,6 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                     Debug.Log(navHit.position);
                     //SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
                     destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);
-                    playerNav.CalculatePath(destination, path);
                 }
                 else
                 {

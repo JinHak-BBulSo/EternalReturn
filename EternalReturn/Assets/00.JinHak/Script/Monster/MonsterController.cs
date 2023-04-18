@@ -46,8 +46,8 @@ public class MonsterController : MonoBehaviour
         monsterAudio = GetComponent<AudioSource>();
 
         navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.acceleration = 0;
-        navMeshAgent.angularSpeed = 180f;
+        navMeshAgent.acceleration = 100;
+        navMeshAgent.angularSpeed = 1800f;
         navMeshAgent.speed = monster.monsterStatus.moveSpeed;
         navMeshAgent.enabled = true;
 
