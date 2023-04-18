@@ -9,7 +9,7 @@ public class Monster : MonoBehaviour, IHitHandler
     private MonsterController monsterController;
 
     private MonsterSpawnPoint spawnPoint = default;
-    public GameObject monsterBattleArea = default;
+    public MonsterBattleArea monsterBattleArea = default;
 
     public string monsterName = default;
     [SerializeField]
@@ -33,7 +33,10 @@ public class Monster : MonoBehaviour, IHitHandler
     {
         monsterController = GetComponent<MonsterController>();
         spawnPoint = transform.parent.GetComponent<MonsterSpawnPoint>();
-        monsterBattleArea = spawnPoint.transform.GetChild(0).gameObject;
+        monsterBattleArea = spawnPoint.transform.GetChild(0).GetComponent<MonsterBattleArea>();
+
+        spawnPoint.monster = this;
+        monsterBattleArea.monster = this;
 
         monsterStatus = new MonsterStatus();
         SetStatus();
@@ -53,6 +56,12 @@ public class Monster : MonoBehaviour, IHitHandler
 
         spawnPoint.exitPlayer -= ExitPlayer;
         spawnPoint.exitPlayer += ExitPlayer;
+
+        spawnPoint = transform.parent.GetComponent<MonsterSpawnPoint>();
+        monsterBattleArea = spawnPoint.transform.GetChild(0).GetComponent<MonsterBattleArea>();
+
+        spawnPoint.monster = this;
+        monsterBattleArea.monster = this;
 
         Appear();
         SetStatus();
@@ -75,6 +84,10 @@ public class Monster : MonoBehaviour, IHitHandler
         /* each monster override using */
     }
 
+    public virtual void Idle()
+    {
+        
+    }
     public virtual void Attack()
     {
         monsterController.monsterAni.SetBool("isAttack", true);

@@ -44,6 +44,7 @@ public class MonsterController : MonoBehaviour
         monsterRigid = GetComponent<Rigidbody>();
         monsterAni = GetComponent<Animator>();
         monsterAudio = GetComponent<AudioSource>();
+        monster = GetComponent<Monster>();
 
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.acceleration = 100;
@@ -72,20 +73,14 @@ public class MonsterController : MonoBehaviour
 
     void Update()
     {
-        if(!isDie && !isBattleStart)
-        {
-            return;
-        }
-        else if(!isDie && isBattleStart)
-        {
-            UpdateState();
-        }
+        UpdateState();
         monsterStateMachine.DoUpdate();
     }
 
     private void FixedUpdate()
     {
-        monsterStateMachine.DoFixedUpdate();
+        if(monsterStateMachine != default)
+            monsterStateMachine.DoFixedUpdate();
     }
 
     public void CallCoroutine(IEnumerator coroutine)
@@ -104,11 +99,12 @@ public class MonsterController : MonoBehaviour
         {
             monsterStateMachine.SetState(monsterStateDic[MonsterState.RECALL]);
         }
+
         if(targetPlayer == null && encountPlayerCount == 0)
         {
             monsterStateMachine.SetState(monsterStateDic[MonsterState.IDLE]);
         }
-        else
+        else 
         {
             if(encountPlayerCount != 0 && targetPlayer == null)
             {

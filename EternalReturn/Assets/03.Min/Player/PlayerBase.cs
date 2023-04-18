@@ -233,7 +233,6 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         //}
         if (isMove)
         {
-            Debug.Log(corners.Count);
             if (corners.Count > 0 && currentCorner < corners.Count)
             {
                 if (Vector3.Distance(corners[currentCorner], transform.position) <= 0.2f)
@@ -313,6 +312,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public void TakeDamage(DamageMessage message)
     {
         playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerStat.defense)));
+        Debug.Log(playerStat.nowHp);
     }
     public void TakeDamage(DamageMessage message, float damageAmount)
     {
