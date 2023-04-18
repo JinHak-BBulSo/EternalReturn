@@ -17,6 +17,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public Animator playerAni = default;
     [HideInInspector]
     public NavMeshAgent playerNav = default;
+    public NavMeshPath path = default;
     public bool isAttackAble = true;
     public bool isMove = false;
     public int attackType = 0;
@@ -29,16 +30,22 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public float[] debuffDamage = new float[10];        // 디버프 데미지
     public Queue<float>[] debuffDamageQueues = new Queue<float>[10];
     public List<float>[] debuffRemainList = new List<float>[10];
+    public List<Vector3> corners = new List<Vector3>();
+    private int currentCorner = 0;
+
+
+
 
     protected virtual void Start()
     {
         playerController = GetComponent<PlayerController>();
         playerAni = GetComponent<Animator>();
         playerNav = GetComponent<NavMeshAgent>();
+        Camera.main.transform.parent.GetComponent<MoveCamera>().player = this;
         InitStat();
 
     }
-    
+
 
     protected virtual void Update()
     {
@@ -52,17 +59,20 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
             {
                 NavMeshHit navHit;
-                if(NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
+                if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
                 {
-                    Debug.Log(navHit.position);
-                    //SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
-                    destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);
-                }
-                else
-                {
+                    // destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);
+                    SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
+                    path = new NavMeshPath();
+                    playerNav.CalculatePath(destination, path);
 
+                    corners.Clear();
+                    for (int i = 0; i < path.corners.Length; i++)
+                    {
+                        corners.Add(path.corners[i]);
+                    }
+                    currentCorner = 0;
                 }
-
                 //SetDestination(hit.point);
             }
         }
@@ -223,16 +233,35 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         //}
         if (isMove)
         {
-            if (Vector3.Distance(destination, transform.position) <= 0.1f)
+            Debug.Log(corners.Count);
+            if (corners.Count > 0 && currentCorner < corners.Count)
             {
-                isMove = false;
-                return;
+                if (Vector3.Distance(corners[currentCorner], transform.position) <= 0.2f)
+                {
+                    currentCorner++;
+                }
+                if (currentCorner < corners.Count)
+                {
+                    var dir = corners[currentCorner] - transform.position;
+                    Quaternion viewroate = Quaternion.LookRotation(dir);
+                    viewroate = Quaternion.Euler(transform.rotation.x, viewroate.eulerAngles.y, transform.rotation.z);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, viewroate, 6f * Time.deltaTime);
+                    transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
+                }
             }
-            var dir = destination - transform.position;
-            Quaternion viewroate = Quaternion.LookRotation(dir);
-            viewroate = Quaternion.Euler(transform.rotation.x, viewroate.eulerAngles.y, transform.rotation.z);
-            transform.rotation = Quaternion.Slerp(transform.rotation, viewroate, 6f * Time.deltaTime);
-            transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
+            else
+            {
+                if (Vector3.Distance(destination, transform.position) <= 0.2f)
+                {
+                    isMove = false;
+                    return;
+                }
+                var dir = destination - transform.position;
+                Quaternion viewroate = Quaternion.LookRotation(dir);
+                viewroate = Quaternion.Euler(transform.rotation.x, viewroate.eulerAngles.y, transform.rotation.z);
+                transform.rotation = Quaternion.Slerp(transform.rotation, viewroate, 6f * Time.deltaTime);
+                transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
+            }
         }
     }
 
