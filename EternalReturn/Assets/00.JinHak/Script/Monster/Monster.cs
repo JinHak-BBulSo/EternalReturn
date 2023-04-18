@@ -14,7 +14,7 @@ public class Monster : MonoBehaviour, IHitHandler
     public string monsterName = default;
     [SerializeField]
     private MonsterData monsterData;
-    
+
     public bool isSkillAble = false;
     public bool isAttackAble = false;
     public bool isBattleAreaOut = false;
@@ -56,7 +56,7 @@ public class Monster : MonoBehaviour, IHitHandler
         Appear();
         SetStatus();
     }
-    
+
     protected virtual void SetStatus()
     {
         monsterStatus.maxHp = monsterData.Hp;
@@ -124,7 +124,7 @@ public class Monster : MonoBehaviour, IHitHandler
     {
         monsterController.monsterAni.SetBool("isBeware", false);
     }
-    
+
     public virtual void ExitRecall()
     {
         isBattleAreaOut = false;
@@ -143,12 +143,16 @@ public class Monster : MonoBehaviour, IHitHandler
     /// <param name="message"></param>
     public void TakeDamage(DamageMessage message)
     {
-        if(firstAttackPlayer == default)
+        if (firstAttackPlayer == default)
         {
             firstAttackPlayer = message.causer.GetComponent<PlayerBase>();
             monsterController.targetPlayer = firstAttackPlayer;
         }
         monsterStatus.nowHp -= (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
+    }
+    public void TakeDamage(DamageMessage message, float damageAmount)
+    {
+        throw new System.NotImplementedException();
     }
 
     /// <summary>
@@ -184,6 +188,8 @@ public class Monster : MonoBehaviour, IHitHandler
         // 이미 상태이상이 걸린 경우
         if (applyDebuffCheck[debuffIndex_])
         {
+            StartCoroutine(ContinousDamageEnd(debuffContinousTime[debuffIndex_], debuffIndex_, message.damageAmount));
+            debuffDamage[debuffIndex_] += message.damageAmount;
             debuffRemainTime[debuffIndex_] = debuffContinousTime[debuffIndex_];
         }
         // 상태이상이 걸려있지 않은 경우
@@ -196,8 +202,7 @@ public class Monster : MonoBehaviour, IHitHandler
 
             // 상태이상 틱 간격
             float delayTime_ = 0;
-
-            //float resetDamageCount = 0;
+            StartCoroutine(ContinousDamageEnd(debuffContinousTime[debuffIndex_], debuffIndex_, message.damageAmount));
 
             while (debuffRemainTime[debuffIndex_] > 0)
             {
@@ -210,7 +215,7 @@ public class Monster : MonoBehaviour, IHitHandler
                 //resetDamageCount += Time.deltaTime;
 
                 // 딜레이 시간이 다 되었을시 대미지를 입힘
-                if(delayTime_ > debuffDelayTime[debuffIndex_])
+                if (delayTime_ > debuffDelayTime[debuffIndex_])
                 {
                     TakeSolidDamage(message, debuffDamage[debuffIndex_]);
                     delayTime_ = 0;
