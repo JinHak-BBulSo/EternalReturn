@@ -258,10 +258,11 @@ MonoBehaviour:
   type: 14
   rare: 3
   name: "\uAE30\uC0AC\uB2E8\uC7A5\uC758 \uD22C\uAD6C"
-  count: 1
+  count: 0
   weaponAttackSpeedPercent: 0
   weaponAttackRangePercent: 0
   foodIncrease: 0
+  maxCount: 1
   ItemStat:
     attackPower: 0
     skillPower: 0
@@ -282,6 +283,7 @@ MonoBehaviour:
     extraStamina: 200
     hpRegen: 0
     staminaRegen: 0
+  craftTime: 0
 --- !u!1 &466869487920827935
 GameObject:
   m_ObjectHideFlags: 0

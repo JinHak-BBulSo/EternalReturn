@@ -336,10 +336,11 @@ MonoBehaviour:
   type: 20
   rare: 0
   name: "\uBB3C"
-  count: 6
+  count: 0
   weaponAttackSpeedPercent: 0
   weaponAttackRangePercent: 0
   foodIncrease: 225
+  maxCount: 6
   ItemStat:
     attackPower: 0
     skillPower: 0
@@ -360,3 +361,4 @@ MonoBehaviour:
     extraStamina: 0
     hpRegen: 0
     staminaRegen: 0
+  craftTime: 0

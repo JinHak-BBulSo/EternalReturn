@@ -174,16 +174,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aff7cfbcc645e024b9d3c8c77b88b92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 1
-  type: 1
-  rare: 0
-  name: "\uAC00\uC704"
-  count: 1
-  weaponAttackSpeedPercent: 0
-  weaponAttackRangePercent: 0
-  foodIncrease: 0
-  ItemStat:
-    attackPower: 5
+  item:
+    attackPower: 0
     skillPower: 0
     basicAttackPower: 0
     defense: 0
@@ -202,6 +194,16 @@ MonoBehaviour:
     extraStamina: 0
     hpRegen: 0
     staminaRegen: 0
+    id: 1
+    type: 0
+    rare: 0
+    name: 
+    count: 0
+    weaponAttackSpeedPercent: 0
+    weaponAttackRangePercent: 0
+    foodIncrease: 0
+    maxCount: 0
+    craftTime: 0
 --- !u!1 &2513827127216802650
 GameObject:
   m_ObjectHideFlags: 0

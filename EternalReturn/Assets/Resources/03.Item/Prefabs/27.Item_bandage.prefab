@@ -102,9 +102,11 @@ MonoBehaviour:
   type: 16
   rare: 0
   name: "\uBD95\uB300"
-  count: 1
+  count: 0
   weaponAttackSpeedPercent: 0
   weaponAttackRangePercent: 0
+  foodIncrease: 0
+  maxCount: 1
   ItemStat:
     attackPower: 0
     skillPower: 0
@@ -125,6 +127,7 @@ MonoBehaviour:
     extraStamina: 0
     hpRegen: 0
     staminaRegen: 0
+  craftTime: 0
 --- !u!1 &4077324562014933553
 GameObject:
   m_ObjectHideFlags: 0
