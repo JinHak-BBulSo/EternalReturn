@@ -233,7 +233,6 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         //}
         if (isMove)
         {
-            Debug.Log(corners.Count);
             if (corners.Count > 0 && currentCorner < corners.Count)
             {
                 if (Vector3.Distance(corners[currentCorner], transform.position) <= 0.2f)
@@ -248,20 +247,24 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                     transform.rotation = Quaternion.Slerp(transform.rotation, viewroate, 6f * Time.deltaTime);
                     transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
                 }
-            }
-            else
-            {
-                if (Vector3.Distance(destination, transform.position) <= 0.2f)
+                else
                 {
                     isMove = false;
-                    return;
                 }
-                var dir = destination - transform.position;
-                Quaternion viewroate = Quaternion.LookRotation(dir);
-                viewroate = Quaternion.Euler(transform.rotation.x, viewroate.eulerAngles.y, transform.rotation.z);
-                transform.rotation = Quaternion.Slerp(transform.rotation, viewroate, 6f * Time.deltaTime);
-                transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
             }
+            // else
+            // {
+            //     if (Vector3.Distance(destination, transform.position) <= 0.2f)
+            //     {
+            //         isMove = false;
+            //         return;
+            //     }
+            //     var dir = destination - transform.position;
+            //     Quaternion viewroate = Quaternion.LookRotation(dir);
+            //     viewroate = Quaternion.Euler(transform.rotation.x, viewroate.eulerAngles.y, transform.rotation.z);
+            //     transform.rotation = Quaternion.Slerp(transform.rotation, viewroate, 6f * Time.deltaTime);
+            //     transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
+            // }
         }
     }
 
@@ -292,12 +295,25 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     private void OnTriggerEnter(Collider other)
     {
-        DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
-        IHitHandler test = other.GetComponent<IHitHandler>();
-        if (test != null)
-        {
-            test.TakeDamage(dm);
-        }
+
+        // if (other.CompareTag("Skill"))
+        // {
+        //     // DamageMessage dm = other.GetComponent<Skill>().dm;
+        //     // DamageMessage debuffdm = other.GetComponent<Skill>()
+
+        //     TakeDamage(dm);
+
+        //     if(debuffdm != default){
+        //         ContinousDamage();
+        //     }
+        // }
+        // DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
+        // IHitHandler enemy = other.GetComponent<IHitHandler>();
+        // Debug.Log("?");
+        // if (enemy != null)
+        // {
+        //     enemy.TakeDamage(dm);
+        // }
     }
 
     /// <summary>

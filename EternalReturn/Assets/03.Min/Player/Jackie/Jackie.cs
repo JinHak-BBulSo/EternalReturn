@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Jackie : PlayerBase
 {
-    private List<PlayerBase> enemyPlayers = new List<PlayerBase>();
+    public List<IHitHandler> enemy = new List<IHitHandler>();
     [SerializeField]
-    private MeshCollider QMeshCol = default;
+    private BoxCollider QBoxCol = default;
     protected override void Start()
     {
         base.Start();
-        QMeshCol = Skill_Q_Range.transform.GetChild(0).GetChild(0).GetComponent<MeshCollider>();
+        QBoxCol = Skill_Q_Range.transform.GetChild(0).GetChild(0).GetComponent<BoxCollider>();
     }
     public override void Skill_Q()
     {
