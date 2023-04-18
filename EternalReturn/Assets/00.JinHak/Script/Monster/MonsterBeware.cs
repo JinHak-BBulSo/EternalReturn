@@ -9,7 +9,7 @@ public class MonsterBeware : IMonsterState
     {
         this.monsterController = monsterCtrl_;
         monsterController.monsterState = MonsterController.MonsterState.BEWARE;
-        monsterController.monster.Beware();
+        Beware();
     }
     public void StateFixedUpdate()
     {
@@ -21,6 +21,14 @@ public class MonsterBeware : IMonsterState
     }
     public void StateExit()
     {
-        monsterController.monster.ExitBeware();
+        ExitBeware();
+    }
+    public void Beware()
+    {
+        monsterController.monsterAni.SetBool("isBeware", true);
+    }
+    public virtual void ExitBeware()
+    {
+        monsterController.monsterAni.SetBool("isBeware", false);
     }
 }

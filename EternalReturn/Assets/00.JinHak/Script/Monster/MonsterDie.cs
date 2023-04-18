@@ -9,7 +9,7 @@ public class MonsterDie : IMonsterState
     {
         this.monsterController = monsterCtrl_;
         monsterController.monsterState = MonsterController.MonsterState.DIE;
-        monsterController.monster.Die();
+        Die();
         monsterController.CallCoroutine(EraseMonster());
     }
     public void StateFixedUpdate()
@@ -29,5 +29,10 @@ public class MonsterDie : IMonsterState
     {
         yield return new WaitForSeconds(60);
         monsterController.gameObject.SetActive(false);
+    }
+
+    public void Die()
+    {
+        monsterController.monsterAni.SetTrigger("Die");
     }
 }

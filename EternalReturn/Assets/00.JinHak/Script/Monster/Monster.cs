@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class Monster : MonoBehaviour, IHitHandler
@@ -9,7 +10,9 @@ public class Monster : MonoBehaviour, IHitHandler
     private MonsterController monsterController;
 
     private MonsterSpawnPoint spawnPoint = default;
-    public MonsterBattleArea monsterBattleArea = default;
+    public MonsterSpawnPoint SpawnPoint { get { return spawnPoint; } }
+    private MonsterBattleArea monsterBattleArea = default;
+    public MonsterBattleArea MonsterBattleArea { get { return monsterBattleArea; } }
 
     public string monsterName = default;
     [SerializeField]
@@ -84,28 +87,15 @@ public class Monster : MonoBehaviour, IHitHandler
         /* each monster override using */
     }
 
-    public virtual void Idle()
-    {
-        
-    }
-    public virtual void Attack()
-    {
-        monsterController.monsterAni.SetBool("isAttack", true);
-    }
-    public virtual void Recall()
-    {
-        isBattleAreaOut = true;
-        monsterController.monsterAni.SetBool("isMove", true);
-    }
-
-    public virtual void Beware()
-    {
-        monsterController.monsterAni.SetBool("isBeware", true);
-    }
-
     public virtual void Skill()
     {
         /* each monster override using */
+        
+        // 공격형 스킬의 경우 예시
+        /*GameObject target_ = monsterController.gameObject;
+        float damageAmount_ = monsterController.monster.monsterStatus.attackPower;
+        DamageMessage dm = new DamageMessage(target_, damageAmount_);
+        monsterController.targetPlayer.TakeDamage(dm);*/
     }
 
     public virtual void Appear()
@@ -117,32 +107,17 @@ public class Monster : MonoBehaviour, IHitHandler
         monsterController.monsterAni.SetTrigger("EndAppear");
     }
 
-    public void Die()
+    public void FirstAttackCheck(DamageMessage message)
     {
-        monsterController.monsterAni.SetTrigger("Die");
-    }
-
-    public virtual void ExitAttack()
-    {
-        DamageMessage dm = new DamageMessage(gameObject, monsterStatus.attackPower);
-        monsterController.targetPlayer.TakeDamage(dm);
-        monsterController.monsterAni.SetBool("isAttack", false);
-    }
-
-    public virtual void ExitSkill()
-    {
-        monsterController.monsterAni.SetBool("isSkill", false);
-    }
-
-    public virtual void ExitBeware()
-    {
-        monsterController.monsterAni.SetBool("isBeware", false);
-    }
-    
-    public virtual void ExitRecall()
-    {
-        isBattleAreaOut = false;
-        monsterController.monsterAni.SetBool("isMove", false);
+        if (firstAttackPlayer == default)
+        {
+            firstAttackPlayer = message.causer.GetComponent<PlayerBase>();
+            monsterController.targetPlayer = firstAttackPlayer;
+        }
+        else
+        {
+            return;
+        }
     }
 
     /// <summary>
@@ -157,16 +132,14 @@ public class Monster : MonoBehaviour, IHitHandler
     /// <param name="message"></param>
     public void TakeDamage(DamageMessage message)
     {
-        if(firstAttackPlayer == default)
-        {
-            firstAttackPlayer = message.causer.GetComponent<PlayerBase>();
-            monsterController.targetPlayer = firstAttackPlayer;
-        }
+        FirstAttackCheck(message);
         monsterStatus.nowHp -= (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
     }
+    // 필요없을듯?
     public void TakeDamage(DamageMessage message, float damageAmount)
     {
-        throw new System.NotImplementedException();
+        FirstAttackCheck(message);
+        monsterStatus.nowHp -= damageAmount;
     }
 
     /// <summary>

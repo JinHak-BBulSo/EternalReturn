@@ -34,6 +34,7 @@ public class MonsterMove : IMonsterState
                 Vector3.Distance(monsterController.transform.position, monsterController.targetPlayer.transform.position))
             {
                 monsterController.monsterAni.SetBool("isMove", false);
+                monsterController.monsterState = MonsterController.MonsterState.IDLE;
                 yield break;
             }
             yield return null;
