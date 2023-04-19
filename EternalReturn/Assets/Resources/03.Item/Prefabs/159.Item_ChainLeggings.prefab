@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2516752247231420627
 Transform:
   m_ObjectHideFlags: 0
@@ -130,6 +130,9 @@ MonoBehaviour:
     craftTime: 1
   isInventory: 0
   isEquipment: 0
+  isItemWishList: 0
+  nameBg: {fileID: 0}
+  wishListImg: {fileID: 0}
 --- !u!1 &2516752247367684820
 GameObject:
   m_ObjectHideFlags: 0

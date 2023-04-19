@@ -32,6 +32,8 @@ public class ItemCombineLoad : MonoBehaviour
     string itemPath = "ItemList";
     private ItemDefine itemDefine;
     public List<Item> itemInferiorList;
+    public List<Item> itemInferiorRare;
+    public List<Item> itemInferiorUncommon;
     private Dictionary<ItemDefine, int> itemCombineDictionary;
     // public int[,] itemCombineKeyArray = new int[300, 300];
 
@@ -73,24 +75,24 @@ public class ItemCombineLoad : MonoBehaviour
         ItemWishList.Add(AddItem(81));
 
         ItemManager.Instance.itemWishList = ItemWishList;
-        ItemManager.Instance.inventory.Add(itemList[122].GetComponent<Item>());
+        ItemManager.Instance.equipmentInven.Add(itemList[0]);
+        ItemManager.Instance.inventory.Add(itemList[20]);
+        ItemManager.Instance.inventory[0].item.count += 2;
+        Debug.Log(ItemManager.Instance.inventory[0].item.count);
+
 
 
         for (int i = 0; i < ItemWishList.Count; i++)
         {
-            Debug.Log(ItemWishList[i].item.id);
             ItemManager.Instance.AddInferiorList(ItemWishList[i].item.id);
         }
         itemInferiorList = ItemManager.Instance.itemInferiorList;
-        for (int i = 0; i < itemInferiorList.Count; i++)
-        {
-            // Debug.Log($"Item id: {ItemManager.Instance.itemInferiorList[i].name}, Count  :{ItemManager.Instance.itemInferiorList[i].item.count}");
-        }
+        itemInferiorRare = ItemManager.Instance.ItemInferiorRare;
+        itemInferiorUncommon = ItemManager.Instance.ItemInferiorUncommon;
+
 
 
     }
-
-
     public Item AddItem(int i)
     {
         Item item = new Item();
