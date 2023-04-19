@@ -181,7 +181,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3196099613741406065}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -927.3478, y: -536.0585, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -254,27 +254,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aff7cfbcc645e024b9d3c8c77b88b92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 181
-  type: 18
-  rare: 1
-  name: "\uC9C4\uC2E0\uC0AC\uB9AC"
-  count: 0
-  weaponAttackSpeedPercent: 0
-  weaponAttackRangePercent: 0
-  foodIncrease: 0
-  maxCount: 1
-  ItemStat:
+  item:
     attackPower: 0
-    skillPower: 12
-    basicAttackPower: 0
+    moveSpeed: 0
     defense: 0
     attackSpeed: 0
+    attackRange: 0
+    skillPower: 12
+    basicAttackPower: 0
     coolDown: 5
     criticalPercent: 0
     criticalDamage: 0
-    moveSpeed: 0
     visionRange: 0
-    attackRange: 0
     damageReduce: 0
     tenacity: 0
     armorReduce: 0
@@ -283,7 +274,18 @@ MonoBehaviour:
     extraStamina: 0
     hpRegen: 0
     staminaRegen: 0
-  craftTime: 0
+    id: 181
+    type: 18
+    rare: 1
+    name: "\uC9C4\uC2E0\uC0AC\uB9AC"
+    count: 0
+    weaponAttackSpeedPercent: 0
+    weaponAttackRangePercent: 0
+    foodIncrease: 0
+    maxCount: 1
+    craftTime: 1
+  isInventory: 0
+  isEquipment: 0
 --- !u!1 &3196099614458858748
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +312,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3196099614458858748}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -4}
   m_LocalScale: {x: 0.02, y: 0.02, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -321,7 +323,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -2}
   m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3196099614458858747

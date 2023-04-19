@@ -8,6 +8,7 @@ public class PlayerSkill_W : IPlayerState
     public void StateEnter(PlayerController controller_)
     {
         this.playerController = controller_;
+        playerController.player.Skill_W();
     }
     public void StateExit()
     {
@@ -20,6 +21,7 @@ public class PlayerSkill_W : IPlayerState
 
     public void StateUpdate()
     {
+        playerController.ChangeState(new PlayerIdle());
 
     }
 }

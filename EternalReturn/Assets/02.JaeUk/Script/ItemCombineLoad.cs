@@ -2,7 +2,6 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -26,56 +25,25 @@ public class CSVReader
     }
 }
 
-public class ItemDefine
-{
-    public int itemId_1; // 하위 아이템 A
-    public int itemId_2; // 하위 아이템 B
-    public ItemDefine(int a, int b)
-    {
-        itemId_1 = a;
-        itemId_2 = b;
-    }
-    public ItemDefine()
-    {
-
-    }
-
-    public bool ComparerItem(ItemDefine a, ItemDefine b)
-    {
-        if (a.itemId_1 == b.itemId_1 && a.itemId_2 == b.itemId_2)
-        {
-            return false;
-
-        }
-        else
-        {
-            return true;
-        }
-    }
-    public ItemDefine FineInferiorItemId(Dictionary<ItemDefine, int> dic, int i)
-    {
-
-        return dic.FirstOrDefault(x => x.Value == i).Key;
-    }
-}
 public class ItemCombineLoad : MonoBehaviour
 {
-    public List<GameObject> itemList;
+    private List<Item> itemList;
     string combinePath = "ItemCombine";
     string itemPath = "ItemList";
-    public ItemDefine itemDefine;
+    private ItemDefine itemDefine;
+    public List<Item> itemInferiorList;
     private Dictionary<ItemDefine, int> itemCombineDictionary;
     // public int[,] itemCombineKeyArray = new int[300, 300];
 
     // Start is called before the first frame update
     private void Start()
     {
+        itemList = ItemManager.Instance.itemList;
         List<string[]> combineList = CSVReader.Read(combinePath);
         List<string[]> itemListCSV = CSVReader.Read(itemPath);
         itemCombineDictionary = new Dictionary<ItemDefine, int>();
         object[] ItemLoadObjs = Resources.LoadAll("03.Item/Prefabs");
-        List<ItemStat> ItemWishList = new List<ItemStat>();
-
+        List<Item> ItemWishList = new List<Item>();
         for (int i = 0; i < combineList.Count; i++)
         {
             itemDefine = new ItemDefine(int.Parse(combineList[i][1]), int.Parse(combineList[i][2]));
@@ -86,10 +54,8 @@ public class ItemCombineLoad : MonoBehaviour
 
         ItemManager.Instance.itemCombineDictionary = itemCombineDictionary;
 
-
         for (int i = 0; i < itemList.Count; i++)
         {
-            ItemManager.Instance.itemList.Add(itemList[i].GetComponent<Item>());
             ItemManager.Instance.itemList[i].item = new ItemStat(float.Parse(itemListCSV[i][0]), float.Parse(itemListCSV[i][1]), float.Parse(itemListCSV[i][2]),
             float.Parse(itemListCSV[i][3]), float.Parse(itemListCSV[i][4]), float.Parse(itemListCSV[i][5]), float.Parse(itemListCSV[i][6]), float.Parse(itemListCSV[i][7]),
             float.Parse(itemListCSV[i][8]), float.Parse(itemListCSV[i][9]), float.Parse(itemListCSV[i][10]), float.Parse(itemListCSV[i][11]), float.Parse(itemListCSV[i][12]),
@@ -99,7 +65,7 @@ public class ItemCombineLoad : MonoBehaviour
 
 
         }
-        ItemWishList.Add(AddItem(132));
+        // ItemWishList.Add(AddItem(132));
         ItemWishList.Add(AddItem(102));
         ItemWishList.Add(AddItem(171));
         ItemWishList.Add(AddItem(148));
@@ -107,27 +73,33 @@ public class ItemCombineLoad : MonoBehaviour
         ItemWishList.Add(AddItem(81));
 
         ItemManager.Instance.itemWishList = ItemWishList;
+        ItemManager.Instance.inventory.Add(itemList[122].GetComponent<Item>());
 
 
-
-        for (int i = 0; i < ItemManager.Instance.itemWishList.Count; i++)
+        for (int i = 0; i < ItemWishList.Count; i++)
         {
-            ItemManager.Instance.AddInferiorList(ItemWishList[i].id);
+            Debug.Log(ItemWishList[i].item.id);
+            ItemManager.Instance.AddInferiorList(ItemWishList[i].item.id);
         }
-        for (int i = 0; i < ItemManager.Instance.itemInferiorList.Count; i++)
+        itemInferiorList = ItemManager.Instance.itemInferiorList;
+        for (int i = 0; i < itemInferiorList.Count; i++)
         {
-            Debug.Log($"Item id: {ItemManager.Instance.itemInferiorList[i].name}, Count  :{ItemManager.Instance.itemInferiorList[i].count}");
+            // Debug.Log($"Item id: {ItemManager.Instance.itemInferiorList[i].name}, Count  :{ItemManager.Instance.itemInferiorList[i].item.count}");
         }
 
 
     }
-    public ItemStat AddItem(int i)
+
+
+    public Item AddItem(int i)
     {
-        ItemStat item = new ItemStat();
-        item = ItemManager.Instance.itemList[i].item;
+        Item item = new Item();
+        item = ItemManager.Instance.itemList[i];
         return item;
     }
-    // Update is called once per frame
-
 
 }
+// Update is called once per frame
+
+
+
