@@ -174,7 +174,7 @@ public class Monster : MonoBehaviour, IHitHandler
     /// <param name="message"></param>
     /// <param name="debuffIndex_"></param>
     /// <returns></returns>
-    public IEnumerator ContinousDamage(DamageMessage message, int debuffIndex_, float continousTime_)
+    public IEnumerator ContinousDamage(DamageMessage message, int debuffIndex_, float continousTime_, float tickTime_)
     {
         // 이미 상태이상이 걸린 경우
         if (applyDebuffCheck[debuffIndex_])
@@ -208,7 +208,7 @@ public class Monster : MonoBehaviour, IHitHandler
                 //resetDamageCount += Time.deltaTime;
 
                 // 딜레이 시간이 다 되었을시 대미지를 입힘
-                if(delayTime_ > debuffDelayTime[debuffIndex_])
+                if(delayTime_ > tickTime_)
                 {
                     TakeSolidDamage(message, debuffDamage[debuffIndex_]);
                     delayTime_ = 0;
