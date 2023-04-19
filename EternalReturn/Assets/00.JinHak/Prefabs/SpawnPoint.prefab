@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 9039394540474566624}
   - component: {fileID: 9039394540474566631}
   - component: {fileID: 9039394540474566629}
-  m_Layer: 0
+  - component: {fileID: 250700299411963704}
+  m_Layer: 2
   m_Name: BattleArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,6 +99,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.00000008940697, y: -0.00000011920929, z: -0.00000008195639}
+--- !u!114 &250700299411963704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9039394540474566648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfb1de84a53a4d54daf372d59cebf435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster: {fileID: 0}
 --- !u!1 &9039394542087057766
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,7 +125,7 @@ GameObject:
   - component: {fileID: 9039394542087057760}
   - component: {fileID: 9039394542087057775}
   - component: {fileID: 9039394542087057774}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

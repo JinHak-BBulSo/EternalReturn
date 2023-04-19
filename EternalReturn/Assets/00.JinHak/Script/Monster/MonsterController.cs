@@ -38,7 +38,6 @@ public class MonsterController : MonoBehaviour
     public int encountPlayerCount = 0;
 
     public bool actionDelay = false;
-
     public void AwakeOrder()
     {
         // Component Set
@@ -103,6 +102,13 @@ public class MonsterController : MonoBehaviour
 
     private void UpdateState()
     {
+        if(monster.monsterStatus.nowHp <= 0)
+        {
+            monster.monsterStatus.nowHp = 0;
+            monsterStateMachine.SetState(monsterStateDic[MonsterState.DIE]);
+            return;
+        }
+
         if (actionDelay)
         {
             monsterStateMachine.SetState(monsterStateDic[MonsterState.DELAY]);

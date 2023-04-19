@@ -28,6 +28,7 @@ public class Monster : MonoBehaviour, IHitHandler
     public float[] debuffDamage = new float[10];        // 디버프 데미지
     
     public PlayerBase firstAttackPlayer = default;
+    public bool isDie = false;
 
     void Awake()
     {
