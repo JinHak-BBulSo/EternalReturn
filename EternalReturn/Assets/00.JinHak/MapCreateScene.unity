@@ -16081,7 +16081,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 8efddbe5c937ffd47b8bac97004a6aad, type: 2}
+      objectReference: {fileID: 2100000, guid: 1cd33b63a418cc745b280514003166a7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6efbd7151a2ff949b15cfc57188499b, type: 3}
 --- !u!4 &335826024 stripped
@@ -37988,7 +37988,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 8efddbe5c937ffd47b8bac97004a6aad, type: 2}
+      objectReference: {fileID: 2100000, guid: 1cd33b63a418cc745b280514003166a7, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a593397a96d1294aab1f40da45a5e26, type: 3}
 --- !u!4 &745335994 stripped
@@ -45302,7 +45302,6 @@ MonoBehaviour:
   m_Cameras: []
   m_RendererIndex: -1
   m_VolumeLayerMask:
-    serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
@@ -64756,7 +64755,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 5a8055e58d031564282087795602bb55, type: 2}
+      objectReference: {fileID: 2100000, guid: 2c790c87df9b97643b36b31a7270f0ab, type: 2}
     - target: {fileID: -8679921383154817045, guid: e34552a76bfce604992859dc8d252ce7,
         type: 3}
       propertyPath: m_RootOrder
@@ -106443,6 +106442,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bg_NaviMesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 2308003474833837480, guid: 735175c5a222960468e60ccd6f4e628d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3120005264827668242, guid: 735175c5a222960468e60ccd6f4e628d,
         type: 3}
