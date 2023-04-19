@@ -66,6 +66,8 @@ public class Monster : MonoBehaviour, IHitHandler
 
         Appear();
         SetStatus();
+
+        monsterController.navMeshAgent.enabled = true;
     }
     
     protected virtual void SetStatus()

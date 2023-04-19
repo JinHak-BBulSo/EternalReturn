@@ -106637,22 +106637,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnWolf
       objectReference: {fileID: 0}
-    - target: {fileID: 5136994576691803416, guid: 43672a2757f3dbe46adc5c8b0c79becd,
-        type: 3}
-      propertyPath: monsterData
-      value: 
-      objectReference: {fileID: 11400000, guid: e1582f0a8c205f446bd0675aee9eb6d1,
-        type: 2}
-    - target: {fileID: 5136994576691803416, guid: 43672a2757f3dbe46adc5c8b0c79becd,
-        type: 3}
-      propertyPath: monsterStatus.level
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5136994576691803416, guid: 43672a2757f3dbe46adc5c8b0c79becd,
-        type: 3}
-      propertyPath: monsterStatus.maxLevel
-      value: 20
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43672a2757f3dbe46adc5c8b0c79becd, type: 3}
 --- !u!1001 &6516955404931140733
