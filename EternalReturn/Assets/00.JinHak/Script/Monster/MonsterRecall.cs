@@ -8,7 +8,7 @@ public class MonsterRecall : IMonsterState
     public void StateEnter(MonsterController monsterCtrl_)
     {
         this.monsterController = monsterCtrl_;
-        monsterController.monsterState = MonsterController.MonsterState.MOVE;
+        monsterController.monsterState = MonsterController.MonsterState.RECALL;
         monsterController.CallCoroutine(Recall());
     }
     public void StateFixedUpdate()
@@ -17,7 +17,7 @@ public class MonsterRecall : IMonsterState
     }
     public void StateUpdate()
     {
-        monsterController.navMeshAgent.SetDestination(monsterController.monster.monsterBattleArea.transform.position);
+        monsterController.navMeshAgent.SetDestination(monsterController.monster.MonsterBattleArea.transform.position);
     }
     public void StateExit()
     {
@@ -26,14 +26,34 @@ public class MonsterRecall : IMonsterState
 
     IEnumerator Recall()
     {
+        yield return null;
+        RecallStart();
+        monsterController.navMeshAgent.SetDestination(monsterController.monster.SpawnPoint.transform.position);
+        
         while (true)
         {
-            monsterController.monsterAni.SetBool("isMove", true);
-            if (Vector3.Distance(monsterController.transform.position, monsterController.monster.monsterBattleArea.transform.position) < 0.1f)
+            Vector3 monsterPos_ = monsterController.transform.localPosition;
+            Vector3 recallPos_ = monsterController.monster.MonsterBattleArea.transform.localPosition;
+
+            if (ExceptY.ExceptYDistance(monsterPos_, recallPos_) < 0.01f)
             {
-                monsterController.monster.ExitRecall();
+                ExitRecall();
                 yield break;
             }
+            yield return null;
         }
+    }
+
+    public void RecallStart()
+    {
+        monsterController.monster.isBattleAreaOut = true;
+        monsterController.monsterAni.SetBool("isMove", true);
+    }
+    public virtual void ExitRecall()
+    {
+        monsterController.monster.firstAttackPlayer = default;
+        monsterController.targetPlayer = default;
+        monsterController.monster.isBattleAreaOut = false;
+        monsterController.monsterAni.SetBool("isMove", false);
     }
 }

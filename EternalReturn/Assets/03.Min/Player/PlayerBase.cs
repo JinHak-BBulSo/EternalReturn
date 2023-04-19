@@ -329,6 +329,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public void TakeDamage(DamageMessage message)
     {
         playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerStat.defense)));
+        Debug.Log(playerStat.nowHp);
     }
     public void TakeDamage(DamageMessage message, float damageAmount)
     {
@@ -363,7 +364,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     /// <param name="message"></param>
     /// <param name="debuffIndex_"></param>
     /// <returns></returns>
-    public IEnumerator ContinousDamage(DamageMessage message, int debuffIndex_)
+    public IEnumerator ContinousDamage(DamageMessage message, int debuffIndex_, float continousTime_)
     {
         // 이미 상태이상이 걸린 경우
         if (applyDebuffCheck[debuffIndex_])

@@ -15,18 +15,17 @@ public class MonsterController : MonoBehaviour
         ATTACk,
         SKILL,
         RECALL,
+        DELAY,
         DIE
     }
 
-    public Action skillActive = default;
+    //public Action skillActive = default;
 
     private Dictionary<MonsterState, IMonsterState> monsterStateDic = new Dictionary<MonsterState, IMonsterState>();
-    private MonsterStateMachine monsterStateMachine = default;
     public MonsterState monsterState = MonsterState.NONE;
-    public MonsterStateMachine MonsterStateMachine { get; private set; }
 
-    private bool isBattleStart = false;
-    private bool isDie = false;
+    private MonsterStateMachine monsterStateMachine = default;
+    public MonsterStateMachine MonsterStateMachine { get { return monsterStateMachine; } private set { } }
 
     public Monster monster = default;
     public Rigidbody monsterRigid = default;
@@ -38,16 +37,19 @@ public class MonsterController : MonoBehaviour
     protected bool isInSkillUse = false;
     public int encountPlayerCount = 0;
 
+    public bool actionDelay = false;
+
     public void AwakeOrder()
     {
         // Component Set
         monsterRigid = GetComponent<Rigidbody>();
         monsterAni = GetComponent<Animator>();
         monsterAudio = GetComponent<AudioSource>();
+        monster = GetComponent<Monster>();
 
         navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.acceleration = 0;
-        navMeshAgent.angularSpeed = 180f;
+        navMeshAgent.acceleration = 100;
+        navMeshAgent.angularSpeed = 1800f;
         navMeshAgent.speed = monster.monsterStatus.moveSpeed;
         navMeshAgent.enabled = true;
 
@@ -57,6 +59,7 @@ public class MonsterController : MonoBehaviour
         IMonsterState attack = new MonsterAttack();
         IMonsterState skill = new MonsterSkill();
         IMonsterState recall = new MonsterRecall();
+        IMonsterState delay = new MonsterDelay();
         IMonsterState die = new MonsterDie();
 
         monsterStateDic.Add(MonsterState.IDLE, idle);
@@ -65,6 +68,7 @@ public class MonsterController : MonoBehaviour
         monsterStateDic.Add(MonsterState.ATTACk, attack);
         monsterStateDic.Add(MonsterState.SKILL, skill);
         monsterStateDic.Add(MonsterState.RECALL, recall);
+        monsterStateDic.Add(MonsterState.DELAY, delay);
         monsterStateDic.Add(MonsterState.DIE, die);
 
         monsterStateMachine = new MonsterStateMachine(idle, this);
@@ -72,20 +76,14 @@ public class MonsterController : MonoBehaviour
 
     void Update()
     {
-        if(!isDie && !isBattleStart)
-        {
-            return;
-        }
-        else if(!isDie && isBattleStart)
-        {
-            UpdateState();
-        }
+        UpdateState();
         monsterStateMachine.DoUpdate();
     }
 
     private void FixedUpdate()
     {
-        monsterStateMachine.DoFixedUpdate();
+        if(monsterStateMachine != default)
+            monsterStateMachine.DoFixedUpdate();
     }
 
     public void CallCoroutine(IEnumerator coroutine)
@@ -98,23 +96,36 @@ public class MonsterController : MonoBehaviour
         StopCoroutine(coroutine);
     }
 
+    public void Delay()
+    {
+        actionDelay = true;
+    }
+
     private void UpdateState()
     {
+        if (actionDelay)
+        {
+            monsterStateMachine.SetState(monsterStateDic[MonsterState.DELAY]);
+            return;
+        }
+
         if (monster.isBattleAreaOut)
         {
             monsterStateMachine.SetState(monsterStateDic[MonsterState.RECALL]);
+            return;
         }
+
         if(targetPlayer == null && encountPlayerCount == 0)
         {
             monsterStateMachine.SetState(monsterStateDic[MonsterState.IDLE]);
         }
-        else
+        else 
         {
             if(encountPlayerCount != 0 && targetPlayer == null)
             {
                 monsterStateMachine.SetState(monsterStateDic[MonsterState.BEWARE]);
             }
-            else if(encountPlayerCount != 0 && targetPlayer != null)
+            else if(targetPlayer != null)
             {
                 if (Vector3.Distance(targetPlayer.transform.position, this.transform.position) > monster.monsterStatus.attackRange)
                 {
@@ -128,7 +139,7 @@ public class MonsterController : MonoBehaviour
         }
     }
 
-    protected virtual void UseSkill()
+    /*protected virtual void UseSkill()
     {
         isInSkillUse = true;
         skillActive();
@@ -136,5 +147,5 @@ public class MonsterController : MonoBehaviour
     protected virtual void EndSkill()
     {
         isInSkillUse = false;
-    }
+    }*/
 }
