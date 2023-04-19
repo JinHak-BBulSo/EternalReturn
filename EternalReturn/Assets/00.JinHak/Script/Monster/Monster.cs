@@ -136,13 +136,8 @@ public class Monster : MonoBehaviour, IHitHandler
     public void TakeDamage(DamageMessage message)
     {
         FirstAttackCheck(message);
-        if(message.debuffIndex == -1)
+        if (message.debuffIndex == -1)
             monsterStatus.nowHp -= (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
-        else
-        {
-            StartCoroutine(ContinousDamage(message, message.debuffIndex, message.continousTime));
-        }
-
     }
     // 필요없을듯?
     public void TakeDamage(DamageMessage message, float damageAmount)

@@ -329,7 +329,6 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public void TakeDamage(DamageMessage message)
     {
         playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerStat.defense)));
-        Debug.Log(playerStat.nowHp);
     }
     public void TakeDamage(DamageMessage message, float damageAmount)
     {

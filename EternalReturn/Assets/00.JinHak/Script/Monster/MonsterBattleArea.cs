@@ -13,10 +13,8 @@ public class MonsterBattleArea : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log(other.name);
         if(other.gameObject.Equals(monster.gameObject))
         {
-            Debug.Log("아웃");
             monster.isBattleAreaOut = true;
         }
     }
