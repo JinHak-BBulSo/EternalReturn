@@ -7,8 +7,13 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 {
     private PlayerController playerController = default;
     private Vector3 destination = default;
+    private int currentCorner = 0;
+    protected SphereCollider basicAttackCol = default;
+
     [SerializeField]
     protected GameObject weapon = default;
+
+    public GameObject enemy = default;
     public Transform attackRange = default;
     public GameObject Skill_Q_Range = default;
     public CharaterData charaterData = default;
@@ -31,7 +36,6 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public Queue<float>[] debuffDamageQueues = new Queue<float>[10];
     public List<float>[] debuffRemainList = new List<float>[10];
     public List<Vector3> corners = new List<Vector3>();
-    private int currentCorner = 0;
 
 
 
@@ -42,6 +46,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         playerAni = GetComponent<Animator>();
         playerNav = GetComponent<NavMeshAgent>();
         Camera.main.transform.parent.GetComponent<MoveCamera>().player = this;
+        basicAttackCol = attackRange.GetComponent<SphereCollider>();
         InitStat();
 
     }
@@ -128,19 +133,27 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     }
     public virtual void Attack()
     {
-        playerAni.SetFloat("MotionSpeed", playerStat.attackSpeed);
-        switch (attackType)
+        if (enemy != null)
         {
-            case 0:
-                playerAni.SetBool("isAttack", true);
-                playerAni.SetFloat("AttackType", attackType);
-                playerController.ChangeState(new PlayerIdle());
-                break;
-            case 1:
-                playerAni.SetBool("isAttack", true);
-                playerAni.SetFloat("AttackType", attackType);
-                playerController.ChangeState(new PlayerIdle());
-                break;
+            playerAni.SetFloat("MotionSpeed", playerStat.attackSpeed);
+            transform.LookAt(enemy.transform);
+            switch (attackType)
+            {
+                case 0:
+                    playerAni.SetBool("isAttack", true);
+                    playerAni.SetFloat("AttackType", attackType);
+                    playerController.ChangeState(new PlayerIdle());
+                    break;
+                case 1:
+                    playerAni.SetBool("isAttack", true);
+                    playerAni.SetFloat("AttackType", attackType);
+                    playerController.ChangeState(new PlayerIdle());
+                    break;
+            }
+        }
+        else
+        {
+            playerController.ChangeState(new PlayerIdle());
         }
     }
 
@@ -148,7 +161,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     {
         playerController.ChangeState(new PlayerIdle());
     }
-    private void AttackEnd()
+    protected virtual void AttackEnd()
     {
         isAttackAble = false;
         AnimatorStateInfo currentAnimationState = playerAni.GetCurrentAnimatorStateInfo(0);
@@ -162,7 +175,9 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 attackType = 0;
                 break;
         }
+
         StartCoroutine(MotionDelay(delay_));
+
     }
 
     private void AttackAniEnd()
@@ -173,7 +188,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     IEnumerator MotionDelay(float delay_)
     {
         // 공격불가 시간
-        Debug.Log(delay_);
+        // Debug.Log(delay_);
         yield return new WaitForSeconds(delay_);
         isAttackAble = true;
     }

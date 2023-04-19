@@ -6,24 +6,30 @@ public class Jackie : PlayerBase
 {
     public List<PlayerBase> enemyPlayer = new List<PlayerBase>();
     public List<Monster> enemyHunt = new List<Monster>();
-    [SerializeField]
     private BoxCollider QBoxCol = default;
+    [SerializeField]
     private bool isWBuffOn = false;
+    [SerializeField]
     private bool isRBuffOn = false;
     protected override void Start()
     {
         base.Start();
         QBoxCol = Skill_Q_Range.transform.GetChild(0).GetChild(0).GetComponent<BoxCollider>();
+        basicAttackCol = attackRange.GetComponent<SphereCollider>();
     }
 
     public override void Attack()
     {
         base.Attack();
+    }
+
+    protected override void AttackEnd()
+    {
+        base.AttackEnd();
         if (isRBuffOn)
         {
             if (isWBuffOn)
             {
-
             }
             else
             {
@@ -38,9 +44,20 @@ public class Jackie : PlayerBase
             }
             else
             {
-
+                Debug.Log(enemy.name);
+                if (enemy.GetComponent<Monster>() != null)
+                {
+                    DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
+                    enemy.GetComponent<Monster>().TakeDamage(dm);
+                }
+                else if (enemy.GetComponent<PlayerBase>() != null)
+                {
+                    DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
+                    enemy.GetComponent<PlayerBase>().TakeDamage(dm);
+                }
             }
         }
+        enemy = null;
     }
     public override void Skill_Q()
     {
