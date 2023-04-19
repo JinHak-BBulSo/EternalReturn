@@ -369,21 +369,23 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         // 이미 상태이상이 걸린 경우
         if (applyDebuffCheck[debuffIndex_])
         {
-            StartCoroutine(ContinousDamageEnd(debuffContinousTime[debuffIndex_], debuffIndex_, message.damageAmount));
+            StartCoroutine(ContinousDamageEnd(continousTime_, debuffIndex_, message.damageAmount));
             debuffDamage[debuffIndex_] += message.damageAmount;
-            debuffRemainTime[debuffIndex_] = debuffContinousTime[debuffIndex_];
+
+            if (continousTime_ > debuffRemainTime[debuffIndex_])
+                debuffRemainTime[debuffIndex_] = continousTime_;
         }
         // 상태이상이 걸려있지 않은 경우
         else
         {
             // 상태이상 남은 시간 기록
-            debuffRemainTime[debuffIndex_] = debuffContinousTime[debuffIndex_];
+            debuffRemainTime[debuffIndex_] = continousTime_;
             // 상태이상 데미지를 저장
             debuffDamage[debuffIndex_] = message.damageAmount;
 
             // 상태이상 틱 간격
             float delayTime_ = 0;
-            StartCoroutine(ContinousDamageEnd(debuffContinousTime[debuffIndex_], debuffIndex_, message.damageAmount));
+            StartCoroutine(ContinousDamageEnd(continousTime_, debuffIndex_, message.damageAmount));
 
             while (debuffRemainTime[debuffIndex_] > 0)
             {
@@ -408,6 +410,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             // 지속 종료시 리셋
             debuffRemainTime[debuffIndex_] = 0;
             debuffDamage[debuffIndex_] = 0;
+            applyDebuffCheck[debuffIndex_] = false;
         }
     }
 
