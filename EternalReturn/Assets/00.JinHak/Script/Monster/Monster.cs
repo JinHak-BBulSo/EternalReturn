@@ -17,7 +17,7 @@ public class Monster : MonoBehaviour, IHitHandler
     public string monsterName = default;
     [SerializeField]
     private MonsterData monsterData;
-
+    
     public bool isSkillAble = false;
     public bool isAttackAble = false;
     public bool isBattleAreaOut = false;
@@ -26,7 +26,7 @@ public class Monster : MonoBehaviour, IHitHandler
     public float[] debuffDelayTime = new float[10];     // 디버프 틱 간격
     public float[] debuffRemainTime = new float[10];    // 디버프 남은 시간
     public float[] debuffDamage = new float[10];        // 디버프 데미지
-
+    
     public PlayerBase firstAttackPlayer = default;
     public bool isDie = false;
 
@@ -67,7 +67,7 @@ public class Monster : MonoBehaviour, IHitHandler
         Appear();
         SetStatus();
     }
-
+    
     protected virtual void SetStatus()
     {
         monsterStatus.maxHp = monsterData.Hp;
@@ -83,7 +83,7 @@ public class Monster : MonoBehaviour, IHitHandler
 
     protected virtual void SetDebuffData()
     {
-
+        
     }
     public virtual void LevelUp()
     {
@@ -93,7 +93,7 @@ public class Monster : MonoBehaviour, IHitHandler
     public virtual void Skill()
     {
         /* each monster override using */
-
+        
         // 공격형 스킬의 경우 예시
         /*GameObject target_ = monsterController.gameObject;
         float damageAmount_ = monsterController.monster.monsterStatus.attackPower;
@@ -138,11 +138,6 @@ public class Monster : MonoBehaviour, IHitHandler
         FirstAttackCheck(message);
         if (message.debuffIndex == -1)
             monsterStatus.nowHp -= (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
-        // else
-        // {
-        //     StartCoroutine(ContinousDamage(message, message.debuffIndex, message.continousTime));
-        // }
-
     }
     // 필요없을듯?
     public void TakeDamage(DamageMessage message, float damageAmount)
@@ -187,7 +182,7 @@ public class Monster : MonoBehaviour, IHitHandler
             StartCoroutine(ContinousDamageEnd(continousTime_, debuffIndex_, message.damageAmount));
             debuffDamage[debuffIndex_] += message.damageAmount;
 
-            if (continousTime_ > debuffRemainTime[debuffIndex_])
+            if(continousTime_ > debuffRemainTime[debuffIndex_])
                 debuffRemainTime[debuffIndex_] = continousTime_;
         }
         // 상태이상이 걸려있지 않은 경우
@@ -213,7 +208,7 @@ public class Monster : MonoBehaviour, IHitHandler
                 //resetDamageCount += Time.deltaTime;
 
                 // 딜레이 시간이 다 되었을시 대미지를 입힘
-                if (delayTime_ > tickTime_)
+                if(delayTime_ > tickTime_)
                 {
                     TakeSolidDamage(message, debuffDamage[debuffIndex_]);
                     delayTime_ = 0;
@@ -242,5 +237,5 @@ public class Monster : MonoBehaviour, IHitHandler
     public void ExitPlayer()
     {
         monsterController.encountPlayerCount--;
-    }
+    }  
 }
