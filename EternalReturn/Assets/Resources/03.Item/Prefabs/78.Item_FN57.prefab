@@ -101,7 +101,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6204397742066963700}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -461.54587, y: -271.27594, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -174,27 +174,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aff7cfbcc645e024b9d3c8c77b88b92b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 78
-  type: 10
-  rare: 2
-  name: FN57
-  count: 0
-  weaponAttackSpeedPercent: 0
-  weaponAttackRangePercent: 0
-  foodIncrease: 0
-  maxCount: 1
-  ItemStat:
+  item:
     attackPower: 29
-    skillPower: 0
-    basicAttackPower: 0
+    moveSpeed: 0.04
     defense: 0
     attackSpeed: 0
+    attackRange: 0
+    skillPower: 0
+    basicAttackPower: 0
     coolDown: 0
     criticalPercent: 0
     criticalDamage: 0
-    moveSpeed: 0.04
     visionRange: 1
-    attackRange: 0
     damageReduce: 0
     tenacity: 0
     armorReduce: 0
@@ -203,7 +194,18 @@ MonoBehaviour:
     extraStamina: 0
     hpRegen: 0
     staminaRegen: 0
-  craftTime: 0
+    id: 78
+    type: 10
+    rare: 2
+    name: FN57
+    count: 0
+    weaponAttackSpeedPercent: 0.505
+    weaponAttackRangePercent: 4.2
+    foodIncrease: 0
+    maxCount: 1
+    craftTime: 2
+  isInventory: 0
+  isEquipment: 0
 --- !u!1 &6204397742502956807
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +232,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6204397742502956807}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -4}
   m_LocalScale: {x: 0.02, y: 0.02, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -241,7 +243,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -2}
   m_SizeDelta: {x: 50, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6204397742502956800

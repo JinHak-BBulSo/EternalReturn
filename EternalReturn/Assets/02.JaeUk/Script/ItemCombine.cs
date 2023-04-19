@@ -16,6 +16,7 @@ public class ItemCombine : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
 
+            // AddAbleCombineList(ItemManager.Instance.itemList[111], ItemManager.Instance.itemCombineDictionary);
             AddAbleCombineList(ItemManager.Instance.itemList[111], ItemManager.Instance.itemCombineDictionary);
 
         }

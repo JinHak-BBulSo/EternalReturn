@@ -27,22 +27,23 @@ public class CSVReader
 
 public class ItemCombineLoad : MonoBehaviour
 {
-    public List<GameObject> itemList;
+    private List<Item> itemList;
     string combinePath = "ItemCombine";
     string itemPath = "ItemList";
-    public ItemDefine itemDefine;
+    private ItemDefine itemDefine;
+    public List<Item> itemInferiorList;
     private Dictionary<ItemDefine, int> itemCombineDictionary;
     // public int[,] itemCombineKeyArray = new int[300, 300];
 
     // Start is called before the first frame update
     private void Start()
     {
+        itemList = ItemManager.Instance.itemList;
         List<string[]> combineList = CSVReader.Read(combinePath);
         List<string[]> itemListCSV = CSVReader.Read(itemPath);
         itemCombineDictionary = new Dictionary<ItemDefine, int>();
         object[] ItemLoadObjs = Resources.LoadAll("03.Item/Prefabs");
-        List<ItemStat> ItemWishList = new List<ItemStat>();
-
+        List<Item> ItemWishList = new List<Item>();
         for (int i = 0; i < combineList.Count; i++)
         {
             itemDefine = new ItemDefine(int.Parse(combineList[i][1]), int.Parse(combineList[i][2]));
@@ -55,7 +56,6 @@ public class ItemCombineLoad : MonoBehaviour
 
         for (int i = 0; i < itemList.Count; i++)
         {
-            ItemManager.Instance.itemList.Add(itemList[i].GetComponent<Item>());
             ItemManager.Instance.itemList[i].item = new ItemStat(float.Parse(itemListCSV[i][0]), float.Parse(itemListCSV[i][1]), float.Parse(itemListCSV[i][2]),
             float.Parse(itemListCSV[i][3]), float.Parse(itemListCSV[i][4]), float.Parse(itemListCSV[i][5]), float.Parse(itemListCSV[i][6]), float.Parse(itemListCSV[i][7]),
             float.Parse(itemListCSV[i][8]), float.Parse(itemListCSV[i][9]), float.Parse(itemListCSV[i][10]), float.Parse(itemListCSV[i][11]), float.Parse(itemListCSV[i][12]),
@@ -65,7 +65,7 @@ public class ItemCombineLoad : MonoBehaviour
 
 
         }
-        ItemWishList.Add(AddItem(132));
+        // ItemWishList.Add(AddItem(132));
         ItemWishList.Add(AddItem(102));
         ItemWishList.Add(AddItem(171));
         ItemWishList.Add(AddItem(148));
@@ -76,22 +76,25 @@ public class ItemCombineLoad : MonoBehaviour
         ItemManager.Instance.inventory.Add(itemList[122].GetComponent<Item>());
 
 
-        for (int i = 0; i < ItemManager.Instance.itemWishList.Count; i++)
+        for (int i = 0; i < ItemWishList.Count; i++)
         {
-            ItemManager.Instance.AddInferiorList(ItemWishList[i].id);
+            Debug.Log(ItemWishList[i].item.id);
+            ItemManager.Instance.AddInferiorList(ItemWishList[i].item.id);
         }
-        for (int i = 0; i < ItemManager.Instance.itemInferiorList.Count; i++)
+        itemInferiorList = ItemManager.Instance.itemInferiorList;
+        for (int i = 0; i < itemInferiorList.Count; i++)
         {
-            // Debug.Log($"Item id: {ItemManager.Instance.itemInferiorList[i].name}, Count  :{ItemManager.Instance.itemInferiorList[i].count}");
+            // Debug.Log($"Item id: {ItemManager.Instance.itemInferiorList[i].name}, Count  :{ItemManager.Instance.itemInferiorList[i].item.count}");
         }
 
 
     }
 
-    public ItemStat AddItem(int i)
+
+    public Item AddItem(int i)
     {
-        ItemStat item = new ItemStat();
-        item = ItemManager.Instance.itemList[i].item;
+        Item item = new Item();
+        item = ItemManager.Instance.itemList[i];
         return item;
     }
 
