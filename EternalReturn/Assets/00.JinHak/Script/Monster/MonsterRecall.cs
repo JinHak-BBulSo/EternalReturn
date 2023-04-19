@@ -26,6 +26,7 @@ public class MonsterRecall : IMonsterState
 
     IEnumerator Recall()
     {
+        yield return null;
         RecallStart();
         monsterController.navMeshAgent.SetDestination(monsterController.monster.SpawnPoint.transform.position);
         
@@ -50,6 +51,7 @@ public class MonsterRecall : IMonsterState
     }
     public virtual void ExitRecall()
     {
+        monsterController.monster.firstAttackPlayer = default;
         monsterController.targetPlayer = default;
         monsterController.monster.isBattleAreaOut = false;
         monsterController.monsterAni.SetBool("isMove", false);

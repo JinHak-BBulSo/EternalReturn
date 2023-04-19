@@ -24,11 +24,11 @@ public class MonsterDelay : IMonsterState
     }
     public void StateExit()
     {
-        monsterController.actionDelay = false;
+        
     }
     IEnumerator Delay()
     {
         yield return new WaitForSeconds(0.4f);
-        monsterController.monsterState = MonsterController.MonsterState.IDLE;
+        monsterController.actionDelay = false;
     }
 }

@@ -23,14 +23,11 @@ public class Monster : MonoBehaviour, IHitHandler
     public bool isBattleAreaOut = false;
 
     public bool[] applyDebuffCheck = new bool[10];      // 해당 디버프가 걸렸는지 체크
-    public float[] debuffContinousTime = new float[10]; // 디버프 유지 시간
     public float[] debuffDelayTime = new float[10];     // 디버프 틱 간격
     public float[] debuffRemainTime = new float[10];    // 디버프 남은 시간
     public float[] debuffDamage = new float[10];        // 디버프 데미지
-    public Queue<float>[] debuffDamageQueues = new Queue<float>[10];
-    public List<float>[] debuffRemainList = new List<float>[10];
-
-    private PlayerBase firstAttackPlayer = default;
+    
+    public PlayerBase firstAttackPlayer = default;
 
     void Awake()
     {
@@ -81,6 +78,11 @@ public class Monster : MonoBehaviour, IHitHandler
         monsterStatus.moveSpeed = monsterData.MoveSpeed;
 
         isSkillAble = true;
+    }
+
+    protected virtual void SetDebuffData()
+    {
+        
     }
     public virtual void LevelUp()
     {
@@ -133,7 +135,13 @@ public class Monster : MonoBehaviour, IHitHandler
     public void TakeDamage(DamageMessage message)
     {
         FirstAttackCheck(message);
-        monsterStatus.nowHp -= (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
+        if(message.debuffIndex == -1)
+            monsterStatus.nowHp -= (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
+        else
+        {
+            StartCoroutine(ContinousDamage(message, message.debuffIndex, message.continousTime));
+        }
+
     }
     // 필요없을듯?
     public void TakeDamage(DamageMessage message, float damageAmount)
@@ -170,26 +178,28 @@ public class Monster : MonoBehaviour, IHitHandler
     /// <param name="message"></param>
     /// <param name="debuffIndex_"></param>
     /// <returns></returns>
-    public IEnumerator ContinousDamage(DamageMessage message, int debuffIndex_)
+    public IEnumerator ContinousDamage(DamageMessage message, int debuffIndex_, float continousTime_)
     {
         // 이미 상태이상이 걸린 경우
         if (applyDebuffCheck[debuffIndex_])
         {
-            StartCoroutine(ContinousDamageEnd(debuffContinousTime[debuffIndex_], debuffIndex_, message.damageAmount));
+            StartCoroutine(ContinousDamageEnd(continousTime_, debuffIndex_, message.damageAmount));
             debuffDamage[debuffIndex_] += message.damageAmount;
-            debuffRemainTime[debuffIndex_] = debuffContinousTime[debuffIndex_];
+
+            if(continousTime_ > debuffRemainTime[debuffIndex_])
+                debuffRemainTime[debuffIndex_] = continousTime_;
         }
         // 상태이상이 걸려있지 않은 경우
         else
         {
             // 상태이상 남은 시간 기록
-            debuffRemainTime[debuffIndex_] = debuffContinousTime[debuffIndex_];
+            debuffRemainTime[debuffIndex_] = continousTime_;
             // 상태이상 데미지를 저장
             debuffDamage[debuffIndex_] = message.damageAmount;
 
             // 상태이상 틱 간격
             float delayTime_ = 0;
-            StartCoroutine(ContinousDamageEnd(debuffContinousTime[debuffIndex_], debuffIndex_, message.damageAmount));
+            StartCoroutine(ContinousDamageEnd(continousTime_, debuffIndex_, message.damageAmount));
 
             while (debuffRemainTime[debuffIndex_] > 0)
             {
@@ -214,6 +224,7 @@ public class Monster : MonoBehaviour, IHitHandler
             // 지속 종료시 리셋
             debuffRemainTime[debuffIndex_] = 0;
             debuffDamage[debuffIndex_] = 0;
+            applyDebuffCheck[debuffIndex_] = false;
         }
     }
 

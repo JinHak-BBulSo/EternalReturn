@@ -106,6 +106,7 @@ public class MonsterController : MonoBehaviour
         if (actionDelay)
         {
             monsterStateMachine.SetState(monsterStateDic[MonsterState.DELAY]);
+            return;
         }
 
         if (monster.isBattleAreaOut)
