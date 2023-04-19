@@ -233,7 +233,6 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         //}
         if (isMove)
         {
-            Debug.Log(corners.Count);
             if (corners.Count > 0 && currentCorner < corners.Count)
             {
                 if (Vector3.Distance(corners[currentCorner], transform.position) <= 0.2f)
@@ -248,20 +247,24 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                     transform.rotation = Quaternion.Slerp(transform.rotation, viewroate, 6f * Time.deltaTime);
                     transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
                 }
-            }
-            else
-            {
-                if (Vector3.Distance(destination, transform.position) <= 0.2f)
+                else
                 {
                     isMove = false;
-                    return;
                 }
-                var dir = destination - transform.position;
-                Quaternion viewroate = Quaternion.LookRotation(dir);
-                viewroate = Quaternion.Euler(transform.rotation.x, viewroate.eulerAngles.y, transform.rotation.z);
-                transform.rotation = Quaternion.Slerp(transform.rotation, viewroate, 6f * Time.deltaTime);
-                transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
             }
+            // else
+            // {
+            //     if (Vector3.Distance(destination, transform.position) <= 0.2f)
+            //     {
+            //         isMove = false;
+            //         return;
+            //     }
+            //     var dir = destination - transform.position;
+            //     Quaternion viewroate = Quaternion.LookRotation(dir);
+            //     viewroate = Quaternion.Euler(transform.rotation.x, viewroate.eulerAngles.y, transform.rotation.z);
+            //     transform.rotation = Quaternion.Slerp(transform.rotation, viewroate, 6f * Time.deltaTime);
+            //     transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
+            // }
         }
     }
 
@@ -292,12 +295,25 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     private void OnTriggerEnter(Collider other)
     {
-        DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
-        IHitHandler test = other.GetComponent<IHitHandler>();
-        if (test != null)
-        {
-            test.TakeDamage(dm);
-        }
+
+        // if (other.CompareTag("Skill"))
+        // {
+        //     // DamageMessage dm = other.GetComponent<Skill>().dm;
+        //     // DamageMessage debuffdm = other.GetComponent<Skill>()
+
+        //     TakeDamage(dm);
+
+        //     if(debuffdm != default){
+        //         ContinousDamage();
+        //     }
+        // }
+        // DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
+        // IHitHandler enemy = other.GetComponent<IHitHandler>();
+        // Debug.Log("?");
+        // if (enemy != null)
+        // {
+        //     enemy.TakeDamage(dm);
+        // }
     }
 
     /// <summary>
@@ -313,6 +329,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public void TakeDamage(DamageMessage message)
     {
         playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerStat.defense)));
+        Debug.Log(playerStat.nowHp);
     }
     public void TakeDamage(DamageMessage message, float damageAmount)
     {
@@ -347,26 +364,28 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     /// <param name="message"></param>
     /// <param name="debuffIndex_"></param>
     /// <returns></returns>
-    public IEnumerator ContinousDamage(DamageMessage message, int debuffIndex_)
+    public IEnumerator ContinousDamage(DamageMessage message, int debuffIndex_, float continousTime_)
     {
         // 이미 상태이상이 걸린 경우
         if (applyDebuffCheck[debuffIndex_])
         {
-            StartCoroutine(ContinousDamageEnd(debuffContinousTime[debuffIndex_], debuffIndex_, message.damageAmount));
+            StartCoroutine(ContinousDamageEnd(continousTime_, debuffIndex_, message.damageAmount));
             debuffDamage[debuffIndex_] += message.damageAmount;
-            debuffRemainTime[debuffIndex_] = debuffContinousTime[debuffIndex_];
+
+            if (continousTime_ > debuffRemainTime[debuffIndex_])
+                debuffRemainTime[debuffIndex_] = continousTime_;
         }
         // 상태이상이 걸려있지 않은 경우
         else
         {
             // 상태이상 남은 시간 기록
-            debuffRemainTime[debuffIndex_] = debuffContinousTime[debuffIndex_];
+            debuffRemainTime[debuffIndex_] = continousTime_;
             // 상태이상 데미지를 저장
             debuffDamage[debuffIndex_] = message.damageAmount;
 
             // 상태이상 틱 간격
             float delayTime_ = 0;
-            StartCoroutine(ContinousDamageEnd(debuffContinousTime[debuffIndex_], debuffIndex_, message.damageAmount));
+            StartCoroutine(ContinousDamageEnd(continousTime_, debuffIndex_, message.damageAmount));
 
             while (debuffRemainTime[debuffIndex_] > 0)
             {
@@ -391,6 +410,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             // 지속 종료시 리셋
             debuffRemainTime[debuffIndex_] = 0;
             debuffDamage[debuffIndex_] = 0;
+            applyDebuffCheck[debuffIndex_] = false;
         }
     }
 

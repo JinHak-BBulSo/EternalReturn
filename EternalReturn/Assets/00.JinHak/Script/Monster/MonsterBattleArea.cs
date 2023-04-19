@@ -7,10 +7,16 @@ public class MonsterBattleArea : MonoBehaviour
 {
     public Monster monster = default;
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.name);
+    }
     private void OnTriggerExit(Collider other)
     {
-        if(other.tag == "Enemy")
+        Debug.Log(other.name);
+        if(other.gameObject.Equals(monster.gameObject))
         {
+            Debug.Log("아웃");
             monster.isBattleAreaOut = true;
         }
     }

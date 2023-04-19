@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,9 @@ using UnityEngine;
 public class MonsterStateMachine
 {
     private MonsterController monsterController = default;
+
     public delegate void MonsterStateHandler(IMonsterState state_);
-    public event MonsterStateHandler MonsterStateChange;
+    public Action<IMonsterState> monsterStateChange;
 
     public IMonsterState nowState
     {
@@ -16,7 +18,7 @@ public class MonsterStateMachine
 
     public MonsterStateMachine(IMonsterState idleState_, MonsterController monsterController_)
     {
-        MonsterStateChange += SetState;
+        monsterStateChange += SetState;
         nowState = idleState_;
         monsterController = monsterController_;
         SetState(nowState);
@@ -31,6 +33,7 @@ public class MonsterStateMachine
 
         nowState.StateExit();
         nowState = state_;
+        Debug.Log(nowState);
         nowState.StateEnter(monsterController);
     }
 
