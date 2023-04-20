@@ -6,6 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  m_configObjects: {}
+    path: Assets/00.JinHak/MapCreateScene.unity
+    guid: 6ab71d1e52dc58a4f9db8590f983b692
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: c0a5e86ad81fd0e439d2e6e82fb91b66,
+      type: 2}

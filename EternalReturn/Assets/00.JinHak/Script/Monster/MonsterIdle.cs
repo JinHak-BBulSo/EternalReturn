@@ -22,4 +22,9 @@ public class MonsterIdle : IMonsterState
     {
 
     }
+
+    public virtual void Idle()
+    {
+
+    }
 }

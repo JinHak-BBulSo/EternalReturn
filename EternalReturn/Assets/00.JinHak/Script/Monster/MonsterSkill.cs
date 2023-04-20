@@ -7,7 +7,9 @@ public class MonsterSkill : IMonsterState
     private MonsterController monsterController = default;
     public void StateEnter(MonsterController monsterCtrl_)
     {
-        
+        this.monsterController = monsterCtrl_;
+        monsterController.monsterState = MonsterController.MonsterState.SKILL;
+        monsterController.monster.Skill();
     }
     public void StateFixedUpdate()
     {
@@ -19,6 +21,12 @@ public class MonsterSkill : IMonsterState
     }
     public void StateExit()
     {
-
+        ExitSkill();
+    }
+    public virtual void ExitSkill()
+    {
+        monsterController.monsterAni.SetBool("isSkill", false);
+        IMonsterState nextState = new MonsterDelay();
+        monsterController.MonsterStateMachine.monsterStateChange(nextState);
     }
 }
