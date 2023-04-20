@@ -7,9 +7,6 @@ public class JackieQ : MonoBehaviour
     [SerializeField]
     private Jackie player = default;
     private BoxCollider skillRange = default;
-    public float firstAttackDamage = 0f;
-    public float secondAttackDamage = 0f;
-    public float bloodDamage = 0f;
 
     private void Start()
     {
