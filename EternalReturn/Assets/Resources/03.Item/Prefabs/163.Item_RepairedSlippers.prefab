@@ -122,7 +122,7 @@ MonoBehaviour:
     type: 17
     rare: 1
     name: "\uB367\uB304 \uC2AC\uB9AC\uD37C"
-    count: 0
+    count: 1
     weaponAttackSpeedPercent: 0
     weaponAttackRangePercent: 0
     foodIncrease: 0
@@ -130,7 +130,7 @@ MonoBehaviour:
     craftTime: 1
   isInventory: 0
   isEquipment: 0
-  isItemWishList: 0
+  isItemWishList: 1
   nameBg: {fileID: 0}
   wishListImg: {fileID: 0}
 --- !u!1 &2975086598972013290

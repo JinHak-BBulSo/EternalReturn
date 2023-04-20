@@ -202,7 +202,7 @@ MonoBehaviour:
     type: 19
     rare: 2
     name: "\uB300\uBD80"
-    count: 0
+    count: 1
     weaponAttackSpeedPercent: 0.485
     weaponAttackRangePercent: 1.45
     foodIncrease: 0

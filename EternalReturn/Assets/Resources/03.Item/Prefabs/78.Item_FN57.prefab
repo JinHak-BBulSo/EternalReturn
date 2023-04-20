@@ -198,7 +198,7 @@ MonoBehaviour:
     type: 10
     rare: 2
     name: FN57
-    count: 0
+    count: 1
     weaponAttackSpeedPercent: 0.505
     weaponAttackRangePercent: 4.2
     foodIncrease: 0

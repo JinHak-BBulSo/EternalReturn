@@ -276,7 +276,7 @@ MonoBehaviour:
     type: 15
     rare: 3
     name: "EOD\uC288\uD2B8"
-    count: 0
+    count: 1
     weaponAttackSpeedPercent: 0
     weaponAttackRangePercent: 0
     foodIncrease: 0

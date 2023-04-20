@@ -199,18 +199,18 @@ MonoBehaviour:
     hpRegen: 0
     staminaRegen: 0
     id: 2
-    type: 16
+    type: 0
     rare: 0
     name: "\uD39C"
-    count: 0
+    count: 1
     weaponAttackSpeedPercent: 0
     weaponAttackRangePercent: 0
     foodIncrease: 0
     maxCount: 1
     craftTime: 0
-  isInventory: 0
-  isEquipment: 0
-  isItemWishList: 0
+    isInventory: 0
+    isEquipment: 0
+    isItemWishList: 0
   nameBg: {fileID: 0}
   wishListImg: {fileID: 0}
 --- !u!1 &4241629657752191588

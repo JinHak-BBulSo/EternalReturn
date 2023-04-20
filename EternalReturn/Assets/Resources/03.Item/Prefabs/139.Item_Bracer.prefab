@@ -278,7 +278,7 @@ MonoBehaviour:
     type: 16
     rare: 1
     name: "\uBE0C\uB808\uC774\uC11C"
-    count: 0
+    count: 1
     weaponAttackSpeedPercent: 0
     weaponAttackRangePercent: 0
     foodIncrease: 0
@@ -286,7 +286,7 @@ MonoBehaviour:
     craftTime: 1
   isInventory: 0
   isEquipment: 0
-  isItemWishList: 0
+  isItemWishList: 1
   nameBg: {fileID: 0}
   wishListImg: {fileID: 0}
 --- !u!1 &7261486036675210415

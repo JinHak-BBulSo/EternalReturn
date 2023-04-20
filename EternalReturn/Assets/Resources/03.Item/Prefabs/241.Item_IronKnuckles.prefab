@@ -356,7 +356,7 @@ MonoBehaviour:
     type: 6
     rare: 1
     name: "\uC544\uC774\uC5B8 \uB108\uD074"
-    count: 0
+    count: 1
     weaponAttackSpeedPercent: 0.63
     weaponAttackRangePercent: 0.95
     foodIncrease: 0

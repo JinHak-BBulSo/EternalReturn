@@ -198,7 +198,7 @@ MonoBehaviour:
     type: 10
     rare: 2
     name: "\uB354\uBE14 \uB9AC\uBCFC\uBC84 SP"
-    count: 0
+    count: 1
     weaponAttackSpeedPercent: 0.505
     weaponAttackRangePercent: 4.2
     foodIncrease: 0

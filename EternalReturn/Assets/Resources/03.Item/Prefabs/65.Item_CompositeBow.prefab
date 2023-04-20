@@ -280,7 +280,7 @@ MonoBehaviour:
     type: 9
     rare: 2
     name: "\uCEF4\uD3EC\uC9C0\uD2B8 \uBCF4\uC6B0 "
-    count: 0
+    count: 1
     weaponAttackSpeedPercent: 0.65
     weaponAttackRangePercent: 5.85
     foodIncrease: 0

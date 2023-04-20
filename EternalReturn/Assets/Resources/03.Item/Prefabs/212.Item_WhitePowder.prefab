@@ -200,7 +200,7 @@ MonoBehaviour:
     type: 0
     rare: 1
     name: "\uBC31\uC0C9 \uAC00\uB8E8"
-    count: 0
+    count: 1
     weaponAttackSpeedPercent: 0
     weaponAttackRangePercent: 0
     foodIncrease: 0

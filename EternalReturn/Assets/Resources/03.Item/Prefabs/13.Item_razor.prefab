@@ -202,7 +202,7 @@ MonoBehaviour:
     type: 8
     rare: 0
     name: "\uBA74\uB3C4\uCE7C"
-    count: 0
+    count: 1
     weaponAttackSpeedPercent: 0.55
     weaponAttackRangePercent: 4.7
     foodIncrease: 0

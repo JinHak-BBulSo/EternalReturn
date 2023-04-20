@@ -278,7 +278,7 @@ MonoBehaviour:
     type: 0
     rare: 0
     name: "\uBD84\uD544"
-    count: 0
+    count: 1
     weaponAttackSpeedPercent: 0
     weaponAttackRangePercent: 0
     foodIncrease: 0

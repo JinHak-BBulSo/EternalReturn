@@ -202,7 +202,7 @@ MonoBehaviour:
     type: 17
     rare: 1
     name: "\uBD80\uCE20"
-    count: 0
+    count: 1
     weaponAttackSpeedPercent: 0
     weaponAttackRangePercent: 0
     foodIncrease: 0

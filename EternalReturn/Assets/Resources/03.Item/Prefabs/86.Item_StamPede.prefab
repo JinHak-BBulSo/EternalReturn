@@ -122,7 +122,7 @@ MonoBehaviour:
     type: 10
     rare: 3
     name: "\uC2A4\uD0EC\uD53C\uB4DC"
-    count: 0
+    count: 1
     weaponAttackSpeedPercent: 0.505
     weaponAttackRangePercent: 4.2
     foodIncrease: 0

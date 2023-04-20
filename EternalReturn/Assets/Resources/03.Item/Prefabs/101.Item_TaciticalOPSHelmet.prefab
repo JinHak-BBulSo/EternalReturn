@@ -122,7 +122,7 @@ MonoBehaviour:
     type: 14
     rare: 3
     name: "\uC804\uC220-OPS \uD5EC\uBA67"
-    count: 0
+    count: 1
     weaponAttackSpeedPercent: 0
     weaponAttackRangePercent: 0
     foodIncrease: 0

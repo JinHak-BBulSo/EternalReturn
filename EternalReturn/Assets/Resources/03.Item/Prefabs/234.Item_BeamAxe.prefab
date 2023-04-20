@@ -200,7 +200,7 @@ MonoBehaviour:
     type: 19
     rare: 3
     name: "\uBE54 \uC5D1\uC2A4"
-    count: 0
+    count: 1
     weaponAttackSpeedPercent: 0.485
     weaponAttackRangePercent: 1.45
     foodIncrease: 0

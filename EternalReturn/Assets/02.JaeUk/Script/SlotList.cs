@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class SlotList : MonoBehaviour
 {
-    public List<Item> inventory;
-    public List<Item> equipmentInven;
+    public List<ItemStat> inventory;
 
-    public List<Item> itemListClone;
+    public List<ItemStat> itemListClone;
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -20,7 +19,7 @@ public class SlotList : MonoBehaviour
     {
     }
 
-    public virtual void Addslot(int i)
+    public virtual void Addslot()
     {
 
     }
