@@ -1,4 +1,4 @@
-﻿Shader "TheFallenRealm/Fog/Blur"
+Shader "TheFallenRealm/Fog/Blur"
 {
     Properties
     {

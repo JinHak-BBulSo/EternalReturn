@@ -1,37 +1,23 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Rendering;
 
 public class PreRenderCalls : MonoBehaviour
 {
-    public bool UsingURP;
-    public Fog _Fog;
+    public Fog fog;
+    private float timer;
 
-    void Awake()
+    private void Update()
     {
-        if (UsingURP)
-        {
-            RenderPipelineManager.beginCameraRendering += PreRenderURP;
-        }
+        timer += Time.deltaTime;
     }
 
-    void OnDisable()
+    private void OnPreRender()
     {
-        if (UsingURP)
-        {
-            RenderPipelineManager.beginCameraRendering -= PreRenderURP;
-        }
-    }
+        if (timer < 0.1f)
+            return;
+        else
+            timer = 0f;
 
-    void PreRenderURP(ScriptableRenderContext renderContext, Camera obj)
-    {
-        Debug.Log("PreRender");
-        OnPreRender();
-    }
-
-    void OnPreRender()
-    {
-        Debug.Log("Set");
-        // FOG CALL
-        _Fog.SetCookie();
+        fog.SetCookie();
     }
 }
