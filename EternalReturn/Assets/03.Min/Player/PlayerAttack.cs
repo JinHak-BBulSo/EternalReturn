@@ -8,6 +8,7 @@ public class PlayerAttack : IPlayerState
     public void StateEnter(PlayerController controller_)
     {
         this.playerController = controller_;
+        controller_.player.basicAttackCol.enabled = true;
         controller_.player.Attack();
     }
 

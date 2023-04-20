@@ -8,7 +8,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     private PlayerController playerController = default;
     private Vector3 destination = default;
     private int currentCorner = 0;
-    protected SphereCollider basicAttackCol = default;
+    public SphereCollider basicAttackCol = default;
 
     [SerializeField]
     protected GameObject weapon = default;
@@ -133,6 +133,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     }
     public virtual void Attack()
     {
+        Debug.Log(enemy);
         if (enemy != null)
         {
             playerAni.SetFloat("MotionSpeed", playerStat.attackSpeed);
@@ -156,7 +157,6 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             playerController.ChangeState(new PlayerIdle());
         }
     }
-
     private void SkillEnd()
     {
         playerController.ChangeState(new PlayerIdle());
