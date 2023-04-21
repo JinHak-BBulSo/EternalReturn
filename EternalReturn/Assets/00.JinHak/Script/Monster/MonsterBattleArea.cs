@@ -7,7 +7,7 @@ public class MonsterBattleArea : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name);
+        
     }
     private void OnTriggerExit(Collider other)
     {
