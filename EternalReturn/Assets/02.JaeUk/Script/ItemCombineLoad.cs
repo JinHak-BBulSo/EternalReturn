@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 public class CSVReader
 {
@@ -27,11 +28,13 @@ public class CSVReader
 
 public class ItemCombineLoad : MonoBehaviour
 {
-    private List<Item> itemList;
+    private List<ItemStat> itemList;
     string combinePath = "ItemCombine";
     string itemPath = "ItemList";
     private ItemDefine itemDefine;
-    public List<Item> itemInferiorList;
+    public List<ItemStat> itemInferiorList;
+    public List<ItemStat> itemInferiorRare;
+    public List<ItemStat> itemInferiorUncommon;
     private Dictionary<ItemDefine, int> itemCombineDictionary;
     // public int[,] itemCombineKeyArray = new int[300, 300];
 
@@ -43,7 +46,7 @@ public class ItemCombineLoad : MonoBehaviour
         List<string[]> itemListCSV = CSVReader.Read(itemPath);
         itemCombineDictionary = new Dictionary<ItemDefine, int>();
         object[] ItemLoadObjs = Resources.LoadAll("03.Item/Prefabs");
-        List<Item> ItemWishList = new List<Item>();
+        List<ItemStat> ItemWishList = new List<ItemStat>();
         for (int i = 0; i < combineList.Count; i++)
         {
             itemDefine = new ItemDefine(int.Parse(combineList[i][1]), int.Parse(combineList[i][2]));
@@ -56,15 +59,19 @@ public class ItemCombineLoad : MonoBehaviour
 
         for (int i = 0; i < itemList.Count; i++)
         {
-            ItemManager.Instance.itemList[i].item = new ItemStat(float.Parse(itemListCSV[i][0]), float.Parse(itemListCSV[i][1]), float.Parse(itemListCSV[i][2]),
+            ItemStat item = new ItemStat(float.Parse(itemListCSV[i][0]), float.Parse(itemListCSV[i][1]), float.Parse(itemListCSV[i][2]),
             float.Parse(itemListCSV[i][3]), float.Parse(itemListCSV[i][4]), float.Parse(itemListCSV[i][5]), float.Parse(itemListCSV[i][6]), float.Parse(itemListCSV[i][7]),
             float.Parse(itemListCSV[i][8]), float.Parse(itemListCSV[i][9]), float.Parse(itemListCSV[i][10]), float.Parse(itemListCSV[i][11]), float.Parse(itemListCSV[i][12]),
             float.Parse(itemListCSV[i][13]), float.Parse(itemListCSV[i][14]), float.Parse(itemListCSV[i][15]), float.Parse(itemListCSV[i][16]), float.Parse(itemListCSV[i][17]),
             float.Parse(itemListCSV[i][18]), int.Parse(itemListCSV[i][19]), int.Parse(itemListCSV[i][20]), int.Parse(itemListCSV[i][21]), itemListCSV[i][22], int.Parse(itemListCSV[i][23]),
             int.Parse(itemListCSV[i][24]), int.Parse(itemListCSV[i][25]));
-
+            itemList[i] = item;
 
         }
+        ItemManager.Instance.itemList = itemList;
+
+        // func(ItemManager.Instance.itemList, false);
+
         // ItemWishList.Add(AddItem(132));
         ItemWishList.Add(AddItem(102));
         ItemWishList.Add(AddItem(171));
@@ -72,29 +79,76 @@ public class ItemCombineLoad : MonoBehaviour
         ItemWishList.Add(AddItem(187));
         ItemWishList.Add(AddItem(81));
 
+        // func(ItemWishList, true);
+        ItemManager.Instance.itemWishList = default;
         ItemManager.Instance.itemWishList = ItemWishList;
-        ItemManager.Instance.inventory.Add(itemList[122].GetComponent<Item>());
+        ItemStat itemDefault = new ItemStat();
+        ItemManager.Instance.equipmentInven.Add(itemDefault);
+        ItemManager.Instance.equipmentInven.Add(itemDefault);
+        ItemManager.Instance.equipmentInven.Add(itemDefault);
+        ItemManager.Instance.equipmentInven.Add(itemDefault);
+        ItemManager.Instance.equipmentInven.Add(itemDefault);
+        ItemManager.Instance.equipmentInven.Add(itemDefault);
+        ItemManager.Instance.EquipmentListSet(AddItem(0));
+        ItemManager.Instance.EquipmentListSet(AddItem(20));
+        ItemManager.Instance.EquipmentListSet(AddItem(27));
+        ItemManager.Instance.EquipmentListSet(AddItem(28));
+        ItemManager.Instance.EquipmentListSet(AddItem(34));
+
+
+        ItemManager.Instance.inventory.Add(AddItem(54));
+        ItemManager.Instance.inventory.Add(AddItem(226));
+        ItemManager.Instance.inventory.Add(AddItem(26));
+        ItemManager.Instance.inventory.Add(AddItem(42));
+        ItemManager.Instance.inventory.Add(AddItem(43));
+        ItemManager.Instance.inventory.Add(AddItem(47));
+        ItemManager.Instance.inventory.Add(AddItem(56));
+        ItemManager.Instance.inventory.Add(AddItem(52));
+        ItemManager.Instance.inventory.Add(AddItem(31));
+        ItemManager.Instance.inventory[0].count += 2;
+        ItemManager.Instance.inventory[1].count += 1;
+
+
 
 
         for (int i = 0; i < ItemWishList.Count; i++)
         {
-            Debug.Log(ItemWishList[i].item.id);
-            ItemManager.Instance.AddInferiorList(ItemWishList[i].item.id);
-        }
-        itemInferiorList = ItemManager.Instance.itemInferiorList;
-        for (int i = 0; i < itemInferiorList.Count; i++)
-        {
-            // Debug.Log($"Item id: {ItemManager.Instance.itemInferiorList[i].name}, Count  :{ItemManager.Instance.itemInferiorList[i].item.count}");
+            ItemManager.Instance.AddInferiorList(ItemWishList[i].id);
         }
 
+        itemInferiorList = ItemManager.Instance.itemInferiorList;
+        itemInferiorRare = ItemManager.Instance.ItemInferiorRare;
+        itemInferiorUncommon = ItemManager.Instance.ItemInferiorUncommon;
+
+
+        // func(ItemManager.Instance.itemList, false);
+    }
+    public void func(List<ItemStat> list, bool flag)
+    {
+        if (flag)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                Debug.Log($"아이템 이름 : {list[i].name}, 아이템 개수 : {list[i].count},아이템 레어도 : {list[i].rare}");
+            }
+        }
+        else
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].count > 1)
+                {
+                    Debug.Log($"아이템 이름 : {list[i].name}, 아이템 개수 : {list[i].count},아이템 레어도 : {list[i].rare}");
+                }
+
+            }
+        }
 
     }
-
-
-    public Item AddItem(int i)
+    public ItemStat AddItem(int i)
     {
-        Item item = new Item();
-        item = ItemManager.Instance.itemList[i];
+        ItemStat item = new ItemStat(ItemManager.Instance.itemList[i]);
+        // Debug.Log(item);
         return item;
     }
 
