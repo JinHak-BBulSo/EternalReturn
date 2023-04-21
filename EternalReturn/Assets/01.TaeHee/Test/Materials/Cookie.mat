@@ -7,18 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<<< HEAD:EternalReturn/Assets/01.TaeHee/Test/Materials/Cookie.mat
   m_Name: Cookie
   m_Shader: {fileID: 4800000, guid: 95dbe3f5c818be54eb0168b0a2ee7da7, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _ALPHAPREMULTIPLY_ON
-========
-  m_Name: Uptown_OBJ_MerryGoRound
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
->>>>>>>> origin/KJH:EternalReturn/Assets/Resources/02.Map/15.Uptown/01.Texture/Materials/Uptown_OBJ_MerryGoRound.mat
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -53,11 +46,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-<<<<<<<< HEAD:EternalReturn/Assets/01.TaeHee/Test/Materials/Cookie.mat
         m_Texture: {fileID: 0}
-========
-        m_Texture: {fileID: 2800000, guid: e0426fa01eaeb404bbcda2b64e70574d, type: 3}
->>>>>>>> origin/KJH:EternalReturn/Assets/Resources/02.Map/15.Uptown/01.Texture/Materials/Uptown_OBJ_MerryGoRound.mat
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -72,7 +61,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-<<<<<<<< HEAD:EternalReturn/Assets/01.TaeHee/Test/Materials/Cookie.mat
     - _ShadowTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -81,22 +69,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-========
->>>>>>>> origin/KJH:EternalReturn/Assets/Resources/02.Map/15.Uptown/01.Texture/Materials/Uptown_OBJ_MerryGoRound.mat
     m_Ints: []
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-<<<<<<<< HEAD:EternalReturn/Assets/01.TaeHee/Test/Materials/Cookie.mat
     - _DstBlend: 10
     - _GlossMapScale: 1
     - _Glossiness: 0
-========
-    - _DstBlend: 0
-    - _GlossMapScale: 1
-    - _Glossiness: 0.5
->>>>>>>> origin/KJH:EternalReturn/Assets/Resources/02.Map/15.Uptown/01.Texture/Materials/Uptown_OBJ_MerryGoRound.mat
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 3
@@ -105,17 +85,10 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-<<<<<<<< HEAD:EternalReturn/Assets/01.TaeHee/Test/Materials/Cookie.mat
     - _StartTime: 0
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.7882353}
-========
-    - _UVSec: 0
-    - _ZWrite: 1
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
->>>>>>>> origin/KJH:EternalReturn/Assets/Resources/02.Map/15.Uptown/01.Texture/Materials/Uptown_OBJ_MerryGoRound.mat
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
