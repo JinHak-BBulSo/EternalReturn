@@ -1,12 +1,11 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:EternalReturn/Assets/01.TaeHee/Test/Prefabs/Fog.prefab.meta
-guid: 8d8cfd67bcc361448a70913fd008adca
-PrefabImporter:
+<<<<<<<< HEAD:EternalReturn/Assets/01.TaeHee/Materials.meta
+guid: a28d52b35caa655429e877ddb69d86ea
 ========
 guid: 0b332a9acf2986343a6744435bdf8a7b
+>>>>>>>> origin/KJH:EternalReturn/Assets/Resources/02.Map/15.Uptown/01.Texture/Materials.meta
 folderAsset: yes
 DefaultImporter:
->>>>>>>> origin/Dev:EternalReturn/Assets/Resources/02.Map/15.Uptown/01.Texture/Materials.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
