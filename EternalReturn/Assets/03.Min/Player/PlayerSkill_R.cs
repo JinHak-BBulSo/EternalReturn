@@ -10,6 +10,7 @@ public class PlayerSkill_R : IPlayerState
         this.playerController = controller_;
         playerController.player.playerAni.Rebind();
         playerController.ResetRange();
+        playerController.transform.LookAt(controller_.player.nowMousePoint);
     }
     public void StateExit()
     {

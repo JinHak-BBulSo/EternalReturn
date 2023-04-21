@@ -11,6 +11,11 @@ public class Jackie : PlayerBase
     private bool isWBuffOn = false;
     [SerializeField]
     private bool isRBuffOn = false;
+    Vector3 targetPos;
+    Vector3 exceptYTragetPos;
+    Vector3 nowPos;
+    Vector3 dir;
+    float distance;
     protected override void Start()
     {
         base.Start();
@@ -81,9 +86,33 @@ public class Jackie : PlayerBase
         base.Skill_E();
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 2);
-        StartCoroutine(SkillCooltime(1, 20f));
+        targetPos = nowMousePoint;
+        exceptYTragetPos = ExceptY.ExceptYPos(nowMousePoint);
+        nowPos = ExceptY.ExceptYPos(transform.position);
+        distance = ExceptY.ExceptYDistance(transform.position, targetPos);
+        Debug.Log(distance);
+        if (distance >= 5.5f)
+        {
+            dir = Vector3.Normalize(exceptYTragetPos - nowPos);
+            targetPos = nowPos + dir * 5.5f;
+        }
+        StartCoroutine(JackieJump());
+        StartCoroutine(SkillCooltime(2, 1f));
     }
 
+    IEnumerator JackieJump()
+    {
+        while (true)
+        {
+            transform.Translate(dir * Time.deltaTime * 10f);
+            Debug.Log("?");
+            if (ExceptY.ExceptYDistance(transform.position, targetPos) <= 0.1f || ExceptY.ExceptYDistance(transform.position, targetPos) >= 0.1f)
+            {
+                break;
+            }
+            yield return null;
+        }
+    }
     IEnumerator buffCool()
     {
         yield return new WaitForSeconds(5f);
@@ -117,12 +146,40 @@ public class Jackie : PlayerBase
         }
         QBoxCol.isTrigger = false;
     }
+
+    private void EDamage()
+    {
+        RaycastHit[] hits;
+        hits = Physics.SphereCastAll(transform.position, 1.0f, Vector3.up, 0f);
+        foreach (var hit in hits)
+        {
+            if (hit.transform.gameObject.GetComponent<Monster>() != null)
+            {
+                enemyHunt.Add(hit.transform.gameObject.GetComponent<Monster>());
+            }
+            else if (hit.transform.gameObject.GetComponent<PlayerBase>() != null)
+            {
+                enemyPlayer.Add(hit.transform.gameObject.GetComponent<PlayerBase>());
+            }
+        }
+
+        for (int i = 0; i < enemyPlayer.Count; i++)
+        {
+            DamageMessage dm = new DamageMessage(gameObject, 50 + (playerStat.attackPower * 0.42f) + (playerStat.skillPower * 0.60f));
+            enemyPlayer[i].TakeDamage(dm);
+        }
+
+        for (int i = 0; i < enemyHunt.Count; i++)
+        {
+            DamageMessage dm = new DamageMessage(gameObject, 50 + (playerStat.attackPower * 0.42f) + (playerStat.skillPower * 0.60f));
+            enemyHunt[i].TakeDamage(dm);
+        }
+    }
     private void FirstQDamage()
     {
         for (int i = 0; i < enemyPlayer.Count; i++)
         {
             DamageMessage dm = new DamageMessage(gameObject, 25 + (playerStat.attackPower * 0.45f) + (playerStat.skillPower * 0.40f));
-            Debug.Log(25 + (playerStat.attackPower * 0.45f) + (playerStat.skillPower * 0.40f));
             enemyPlayer[i].TakeDamage(dm);
             DamageMessage debuffdm = new DamageMessage(gameObject, (30 + (playerStat.attackPower * 0.5f) + (playerStat.skillPower * 0.05f)) / 6f, 0, 6f);
             StartCoroutine(enemyPlayer[i].ContinousDamage(debuffdm, 0, 6f, 1f));
@@ -131,10 +188,8 @@ public class Jackie : PlayerBase
         for (int i = 0; i < enemyHunt.Count; i++)
         {
             DamageMessage dm = new DamageMessage(gameObject, 25 + (playerStat.attackPower * 0.45f) + (playerStat.skillPower * 0.40f));
-            Debug.Log(25 + (playerStat.attackPower * 0.45f) + (playerStat.skillPower * 0.40f));
             enemyHunt[i].TakeDamage(dm);
             DamageMessage debuffdm = new DamageMessage(gameObject, (30 + (playerStat.attackPower * 0.5f) + (playerStat.skillPower * 0.05f)) / 6f, 0, 6f);
-            Debug.Log((30 + (playerStat.attackPower * 0.5f) + (playerStat.skillPower * 0.05f)) / 6f);
             StartCoroutine(enemyHunt[i].ContinousDamage(debuffdm, 0, 6f, 1f));
         }
     }
