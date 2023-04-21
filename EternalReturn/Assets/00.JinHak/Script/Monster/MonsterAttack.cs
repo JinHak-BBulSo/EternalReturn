@@ -11,6 +11,7 @@ public class MonsterAttack : IMonsterState
         this.monsterController = monsterCtrl_;
         monsterController.monsterState = MonsterController.MonsterState.ATTACk;
         Attack();
+        monsterController.navMeshAgent.enabled = false;
     }
 
     public void StateFixedUpdate()
@@ -38,5 +39,6 @@ public class MonsterAttack : IMonsterState
 
         monsterController.targetPlayer.TakeDamage(dm);
         monsterController.monsterAni.SetBool("isAttack", false);
+        monsterController.navMeshAgent.enabled = true;
     }
 }
