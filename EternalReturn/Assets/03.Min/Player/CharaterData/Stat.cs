@@ -5,32 +5,32 @@ using UnityEngine;
 [System.Serializable]
 public class Stat : BaseStat
 {
-    [HideInInspector]
+    //[HideInInspector]
     public float skillPower;
-    [HideInInspector]
+    //[HideInInspector]
     public float basicAttackPower;
-    [HideInInspector]
+    //[HideInInspector]
     public float coolDown;
-    [HideInInspector]
+    //[HideInInspector]
     public float criticalPercent;
-    [HideInInspector]
+    //[HideInInspector]
     public float criticalDamage;
-    [HideInInspector]
+    //[HideInInspector]
     public float visionRange;
-    [HideInInspector]
+    //[HideInInspector]
     public float damageReduce;
-    [HideInInspector]
+    //[HideInInspector]
     public float tenacity;
-    [HideInInspector]
+    //[HideInInspector]
     public float armorReduce;
-    [HideInInspector]
+    //[HideInInspector]
     public float lifeSteel;
-    [HideInInspector]
+    //[HideInInspector]
     public float extraHp;
-    [HideInInspector]
+    //[HideInInspector]
     public float extraStamina;
-    [HideInInspector]
+    //[HideInInspector]
     public float hpRegen;
-    [HideInInspector]
+    //[HideInInspector]
     public float staminaRegen;
 }

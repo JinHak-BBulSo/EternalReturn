@@ -22,6 +22,31 @@ public class ItemStat : Stat
     {
 
     }
+    public ItemStat(float attackPower_, float skillPower_, float basicAttackPower_, float defense_, float attackSpeed_, float coolDown_, float criticalPercent_, float criticalDamage_,
+     float moveSpeed_, float visionRange_, float attackRange_, float damageReduce_, float tenacity_, float armorReduce_, float lifeSteel_, float extraHp_,
+      float extraStamina_, float hpRegen_, float staminaRegen_, float weaponAttackSpeedPercent_, float weaponAttackRangePercent_)
+    {
+        attackPower = attackPower_;
+        skillPower = skillPower_;
+        basicAttackPower = basicAttackPower_;
+        attackSpeed = attackSpeed_;
+        coolDown = coolDown_;
+        criticalPercent = criticalPercent_;
+        criticalDamage = criticalDamage_;
+        moveSpeed = moveSpeed_;
+        visionRange = visionRange_;
+        attackRange = attackRange_;
+        damageReduce = damageReduce_;
+        tenacity = tenacity_;
+        armorReduce = armorReduce_;
+        lifeSteel = lifeSteel_;
+        extraHp = extraHp_;
+        extraStamina = extraStamina_;
+        hpRegen = hpRegen_;
+        staminaRegen = staminaRegen_;
+        weaponAttackSpeedPercent = weaponAttackSpeedPercent_;
+        weaponAttackRangePercent = weaponAttackRangePercent_;
+    }
 
     public ItemStat(ItemStat itemClone)
     {

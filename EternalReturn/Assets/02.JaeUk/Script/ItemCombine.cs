@@ -5,6 +5,8 @@ using System.Linq;
 
 public class ItemCombine : MonoBehaviour
 {
+    public GameObject player;
+    public GameObject ItemCanvas;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +19,7 @@ public class ItemCombine : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             InventoryChange();
-
+            func(ItemManager.Instance.itemList, 1);
 
         }
         if (Input.GetKeyDown(KeyCode.Z))
@@ -61,6 +63,30 @@ public class ItemCombine : MonoBehaviour
         {
             Debug.Log($"아이템 이름 : {list[i].name}, 아이템 개수 : {list[i].count},아이템 레어도 : {list[i].rare}");
         }
+    }
+    public void func(List<ItemStat> list, int type = 0)
+    {
+        switch (type)
+        {
+            case 1:
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i].rare == 0)
+                    {
+                        Debug.Log($"아이템 이름 : {list[i].name}, 아이템 id : {list[i].id},아이템 타입: {list[i].type}");
+                    }
+                }
+
+                break;
+
+            default:
+                for (int i = 0; i < list.Count; i++)
+                {
+                    Debug.Log($"아이템 이름 : {list[i].name}, 아이템 개수 : {list[i].count},아이템 레어도 : {list[i].rare}");
+                }
+                break;
+        }
+
     }
 
     //CombinList의 우선 순위를 나타 내기 위한 솔팅 메서드
@@ -204,7 +230,7 @@ public class ItemCombine : MonoBehaviour
             for (int i = itemSlot1.Count - 1; i >= 0; i--)
             {
 
-                if (ItemManager.Instance.inventory[itemSlot1[i]].count < 1)
+                if (ItemManager.Instance.inventory[itemSlot1[i]].count < 2)
                 {
                     ItemManager.Instance.inventory.RemoveAt(itemSlot1[i]);
                 }
@@ -217,13 +243,46 @@ public class ItemCombine : MonoBehaviour
             for (int i = itemSlot2.Count - 1; i >= 0; i--)
             {
 
-                if (ItemManager.Instance.equipmentInven[itemSlot2[i]].count < 1)
+                if (ItemManager.Instance.equipmentInven[itemSlot2[i]].count < 2)
                 {
-                    ItemManager.Instance.equipmentInven[itemSlot2[i]] = default;
+                    ItemManager.Instance.equipmentInven[itemSlot2[i]] = new ItemStat();
                 }
 
             }
-            ItemManager.Instance.AddItemToList(item, ItemManager.Instance.inventory);
+            if (ItemManager.Instance.EquipmentListIsBlank() != null)
+            {
+                bool chk = false;
+                foreach (int i in ItemManager.Instance.EquipmentListIsBlank())
+                {
+                    if (i == item.type)
+                    {
+                        ItemManager.Instance.EquipmentListSet(item);
+                        chk = true;
+                    }
+
+
+
+                }
+                if (ItemManager.Instance.inventory.Count < 10 && !chk)
+                {
+                    ItemManager.Instance.AddItemToList(item, ItemManager.Instance.inventory);
+                }
+                else if (!chk)
+                {
+                    ItemManager.Instance.DropItem(item, player, ItemCanvas);
+                }
+
+            }
+            else if (ItemManager.Instance.EquipmentListIsBlank() == null && ItemManager.Instance.inventory.Count < 10)
+            {
+                ItemManager.Instance.AddItemToList(item, ItemManager.Instance.inventory);
+            }
+            else
+            {
+                ItemManager.Instance.DropItem(item, player, ItemCanvas);
+            }
+
+
 
         }
 

@@ -16,6 +16,7 @@ public class ItemManager : SingleTonBase<ItemManager>
     public List<ItemStat> combineAbleList = new List<ItemStat>();
     public List<ItemStat> inventory = new List<ItemStat>();
     public List<ItemStat> equipmentInven = new List<ItemStat>();
+    public ItemStat equipmentTotalState = default;
     public bool isItemDrop = true;
     public bool isItemPick = true;
 
@@ -308,10 +309,49 @@ public class ItemManager : SingleTonBase<ItemManager>
 
         }
     }
+    public void DropItem(ItemStat item, GameObject player, GameObject canvas)
+    {
+        GameObject itemObj = Instantiate(itemListObj[item.id]);
+        itemObj.transform.SetParent(canvas.transform, false);
+        itemObj.transform.position = player.transform.position;
 
+    }
+    public List<int> EquipmentListIsBlank()
+    {
+        List<int> item = new List<int>();
+        for (int i = 0; i < equipmentInven.Count; i++)
+        {
+            if (equipmentInven[i].id == 0 || equipmentInven[i] == null)
+            {
+                switch (i)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        item.Add(14);
+                        break;
+                    case 2:
+                        item.Add(15);
+                        break;
+                    case 3:
+                        item.Add(16);
+                        break;
+                    case 4:
+                        item.Add(17);
+                        break;
+                    case 5:
+                        item.Add(18);
+                        break;
+                }
+            }
+        }
+        return item;
+    }
 
     public void EquipmentListSet(ItemStat item)
     {
+
+
         switch (item.type)
         {
             case 1:
@@ -370,6 +410,59 @@ public class ItemManager : SingleTonBase<ItemManager>
                 break;
             default:
                 break;
+
         }
+        SetequipmentTotalState();
+
+    }
+    public void SetequipmentTotalState()
+    {
+        float attackPower = 0;
+        float moveSpeed = 0;
+        float defense = 0;
+        float attackSpeed = 0;
+        float attackRange = 0;
+        float skillPower = 0;
+        float basicAttackPower = 0;
+        float coolDown = 0;
+        float criticalPercent = 0;
+        float criticalDamage = 0;
+        float visionRange = 0;
+        float damageReduce = 0;
+        float tenacity = 0;
+        float armorReduce = 0;
+        float lifeSteel = 0;
+        float extraHp = 0;
+        float extraStamina = 0;
+        float hpRegen = 0;
+        float staminaRegen = 0;
+        float weaponAttackSpeedPercent = 0;
+        float weaponAttackRangePercent = 0;
+        for (int i = 0; i < equipmentInven.Count; i++)
+        {
+            attackPower += equipmentInven[i].attackPower;
+            moveSpeed += equipmentInven[i].moveSpeed;
+            defense += equipmentInven[i].defense;
+            attackSpeed += equipmentInven[i].attackSpeed;
+            attackRange += equipmentInven[i].attackRange;
+            skillPower += equipmentInven[i].skillPower;
+            basicAttackPower += equipmentInven[i].basicAttackPower;
+            coolDown += equipmentInven[i].coolDown;
+            criticalPercent += equipmentInven[i].criticalPercent;
+            criticalDamage += equipmentInven[i].criticalDamage;
+            visionRange += equipmentInven[i].visionRange;
+            damageReduce += equipmentInven[i].damageReduce;
+            tenacity += equipmentInven[i].tenacity;
+            armorReduce += equipmentInven[i].armorReduce;
+            lifeSteel += equipmentInven[i].lifeSteel;
+            extraHp += equipmentInven[i].extraHp;
+            extraStamina += equipmentInven[i].extraStamina;
+            hpRegen += equipmentInven[i].hpRegen;
+            staminaRegen += equipmentInven[i].staminaRegen;
+            weaponAttackSpeedPercent += equipmentInven[i].weaponAttackSpeedPercent;
+            weaponAttackRangePercent += equipmentInven[i].weaponAttackRangePercent;
+        }
+        equipmentTotalState = new ItemStat(attackPower, skillPower, basicAttackPower, defense, attackSpeed, coolDown, criticalPercent, criticalDamage, moveSpeed, visionRange, attackRange, damageReduce, tenacity, armorReduce,
+        lifeSteel, extraHp, extraStamina, hpRegen, staminaRegen, weaponAttackSpeedPercent, weaponAttackRangePercent);
     }
 }

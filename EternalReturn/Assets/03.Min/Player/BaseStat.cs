@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class BaseStat
 {
-    [HideInInspector]
+    //[HideInInspector]
     public float attackPower;
-    [HideInInspector]
+    //[HideInInspector]
     public float moveSpeed;
-    [HideInInspector]
+    //[HideInInspector]
     public float defense;
-    [HideInInspector]
+    //[HideInInspector]
     public float attackSpeed;
-    [HideInInspector]
+    //[HideInInspector]
     public float attackRange;
 
 }
