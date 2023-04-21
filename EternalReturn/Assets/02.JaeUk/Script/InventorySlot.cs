@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class InventorySlot : Slot
+public class InventorySlot : Slot, IDragHandler, IEndDragHandler, IBeginDragHandler
 {
 
+    public bool chk = false;
     public override void Start()
     {
         base.Start();
@@ -13,47 +15,58 @@ public class InventorySlot : Slot
     // Start is called before the first frame update
     public override void Onclick(int i)
     {
-        Debug.Log("!!");
-        if (ItemManager.Instance.inventory.Count < i + 1)
+        if (!chk)
         {
+            Debug.Log("UnActive");
+            if (ItemManager.Instance.inventory.Count < i + 1)
+            {
+
+            }
+            else
+            {
+                if (ItemManager.Instance.inventory[i].type == playerWeaponType)
+                {
+                    Switching(i, 0);
+                }
+                else
+                {
+                    switch (ItemManager.Instance.inventory[i].type)
+                    {
+
+                        case 14:
+                            Switching(i, 2);
+                            break;
+                        case 15:
+                            Switching(i, 1);
+                            break;
+                        case 16:
+                            Switching(i, 3);
+                            break;
+                        case 17:
+                            Switching(i, 4);
+                            break;
+                        case 18:
+                            Switching(i, 5);
+                            break;
+                        case 19:
+                            break;
+                        case 20:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                chk = false;
+            }
 
         }
         else
         {
-            if (ItemManager.Instance.inventory[i].type == playerWeaponType)
-            {
-                Switching(i, 0);
-            }
-            else
-            {
-                switch (ItemManager.Instance.inventory[i].type)
-                {
-
-                    case 14:
-                        Switching(i, 2);
-                        break;
-                    case 15:
-                        Switching(i, 1);
-                        break;
-                    case 16:
-                        Switching(i, 3);
-                        break;
-                    case 17:
-                        Switching(i, 4);
-                        break;
-                    case 18:
-                        Switching(i, 5);
-                        break;
-                    case 19:
-                        break;
-                    case 20:
-                        break;
-                    default:
-                        break;
-                }
-            }
+            Debug.Log("Active");
 
         }
+
+
 
     }
     public void Switching(int order, int idx)
@@ -71,5 +84,18 @@ public class InventorySlot : Slot
 
         ItemManager.Instance.SetequipmentTotalState();
         ItemManager.Instance.isItemPick = true;
+    }
+    public void OnDrag(PointerEventData eventData)
+    {
+        chk = false;
+        transform.GetChild(0).position = eventData.position;
+    }
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        transform.GetChild(0).position = transform.position;
+
+    }
+    public void OnBeginDrag(PointerEventData eventData)
+    {
     }
 }
