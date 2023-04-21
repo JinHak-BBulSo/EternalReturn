@@ -8,6 +8,8 @@ public class PlayerSkill_W : IPlayerState
     public void StateEnter(PlayerController controller_)
     {
         this.playerController = controller_;
+        playerController.player.playerAni.Rebind();
+        playerController.ResetRange();
         playerController.player.Skill_W();
     }
     public void StateExit()

@@ -20,13 +20,13 @@ public class ItemDefine
         ItemDefine define = new ItemDefine(itemId_1, itemId_2);
         for (int i = 0; i < ItemManager.Instance.itemList.Count; i++)
         {
-            if (define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].item.id) != null)
+            if (define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].id) != null)
             {
                 // Debug.Log("id1 Find" + define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].item.id).itemId_1);
 
                 // Debug.Log("id2 Find" + define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].item.id).itemId_2);
 
-                if (!ComparerItem(define, define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].item.id)))
+                if (!ComparerItem(define, define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].id)))
                 {
 
                     return true;
@@ -43,15 +43,15 @@ public class ItemDefine
         ItemDefine define = new ItemDefine(itemId_1, itemId_2);
         for (int i = 0; i < ItemManager.Instance.itemList.Count; i++)
         {
-            if (define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].item.id) != null)
+            if (define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].id) != null)
             {
                 // Debug.Log("id1 Find" + define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].item.id).itemId_1);
 
                 // Debug.Log("id2 Find" + define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].item.id).itemId_2);
-                if (!ComparerItem(define, define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].item.id)))
+                if (!ComparerItem(define, define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].id)))
                 {
 
-                    return FineInferiorItemId(dic, ItemManager.Instance.itemList[i].item.id);
+                    return FineInferiorItemId(dic, ItemManager.Instance.itemList[i].id);
 
                 }
             }

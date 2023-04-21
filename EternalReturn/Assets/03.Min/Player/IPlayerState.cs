@@ -9,4 +9,5 @@ public interface IPlayerState
     void StateFixedUpdate();
     void StateUpdate();
     void StateExit();
+
 }
