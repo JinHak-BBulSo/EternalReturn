@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
+[System.Serializable]
+public class ItemController : MonoBehaviour
 {
+
     public ItemStat item;
 
-    public bool isInventory = false;
-    public bool isEquipment = false;
-    public bool isItemWishList = false;
+
     public GameObject nameBg;
     public GameObject wishListImg;
     private void OnEnable()
@@ -22,9 +22,9 @@ public class Item : MonoBehaviour
 
     public void itemWishListChk()
     {
-        if (!isItemWishList)
+        if (!item.isItemWishList)
         {
-            wishListImg.SetActive(isItemWishList);
+            wishListImg.SetActive(item.isItemWishList);
         }
 
     }
@@ -32,29 +32,29 @@ public class Item : MonoBehaviour
     {
         nameBg = transform.GetChild(0).gameObject;
         wishListImg = transform.GetChild(0).GetChild(0).gameObject;
-        if (isInventory)
+        if (item.isInventory)
         {
             nameBg.SetActive(false);
         }
-        else if (isEquipment)
+        else if (item.isEquipment)
         {
             nameBg.SetActive(false);
         }
         else
         {
             nameBg.SetActive(true);
-            List<Item> itemInferiorList = new List<Item>();
+            List<ItemStat> itemInferiorList = new List<ItemStat>();
             itemInferiorList = ItemManager.Instance.itemInferiorList;
 
             for (int i = 0; i < itemInferiorList.Count; i++)
             {
-                if (item.id == itemInferiorList[i].item.id)
+                if (item.id == itemInferiorList[i].id)
                 {
-                    isItemWishList = true;
+                    item.isItemWishList = true;
                 }
             }
 
-            wishListImg.SetActive(isItemWishList);
+            wishListImg.SetActive(item.isItemWishList);
         }
     }
 
