@@ -64,7 +64,9 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
         if (Input.GetMouseButtonDown(1) || (isAttackMove && Input.GetMouseButtonDown(0)))
         {
+
             RaycastHit hit;
+
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
             {
                 NavMeshHit navHit;
@@ -84,6 +86,8 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 }
                 //SetDestination(hit.point);
             }
+            Debug.Log(hit);
+
         }
 
 
