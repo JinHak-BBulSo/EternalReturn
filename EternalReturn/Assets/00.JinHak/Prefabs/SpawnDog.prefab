@@ -12,6 +12,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawnDog
       objectReference: {fileID: 0}
+    - target: {fileID: 3214226632272968475, guid: 95597e75c58c2d145a2a4d4f9b1380da,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 3214226632272968479, guid: 95597e75c58c2d145a2a4d4f9b1380da,
         type: 3}
       propertyPath: m_RootOrder

@@ -14,6 +14,8 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     protected GameObject weapon = default;
 
     public GameObject enemy = default;
+    public GameObject clickTarget = default;
+
     public Transform attackRange = default;
     public GameObject[] SkillRange = new GameObject[5];
     public CharaterData charaterData = default;
@@ -70,6 +72,8 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
             {
                 NavMeshHit navHit;
+                clickTarget = hit.collider.gameObject;
+
                 if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
                 {
                     // destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);

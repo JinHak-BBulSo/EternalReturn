@@ -72,6 +72,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9039394542087057766, guid: 9d1c2359969fc3640baf4c6f232567d4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d1c2359969fc3640baf4c6f232567d4, type: 3}
 --- !u!4 &2810951061059925140 stripped
@@ -95,17 +100,17 @@ PrefabInstance:
     - target: {fileID: 3695906195488022369, guid: a659a0759ce1caf408a00430912fe3f7,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 21.428564
+      value: 14.999992
       objectReference: {fileID: 0}
     - target: {fileID: 3695906195488022369, guid: a659a0759ce1caf408a00430912fe3f7,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 375
+      value: 262.5
       objectReference: {fileID: 0}
     - target: {fileID: 3695906195488022369, guid: a659a0759ce1caf408a00430912fe3f7,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 21.428564
+      value: 14.999992
       objectReference: {fileID: 0}
     - target: {fileID: 3695906195488022369, guid: a659a0759ce1caf408a00430912fe3f7,
         type: 3}
