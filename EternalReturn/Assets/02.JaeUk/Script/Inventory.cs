@@ -32,6 +32,7 @@ public class Inventory : SlotList
             }
             for (int i = 0; i < inventory.Count; i++)
             {
+
                 ItemSlot[i].transform.GetChild(0).GetComponent<Image>().sprite = ItemManager.Instance.itemListObj[inventory[i].id].GetComponent<SpriteRenderer>().sprite;
                 ItemSlot[i].transform.GetChild(1).GetComponent<Text>().text = inventory[i].count.ToString();
                 ItemSlot[i].transform.GetChild(0).gameObject.SetActive(true);
@@ -42,4 +43,5 @@ public class Inventory : SlotList
         }
 
     }
+
 }

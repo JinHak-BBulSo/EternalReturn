@@ -31,7 +31,7 @@ public class ItemCombine : MonoBehaviour
                 DeleteInferiorList(ItemManager.Instance.combineAbleList[0]);
                 ItemManager.Instance.combineAbleList.RemoveAt(0);
                 InventoryChange();
-                ItemManager.Instance.isItemPick = true;
+
             }
 
         }
@@ -55,6 +55,7 @@ public class ItemCombine : MonoBehaviour
             DeleteImpossibleCombine(ItemManager.Instance.combineAbleList[i], ItemManager.Instance.itemCombineDictionary);
         }
         ListSortRareAndUseable(ItemManager.Instance.combineAbleList);
+        ItemManager.Instance.isItemPick = true;
 
     }
     public void func(List<ItemStat> list)
