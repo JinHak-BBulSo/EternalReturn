@@ -21,13 +21,7 @@ public class PlayerIdle : IPlayerState
     {
         if (playerController.player.isMove)
         {
-            playerController.player.playerAni.SetBool("isAttack", false);
             playerController.ChangeState(new PlayerMove());
-        }
-
-        if (Input.GetKeyDown(KeyCode.A) && playerController.player.isAttackAble)
-        {
-            playerController.ChangeState(new PlayerAttack());
         }
 
         if (!playerController.player.skillCooltimes[0])

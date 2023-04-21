@@ -8,14 +8,14 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     private PlayerController playerController = default;
     private Vector3 destination = default;
     private int currentCorner = 0;
-    public SphereCollider basicAttackCol = default;
+    public Vector3 nowMousePoint = default;
 
     [SerializeField]
     protected GameObject weapon = default;
 
     public GameObject enemy = default;
     public Transform attackRange = default;
-    public GameObject Skill_Q_Range = default;
+    public GameObject[] SkillRange = new GameObject[5];
     public CharaterData charaterData = default;
     public PlayerStat playerStat = default;
     [HideInInspector]
@@ -25,6 +25,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public NavMeshPath path = default;
     public bool isAttackAble = true;
     public bool isMove = false;
+    public bool isAttackMove = false;
     public int attackType = 0;
     public bool isAttackRangeShow = false;
     public bool[] skillCooltimes = new bool[5];
@@ -36,6 +37,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public Queue<float>[] debuffDamageQueues = new Queue<float>[10];
     public List<float>[] debuffRemainList = new List<float>[10];
     public List<Vector3> corners = new List<Vector3>();
+    private SpriteRenderer[] attackRangeRender = new SpriteRenderer[2];
 
 
 
@@ -46,19 +48,21 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         playerAni = GetComponent<Animator>();
         playerNav = GetComponent<NavMeshAgent>();
         Camera.main.transform.parent.GetComponent<MoveCamera>().player = this;
-        basicAttackCol = attackRange.GetComponent<SphereCollider>();
+        attackRangeRender[0] = attackRange.GetComponent<SpriteRenderer>();
+        attackRangeRender[1] = attackRange.transform.GetChild(0).GetComponent<SpriteRenderer>();
         InitStat();
-
     }
 
 
     protected virtual void Update()
     {
-
         ShowAttackRange();
         DisableAttackRange();
+        RaycastHit mousePoint;
+        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mousePoint);
+        nowMousePoint = mousePoint.point;
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) || (isAttackMove && Input.GetMouseButtonDown(0)))
         {
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
@@ -82,9 +86,8 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             }
         }
 
+
     }
-
-
 
 
     // 스탯 초기값 할당
@@ -131,32 +134,39 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     {
 
     }
+
+
     public virtual void Attack()
     {
-        Debug.Log(enemy);
-        if (enemy != null)
+        playerAni.SetFloat("MotionSpeed", playerStat.attackSpeed);
+        transform.LookAt(enemy.transform);
+        switch (attackType)
         {
-            playerAni.SetFloat("MotionSpeed", playerStat.attackSpeed);
-            transform.LookAt(enemy.transform);
-            switch (attackType)
-            {
-                case 0:
-                    playerAni.SetBool("isAttack", true);
-                    playerAni.SetFloat("AttackType", attackType);
-                    playerController.ChangeState(new PlayerIdle());
-                    break;
-                case 1:
-                    playerAni.SetBool("isAttack", true);
-                    playerAni.SetFloat("AttackType", attackType);
-                    playerController.ChangeState(new PlayerIdle());
-                    break;
-            }
-        }
-        else
-        {
-            playerController.ChangeState(new PlayerIdle());
+            case 0:
+                playerAni.SetBool("isAttack", true);
+                playerAni.SetFloat("AttackType", attackType);
+                playerController.ChangeState(new PlayerIdle());
+                break;
+            case 1:
+                playerAni.SetBool("isAttack", true);
+                playerAni.SetFloat("AttackType", attackType);
+                playerController.ChangeState(new PlayerIdle());
+                break;
         }
     }
+
+
+    private void MotionStart()
+    {
+        playerAni.SetBool("skillStart", true);
+    }
+
+    private void MotionEnd()
+    {
+        playerAni.Rebind();
+        playerController.ResetRange();
+    }
+
     private void SkillEnd()
     {
         playerController.ChangeState(new PlayerIdle());
@@ -197,7 +207,8 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            attackRange.gameObject.SetActive(true);
+            attackRangeRender[0].color = new Color(attackRangeRender[0].color.r, attackRangeRender[0].color.g, attackRangeRender[0].color.b, 0.5f);
+            attackRangeRender[1].color = new Color(attackRangeRender[1].color.r, attackRangeRender[1].color.g, attackRangeRender[1].color.b, 1f);
             attackRange.localScale = new Vector3(0.01f * playerStat.attackRange * 4f, 0.01f * playerStat.attackRange * 4f, 0.01f);
             isAttackRangeShow = true;
         }
@@ -207,9 +218,19 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     {
         if (isAttackRangeShow)
         {
-            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(0))
             {
-                attackRange.gameObject.SetActive(false);
+                attackRangeRender[0].color = new Color(attackRangeRender[0].color.r, attackRangeRender[0].color.g, attackRangeRender[0].color.b, 0f);
+                attackRangeRender[1].color = new Color(attackRangeRender[1].color.r, attackRangeRender[1].color.g, attackRangeRender[1].color.b, 0f);
+                isAttackRangeShow = false;
+                isAttackMove = true;
+                playerController.ChangeState(new PlayerAttackMove());
+            }
+            else if (Input.GetMouseButtonDown(1))
+            {
+                attackRangeRender[0].color = new Color(attackRangeRender[0].color.r, attackRangeRender[0].color.g, attackRangeRender[0].color.b, 0f);
+                attackRangeRender[1].color = new Color(attackRangeRender[1].color.r, attackRangeRender[1].color.g, attackRangeRender[1].color.b, 0f);
+                isAttackRangeShow = false;
             }
         }
     }
@@ -232,20 +253,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     public void Move()
     {
-        //if (playerNav.enabled)
-        //{
-        //    float distance = Vector3.Distance(
-        //        new Vector3(transform.position.x, 0, transform.position.y),
-        //        new Vector3(destination.x, 0, destination.y)
-        //        );
-        //    if (distance <= playerNav.stoppingDistance)
-        //    {
-        //        Debug.Log("도착");
-        //        playerNav.enabled = false;
-        //        isMove = false;
-        //        playerNav.ResetPath();
-        //    }
-        //}
+
         if (isMove)
         {
             if (corners.Count > 0 && currentCorner < corners.Count)
@@ -265,21 +273,9 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 else
                 {
                     isMove = false;
+                    isAttackMove = false;
                 }
             }
-            // else
-            // {
-            //     if (Vector3.Distance(destination, transform.position) <= 0.2f)
-            //     {
-            //         isMove = false;
-            //         return;
-            //     }
-            //     var dir = destination - transform.position;
-            //     Quaternion viewroate = Quaternion.LookRotation(dir);
-            //     viewroate = Quaternion.Euler(transform.rotation.x, viewroate.eulerAngles.y, transform.rotation.z);
-            //     transform.rotation = Quaternion.Slerp(transform.rotation, viewroate, 6f * Time.deltaTime);
-            //     transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
-            // }
         }
     }
 
@@ -307,30 +303,6 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public virtual void Skill_D() { }
 
     public virtual void Skill_T() { }
-
-    private void OnTriggerEnter(Collider other)
-    {
-
-        // if (other.CompareTag("Skill"))
-        // {
-        //     // DamageMessage dm = other.GetComponent<Skill>().dm;
-        //     // DamageMessage debuffdm = other.GetComponent<Skill>()
-
-        //     TakeDamage(dm);
-
-        //     if(debuffdm != default){
-        //         ContinousDamage();
-        //     }
-        // }
-        // DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
-        // IHitHandler enemy = other.GetComponent<IHitHandler>();
-        // Debug.Log("?");
-        // if (enemy != null)
-        // {
-        //     enemy.TakeDamage(dm);
-        // }
-    }
-
     /// <summary>
     /// 기본 공격 공식
     /// 공격력 * 기본공격증폭 = message.damageAmount
