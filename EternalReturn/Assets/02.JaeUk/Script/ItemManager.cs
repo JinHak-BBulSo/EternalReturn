@@ -394,10 +394,10 @@ public class ItemManager : SingleTonBase<ItemManager>
                 equipmentInven[0] = item;
                 break;
             case 14:
-                equipmentInven[1] = item;
+                equipmentInven[2] = item;
                 break;
             case 15:
-                equipmentInven[2] = item;
+                equipmentInven[1] = item;
                 break;
             case 16:
                 equipmentInven[3] = item;

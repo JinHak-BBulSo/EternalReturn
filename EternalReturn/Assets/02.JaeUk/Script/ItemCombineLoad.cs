@@ -94,19 +94,24 @@ public class ItemCombineLoad : MonoBehaviour
         ItemManager.Instance.EquipmentListSet(AddItem(27));
         ItemManager.Instance.EquipmentListSet(AddItem(28));
         ItemManager.Instance.EquipmentListSet(AddItem(34));
+        ItemManager.Instance.inventory.Add(AddItem(21));
+        ItemManager.Instance.inventory.Add(AddItem(25));
+        ItemManager.Instance.inventory.Add(AddItem(22));
+        ItemManager.Instance.inventory.Add(AddItem(29));
+        ItemManager.Instance.inventory.Add(AddItem(33));
+        ItemManager.Instance.inventory.Add(AddItem(38));
 
-
-        ItemManager.Instance.inventory.Add(AddItem(54));
-        ItemManager.Instance.inventory.Add(AddItem(226));
-        ItemManager.Instance.inventory.Add(AddItem(26));
-        ItemManager.Instance.inventory.Add(AddItem(42));
-        ItemManager.Instance.inventory.Add(AddItem(43));
-        ItemManager.Instance.inventory.Add(AddItem(47));
-        ItemManager.Instance.inventory.Add(AddItem(56));
-        ItemManager.Instance.inventory.Add(AddItem(52));
-        ItemManager.Instance.inventory.Add(AddItem(31));
-        ItemManager.Instance.inventory[0].count += 2;
-        ItemManager.Instance.inventory[1].count += 1;
+        // ItemManager.Instance.inventory.Add(AddItem(54));
+        // ItemManager.Instance.inventory.Add(AddItem(226));
+        // ItemManager.Instance.inventory.Add(AddItem(26));
+        // ItemManager.Instance.inventory.Add(AddItem(42));
+        // ItemManager.Instance.inventory.Add(AddItem(43));
+        // ItemManager.Instance.inventory.Add(AddItem(47));
+        // ItemManager.Instance.inventory.Add(AddItem(56));
+        // ItemManager.Instance.inventory.Add(AddItem(52));
+        // ItemManager.Instance.inventory.Add(AddItem(31));
+        // ItemManager.Instance.inventory[0].count += 2;
+        // ItemManager.Instance.inventory[1].count += 1;
 
 
 

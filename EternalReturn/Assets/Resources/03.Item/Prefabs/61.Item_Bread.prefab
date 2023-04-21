@@ -353,7 +353,7 @@ MonoBehaviour:
     hpRegen: 0
     staminaRegen: 0
     id: 61
-    type: 16
+    type: 19
     rare: 0
     name: "\uBE75"
     count: 1
