@@ -82,6 +82,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6225067718382617516, guid: 95597e75c58c2d145a2a4d4f9b1380da,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10.714282
+      objectReference: {fileID: 0}
+    - target: {fileID: 6225067718382617516, guid: 95597e75c58c2d145a2a4d4f9b1380da,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 93.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6225067718382617516, guid: 95597e75c58c2d145a2a4d4f9b1380da,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10.714282
+      objectReference: {fileID: 0}
     - target: {fileID: 9162418185085827468, guid: 95597e75c58c2d145a2a4d4f9b1380da,
         type: 3}
       propertyPath: monsterData

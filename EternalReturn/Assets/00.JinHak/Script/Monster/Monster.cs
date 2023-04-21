@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class Monster : MonoBehaviour, IHitHandler
@@ -66,6 +65,8 @@ public class Monster : MonoBehaviour, IHitHandler
 
         Appear();
         SetStatus();
+
+        monsterController.navMeshAgent.enabled = true;
     }
     
     protected virtual void SetStatus()
