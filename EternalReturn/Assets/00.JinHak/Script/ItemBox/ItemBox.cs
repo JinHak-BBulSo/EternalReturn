@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ItemBox : MonoBehaviour
 {
+    private Outline outline = default;
     private GameObject itemBoxUi = default;
     private bool playerEnter = false;
     private ItemBoxSlotList slotList = default;
@@ -18,6 +20,7 @@ public class ItemBox : MonoBehaviour
         itemBoxUi = GameObject.Find("TestUi").transform.GetChild(1).gameObject;
         fullInvenTxt = itemBoxUi.transform.GetChild(0).GetChild(3).gameObject;
         slotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
+        outline = GetComponent<Outline>();
         SetItems();
     }
 
@@ -107,5 +110,18 @@ public class ItemBox : MonoBehaviour
                 slotList.nowOpenItemBox = default;
             }
         }
-    } 
+    }
+
+    private void OnMouseEnter()
+    {
+        outline.enabled = true;
+    }
+
+    private void OnMouseExit()
+    {
+        if (!outline.isClick)
+        {
+            outline.enabled = false;
+        }
+    }
 }

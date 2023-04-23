@@ -242,4 +242,16 @@ public class Monster : MonoBehaviour, IHitHandler
     {
         monsterController.encountPlayerCount--;
     }
+    private void OnMouseEnter()
+    {
+        outline.enabled = true;
+    }
+
+    private void OnMouseExit()
+    {
+        if (!outline.isClick)
+        {
+            outline.enabled = false;
+        }
+    }
 }

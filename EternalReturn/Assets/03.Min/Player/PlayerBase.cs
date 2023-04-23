@@ -83,12 +83,13 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 if (outline != default)
                 {
                     outline.enabled = false;
+                    outline.isClick = false;
                     outline = default;
                 }
                 if (clickTarget.GetComponent<Outline>() != null)
                 {
-                    
                     outline = clickTarget.GetComponent<Outline>();
+                    outline.isClick = true;
                     outline.enabled = true;
                 }
 
