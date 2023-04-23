@@ -14,7 +14,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     protected GameObject weapon = default;
 
     public GameObject enemy = default;
+
+    //[KJH] Add. 마우스 클릭 타겟 기록 및 외곽선 표시
     public GameObject clickTarget = default;
+    public Outline outline = default;
 
     public Transform attackRange = default;
     public GameObject[] SkillRange = new GameObject[5];
@@ -72,15 +75,32 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
             {
                 NavMeshHit navHit;
+
+                //[KJH] Add. 마우스 클릭 타겟 기록
                 clickTarget = hit.collider.gameObject;
+                //[KJH] Add. 클릭 타겟 Outline 표시
+                //외곽선 초기화
+                if (outline != default)
+                {
+                    outline.enabled = false;
+                    outline = default;
+                }
+                if (clickTarget.GetComponent<Outline>() != null)
+                {
+                    
+                    outline = clickTarget.GetComponent<Outline>();
+                    outline.enabled = true;
+                }
 
                 if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
                 {
                     // destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);
-                    SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
+                    //SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
+                    //[KJH] ADD. destionation yPos 변경
+                    SetDestination(new Vector3(navHit.position.x, navHit.position.y, navHit.position.z));
+
                     path = new NavMeshPath();
                     playerNav.CalculatePath(destination, path);
-
                     corners.Clear();
                     for (int i = 0; i < path.corners.Length; i++)
                     {

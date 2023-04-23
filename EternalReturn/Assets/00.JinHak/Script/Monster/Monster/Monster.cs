@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Monster : MonoBehaviour, IHitHandler
 {
@@ -12,6 +13,8 @@ public class Monster : MonoBehaviour, IHitHandler
     public MonsterSpawnPoint SpawnPoint { get { return spawnPoint; } }
     private MonsterBattleArea monsterBattleArea = default;
     public MonsterBattleArea MonsterBattleArea { get { return monsterBattleArea; } }
+
+    public Outline outline = default;
 
     public string monsterName = default;
     [SerializeField]
@@ -238,5 +241,5 @@ public class Monster : MonoBehaviour, IHitHandler
     public void ExitPlayer()
     {
         monsterController.encountPlayerCount--;
-    }  
+    }
 }
