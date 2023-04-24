@@ -14,6 +14,11 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     protected GameObject weapon = default;
 
     public GameObject enemy = default;
+
+    //[KJH] Add. 마우스 클릭 타겟 기록 및 외곽선 표시
+    public GameObject clickTarget = default;
+    public Outline outline = default;
+
     public Transform attackRange = default;
     public GameObject[] SkillRange = new GameObject[5];
     public CharaterData charaterData = default;
@@ -39,6 +44,8 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public List<Vector3> corners = new List<Vector3>();
     private SpriteRenderer[] attackRangeRender = new SpriteRenderer[2];
 
+    //[KJH] Add. MiniMap move
+    private Camera miniMapCamera = default;
 
 
 
@@ -51,6 +58,9 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         attackRangeRender[0] = attackRange.GetComponent<SpriteRenderer>();
         attackRangeRender[1] = attackRange.transform.GetChild(0).GetComponent<SpriteRenderer>();
         InitStat();
+
+        //KJH Add. MinimapCamera Add
+        miniMapCamera = Camera.main.transform.parent.GetChild(1).GetComponent<Camera>();
     }
 
 
@@ -66,17 +76,37 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         {
 
             RaycastHit hit;
-
+            
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
             {
+                Debug.Log(hit.collider.name);
                 NavMeshHit navHit;
+                //[KJH] Add. 마우스 클릭 타겟 기록
+                clickTarget = hit.collider.gameObject;
+                //[KJH] Add. 클릭 타겟 Outline 표시
+                //외곽선 초기화
+                if (outline != default)
+                {
+                    outline.enabled = false;
+                    outline.isClick = false;
+                    outline = default;
+                }
+                if (clickTarget.GetComponent<Outline>() != null)
+                {
+                    outline = clickTarget.GetComponent<Outline>();
+                    outline.isClick = true;
+                    outline.enabled = true;
+                }
+
                 if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
                 {
                     // destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);
-                    SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
+                    //SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
+                    //[KJH] ADD. destionation yPos 변경
+                    SetDestination(new Vector3(navHit.position.x, navHit.position.y, navHit.position.z));
+
                     path = new NavMeshPath();
                     playerNav.CalculatePath(destination, path);
-
                     corners.Clear();
                     for (int i = 0; i < path.corners.Length; i++)
                     {
@@ -86,11 +116,33 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 }
                 //SetDestination(hit.point);
             }
+
+            // MiniMap Click Player Move
+            if (Physics.Raycast(miniMapCamera.ScreenPointToRay(Input.mousePosition), out hit))
+            {
+                NavMeshHit navHit;
+                Debug.Log(hit.collider.transform.position);
+                Debug.Log(hit.collider.name);
+                if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
+                {
+                    // destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);
+                    //SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
+                    //[KJH] ADD. destionation yPos 변경
+                    SetDestination(new Vector3(navHit.position.x, navHit.position.y, navHit.position.z));
+
+                    path = new NavMeshPath();
+                    playerNav.CalculatePath(destination, path);
+                    corners.Clear();
+                    for (int i = 0; i < path.corners.Length; i++)
+                    {
+                        corners.Add(path.corners[i]);
+                    }
+                    currentCorner = 0;
+                }
+            }
             Debug.Log(hit);
 
         }
-
-
     }
 
 
