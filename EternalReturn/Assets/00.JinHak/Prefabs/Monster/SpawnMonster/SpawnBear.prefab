@@ -7,6 +7,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 9039394540474566631, guid: 9d1c2359969fc3640baf4c6f232567d4,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9039394542087057760, guid: 9d1c2359969fc3640baf4c6f232567d4,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9039394542087057762, guid: 9d1c2359969fc3640baf4c6f232567d4,
         type: 3}
       propertyPath: m_RootOrder
@@ -175,6 +185,11 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 3837597044537131449, guid: a659a0759ce1caf408a00430912fe3f7,
         type: 3}
+      propertyPath: monsterItemBox
+      value: 
+      objectReference: {fileID: 1554649546}
+    - target: {fileID: 3837597044537131449, guid: a659a0759ce1caf408a00430912fe3f7,
+        type: 3}
       propertyPath: monsterStatus.level
       value: 5
       objectReference: {fileID: 0}
@@ -201,24 +216,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7975916784493935305}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1933372918
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5152436184380812692}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 1, g: 0, b: 0, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!136 &6287443324725171764
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -233,3 +230,39 @@ CapsuleCollider:
   m_Height: 0.040671848
   m_Direction: 1
   m_Center: {x: 0.039225977, y: 0.0026219757, z: 0.009342426}
+--- !u!114 &1933372918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5152436184380812692}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isClick: 0
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &1554649546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5152436184380812692}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fullInvenTxt: {fileID: 0}
+  itemPrefabs:
+  - {fileID: 1247747957805755363, guid: 0c183ff67843d8f49b4acc7e37f7dab5, type: 3}
+  boxItems: []
+  isOpen: 0

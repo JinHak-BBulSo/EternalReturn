@@ -12,10 +12,20 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9039394540474566631, guid: 9d1c2359969fc3640baf4c6f232567d4,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9039394540474566648, guid: 9d1c2359969fc3640baf4c6f232567d4,
         type: 3}
       propertyPath: m_Layer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9039394542087057760, guid: 9d1c2359969fc3640baf4c6f232567d4,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9039394542087057762, guid: 9d1c2359969fc3640baf4c6f232567d4,
         type: 3}
@@ -121,6 +131,11 @@ PrefabInstance:
       propertyPath: outline
       value: 
       objectReference: {fileID: 542187567}
+    - target: {fileID: 8285957622584676095, guid: ae8884a678f7d0b48acf68c59db3586b,
+        type: 3}
+      propertyPath: monsterItemBox
+      value: 
+      objectReference: {fileID: 1521710573}
     - target: {fileID: 8285957622584676095, guid: ae8884a678f7d0b48acf68c59db3586b,
         type: 3}
       propertyPath: monsterStatus.maxLevel
@@ -240,9 +255,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isClick: 0
   outlineMode: 0
   outlineColor: {r: 1, g: 0, b: 0, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &1521710573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4628068397094065732}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fullInvenTxt: {fileID: 0}
+  itemPrefabs:
+  - {fileID: 1247747957805755363, guid: 0c183ff67843d8f49b4acc7e37f7dab5, type: 3}
+  boxItems: []
+  isOpen: 0

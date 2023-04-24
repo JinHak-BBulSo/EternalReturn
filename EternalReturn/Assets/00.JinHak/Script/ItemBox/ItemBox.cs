@@ -15,6 +15,7 @@ public class ItemBox : MonoBehaviour
     public List<GameObject> itemPrefabs = new List<GameObject>();
     public List<ItemStat> boxItems = new List<ItemStat>();
 
+    public bool isOpen = false;
     protected virtual void Start()
     {
         itemBoxUi = GameObject.Find("TestUi").transform.GetChild(1).gameObject;
@@ -28,8 +29,8 @@ public class ItemBox : MonoBehaviour
     {
         foreach (var item in itemPrefabs)
         {
-            GameObject item_ = Instantiate(item);
-            ItemStat boxItem_ = item_.GetComponent<ItemController>().item;
+            ItemStat item_ = new ItemStat(item.GetComponent<ItemController>().item);
+            ItemStat boxItem_ = item_;
             boxItems.Add(boxItem_);
         }
     }
@@ -73,7 +74,7 @@ public class ItemBox : MonoBehaviour
             slot.slotItem = default;
         }
     }
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
@@ -83,14 +84,20 @@ public class ItemBox : MonoBehaviour
                 slotList.nowOpenItemBox = this;
             }
         }
-    }
+    }*/
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player" && this.enabled)
         {
             if(other.GetComponent<PlayerBase>().clickTarget == this.gameObject)
             {
+                if (!isOpen)
+                {
+                    isOpen = true;
+                    SetSlot();
+                    slotList.nowOpenItemBox = this;
+                }
                 playerEnter = true;
                 itemBoxUi.SetActive(true);
             }
@@ -99,11 +106,12 @@ public class ItemBox : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && this.enabled)
         {
             if (playerEnter)
             {
                 playerEnter = false;
+                isOpen = false;
                 ResetSlot();
                 fullInvenTxt.SetActive(false);
                 itemBoxUi.SetActive(false);

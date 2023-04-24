@@ -19,18 +19,19 @@ public class ItemBoxSlot : Slot
     {
         if (slotItem == default) return;
 
-        List<ItemStat> inventory_ = ItemManager.Instance.inventory;
-        ItemManager.Instance.GetItem(slotItem);
-
-        slotItem.count--;
-
-        if (slotItem.count == 0)
+        if (!ItemManager.Instance.isInventoryFull)
         {
-            slotList.nowOpenItemBox.boxItems.Remove(slotItem);
-            slotList.nowOpenItemBox.ResetSlot();
-            slotList.nowOpenItemBox.SetSlot();
-        }
+            ItemStat item = new ItemStat(slotItem);
+            ItemManager.Instance.GetItem(item);
+            slotItem.count--;
 
+            if (slotItem.count == 0)
+            {
+                slotList.nowOpenItemBox.boxItems.Remove(slotItem);
+                slotList.nowOpenItemBox.ResetSlot();
+                slotList.nowOpenItemBox.SetSlot();
+            }
+        }
         /*if (inventory_. < 10)
         {
             //ItemManager.Instance.AddItemToList(slotItem, inventory_);

@@ -17,6 +17,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 3214226632272968477, guid: 95597e75c58c2d145a2a4d4f9b1380da,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3214226632272968479, guid: 95597e75c58c2d145a2a4d4f9b1380da,
         type: 3}
       propertyPath: m_RootOrder
@@ -87,6 +92,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3214226632807632282, guid: 95597e75c58c2d145a2a4d4f9b1380da,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6225067718382617516, guid: 95597e75c58c2d145a2a4d4f9b1380da,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -107,6 +117,26 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 9162418185085827458, guid: 95597e75c58c2d145a2a4d4f9b1380da,
+        type: 3}
+      propertyPath: m_Height
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162418185085827458, guid: 95597e75c58c2d145a2a4d4f9b1380da,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.012
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162418185085827458, guid: 95597e75c58c2d145a2a4d4f9b1380da,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.002
+      objectReference: {fileID: 0}
+    - target: {fileID: 9162418185085827458, guid: 95597e75c58c2d145a2a4d4f9b1380da,
+        type: 3}
+      propertyPath: m_Center.z
+      value: -0.008
+      objectReference: {fileID: 0}
     - target: {fileID: 9162418185085827468, guid: 95597e75c58c2d145a2a4d4f9b1380da,
         type: 3}
       propertyPath: outline
@@ -118,6 +148,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: bc05a05592b16d84e84dae4d8cd26940,
         type: 2}
+    - target: {fileID: 9162418185085827468, guid: 95597e75c58c2d145a2a4d4f9b1380da,
+        type: 3}
+      propertyPath: monsterItemBox
+      value: 
+      objectReference: {fileID: 1412139892}
     - target: {fileID: 9162418185085827468, guid: 95597e75c58c2d145a2a4d4f9b1380da,
         type: 3}
       propertyPath: monsterStatus.level
@@ -136,24 +171,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5481074691348557431}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1506798424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1270369796178940633}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 1, g: 0, b: 0, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!136 &1453732912321605137
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -168,3 +185,38 @@ CapsuleCollider:
   m_Height: 0.016191559
   m_Direction: 1
   m_Center: {x: 0.0004881157, y: 0.004163169, z: 0.0045343055}
+--- !u!114 &1506798424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270369796178940633}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isClick: 0
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &1412139892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1270369796178940633}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fullInvenTxt: {fileID: 0}
+  itemPrefabs: []
+  boxItems: []
+  isOpen: 0
