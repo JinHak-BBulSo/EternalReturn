@@ -11,10 +11,10 @@ public class Jackie : PlayerBase
     private bool isWBuffOn = false;
     [SerializeField]
     private bool isRBuffOn = false;
-    Vector3 targetPos;
-    Vector3 exceptYTragetPos;
-    Vector3 nowPos;
-    Vector3 dir;
+    public Vector3 targetPos;
+    public Vector3 exceptYTragetPos;
+    public Vector3 nowPos;
+    public Vector3 dir;
     float distance;
     protected override void Start()
     {
@@ -90,11 +90,11 @@ public class Jackie : PlayerBase
         exceptYTragetPos = ExceptY.ExceptYPos(nowMousePoint);
         nowPos = ExceptY.ExceptYPos(transform.position);
         distance = ExceptY.ExceptYDistance(transform.position, targetPos);
-        Debug.Log(distance);
+        dir = Vector3.Normalize(exceptYTragetPos - nowPos);
         if (distance >= 5.5f)
         {
-            dir = Vector3.Normalize(exceptYTragetPos - nowPos);
-            targetPos = nowPos + dir * 5.5f;
+            distance = 5.5f;
+            targetPos = transform.position + dir * distance;
         }
         StartCoroutine(JackieJump());
         StartCoroutine(SkillCooltime(2, 1f));
@@ -102,15 +102,16 @@ public class Jackie : PlayerBase
 
     IEnumerator JackieJump()
     {
+        float time = 0f;
         while (true)
         {
-            transform.Translate(dir * Time.deltaTime * 10f);
-            Debug.Log("?");
-            if (ExceptY.ExceptYDistance(transform.position, targetPos) <= 0.1f || ExceptY.ExceptYDistance(transform.position, targetPos) >= 0.1f)
+            transform.position += (dir * distance) * Time.deltaTime;
+            if (time >= 0.7f)
             {
-                break;
+                yield break;
             }
             yield return null;
+            time += Time.deltaTime;
         }
     }
     IEnumerator buffCool()
