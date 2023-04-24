@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isClick: 0
+  monster: {fileID: 2988378618793571741}
   outlineMode: 0
   outlineColor: {r: 1, g: 0, b: 0, a: 1}
   outlineWidth: 2
@@ -261,3 +262,15 @@ MonoBehaviour:
   - {fileID: 1247747957805755363, guid: 0c183ff67843d8f49b4acc7e37f7dab5, type: 3}
   boxItems: []
   isOpen: 0
+--- !u!114 &2988378618793571741 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8464378212902257322, guid: fa4592f8085ffac4a9e3207c54bdef56,
+    type: 3}
+  m_PrefabInstance: {fileID: 6633619346629883703}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: decfc9cd0df3b3a4f8d3ee45af03c03d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

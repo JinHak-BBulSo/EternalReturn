@@ -1115,6 +1115,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56aaffdc9c67cd84a976729885a63929, type: 3}
+--- !u!114 &5136994576691803416 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8207203085696498148, guid: 56aaffdc9c67cd84a976729885a63929,
+    type: 3}
+  m_PrefabInstance: {fileID: 3940529692808793340}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: decfc9cd0df3b3a4f8d3ee45af03c03d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9180730461469186366 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5316239146174764482, guid: 56aaffdc9c67cd84a976729885a63929,
@@ -1135,25 +1147,6 @@ CapsuleCollider:
   m_Height: 0.029446293
   m_Direction: 1
   m_Center: {x: 0.0007232288, y: 0.0046572573, z: 0.002611934}
---- !u!114 &299814331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9180730461469186366}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isClick: 0
-  outlineMode: 0
-  outlineColor: {r: 1, g: 0, b: 0, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!114 &124341543
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1170,6 +1163,26 @@ MonoBehaviour:
   itemPrefabs: []
   boxItems: []
   isOpen: 0
+--- !u!114 &299814331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9180730461469186366}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isClick: 0
+  monster: {fileID: 5136994576691803416}
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0, b: 0, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &5136994577398186115
 PrefabInstance:
   m_ObjectHideFlags: 0
