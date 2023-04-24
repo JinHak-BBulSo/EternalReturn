@@ -9,7 +9,7 @@ public class Fog : MonoBehaviour
     public int CastResolution = 128;
     public int TextureResolution = 128;
 
-    public GameObject CastPointGO;
+    //public GameObject CastPointGO;
     public float CastPointHeight = 1.5f;
     [Range(0, 12)]
     public int PastTexCount = 12;
