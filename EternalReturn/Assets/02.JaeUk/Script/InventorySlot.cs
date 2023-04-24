@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InventorySlot : Slot, IDragHandler, IEndDragHandler, IBeginDragHandler
+public class InventorySlot : Slot, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerClickHandler
 {
 
     public bool chk = false;
+    public Vector3 pos = default;
+    public int myNum;
     public override void Start()
     {
         base.Start();
         playerWeaponType = 1;
     }
     // Start is called before the first frame update
-    public override void Onclick(int i)
+    public override void UseItem(int i)
     {
         if (!chk)
         {
@@ -85,17 +87,38 @@ public class InventorySlot : Slot, IDragHandler, IEndDragHandler, IBeginDragHand
         ItemManager.Instance.SetequipmentTotalState();
         ItemManager.Instance.isItemPick = true;
     }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        Debug.Log(chk);
+        if (!chk)
+        {
+            UseItem(myNum);
+        }
+
+    }
     public void OnDrag(PointerEventData eventData)
     {
-        chk = false;
+
+        chk = true;
         transform.GetChild(0).position = eventData.position;
+
+
+
     }
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (Vector3.Distance(eventData.position, pos) >= 70f)
+        {
+            // ItemManager.Instance.DropItem(ItemManager.Instance.inventory[myNum], Player, canvas);
+        }
+
         transform.GetChild(0).position = transform.position;
+        chk = false;
+
 
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
+        pos = transform.GetChild(0).position;
     }
 }

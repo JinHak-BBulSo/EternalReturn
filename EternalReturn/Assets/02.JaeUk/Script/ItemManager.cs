@@ -5,6 +5,8 @@ using System.Linq;
 
 public class ItemManager : SingleTonBase<ItemManager>
 {
+    public GameObject ItemCanvas;
+    public GameObject Player;
     public ItemDefine itemDefine = new ItemDefine();
     public Dictionary<int, GameObject> itemListObj = new Dictionary<int, GameObject>();
     public List<ItemStat> itemList = new List<ItemStat>();
@@ -25,6 +27,21 @@ public class ItemManager : SingleTonBase<ItemManager>
     {
         AddPrefabs();
         base.Awake();
+
+    }
+    public void SetDefault()
+    {
+        equipmentInven.Add(new ItemStat());
+        equipmentInven.Add(new ItemStat(15));
+        equipmentInven.Add(new ItemStat(14));
+        equipmentInven.Add(new ItemStat(16));
+        equipmentInven.Add(new ItemStat(17));
+        equipmentInven.Add(new ItemStat(18));
+        for (int i = 0; i < 10; i++)
+        {
+            inventory.Add(new ItemStat());
+        }
+
 
     }
     public int[] ADDCombineItemToInven(int id)
@@ -77,6 +94,28 @@ public class ItemManager : SingleTonBase<ItemManager>
             DeleteItemToRare(item_2);
             return forReturn;
         }
+    }
+
+    public void GetItem(ItemStat item)
+    {
+        bool isUsed = false;
+        for (int i = 0; i < equipmentInven.Count; i++)
+        {
+
+            if (item.type == equipmentInven[i].type && equipmentInven[i].id == 0)
+            {
+                equipmentInven[i] = item;
+                isUsed = true;
+            }
+        }
+
+        if (!isUsed)
+        {
+            PickItem(item);
+            Debug.Log(item.id);
+        }
+
+
     }
     public int[] AddInferiorList(int ItemId)
     {
@@ -131,6 +170,21 @@ public class ItemManager : SingleTonBase<ItemManager>
         // Debug.Log($"Find Func Test : {item_.name}, {targetItem_.name}");
         return targetItem_;
     }
+    private ItemStat FindItemFromList(ItemStat item_, int i)
+    {
+        ItemStat targetItem_ = default;
+
+        if (inventory[i].id.Equals(item_.id))
+        {
+            targetItem_ = inventory[i];
+        }
+
+
+
+
+        // Debug.Log($"Find Func Test : {item_.name}, {targetItem_.name}");
+        return targetItem_;
+    }
 
     //! 아이템 리스트와 아이템을 받아서 아이템 리스트에 추가하거나 더해주는 함수
     public void AddItemToList(ItemStat item_, List<ItemStat> itemlist_)
@@ -166,6 +220,95 @@ public class ItemManager : SingleTonBase<ItemManager>
             // Debug.LogFormat("Item add to list: {0}, {1}, {2}",
             // item_.item.name, item_.item.id, item_.item.count);
         }
+    }       // AddItemToList()
+    public void PickItem(ItemStat item_)
+    {
+        bool isChk = false;
+        foreach (ItemStat id in inventory.ToList())
+        {
+            if (id.id == item_.id)
+            {
+                isChk = true;
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        ItemStat targetItem_ = default;
+        if (isChk)
+        {
+
+            for (int i = 0; i < inventory.Count; i++)
+            {
+
+                targetItem_ = FindItemFromList(item_, i);
+
+                if (targetItem_ != default && targetItem_.id != 0 && targetItem_.maxCount > targetItem_.count)
+                {
+                    Debug.Log($"현재 인벤토리에서 가져온 아이템의 칸{i}");
+                    break;
+                }
+
+
+            }
+            if (targetItem_ != default && targetItem_.id != 0)
+            {
+                if (targetItem_.maxCount > targetItem_.count)
+                {
+                    targetItem_.count++;
+                }
+                else
+                {
+
+                    for (int i = 0; i < inventory.Count; i++)
+                    {
+                        if (inventory[i].id == 0)
+                        {
+                            inventory[i] = item_;
+                            break;
+                        }
+
+                    }
+                }
+
+                // Debug.LogFormat("Item exist! count add: {0}, {1}, {2}",
+                // targetItem_.item.name, targetItem_.item.id, targetItem_.item.count);
+            }
+            else
+            {
+
+                for (int i = 0; i < inventory.Count; i++)
+                {
+                    if (inventory[i].id == 0)
+                    {
+                        inventory[i] = item_;
+                        break;
+                    }
+
+                }
+            }
+        }
+        else
+        {
+
+            for (int i = 0; i < inventory.Count; i++)
+            {
+                if (inventory[i].id == 0)
+                {
+                    inventory[i] = item_;
+                    break;
+                }
+
+            }
+
+            // Debug.LogFormat("Item add to list: {0}, {1}, {2}",
+            // item_.item.name, item_.item.id, item_.item.count);
+        }
+
+
+
     }       // AddItemToList()
     private void DeleteItemToList(ItemStat item_, List<ItemStat> itemlist_)
     {

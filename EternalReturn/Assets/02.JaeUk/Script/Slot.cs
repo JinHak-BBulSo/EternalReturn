@@ -5,11 +5,13 @@ using UnityEngine.EventSystems;
 
 public class Slot : MonoBehaviour
 {
+    public GameObject canvas;
+    public GameObject Player;
     public int playerWeaponType = 0;
     // Start is called before the first frame update
     public virtual void Start()
     {
-        // playerWeaponType = 
+
     }
 
     // Update is called once per frame
@@ -18,7 +20,7 @@ public class Slot : MonoBehaviour
 
     }
 
-    public virtual void Onclick(int i)
+    public virtual void UseItem(int i)
     {
 
     }

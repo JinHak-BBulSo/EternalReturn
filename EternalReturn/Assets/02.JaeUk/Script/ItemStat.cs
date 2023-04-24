@@ -22,6 +22,10 @@ public class ItemStat : Stat
     {
 
     }
+    public ItemStat(int type_)
+    {
+        type = type_;
+    }
     public ItemStat(float attackPower_, float skillPower_, float basicAttackPower_, float defense_, float attackSpeed_, float coolDown_, float criticalPercent_, float criticalDamage_,
      float moveSpeed_, float visionRange_, float attackRange_, float damageReduce_, float tenacity_, float armorReduce_, float lifeSteel_, float extraHp_,
       float extraStamina_, float hpRegen_, float staminaRegen_, float weaponAttackSpeedPercent_, float weaponAttackRangePercent_)
