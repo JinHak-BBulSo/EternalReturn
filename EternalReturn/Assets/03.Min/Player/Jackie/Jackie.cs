@@ -6,7 +6,7 @@ public class Jackie : PlayerBase
 {
     public List<PlayerBase> enemyPlayer = new List<PlayerBase>();
     public List<Monster> enemyHunt = new List<Monster>();
-    private BoxCollider QBoxCol = default;
+    public BoxCollider QBoxCol = default;
     [SerializeField]
     private bool isWBuffOn = false;
     [SerializeField]
@@ -14,8 +14,8 @@ public class Jackie : PlayerBase
     protected override void Start()
     {
         base.Start();
-        QBoxCol = Skill_Q_Range.transform.GetChild(0).GetChild(0).GetComponent<BoxCollider>();
-        basicAttackCol = attackRange.GetComponent<SphereCollider>();
+        QBoxCol = SkillRange[0].transform.GetChild(0).GetChild(0).GetComponent<BoxCollider>();
+        // Debug.Log(QBoxCol);
     }
 
     public override void Attack()
@@ -44,7 +44,6 @@ public class Jackie : PlayerBase
             }
             else
             {
-                Debug.Log(enemy.name);
                 if (enemy.GetComponent<Monster>() != null)
                 {
                     DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
@@ -64,7 +63,7 @@ public class Jackie : PlayerBase
         base.Skill_Q();
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 0);
-        Skill_Q_Range.SetActive(true);
+        SkillRange[0].SetActive(true);
         StartCoroutine(SkillCooltime(0, 9f));
     }
 
@@ -76,6 +75,15 @@ public class Jackie : PlayerBase
         StartCoroutine(SkillCooltime(1, 19f));
         StartCoroutine(buffCool());
     }
+
+    public override void Skill_E()
+    {
+        base.Skill_E();
+        playerAni.SetBool("isSkill", true);
+        playerAni.SetFloat("SkillType", 2);
+        StartCoroutine(SkillCooltime(1, 20f));
+    }
+
     IEnumerator buffCool()
     {
         yield return new WaitForSeconds(5f);
@@ -133,7 +141,6 @@ public class Jackie : PlayerBase
 
     private void SecondQDamage()
     {
-        Debug.Log(enemyHunt.Count);
         for (int i = 0; i < enemyPlayer.Count; i++)
         {
             DamageMessage dm = new DamageMessage(gameObject, 25 + (playerStat.attackPower * 0.7f) + (playerStat.skillPower * 0.6f));

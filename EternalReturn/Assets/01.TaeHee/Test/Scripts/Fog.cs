@@ -26,7 +26,7 @@ public class Fog : MonoBehaviour
 
     private float timer = 0;
 
-    void Start()
+    private void Start()
     {
         cookieMask = new RenderTexture(TextureResolution, TextureResolution, 0);
         cookieBlurred = new RenderTexture(TextureResolution, TextureResolution, 0);
@@ -47,19 +47,9 @@ public class Fog : MonoBehaviour
         d_angle = 360 * Mathf.Deg2Rad / CastResolution;
     }
 
-    private void Update()
-    {
-        //timer += Time.deltaTime;
-    }
-
     public void SetCookie()
     {
-        //if (timer < 0.1f)
-        //    return;
-        //else
-        //    timer = 0f;
-
-        CookieBlur.SetInteger("_PastTexCount", PastTexCount);
+        CookieBlur.SetInt("_PastTexCount", PastTexCount);
 
         Vector3 castPoint = Center.position;
         //castPoint.y = CastPointHeight;
@@ -95,5 +85,4 @@ public class Fog : MonoBehaviour
 
         pastMaskIndex = pastMaskIndex >= (PastTexCount - 1) ? 0 : pastMaskIndex + 1;
     }
-
 }

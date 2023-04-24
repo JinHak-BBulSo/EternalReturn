@@ -34,5 +34,13 @@ public class PlayerController : MonoBehaviour
         currentState.StateEnter(this);
         player = this.gameObject.GetComponent<PlayerBase>();
     }
+
+    public void ResetRange()
+    {
+        for (int i = 0; i < player.SkillRange.Length; i++)
+        {
+            player.SkillRange[i].SetActive(false);
+        }
+    }
 }
 
