@@ -128,6 +128,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             // MiniMap Click Player Move
             if (Physics.Raycast(miniMapCamera.ScreenPointToRay(Input.mousePosition), out hit))
             {
+
                 NavMeshHit navHit;
                 Debug.Log(hit.collider.transform.position);
                 Debug.Log(hit.collider.name);

@@ -9,7 +9,7 @@ public class MiniMapPlayerIcon : MonoBehaviour
     void Start()
     {
         targetPlayer = transform.parent.GetChild(0).gameObject;
-        offset = new Vector3(0, 0.4f, 0);
+        offset = new Vector3(0f, 0.4f, -0f);
     }
     void Update()
     {
