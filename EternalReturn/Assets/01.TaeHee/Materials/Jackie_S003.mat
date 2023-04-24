@@ -78,6 +78,6 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SilhouetteColor: {r: 0.40161088, g: 0.7695067, b: 0.8962264, a: 1}
+    - _SilhouetteColor: {r: 0.4016108, g: 0.76950663, b: 0.8962264, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
