@@ -17,6 +17,8 @@ public class ItemBoxSlot : Slot
     
     public void GetItem()
     {
+        if (slotItem == default) return;
+
         bool isInInventory_ = false;
         ItemStat targetItem_ = new ItemStat();
         

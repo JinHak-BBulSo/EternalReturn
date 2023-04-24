@@ -79,6 +79,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
             {
+                Debug.Log(hit.collider.name);
                 NavMeshHit navHit;
                 //[KJH] Add. 마우스 클릭 타겟 기록
                 clickTarget = hit.collider.gameObject;
@@ -121,6 +122,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             {
                 NavMeshHit navHit;
                 Debug.Log(hit.collider.transform.position);
+                Debug.Log(hit.collider.name);
                 if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
                 {
                     // destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);

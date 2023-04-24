@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class MiniMapPlayerIcon : MonoBehaviour
 {
-    GameObject targetPlayer = default;
+    private GameObject targetPlayer = default;
+    private Vector3 offset = default;
     void Start()
     {
         targetPlayer = transform.parent.GetChild(0).gameObject;
+        offset = new Vector3(0, 0.4f, 0);
     }
     void Update()
     {
-        transform.position = ExceptY.ExceptYPos(targetPlayer.transform.position);
+        transform.position = targetPlayer.transform.position + offset;
     }
 }
