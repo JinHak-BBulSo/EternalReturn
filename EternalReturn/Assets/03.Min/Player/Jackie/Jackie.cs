@@ -35,10 +35,20 @@ public class Jackie : PlayerBase
         {
             if (isWBuffOn)
             {
+
             }
             else
             {
-
+                if (enemy.GetComponent<Monster>() != null)
+                {
+                    DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
+                    enemy.GetComponent<Monster>().TakeDamage(dm);
+                }
+                else if (enemy.GetComponent<PlayerBase>() != null)
+                {
+                    DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
+                    enemy.GetComponent<PlayerBase>().TakeDamage(dm);
+                }
             }
         }
         else
@@ -96,10 +106,19 @@ public class Jackie : PlayerBase
             distance = 5.5f;
             targetPos = transform.position + dir * distance;
         }
+        isMove = false;
         StartCoroutine(JackieJump());
-        StartCoroutine(SkillCooltime(2, 1f));
+        StartCoroutine(SkillCooltime(2, 20f));
     }
 
+    public override void Skill_R()
+    {
+        base.Skill_R();
+        isRBuffOn = true;
+        playerAni.SetBool("isSkill", true);
+        playerAni.SetFloat("SkillType", 3);
+        weapon.SetActive(false);
+    }
     IEnumerator JackieJump()
     {
         float time = 0f;
@@ -120,6 +139,18 @@ public class Jackie : PlayerBase
         isWBuffOn = false;
     }
 
+    IEnumerator RbuffCool()
+    {
+        playerController.ChangeState(new PlayerIdle());
+        playerAni.SetBool("isRbuff", true);
+        playerAni.SetBool("isSkill", false);
+        yield return new WaitForSeconds(15f);
+        if (isRBuffOn)
+        {
+            RBuffOff();
+        }
+    }
+
 
     // (9f - ((skillLevel - 1) * 0.5) *  playerStat.coolDown)
     IEnumerator SkillCooltime(int skillType_, float cooltime_)
@@ -129,6 +160,15 @@ public class Jackie : PlayerBase
         skillCooltimes[skillType_] = false;
     }
 
+    private void RBuffOff()
+    {
+        Debug.Log("두번??");
+        isRBuffOn = false;
+        playerAni.SetBool("isRbuff", false);
+        playerAni.SetBool("isSkill", false);
+        weapon.SetActive(true);
+        StartCoroutine(SkillCooltime(3, 70f));
+    }
     private void TriggerOn()
     {
         QBoxCol.isTrigger = true;

@@ -42,5 +42,13 @@ public class PlayerController : MonoBehaviour
             player.SkillRange[i].SetActive(false);
         }
     }
+
+    public void ResetAni()
+    {
+        player.playerAni.SetBool("isMove", false);
+        player.playerAni.SetBool("isAttack", false);
+        player.playerAni.SetBool("isSkill", false);
+        player.playerAni.SetBool("skillStart", false);
+    }
 }
 
