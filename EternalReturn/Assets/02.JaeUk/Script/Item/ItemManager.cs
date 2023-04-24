@@ -21,6 +21,7 @@ public class ItemManager : SingleTonBase<ItemManager>
     public ItemStat equipmentTotalState = default;
     public bool isItemDrop = true;
     public bool isItemPick = true;
+    public bool isInventoryFull = false;
 
 
     protected override void Awake()
@@ -106,6 +107,7 @@ public class ItemManager : SingleTonBase<ItemManager>
             {
                 equipmentInven[i] = item;
                 isUsed = true;
+                isInventoryFull = false;
             }
         }
 
@@ -258,6 +260,7 @@ public class ItemManager : SingleTonBase<ItemManager>
                 if (targetItem_.maxCount > targetItem_.count)
                 {
                     targetItem_.count++;
+                    isInventoryFull = false;
                 }
                 else
                 {
@@ -267,6 +270,7 @@ public class ItemManager : SingleTonBase<ItemManager>
                         if (inventory[i].id == 0)
                         {
                             inventory[i] = item_;
+                            isInventoryFull = false;
                             break;
                         }
 
@@ -284,6 +288,7 @@ public class ItemManager : SingleTonBase<ItemManager>
                     if (inventory[i].id == 0)
                     {
                         inventory[i] = item_;
+                        isInventoryFull = false;
                         break;
                     }
 
@@ -298,7 +303,12 @@ public class ItemManager : SingleTonBase<ItemManager>
                 if (inventory[i].id == 0)
                 {
                     inventory[i] = item_;
+                    isInventoryFull = false;
                     break;
+                }
+                else
+                {
+                    isInventoryFull = true;
                 }
 
             }

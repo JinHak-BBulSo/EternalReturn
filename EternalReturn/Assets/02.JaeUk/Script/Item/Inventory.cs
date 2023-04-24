@@ -20,6 +20,7 @@ public class Inventory : SlotList
     }
     public override void Addslot()
     {
+        Debug.Log(ItemManager.Instance.isItemPick);
         if (ItemManager.Instance.isItemPick)
         {
             ItemManager.Instance.isItemPick = false;
