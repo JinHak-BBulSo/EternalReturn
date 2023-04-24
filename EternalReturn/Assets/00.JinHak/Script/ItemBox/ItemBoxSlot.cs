@@ -19,9 +19,39 @@ public class ItemBoxSlot : Slot
     {
         if (slotItem == default) return;
 
-        bool isInInventory_ = false;
+        List<ItemStat> inventory_ = ItemManager.Instance.inventory;
+        ItemManager.Instance.GetItem(slotItem);
+
+        slotItem.count--;
+
+        if (slotItem.count == 0)
+        {
+            slotList.nowOpenItemBox.boxItems.Remove(slotItem);
+            slotList.nowOpenItemBox.ResetSlot();
+            slotList.nowOpenItemBox.SetSlot();
+        }
+
+        /*if (inventory_. < 10)
+        {
+            //ItemManager.Instance.AddItemToList(slotItem, inventory_);
+            ItemManager.Instance.GetItem(slotItem);
+            slotItem.count--;
+
+            if (slotItem.count == 0)
+            {
+                slotList.nowOpenItemBox.boxItems.Remove(slotItem);
+                slotList.nowOpenItemBox.ResetSlot();
+                slotList.nowOpenItemBox.SetSlot();
+            }
+        }
+        else
+        {
+            slotList.nowOpenItemBox.fullInvenTxt.SetActive(true);
+        }*/
+
+        /*bool isInInventory_ = false;
         ItemStat targetItem_ = new ItemStat();
-        
+
         foreach (ItemStat inventoryItem_ in ItemManager.Instance.inventory)
         {
             if (inventoryItem_.id == slotItem.id)
@@ -37,7 +67,7 @@ public class ItemBoxSlot : Slot
 
         if (isInInventory_)
         {
-            if(targetItem_.count < targetItem_.maxCount)
+            if (targetItem_.count < targetItem_.maxCount)
             {
                 targetItem_.count++;
             }
@@ -49,7 +79,7 @@ public class ItemBoxSlot : Slot
         else
         {
             AddItemToInventory();
-        }
+        }*/
     }
 
     private void AddItemToInventory()
@@ -58,7 +88,8 @@ public class ItemBoxSlot : Slot
 
         if (inventory_.Count < 10)
         {
-            ItemManager.Instance.AddItemToList(slotItem, inventory_);
+            //ItemManager.Instance.AddItemToList(slotItem, inventory_);
+            ItemManager.Instance.GetItem(slotItem);
             slotItem.count--;
 
             if(slotItem.count == 0)

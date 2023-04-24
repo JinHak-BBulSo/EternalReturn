@@ -54,8 +54,8 @@ public class Fog : MonoBehaviour
         Vector3 castPoint = Center.position;
         //castPoint.y = CastPointHeight;
 
-        castPoint.y = CastPointGO.transform.position.y;
-        //castPoint.y = Center.position.y + CastPointHeight - 1f;
+        //castPoint.y = CastPointGO.transform.position.y;
+        castPoint.y = Center.position.y + CastPointHeight - 1f;
         for (int i = 0; i < CastResolution; i++)
         {
             Vector3 dir = Vector3.one;
@@ -66,14 +66,12 @@ public class Fog : MonoBehaviour
             {
                 data[3 + i * 2] = (hit.point.x - transform.position.x) / projectorSize + 0.5f;
                 data[4 + i * 2] = (hit.point.z - transform.position.z) / projectorSize + 0.5f;
-                Debug.Log($"O {hit.transform.gameObject}");
             }
             else
             {
                 Vector3 point = dir.normalized * Radius + Center.transform.position;
                 data[3 + i * 2] = (point.x - transform.position.x) / projectorSize + 0.5f;
                 data[4 + i * 2] = (point.z - transform.position.z) / projectorSize + 0.5f;
-                Debug.Log("X");
             }
         }
         data[1] = (castPoint.x - transform.position.x) / projectorSize + 0.5f;
