@@ -82,24 +82,20 @@ public class ItemCombineLoad : MonoBehaviour
         // func(ItemWishList, true);
         ItemManager.Instance.itemWishList = default;
         ItemManager.Instance.itemWishList = ItemWishList;
-        ItemStat itemDefault = new ItemStat();
-        ItemManager.Instance.equipmentInven.Add(itemDefault);
-        ItemManager.Instance.equipmentInven.Add(itemDefault);
-        ItemManager.Instance.equipmentInven.Add(itemDefault);
-        ItemManager.Instance.equipmentInven.Add(itemDefault);
-        ItemManager.Instance.equipmentInven.Add(itemDefault);
-        ItemManager.Instance.equipmentInven.Add(itemDefault);
+        ItemManager.Instance.SetDefault();
         ItemManager.Instance.EquipmentListSet(AddItem(0));
         ItemManager.Instance.EquipmentListSet(AddItem(20));
         ItemManager.Instance.EquipmentListSet(AddItem(27));
         ItemManager.Instance.EquipmentListSet(AddItem(28));
         ItemManager.Instance.EquipmentListSet(AddItem(34));
-        ItemManager.Instance.inventory.Add(AddItem(21));
-        ItemManager.Instance.inventory.Add(AddItem(25));
-        ItemManager.Instance.inventory.Add(AddItem(22));
-        ItemManager.Instance.inventory.Add(AddItem(29));
-        ItemManager.Instance.inventory.Add(AddItem(33));
-        ItemManager.Instance.inventory.Add(AddItem(38));
+
+
+        ItemManager.Instance.GetItem(AddItem(30));
+        ItemManager.Instance.GetItem(AddItem(23));
+        ItemManager.Instance.GetItem(AddItem(2));
+        ItemManager.Instance.GetItem(AddItem(40));
+
+
 
         // ItemManager.Instance.inventory.Add(AddItem(54));
         // ItemManager.Instance.inventory.Add(AddItem(226));
