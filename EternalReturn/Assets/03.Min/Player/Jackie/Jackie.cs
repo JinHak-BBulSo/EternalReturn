@@ -11,11 +11,14 @@ public class Jackie : PlayerBase
     private bool isWBuffOn = false;
     [SerializeField]
     private bool isRBuffOn = false;
-    public Vector3 targetPos;
-    public Vector3 exceptYTragetPos;
-    public Vector3 nowPos;
-    public Vector3 dir;
-    float distance;
+    private Vector3 targetPos;
+    private Vector3 exceptYTragetPos;
+    private Vector3 nowPos;
+    private Vector3 dir;
+    private float distance;
+    private bool isWeaponPassiveOn = true;
+    private int weaponStack = 0;
+
     protected override void Start()
     {
         base.Start();
@@ -31,11 +34,53 @@ public class Jackie : PlayerBase
     protected override void AttackEnd()
     {
         base.AttackEnd();
+        if (isWeaponPassiveOn)
+        {
+            weaponStack++;
+            if (weaponStack >= 4)
+            {
+                weaponStack = 4;
+            }
+        }
         if (isRBuffOn)
         {
             if (isWBuffOn)
             {
-
+                if (enemy.GetComponent<Monster>() != null)
+                {
+                    if (enemy.GetComponent<Monster>().applyDebuffCheck[0])
+                    {
+                        DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower + playerTotalStat.attackPower * 0.09f);
+                        enemy.GetComponent<Monster>().TakeDamage(dm);
+                        DamageMessage debuffdm = new DamageMessage(gameObject, (10 + (playerTotalStat.attackPower * 0.03f) + (playerTotalStat.skillPower * 0.03f)) / 6f, 0, 6f);
+                        StartCoroutine(enemy.GetComponent<Monster>().ContinousDamage(debuffdm, 0, 6f, 1f));
+                    }
+                    else
+                    {
+                        DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower);
+                        enemy.GetComponent<Monster>().TakeDamage(dm);
+                        DamageMessage debuffdm = new DamageMessage(gameObject, (10 + (playerTotalStat.attackPower * 0.03f) + (playerTotalStat.skillPower * 0.03f)) / 6f, 0, 6f);
+                        StartCoroutine(enemy.GetComponent<Monster>().ContinousDamage(debuffdm, 0, 6f, 1f));
+                    }
+                }
+                else if (enemy.GetComponent<PlayerBase>() != null)
+                {
+                    if (enemy.GetComponent<PlayerBase>().applyDebuffCheck[0])
+                    {
+                        DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower + playerTotalStat.attackPower * 0.09f);
+                        enemy.GetComponent<PlayerBase>().TakeDamage(dm);
+                        DamageMessage debuffdm = new DamageMessage(gameObject, (10 + (playerTotalStat.attackPower * 0.03f) + (playerTotalStat.skillPower * 0.03f)) / 6f, 0, 6f);
+                        StartCoroutine(enemy.GetComponent<PlayerBase>().ContinousDamage(debuffdm, 0, 6f, 1f));
+                    }
+                    else
+                    {
+                        DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower);
+                        enemy.GetComponent<PlayerBase>().TakeDamage(dm);
+                        DamageMessage debuffdm = new DamageMessage(gameObject, (10 + (playerTotalStat.attackPower * 0.03f) + (playerTotalStat.skillPower * 0.03f)) / 6f, 0, 6f);
+                        StartCoroutine(enemy.GetComponent<PlayerBase>().ContinousDamage(debuffdm, 0, 6f, 1f));
+                    }
+                }
+                playerStat.nowHp += 10f + playerTotalStat.attackPower * 0.08f + playerTotalStat.skillPower * 0.05f;
             }
             else
             {
@@ -43,11 +88,15 @@ public class Jackie : PlayerBase
                 {
                     DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
                     enemy.GetComponent<Monster>().TakeDamage(dm);
+                    DamageMessage debuffdm = new DamageMessage(gameObject, (10 + (playerTotalStat.attackPower * 0.03f) + (playerTotalStat.skillPower * 0.03f)) / 6f, 0, 6f);
+                    StartCoroutine(enemy.GetComponent<Monster>().ContinousDamage(debuffdm, 0, 6f, 1f));
                 }
                 else if (enemy.GetComponent<PlayerBase>() != null)
                 {
                     DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
                     enemy.GetComponent<PlayerBase>().TakeDamage(dm);
+                    DamageMessage debuffdm = new DamageMessage(gameObject, (10 + (playerTotalStat.attackPower * 0.03f) + (playerTotalStat.skillPower * 0.03f)) / 6f, 0, 6f);
+                    StartCoroutine(enemy.GetComponent<PlayerBase>().ContinousDamage(debuffdm, 0, 6f, 1f));
                 }
             }
         }
@@ -55,7 +104,33 @@ public class Jackie : PlayerBase
         {
             if (isWBuffOn)
             {
-
+                if (enemy.GetComponent<Monster>() != null)
+                {
+                    if (enemy.GetComponent<Monster>().applyDebuffCheck[0])
+                    {
+                        DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower + playerTotalStat.attackPower * 0.09f);
+                        enemy.GetComponent<Monster>().TakeDamage(dm);
+                    }
+                    else
+                    {
+                        DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower);
+                        enemy.GetComponent<Monster>().TakeDamage(dm);
+                    }
+                }
+                else if (enemy.GetComponent<PlayerBase>() != null)
+                {
+                    if (enemy.GetComponent<PlayerBase>().applyDebuffCheck[0])
+                    {
+                        DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower + playerTotalStat.attackPower * 0.09f);
+                        enemy.GetComponent<PlayerBase>().TakeDamage(dm);
+                    }
+                    else
+                    {
+                        DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower);
+                        enemy.GetComponent<PlayerBase>().TakeDamage(dm);
+                    }
+                }
+                playerStat.nowHp += 10f + playerTotalStat.attackPower * 0.08f + playerTotalStat.skillPower * 0.05f;
             }
             else
             {
@@ -119,6 +194,19 @@ public class Jackie : PlayerBase
         playerAni.SetFloat("SkillType", 3);
         weapon.SetActive(false);
     }
+
+    public override void Skill_D()
+    {
+        base.Skill_D();
+        // if (weaponStack >= 4)
+        // {
+        playerAni.SetBool("isSkill", true);
+        playerAni.SetFloat("SkillType", 4);
+        weaponStack = 0;
+        // }
+
+
+    }
     IEnumerator JackieJump()
     {
         float time = 0f;
@@ -162,11 +250,11 @@ public class Jackie : PlayerBase
 
     private void RBuffOff()
     {
-        Debug.Log("두번??");
         isRBuffOn = false;
         playerAni.SetBool("isRbuff", false);
         playerAni.SetBool("isSkill", false);
         weapon.SetActive(true);
+        playerController.ChangeState(new PlayerIdle());
         StartCoroutine(SkillCooltime(3, 70f));
     }
     private void TriggerOn()
@@ -218,6 +306,8 @@ public class Jackie : PlayerBase
     }
     private void FirstQDamage()
     {
+        enemyPlayer.Clear();
+        enemyHunt.Clear();
         for (int i = 0; i < enemyPlayer.Count; i++)
         {
             DamageMessage dm = new DamageMessage(gameObject, 25 + (playerStat.attackPower * 0.45f) + (playerStat.skillPower * 0.40f));
@@ -250,5 +340,38 @@ public class Jackie : PlayerBase
         }
         enemyPlayer.Clear();
         enemyHunt.Clear();
+    }
+
+    private void DDamage()
+    {
+        RaycastHit[] hits;
+        hits = Physics.BoxCastAll(transform.position, new Vector3(1f, 1f, 3f) * 0.5f, transform.forward, Quaternion.identity, 1f);
+
+        enemyPlayer.Clear();
+        enemyHunt.Clear();
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].transform.GetComponent<PlayerBase>() != null)
+            {
+                enemyPlayer.Add(hits[i].transform.GetComponent<PlayerBase>());
+            }
+            else if (hits[i].transform.GetComponent<Monster>() != null)
+            {
+                enemyHunt.Add(hits[i].transform.GetComponent<Monster>());
+            }
+        }
+
+        for (int i = 0; i < enemyPlayer.Count; i++)
+        {
+            float damage = playerTotalStat.attackPower * 1.2f + playerTotalStat.skillPower * 0.45f + enemyPlayer[i].playerTotalStat.maxHp * 0.07f;
+            DamageMessage dm = new DamageMessage(gameObject, damage);
+            enemyPlayer[i].TakeDamage(dm);
+        }
+        for (int i = 0; i < enemyHunt.Count; i++)
+        {
+            float damage = playerTotalStat.attackPower * 1.2f + playerTotalStat.skillPower * 0.45f + enemyHunt[i].monsterStatus.maxHp * 0.07f;
+            DamageMessage dm = new DamageMessage(gameObject, damage);
+            enemyHunt[i].TakeDamage(dm);
+        }
     }
 }

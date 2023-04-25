@@ -8,7 +8,7 @@ public class PlayerIdle : IPlayerState
     public void StateEnter(PlayerController controller_)
     {
         this.playerController = controller_;
-
+        playerController.playerState = PlayerController.PlayerState.IDLE;
     }
     public void StateExit()
     {

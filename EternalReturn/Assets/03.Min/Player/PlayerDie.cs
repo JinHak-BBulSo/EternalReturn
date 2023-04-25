@@ -8,6 +8,8 @@ public class PlayerDie : IPlayerState
     public void StateEnter(PlayerController controller_)
     {
         this.playerController = controller_;
+        playerController.playerState = PlayerController.PlayerState.DIE;
+
     }
     public void StateExit()
     {

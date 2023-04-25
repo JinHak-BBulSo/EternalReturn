@@ -8,6 +8,7 @@ public class PlayerSkill_W : IPlayerState
     public void StateEnter(PlayerController controller_)
     {
         this.playerController = controller_;
+        playerController.playerState = PlayerController.PlayerState.Skill_W;
         playerController.ResetAni();
         playerController.ResetRange();
         playerController.transform.LookAt(controller_.player.nowMousePoint);
@@ -24,7 +25,6 @@ public class PlayerSkill_W : IPlayerState
 
     public void StateUpdate()
     {
-        playerController.ChangeState(new PlayerIdle());
 
     }
 }
