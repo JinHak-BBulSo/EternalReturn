@@ -8,6 +8,7 @@ public class PlayerIdle : IPlayerState
     public void StateEnter(PlayerController controller_)
     {
         this.playerController = controller_;
+
     }
     public void StateExit()
     {
@@ -19,9 +20,13 @@ public class PlayerIdle : IPlayerState
 
     public void StateUpdate()
     {
-        if (playerController.player.isMove)
+        if (playerController.player.isMove && !playerController.player.isAttackMove)
         {
             playerController.ChangeState(new PlayerMove());
+        }
+        else if (playerController.player.isAttackMove)
+        {
+            playerController.ChangeState(new PlayerAttackMove());
         }
 
         if (!playerController.player.skillCooltimes[0])
