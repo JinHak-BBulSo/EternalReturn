@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class EquipmentSlot : Slot, IDragHandler, IEndDragHandler, IBeginDragHandler
+public class EquipmentSlot : Slot, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerClickHandler
 {
     // Start is called before the first frame update
     public bool chk = false;
@@ -31,7 +31,6 @@ public class EquipmentSlot : Slot, IDragHandler, IEndDragHandler, IBeginDragHand
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log(chk);
         if (!chk)
         {
             UseItem(myNum);
@@ -49,11 +48,7 @@ public class EquipmentSlot : Slot, IDragHandler, IEndDragHandler, IBeginDragHand
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (Vector3.Distance(eventData.position, pos) >= 70f)
-        {
-            // ItemManager.Instance.DropItem(ItemManager.Instance.inventory[myNum], Player, canvas);
-        }
-
+        UseItem(myNum);
         transform.GetChild(1).position = transform.position;
         chk = false;
 
