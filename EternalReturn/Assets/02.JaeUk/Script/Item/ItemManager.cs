@@ -117,7 +117,7 @@ public class ItemManager : SingleTonBase<ItemManager>
             Debug.Log(item.id);
         }
 
-
+        isItemPick = true;
     }
     public int[] AddInferiorList(int ItemId)
     {

@@ -5,8 +5,8 @@ using UnityEngine.AI;
 
 public class PlayerBase : MonoBehaviour, IHitHandler
 {
-    private PlayerController playerController = default;
-    private Vector3 destination = default;
+    protected PlayerController playerController = default;
+    protected Vector3 destination = default;
     private int currentCorner = 0;
     public Vector3 nowMousePoint = default;
 
@@ -76,13 +76,21 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         {
 
             RaycastHit hit;
-            
+            enemy = null;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
             {
-                Debug.Log(hit.collider.name);
                 NavMeshHit navHit;
                 //[KJH] Add. 마우스 클릭 타겟 기록
                 clickTarget = hit.collider.gameObject;
+                enemy = null;
+
+                if (clickTarget.GetComponent<Outline>() != null && clickTarget.GetComponent<Outline>().monster != null)
+                {
+                    Monster monster = clickTarget.GetComponent<Outline>().monster;
+                    enemy = monster.gameObject;
+                    isAttackMove = true;
+                    playerController.ChangeState(new PlayerAttackMove());
+                }
                 //[KJH] Add. 클릭 타겟 Outline 표시
                 //외곽선 초기화
                 if (outline != default)
@@ -220,7 +228,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     private void MotionEnd()
     {
-        playerAni.Rebind();
+        playerController.ResetAni();
         playerController.ResetRange();
     }
 
@@ -275,13 +283,13 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     {
         if (isAttackRangeShow)
         {
+
             if (Input.GetMouseButtonDown(0))
             {
                 attackRangeRender[0].color = new Color(attackRangeRender[0].color.r, attackRangeRender[0].color.g, attackRangeRender[0].color.b, 0f);
                 attackRangeRender[1].color = new Color(attackRangeRender[1].color.r, attackRangeRender[1].color.g, attackRangeRender[1].color.b, 0f);
                 isAttackRangeShow = false;
                 isAttackMove = true;
-                playerController.ChangeState(new PlayerAttackMove());
             }
             else if (Input.GetMouseButtonDown(1))
             {
@@ -311,7 +319,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public void Move()
     {
 
-        if (isMove)
+        if (isMove || isAttackMove)
         {
             if (corners.Count > 0 && currentCorner < corners.Count)
             {
@@ -331,6 +339,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 {
                     isMove = false;
                     isAttackMove = false;
+                    playerAni.SetBool("isMove", false);
                 }
             }
         }

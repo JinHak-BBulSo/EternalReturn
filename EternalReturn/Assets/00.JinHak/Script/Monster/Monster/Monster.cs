@@ -32,6 +32,8 @@ public class Monster : MonoBehaviour, IHitHandler
     public PlayerBase firstAttackPlayer = default;
     public bool isDie = false;
 
+    public ItemBox monsterItemBox = default;
+
     void Awake()
     {
         monsterController = GetComponent<MonsterController>();
@@ -70,6 +72,7 @@ public class Monster : MonoBehaviour, IHitHandler
         SetStatus();
 
         monsterController.navMeshAgent.enabled = true;
+        monsterController.monster.monsterItemBox.enabled = false;
     }
     
     protected virtual void SetStatus()
