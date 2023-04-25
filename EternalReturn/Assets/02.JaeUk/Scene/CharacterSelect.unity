@@ -359,6 +359,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 545828974}
   m_CullTransparentMesh: 1
+--- !u!1 &624991792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 624991793}
+  m_Layer: 0
+  m_Name: RealPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &624991793
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 624991792}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 672.7, y: 38.75, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &668248173
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,7 +727,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 846163753}
+      objectReference: {fileID: 0}
     - target: {fileID: 1250135237514013127, guid: b1ef00bf37b1da84d8d3affcfd0438cf,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -840,24 +871,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 846163750}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &846163752 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1250135237514013125, guid: b1ef00bf37b1da84d8d3affcfd0438cf,
-    type: 3}
-  m_PrefabInstance: {fileID: 846163750}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &846163753
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 846163752}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2bd7f856fc439143ad7ab66c7f127de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &878529907
 GameObject:
   m_ObjectHideFlags: 0
@@ -1137,6 +1150,16 @@ MonoBehaviour:
   - 
   - 
   playerNumber: 0
+  isEnter: 0
+  PlayerSprite:
+  - {fileID: 1486007867}
+  - {fileID: 668248175}
+  - {fileID: 693391342}
+  - {fileID: 545828976}
+  ImageSprite: []
+  startBtn: {fileID: 0}
+  isSelect: 0
+  selectNumber: 0
 --- !u!114 &1298691198
 MonoBehaviour:
   m_ObjectHideFlags: 0

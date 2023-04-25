@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
 public class CharacterSelect : MonoBehaviourPun
 {
     [SerializeField]
@@ -10,7 +11,12 @@ public class CharacterSelect : MonoBehaviourPun
     [SerializeField]
     public int playerNumber;
     string PlayerName;
-    bool isEnter = true;
+    public bool isEnter = false;
+    public Image[] PlayerSprite = null;
+    public Sprite[] ImageSprite;
+    public Button startBtn;
+    public bool isSelect;
+    public int selectNumber;
 
 
     // Start is called before the first frame update
@@ -31,6 +37,7 @@ public class CharacterSelect : MonoBehaviourPun
         {
             playerList[0] = "user";
             playerList[1] = "host";
+            playerNumber = 1;
             isEnter = true;
         }
 
@@ -43,7 +50,31 @@ public class CharacterSelect : MonoBehaviourPun
         if (PhotonNetwork.IsMasterClient)
         {
             playerNumber++;
-            playerList[playerNumber] = "User";
+            for (int i = playerNumber; i < playerList.Length; i++)
+                playerList[playerNumber] = "User";
+        }
+        else
+        {
+            playerNumber++;
+            for (int i = playerNumber; i < playerList.Length; i++)
+                playerList[playerNumber] = "User";
+        }
+
+
+    }
+    [PunRPC]
+    void Select(int Selectnum)
+    {
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+
+        }
+        else
+        {
+            playerNumber++;
+            for (int i = playerNumber; i < playerList.Length; i++)
+                playerList[playerNumber] = "User";
         }
 
 
@@ -53,11 +84,26 @@ public class CharacterSelect : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-        if (isEnter && PhotonNetwork.IsMasterClient)
+        if (isEnter)
         {
             isEnter = false;
             photonView.RPC("EnterGuest", RpcTarget.MasterClient);
         }
+        if (isSelect)
+        {
+            isSelect = false;
+            // photonView.RPC("");
+        }
+
+
+
+
+    }
+    void OnClick()
+    {
+        PlayerSprite[0].sprite = ImageSprite[0];
+        selectNumber = 0;
+        isSelect = true;
     }
 }
 
