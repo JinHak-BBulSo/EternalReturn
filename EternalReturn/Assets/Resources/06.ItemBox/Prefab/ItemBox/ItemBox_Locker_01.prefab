@@ -15,17 +15,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 2f9b6833656d94e4fad34c52a569cfee,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.66
+      value: -109.95959
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2f9b6833656d94e4fad34c52a569cfee,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.47
+      value: 0.31541303
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2f9b6833656d94e4fad34c52a569cfee,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -105.272484
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2f9b6833656d94e4fad34c52a569cfee,
         type: 3}
@@ -76,7 +76,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 1a7bd98c53ef9a0488dba59d90e052d6, type: 2}
+      objectReference: {fileID: 2100000, guid: fb8e02aca8375a642bb27b4b43185d0a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f9b6833656d94e4fad34c52a569cfee, type: 3}
 --- !u!1 &8006576911395459209 stripped
@@ -98,22 +98,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6841748, y: 2.3774402, z: 1.7539204}
   m_Center: {x: -0.34208697, y: 1.1887199, z: 0.8769602}
---- !u!114 &944508271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8006576911395459209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fullInvenTxt: {fileID: 0}
-  itemPrefabs: []
-  boxItems: []
-  isOpen: 0
 --- !u!114 &577839252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,3 +118,19 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &944508271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8006576911395459209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemPrefabs: []
+  boxItems: []
+  playerItemBoxSlotList: []
+  contactPlayer: []

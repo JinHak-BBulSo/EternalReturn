@@ -47,7 +47,8 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     //[KJH] Add. MiniMap move
     private Camera miniMapCamera = default;
 
-
+    public GameObject itemBoxUi = default;
+    public ItemBoxSlotList itemBoxSlotList = default;
 
     protected virtual void Start()
     {
@@ -61,6 +62,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
         //KJH Add. MinimapCamera Add
         miniMapCamera = Camera.main.transform.parent.GetChild(1).GetComponent<Camera>();
+        //KJH Add. Each Player InventoryBoxUi Add
+        itemBoxUi = Instantiate(Resources.Load<GameObject>("06.ItemBox/Prefab/ItemBoxUI/ItemBoxUi"),
+            GameObject.Find("TestUi").transform);
+        itemBoxSlotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
     }
 
 
