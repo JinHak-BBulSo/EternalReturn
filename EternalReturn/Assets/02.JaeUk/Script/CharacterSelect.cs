@@ -6,12 +6,7 @@ using Photon.Realtime;
 using UnityEngine.UI;
 public class CharacterSelect : MonoBehaviourPun
 {
-    [SerializeField]
-    public string[] playerList = new string[4];
-    [SerializeField]
-    public int playerNumber;
-    string PlayerName;
-    public bool isEnter = false;
+    public GameObject player;
     public Image[] PlayerSprite = null;
     public Sprite[] ImageSprite;
     public Button startBtn;
@@ -22,78 +17,19 @@ public class CharacterSelect : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
-        photonView.RPC("SetPlayerList", RpcTarget.All);
-    }
-
-    [PunRPC]
-    void SetPlayerList()
-    {
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            playerList[0] = "host";
-        }
-        else
-        {
-            playerList[0] = "user";
-            playerList[1] = "host";
-            playerNumber = 1;
-            isEnter = true;
-        }
+        PlayerManager.Instance.canvas = transform.gameObject;
+        GameObject playerClone = PhotonNetwork.Instantiate("Global/Player", new Vector3(0, 0, 0), Quaternion.identity, 0);
+        playerClone.transform.SetParent(transform.GetChild(0), false);
 
     }
 
-    [PunRPC]
-    void EnterGuest()
-    {
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            playerNumber++;
-            for (int i = playerNumber; i < playerList.Length; i++)
-                playerList[playerNumber] = "User";
-        }
-        else
-        {
-            playerNumber++;
-            for (int i = playerNumber; i < playerList.Length; i++)
-                playerList[playerNumber] = "User";
-        }
-
-
-    }
-    [PunRPC]
-    void Select(int Selectnum)
-    {
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-
-        }
-        else
-        {
-            playerNumber++;
-            for (int i = playerNumber; i < playerList.Length; i++)
-                playerList[playerNumber] = "User";
-        }
-
-
-    }
 
 
     // Update is called once per frame
     void Update()
     {
-        if (isEnter)
-        {
-            isEnter = false;
-            photonView.RPC("EnterGuest", RpcTarget.MasterClient);
-        }
-        if (isSelect)
-        {
-            isSelect = false;
-            // photonView.RPC("");
-        }
+
 
 
 
