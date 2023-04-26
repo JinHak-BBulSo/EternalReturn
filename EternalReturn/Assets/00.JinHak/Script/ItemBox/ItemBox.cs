@@ -7,9 +7,6 @@ using UnityEngine.UI;
 public class ItemBox : MonoBehaviour
 {
     private Outline outline = default;
-    private GameObject itemBoxUi = default;
-
-    private ItemBoxSlotList slotList = default;
 
     public List<GameObject> itemPrefabs = new List<GameObject>();
     public List<ItemStat> boxItems = new List<ItemStat>();

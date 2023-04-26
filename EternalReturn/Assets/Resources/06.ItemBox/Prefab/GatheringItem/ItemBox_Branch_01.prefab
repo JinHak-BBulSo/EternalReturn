@@ -118,3 +118,51 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &3571922666630081964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4507962855275555770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be2581c880a350249b396c363043081b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemPrefab: {fileID: 5843033311494870089, guid: 43625fb0443bc5347bd44a887e89c9f7,
+    type: 3}
+  gatheringItem:
+    attackPower: 0
+    moveSpeed: 0
+    defense: 0
+    attackSpeed: 0
+    attackRange: 0
+    skillPower: 0
+    basicAttackPower: 0
+    coolDown: 0
+    criticalPercent: 0
+    criticalDamage: 0
+    visionRange: 0
+    damageReduce: 0
+    tenacity: 0
+    armorReduce: 0
+    lifeSteel: 0
+    extraHp: 0
+    extraStamina: 0
+    hpRegen: 0
+    staminaRegen: 0
+    id: 0
+    type: 0
+    rare: 0
+    name: 
+    count: 0
+    weaponAttackSpeedPercent: 0
+    weaponAttackRangePercent: 0
+    foodIncrease: 0
+    maxCount: 0
+    craftTime: 0
+    isInventory: 0
+    isEquipment: 0
+    isItemWishList: 0
+  itemType: 0
