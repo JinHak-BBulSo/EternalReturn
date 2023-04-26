@@ -5,8 +5,25 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    public enum PlayerState
+    {
+        NONE = -1,
+        IDLE,
+        MOVE,
+        ATTACKMOVE,
+        ATTACK,
+        DIE,
+        Skill_Q,
+        Skill_W,
+        Skill_E,
+        Skill_R,
+        Skill_D,
+
+    }
     public PlayerBase player = default;
     public IPlayerState currentState = new PlayerIdle();
+    public PlayerState playerState = PlayerState.NONE;
 
     public void Start()
     {

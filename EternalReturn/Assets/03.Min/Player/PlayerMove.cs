@@ -8,12 +8,18 @@ public class PlayerMove : IPlayerState
     public void StateEnter(PlayerController controller_)
     {
         this.playerController = controller_;
+        playerController.playerState = PlayerController.PlayerState.MOVE;
+
         // playerController.player.playerAni.Rebind();
         playerController.ResetRange();
         playerController.player.playerAni.SetBool("isAttack", false);
         playerController.player.playerAni.SetBool("isSkill", false);
         playerController.player.playerAni.SetBool("skillStart", false);
-        if (!playerController.player.playerAni.GetBool("isMove"))
+        if (playerController.player.playerAni.GetBool("isMove"))
+        {
+            playerController.player.playerAni.SetBool("isMove", true);
+        }
+        else
         {
             playerController.player.playerAni.SetBool("isMove", true);
         }

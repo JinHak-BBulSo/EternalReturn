@@ -6,7 +6,7 @@ using System.Linq;
 public class ItemManager : SingleTonBase<ItemManager>
 {
     public GameObject ItemCanvas;
-    public GameObject Player;
+    public PlayerBase Player;
     public ItemDefine itemDefine = new ItemDefine();
     public Dictionary<int, GameObject> itemListObj = new Dictionary<int, GameObject>();
     public List<ItemStat> itemList = new List<ItemStat>();
@@ -114,7 +114,6 @@ public class ItemManager : SingleTonBase<ItemManager>
         if (!isUsed)
         {
             PickItem(item);
-            Debug.Log(item.id);
         }
 
         isItemPick = true;
@@ -617,5 +616,6 @@ public class ItemManager : SingleTonBase<ItemManager>
         }
         equipmentTotalState = new ItemStat(attackPower, skillPower, basicAttackPower, defense, attackSpeed, coolDown, criticalPercent, criticalDamage, moveSpeed, visionRange, attackRange, damageReduce, tenacity, armorReduce,
         lifeSteel, extraHp, extraStamina, hpRegen, staminaRegen, weaponAttackSpeedPercent, weaponAttackRangePercent);
+        Player.AddTotalStat();
     }
 }
