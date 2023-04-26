@@ -19,8 +19,8 @@ public class ItemBox : MonoBehaviour
 
     protected virtual void Awake()
     {
-        itemBoxUi = GameObject.Find("TestUi").transform.GetChild(1).gameObject;
-        slotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
+        /*itemBoxUi = GameObject.Find("TestUi").transform.GetChild(1).gameObject;
+        slotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();*/
         outline = GetComponent<Outline>();
         SetItems();
     }
@@ -106,7 +106,7 @@ public class ItemBox : MonoBehaviour
                     playerItemBoxSlotList.Add(nowContactPlayer.itemBoxSlotList);
                     
                     SetSlot();
-                    slotList.nowOpenItemBox = this;
+                    nowContactPlayer.itemBoxSlotList.nowOpenItemBox = this;
                     nowContactPlayer.itemBoxSlotList.nowOpenItemBox = this;
                     nowContactPlayer.itemBoxUi.SetActive(true);
                 }

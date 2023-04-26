@@ -96,24 +96,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.6319852, y: 1.0461876, z: 1.1202285}
+  m_Size: {x: 4.358382, y: 1.0461876, z: 1.3442748}
   m_Center: {x: -0.00000017881393, y: 0.00000008940697, z: 0.12516132}
---- !u!114 &376282759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2706608140080808954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fullInvenTxt: {fileID: 0}
-  itemPrefabs: []
-  boxItems: []
-  isOpen: 0
 --- !u!114 &13229353
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,3 +118,19 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!114 &376282759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2706608140080808954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemPrefabs: []
+  boxItems: []
+  playerItemBoxSlotList: []
+  contactPlayer: []

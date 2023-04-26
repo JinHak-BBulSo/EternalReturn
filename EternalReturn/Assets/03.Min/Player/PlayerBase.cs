@@ -63,8 +63,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         //KJH Add. MinimapCamera Add
         miniMapCamera = Camera.main.transform.parent.GetChild(1).GetComponent<Camera>();
         //KJH Add. Each Player InventoryBoxUi Add
-        itemBoxUi = Instantiate(Resources.Load<GameObject>("06.ItemBox/Prefab/ItemBoxUI/ItemBoxUi"),
-            GameObject.Find("TestUi").transform);
+
+        //GameObject itemBoxUi_ = Resources.Load<GameObject>("06.ItemBox/Prefab/ItemBoxUI/ItemBoxUi");
+
+        itemBoxUi = Instantiate(itemBoxUi, GameObject.Find("TestUi").transform);
         itemBoxSlotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
     }
 

@@ -96,7 +96,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4496783, y: 1.324181, z: 0.57878923}
+  m_Size: {x: 0.53961396, y: 1.324181, z: 0.69454706}
   m_Center: {x: 0.000118501484, y: 0.6632772, z: 0.026805982}
 --- !u!114 &1218725504
 MonoBehaviour:
@@ -110,10 +110,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullInvenTxt: {fileID: 0}
   itemPrefabs: []
   boxItems: []
-  isOpen: 0
+  playerItemBoxSlotList: []
+  contactPlayer: []
 --- !u!114 &1969337735
 MonoBehaviour:
   m_ObjectHideFlags: 0
