@@ -11,7 +11,6 @@ public class PlayerSkill_E : IPlayerState
         playerController.playerState = PlayerController.PlayerState.Skill_E;
         playerController.ResetAni();
         playerController.ResetRange();
-        playerController.transform.LookAt(controller_.player.nowMousePoint);
         playerController.player.Skill_E();
     }
     public void StateExit()

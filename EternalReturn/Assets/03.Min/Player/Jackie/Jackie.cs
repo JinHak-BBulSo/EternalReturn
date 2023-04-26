@@ -17,12 +17,13 @@ public class Jackie : PlayerBase
     private Vector3 dir;
     private float distance;
     private bool isWeaponPassiveOn = true;
-    private int weaponStack = 0;
+    public int weaponStack = 0;
 
     protected override void Start()
     {
         base.Start();
         QBoxCol = SkillRange[0].transform.GetChild(0).GetChild(0).GetComponent<BoxCollider>();
+        skillCooltimes[4] = true;
         // Debug.Log(QBoxCol);
     }
 
@@ -39,6 +40,7 @@ public class Jackie : PlayerBase
             weaponStack++;
             if (weaponStack >= 4)
             {
+                skillCooltimes[4] = false;
                 weaponStack = 4;
             }
         }
@@ -86,14 +88,14 @@ public class Jackie : PlayerBase
             {
                 if (enemy.GetComponent<Monster>() != null)
                 {
-                    DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
+                    DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower);
                     enemy.GetComponent<Monster>().TakeDamage(dm);
                     DamageMessage debuffdm = new DamageMessage(gameObject, (10 + (playerTotalStat.attackPower * 0.03f) + (playerTotalStat.skillPower * 0.03f)) / 6f, 0, 6f);
                     StartCoroutine(enemy.GetComponent<Monster>().ContinousDamage(debuffdm, 0, 6f, 1f));
                 }
                 else if (enemy.GetComponent<PlayerBase>() != null)
                 {
-                    DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
+                    DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower);
                     enemy.GetComponent<PlayerBase>().TakeDamage(dm);
                     DamageMessage debuffdm = new DamageMessage(gameObject, (10 + (playerTotalStat.attackPower * 0.03f) + (playerTotalStat.skillPower * 0.03f)) / 6f, 0, 6f);
                     StartCoroutine(enemy.GetComponent<PlayerBase>().ContinousDamage(debuffdm, 0, 6f, 1f));
@@ -136,12 +138,12 @@ public class Jackie : PlayerBase
             {
                 if (enemy.GetComponent<Monster>() != null)
                 {
-                    DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
+                    DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower);
                     enemy.GetComponent<Monster>().TakeDamage(dm);
                 }
                 else if (enemy.GetComponent<PlayerBase>() != null)
                 {
-                    DamageMessage dm = new DamageMessage(gameObject, playerStat.attackPower);
+                    DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower);
                     enemy.GetComponent<PlayerBase>().TakeDamage(dm);
                 }
             }
@@ -151,6 +153,7 @@ public class Jackie : PlayerBase
     public override void Skill_Q()
     {
         base.Skill_Q();
+        transform.LookAt(nowMousePoint);
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 0);
         SkillRange[0].SetActive(true);
@@ -169,6 +172,7 @@ public class Jackie : PlayerBase
     public override void Skill_E()
     {
         base.Skill_E();
+        transform.LookAt(nowMousePoint);
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 2);
         targetPos = nowMousePoint;
@@ -198,12 +202,15 @@ public class Jackie : PlayerBase
     public override void Skill_D()
     {
         base.Skill_D();
-        // if (weaponStack >= 4)
-        // {
-        playerAni.SetBool("isSkill", true);
-        playerAni.SetFloat("SkillType", 4);
-        weaponStack = 0;
-        // }
+        if (weaponStack >= 4)
+        {
+            transform.LookAt(nowMousePoint);
+            playerAni.SetBool("isSkill", true);
+            playerAni.SetFloat("SkillType", 4);
+            weaponStack = 0;
+            skillCooltimes[4] = true;
+        }
+
 
 
     }
@@ -294,13 +301,13 @@ public class Jackie : PlayerBase
 
         for (int i = 0; i < enemyPlayer.Count; i++)
         {
-            DamageMessage dm = new DamageMessage(gameObject, 50 + (playerStat.attackPower * 0.42f) + (playerStat.skillPower * 0.60f));
+            DamageMessage dm = new DamageMessage(gameObject, 50 + (playerTotalStat.attackPower * 0.42f) + (playerTotalStat.skillPower * 0.60f));
             enemyPlayer[i].TakeDamage(dm);
         }
 
         for (int i = 0; i < enemyHunt.Count; i++)
         {
-            DamageMessage dm = new DamageMessage(gameObject, 50 + (playerStat.attackPower * 0.42f) + (playerStat.skillPower * 0.60f));
+            DamageMessage dm = new DamageMessage(gameObject, 50 + (playerTotalStat.attackPower * 0.42f) + (playerTotalStat.skillPower * 0.60f));
             enemyHunt[i].TakeDamage(dm);
         }
     }
@@ -310,17 +317,17 @@ public class Jackie : PlayerBase
         enemyHunt.Clear();
         for (int i = 0; i < enemyPlayer.Count; i++)
         {
-            DamageMessage dm = new DamageMessage(gameObject, 25 + (playerStat.attackPower * 0.45f) + (playerStat.skillPower * 0.40f));
+            DamageMessage dm = new DamageMessage(gameObject, 25 + (playerTotalStat.attackPower * 0.45f) + (playerTotalStat.skillPower * 0.40f));
             enemyPlayer[i].TakeDamage(dm);
-            DamageMessage debuffdm = new DamageMessage(gameObject, (30 + (playerStat.attackPower * 0.5f) + (playerStat.skillPower * 0.05f)) / 6f, 0, 6f);
+            DamageMessage debuffdm = new DamageMessage(gameObject, (30 + (playerTotalStat.attackPower * 0.5f) + (playerTotalStat.skillPower * 0.05f)) / 6f, 0, 6f);
             StartCoroutine(enemyPlayer[i].ContinousDamage(debuffdm, 0, 6f, 1f));
         }
 
         for (int i = 0; i < enemyHunt.Count; i++)
         {
-            DamageMessage dm = new DamageMessage(gameObject, 25 + (playerStat.attackPower * 0.45f) + (playerStat.skillPower * 0.40f));
+            DamageMessage dm = new DamageMessage(gameObject, 25 + (playerTotalStat.attackPower * 0.45f) + (playerTotalStat.skillPower * 0.40f));
             enemyHunt[i].TakeDamage(dm);
-            DamageMessage debuffdm = new DamageMessage(gameObject, (30 + (playerStat.attackPower * 0.5f) + (playerStat.skillPower * 0.05f)) / 6f, 0, 6f);
+            DamageMessage debuffdm = new DamageMessage(gameObject, (30 + (playerTotalStat.attackPower * 0.5f) + (playerTotalStat.skillPower * 0.05f)) / 6f, 0, 6f);
             StartCoroutine(enemyHunt[i].ContinousDamage(debuffdm, 0, 6f, 1f));
         }
     }
@@ -329,23 +336,42 @@ public class Jackie : PlayerBase
     {
         for (int i = 0; i < enemyPlayer.Count; i++)
         {
-            DamageMessage dm = new DamageMessage(gameObject, 25 + (playerStat.attackPower * 0.7f) + (playerStat.skillPower * 0.6f));
+            DamageMessage dm = new DamageMessage(gameObject, 25 + (playerTotalStat.attackPower * 0.7f) + (playerTotalStat.skillPower * 0.6f));
             enemyPlayer[i].TakeDamage(dm);
         }
         for (int i = 0; i < enemyHunt.Count; i++)
         {
-            DamageMessage dm = new DamageMessage(gameObject, 25 + (playerStat.attackPower * 0.7f) + (playerStat.skillPower * 0.6f));
-            Debug.Log(25 + (playerStat.attackPower * 0.7f) + (playerStat.skillPower * 0.6f));
+            DamageMessage dm = new DamageMessage(gameObject, 25 + (playerTotalStat.attackPower * 0.7f) + (playerTotalStat.skillPower * 0.6f));
+            Debug.Log(25 + (playerTotalStat.attackPower * 0.7f) + (playerTotalStat.skillPower * 0.6f));
             enemyHunt[i].TakeDamage(dm);
         }
         enemyPlayer.Clear();
         enemyHunt.Clear();
     }
 
+    IEnumerator WeaponSkillMove()
+    {
+        float time = 0f;
+        while (true)
+        {
+            transform.position += transform.forward * 20f * Time.deltaTime;
+            if (time >= 0.1f)
+            {
+                yield break;
+            }
+            yield return null;
+            time += Time.deltaTime;
+        }
+    }
     private void DDamage()
     {
         RaycastHit[] hits;
-        hits = Physics.BoxCastAll(transform.position, new Vector3(1f, 1f, 3f) * 0.5f, transform.forward, Quaternion.identity, 1f);
+        hits = Physics.BoxCastAll(transform.position, new Vector3(1f, 1f, 1f) * 0.5f, transform.forward, Quaternion.identity, 2f);
+        Debug.DrawRay(transform.position, transform.forward * 2f, Color.red, 10f);
+
+        Debug.Log($"endpoint : {transform.position + transform.forward.normalized * 2f}");
+        StartCoroutine(WeaponSkillMove());
+        // transform.position = transform.position + transform.forward.normalized * 2f;
 
         enemyPlayer.Clear();
         enemyHunt.Clear();

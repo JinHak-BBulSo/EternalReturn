@@ -11,7 +11,6 @@ public class PlayerSkill_R : IPlayerState
         playerController.playerState = PlayerController.PlayerState.Skill_R;
         playerController.ResetAni();
         playerController.ResetRange();
-        playerController.transform.LookAt(controller_.player.nowMousePoint);
         playerController.player.Skill_R();
 
     }
