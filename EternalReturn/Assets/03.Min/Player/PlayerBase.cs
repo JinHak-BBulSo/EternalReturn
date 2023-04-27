@@ -136,6 +136,14 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             // MiniMap Click Player Move
             if (Physics.Raycast(miniMapCamera.ScreenPointToRay(Input.mousePosition), out hit))
             {
+                Vector3 clickPos = Input.mousePosition;
+                if(clickPos.x < 625 || clickPos.x > 735 ||
+                    clickPos.y < 10 || clickPos.y > 110)
+                {
+                    return;
+                }
+                //if(clickPos.x < 625 || clickPos.x > 735)
+                //630, 10 ~ 110 734.5
 
                 NavMeshHit navHit;
                 if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
