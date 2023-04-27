@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class Monster : MonoBehaviour, IHitHandler
 {
     public MonsterStatus monsterStatus = default;
-    private MonsterController monsterController;
+    protected MonsterController monsterController;
 
     private MonsterSpawnPoint spawnPoint = default;
     public MonsterSpawnPoint SpawnPoint { get { return spawnPoint; } }
@@ -75,6 +75,9 @@ public class Monster : MonoBehaviour, IHitHandler
 
         monsterController.navMeshAgent.enabled = true;
         monsterController.monster.monsterItemBox.enabled = false;
+
+        // 몬스터 아이템 셋팅
+        //monsterItemBox.SetItems();
     }
     
     protected virtual void SetStatus()

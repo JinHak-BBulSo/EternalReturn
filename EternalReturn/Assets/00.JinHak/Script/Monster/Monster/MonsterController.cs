@@ -34,7 +34,8 @@ public class MonsterController : MonoBehaviour
     public NavMeshAgent navMeshAgent = default;
     public PlayerBase targetPlayer = default;
 
-    protected bool isInSkillUse = false;
+    public bool isSkillAble = false;
+    public bool isInSkillUse = false;
     public int encountPlayerCount = 0;
 
     public bool actionDelay = false;
@@ -139,7 +140,24 @@ public class MonsterController : MonoBehaviour
                 }
                 else
                 {
-                    monsterStateMachine.SetState(monsterStateDic[MonsterState.ATTACk]);
+                    if (isSkillAble && !isInSkillUse)
+                    {
+                        monsterStateMachine.SetState(monsterStateDic[MonsterState.SKILL]);
+                        isInSkillUse = true;
+                        isSkillAble = false;
+
+                        return;
+                    }
+                    else
+                    {
+                        monsterStateMachine.SetState(monsterStateDic[MonsterState.ATTACk]);
+                    }
+
+                    if (isInSkillUse)
+                    {
+                        monsterStateMachine.SetState(monsterStateDic[MonsterState.SKILL]);
+                        return;
+                    }
                 }
             }
         }
