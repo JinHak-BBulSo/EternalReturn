@@ -93,26 +93,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6763581, y: 0.7111651, z: 1.8912838}
   m_Center: {x: -0.000000014901161, y: 0, z: 0.46533883}
---- !u!114 &6636854201334700366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4295307834278496297}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isClick: 0
-  monster: {fileID: 0}
-  outlineMode: 0
-  outlineColor: {r: 0, g: 0.99010324, b: 1, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!114 &5650048861930846343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2581c880a350249b396c363043081b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPrefab: {fileID: 1332362616705923826, guid: 11769f81b7088144699993af62462f87,
+  itemPrefab: {fileID: 5359322603946105740, guid: be0c891640bd38b41b761acda0887236,
     type: 3}
   gatheringItem:
     attackPower: 0
@@ -161,3 +141,24 @@ MonoBehaviour:
     isEquipment: 0
     isItemWishList: 0
   itemType: 4
+  gatherAble: 0
+--- !u!114 &6636854201334700366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4295307834278496297}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isClick: 0
+  monster: {fileID: 0}
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0.99010324, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

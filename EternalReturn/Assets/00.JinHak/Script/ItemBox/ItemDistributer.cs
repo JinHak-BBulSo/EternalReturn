@@ -50,7 +50,7 @@ public class ItemDistributer : MonoBehaviour
             }
 
             indexArray = new int[itemList.Count];
-
+            
             for (int i = 0; i < indexArray.Length; i++)
             {
                 indexArray[i] = i;
@@ -61,7 +61,8 @@ public class ItemDistributer : MonoBehaviour
                 Shuffle(indexArray);
             }
 
-            for (int i = 0; i < 6; i++)
+            int r = Random.Range(4, 6 + 1);
+            for (int i = 0; i < r; i++)
             {
                 if (i >= itemList.Count) break;
                 
