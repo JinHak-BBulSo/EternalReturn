@@ -248,7 +248,7 @@ public class ItemManager : SingleTonBase<ItemManager>
 
                 targetItem_ = FindItemFromList(item_, i);
                 //KJH ADD
-                if (targetItem_.maxCount == targetItem_.count) continue;
+                if (targetItem_ != default && targetItem_.maxCount == targetItem_.count) continue;
 
                 if (targetItem_ != default && targetItem_.id != 0 && targetItem_.maxCount > targetItem_.count)
                 {

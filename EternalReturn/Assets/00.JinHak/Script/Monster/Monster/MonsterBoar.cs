@@ -9,4 +9,14 @@ public class MonsterBoar : Monster
         base.Skill();
 
     }
+
+    IEnumerator SkillReady()
+    {
+        yield return new WaitForSeconds(2f);
+    }
+
+    void SkillAssult()
+    {
+        
+    }
 }
