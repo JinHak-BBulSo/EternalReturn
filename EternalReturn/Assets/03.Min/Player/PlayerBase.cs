@@ -10,9 +10,8 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     protected Vector3 destination = default;
     private int currentCorner = 0;
     public Vector3 nowMousePoint = default;
-
-    [SerializeField]
-    protected GameObject weapon = default;
+    public GameObject weapon = default;
+    public GameObject fishingRod = default;
 
     public GameObject enemy = default;
 
