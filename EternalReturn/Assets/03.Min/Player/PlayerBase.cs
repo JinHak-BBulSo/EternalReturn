@@ -8,7 +8,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     protected PlayerController playerController = default;
     protected Vector3 destination = default;
-    private int currentCorner = 0;
+    protected int currentCorner = 0;
     public Vector3 nowMousePoint = default;
     public GameObject weapon = default;
     public GameObject fishingRod = default;
@@ -86,13 +86,11 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         {
 
             RaycastHit hit;
-            enemy = null;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
             {
                 NavMeshHit navHit;
                 //[KJH] Add. 마우스 클릭 타겟 기록
                 clickTarget = hit.collider.gameObject;
-                enemy = null;
 
                 if (clickTarget.GetComponent<Outline>() != null && clickTarget.GetComponent<Outline>().monster != null)
                 {
@@ -140,8 +138,6 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             {
 
                 NavMeshHit navHit;
-                Debug.Log(hit.collider.transform.position);
-                Debug.Log(hit.collider.name);
                 if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
                 {
                     // destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);
@@ -310,10 +306,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 attackType = 0;
                 break;
         }
-
         StartCoroutine(MotionDelay(delay_));
-
     }
+
+
 
     private void AttackAniEnd()
     {
@@ -338,6 +334,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             isAttackRangeShow = true;
         }
     }
+
 
     protected virtual void DisableAttackRange()
     {
@@ -378,7 +375,6 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     public void Move()
     {
-
         if (isMove)
         {
             if (corners.Count > 0 && currentCorner < corners.Count)
@@ -410,7 +406,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         }
     }
 
-    private void SetDestination(Vector3 dest_)
+    protected void SetDestination(Vector3 dest_)
     {
         destination = dest_;
         isMove = true;
