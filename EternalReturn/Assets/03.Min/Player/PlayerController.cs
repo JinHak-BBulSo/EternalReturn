@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
         Skill_E,
         Skill_R,
         Skill_D,
+        COLLECT
 
     }
     public PlayerBase player = default;
@@ -66,6 +67,13 @@ public class PlayerController : MonoBehaviour
         player.playerAni.SetBool("isAttack", false);
         player.playerAni.SetBool("isSkill", false);
         player.playerAni.SetBool("skillStart", false);
+        player.playerAni.SetBool("isCollect", false);
+    }
+
+    public void toolReset()
+    {
+        player.weapon.SetActive(true);
+        player.fishingRod.SetActive(false);
     }
 }
 

@@ -44,6 +44,10 @@ MonoBehaviour:
   - getPlayer
   - SetPlayerListUser
   - EnterGuest
+  - Select
+  - ReadyCheck
+  - SetImageChange
+  - ChageImage
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

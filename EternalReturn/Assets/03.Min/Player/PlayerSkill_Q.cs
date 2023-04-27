@@ -11,7 +11,14 @@ public class PlayerSkill_Q : IPlayerState
         playerController.playerState = PlayerController.PlayerState.Skill_Q;
         playerController.ResetAni();
         playerController.ResetRange();
-        playerController.player.Skill_Q();
+        if (playerController.player.SkillRange[0] == null)
+        {
+            playerController.player.Skill_Q();
+        }
+        else
+        {
+            playerController.player.SkillRange[0].SetActive(true);
+        }
     }
     public void StateExit()
     {
@@ -23,6 +30,9 @@ public class PlayerSkill_Q : IPlayerState
 
     public void StateUpdate()
     {
+        if (playerController.player.SkillRange[0].activeSelf)
+        {
 
+        }
     }
 }
