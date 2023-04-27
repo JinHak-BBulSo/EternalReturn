@@ -68,12 +68,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
-  playerList:
-  - 
-  - 
-  - 
-  - 
   playerNumber: 0
+  playerTotalNumber: 0
   isEnter: 0
   isSelect: 0
+  anotherSelect: 0
   selectNumber: 0

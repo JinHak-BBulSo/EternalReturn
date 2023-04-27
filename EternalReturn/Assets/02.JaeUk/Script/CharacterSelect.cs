@@ -29,17 +29,28 @@ public class CharacterSelect : MonoBehaviourPun
     // Update is called once per frame
     void Update()
     {
-
+        if (PlayerManager.Instance.SelectChk)
+        {
+            Debug.Log("!!!");
+            PlayerManager.Instance.SelectChk = false;
+            for (int i = 0; i < transform.GetChild(0).childCount; i++)
+            {
+                if (transform.GetChild(0).GetChild(i).GetComponent<CharacterSelectController>().isSelect)
+                    PlayerSprite[i].sprite = ImageSprite[transform.GetChild(0).GetChild(i).GetComponent<CharacterSelectController>().selectCharacterNum];
+            }
+        }
 
 
 
 
     }
-    void OnClick()
+    public void OnClick()
     {
+        Debug.Log("!!");
         PlayerSprite[0].sprite = ImageSprite[0];
         selectNumber = 0;
-        isSelect = true;
+        PlayerManager.Instance.IsSelect = true;
+        PlayerManager.Instance.characterNum = 0;
     }
 }
 
