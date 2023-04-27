@@ -48,11 +48,11 @@ public class GatheringItemBox : MonoBehaviour
     {
         if (!gatherAble) return;
 
+        ItemStat item = new ItemStat(gatheringItem);
+        ItemManager.Instance.GetItem(item);
+
         if (!ItemManager.Instance.isInventoryFull)
         {
-            ItemStat item = new ItemStat(gatheringItem);
-            ItemManager.Instance.GetItem(item);
-
             gatherAble = false;
             StartCoroutine(RespawnItem(respawnItemTime));
         }

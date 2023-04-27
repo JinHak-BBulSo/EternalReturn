@@ -68,7 +68,9 @@ public class ItemDistributer : MonoBehaviour
                 
                 itemBox.itemPrefabs.Add(itemList[indexArray[i]]);
                 itemCountList[indexArray[i]]--;
-            }  
+            }
+
+            itemBox.SetItems();
         }
     }
 }

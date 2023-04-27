@@ -229,6 +229,8 @@ public class ItemManager : SingleTonBase<ItemManager>
         {
             if (id.id == item_.id)
             {
+                //KJH ADD
+                if (id.maxCount == id.count) continue;
                 isChk = true;
             }
             else
@@ -248,6 +250,7 @@ public class ItemManager : SingleTonBase<ItemManager>
 
                 if (targetItem_ != default && targetItem_.id != 0 && targetItem_.maxCount > targetItem_.count)
                 {
+                    
                     Debug.Log($"현재 인벤토리에서 가져온 아이템의 칸{i}");
                     break;
                 }

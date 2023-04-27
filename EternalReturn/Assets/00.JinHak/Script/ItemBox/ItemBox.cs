@@ -19,10 +19,9 @@ public class ItemBox : MonoBehaviour
         /*itemBoxUi = GameObject.Find("TestUi").transform.GetChild(1).gameObject;
         slotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();*/
         outline = GetComponent<Outline>();
-        SetItems();
     }
 
-    private void SetItems()
+    public void SetItems()
     {
         foreach (var item in itemPrefabs)
         {
@@ -62,6 +61,8 @@ public class ItemBox : MonoBehaviour
                 slotList.boxSlotList[i].transform.GetChild(1).gameObject.SetActive(false);
                 slotList.boxSlotList[i].slotItem = default;
             }
+
+            slotIndex_ = 0;
         }
     }
 
