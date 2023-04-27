@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngineInternal;
-using static UnityEditor.Progress;
 
 public class ItemBoxSlot : Slot
 {   
     public ItemBoxSlotList slotList = default;
     public ItemStat slotItem = new ItemStat();
     public ItemStat cloneItem = new ItemStat();
-    
+    public GameObject fullInvenTxt = default;
+
     public void OnClick()
     {
         GetItem();
@@ -21,6 +20,7 @@ public class ItemBoxSlot : Slot
 
         if (!ItemManager.Instance.isInventoryFull)
         {
+            fullInvenTxt.SetActive(false);
             ItemStat item = new ItemStat(slotItem);
             ItemManager.Instance.GetItem(item);
             slotItem.count--;
@@ -31,6 +31,10 @@ public class ItemBoxSlot : Slot
                 slotList.nowOpenItemBox.ResetSlot();
                 slotList.nowOpenItemBox.SetSlot();
             }
+        }
+        else
+        {
+            fullInvenTxt.SetActive(true);
         }
         /*if (inventory_. < 10)
         {
@@ -83,7 +87,7 @@ public class ItemBoxSlot : Slot
         }*/
     }
 
-    private void AddItemToInventory()
+    /*private void AddItemToInventory()
     {
         List<ItemStat> inventory_ = ItemManager.Instance.inventory;
 
@@ -102,7 +106,7 @@ public class ItemBoxSlot : Slot
         }
         else
         {
-            slotList.nowOpenItemBox.fullInvenTxt.SetActive(true);
+            fullInvenTxt.SetActive(true);
         }
-    }
+    }*/
 }

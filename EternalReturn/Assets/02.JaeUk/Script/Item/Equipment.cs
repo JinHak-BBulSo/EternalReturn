@@ -19,7 +19,6 @@ public class Equipment : SlotList
     }
     public override void Addslot()
     {
-        Debug.Log("1" + ItemManager.Instance.isItemPick);
         if (ItemManager.Instance.isItemPick)
         {
             List<ItemStat> equipment = ItemManager.Instance.equipmentInven;

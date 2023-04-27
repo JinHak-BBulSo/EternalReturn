@@ -39,11 +39,13 @@ public class Monster : MonoBehaviour, IHitHandler
         monsterController = GetComponent<MonsterController>();
         spawnPoint = transform.parent.GetComponent<MonsterSpawnPoint>();
         monsterBattleArea = spawnPoint.transform.GetChild(0).GetComponent<MonsterBattleArea>();
+        monsterItemBox = GetComponent<ItemBox>();
 
         spawnPoint.monster = this;
         monsterBattleArea.monster = this;
 
         monsterStatus = new MonsterStatus();
+        outline = GetComponent<Outline>();
         SetStatus();
 
         if (spawnPoint != null)

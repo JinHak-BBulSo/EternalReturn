@@ -5,8 +5,26 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
+    public enum PlayerState
+    {
+        NONE = -1,
+        IDLE,
+        MOVE,
+        ATTACKMOVE,
+        ATTACK,
+        DIE,
+        Skill_Q,
+        Skill_W,
+        Skill_E,
+        Skill_R,
+        Skill_D,
+        COLLECT
+
+    }
     public PlayerBase player = default;
     public IPlayerState currentState = new PlayerIdle();
+    public PlayerState playerState = PlayerState.NONE;
 
     public void Start()
     {
@@ -49,6 +67,13 @@ public class PlayerController : MonoBehaviour
         player.playerAni.SetBool("isAttack", false);
         player.playerAni.SetBool("isSkill", false);
         player.playerAni.SetBool("skillStart", false);
+        player.playerAni.SetBool("isCollect", false);
+    }
+
+    public void toolReset()
+    {
+        player.weapon.SetActive(true);
+        player.fishingRod.SetActive(false);
     }
 }
 
