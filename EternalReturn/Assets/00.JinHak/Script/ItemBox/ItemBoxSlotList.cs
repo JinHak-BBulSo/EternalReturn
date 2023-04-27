@@ -13,6 +13,7 @@ public class ItemBoxSlotList : MonoBehaviour
         {
             boxSlotList.Add(transform.GetChild(i).GetComponent<ItemBoxSlot>());
             boxSlotList[i].slotList = this;
+            boxSlotList[i].fullInvenTxt = transform.parent.GetChild(3).gameObject;
         }
 
         transform.parent.parent.gameObject.SetActive(false);

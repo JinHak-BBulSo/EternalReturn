@@ -6,7 +6,7 @@ using System.Linq;
 public class ItemManager : SingleTonBase<ItemManager>
 {
     public GameObject ItemCanvas;
-    public GameObject Player;
+    public PlayerBase Player;
     public ItemDefine itemDefine = new ItemDefine();
     public Dictionary<int, GameObject> itemListObj = new Dictionary<int, GameObject>();
     public List<ItemStat> itemList = new List<ItemStat>();
@@ -114,7 +114,6 @@ public class ItemManager : SingleTonBase<ItemManager>
         if (!isUsed)
         {
             PickItem(item);
-            Debug.Log(item.id);
         }
 
         isItemPick = true;
@@ -230,6 +229,8 @@ public class ItemManager : SingleTonBase<ItemManager>
         {
             if (id.id == item_.id)
             {
+                //KJH ADD
+                if (id.maxCount == id.count) continue;
                 isChk = true;
             }
             else
@@ -246,9 +247,12 @@ public class ItemManager : SingleTonBase<ItemManager>
             {
 
                 targetItem_ = FindItemFromList(item_, i);
+                //KJH ADD
+                if (targetItem_ != default && targetItem_.maxCount == targetItem_.count) continue;
 
                 if (targetItem_ != default && targetItem_.id != 0 && targetItem_.maxCount > targetItem_.count)
                 {
+                    
                     Debug.Log($"현재 인벤토리에서 가져온 아이템의 칸{i}");
                     break;
                 }
@@ -617,5 +621,6 @@ public class ItemManager : SingleTonBase<ItemManager>
         }
         equipmentTotalState = new ItemStat(attackPower, skillPower, basicAttackPower, defense, attackSpeed, coolDown, criticalPercent, criticalDamage, moveSpeed, visionRange, attackRange, damageReduce, tenacity, armorReduce,
         lifeSteel, extraHp, extraStamina, hpRegen, staminaRegen, weaponAttackSpeedPercent, weaponAttackRangePercent);
+        Player.AddTotalStat();
     }
 }

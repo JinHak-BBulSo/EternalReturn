@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Linq;
-
+using UnityEngine.SceneManagement;
 public class CSVReader
 {
     public static List<string[]> Read(string file)
@@ -121,7 +121,7 @@ public class ItemCombineLoad : MonoBehaviour
         itemInferiorRare = ItemManager.Instance.ItemInferiorRare;
         itemInferiorUncommon = ItemManager.Instance.ItemInferiorUncommon;
 
-
+        //SceneManager.LoadScene("Lobby");
         // func(ItemManager.Instance.itemList, false);
     }
     public void func(List<ItemStat> list, bool flag)

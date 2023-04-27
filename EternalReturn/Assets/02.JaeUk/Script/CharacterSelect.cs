@@ -3,61 +3,54 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
 public class CharacterSelect : MonoBehaviourPun
 {
-    [SerializeField]
-    public string[] playerList = new string[4];
-    [SerializeField]
-    public int playerNumber;
-    string PlayerName;
-    bool isEnter = true;
+    public GameObject player;
+    public Image[] PlayerSprite = null;
+    public Sprite[] ImageSprite;
+    public Button startBtn;
+    public bool isSelect;
+    public int selectNumber;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        photonView.RPC("SetPlayerList", RpcTarget.All);
-    }
-
-    [PunRPC]
-    void SetPlayerList()
-    {
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            playerList[0] = "host";
-        }
-        else
-        {
-            playerList[0] = "user";
-            playerList[1] = "host";
-            isEnter = true;
-        }
+        PlayerManager.Instance.canvas = transform.gameObject;
+        GameObject playerClone = PhotonNetwork.Instantiate("Global/Player", new Vector3(0, 0, 0), Quaternion.identity, 0);
+        playerClone.transform.SetParent(transform.GetChild(0), false);
 
     }
 
-    [PunRPC]
-    void EnterGuest()
-    {
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            playerNumber++;
-            playerList[playerNumber] = "User";
-        }
-
-
-    }
 
 
     // Update is called once per frame
     void Update()
     {
-        if (isEnter && PhotonNetwork.IsMasterClient)
+        if (PlayerManager.Instance.SelectChk)
         {
-            isEnter = false;
-            photonView.RPC("EnterGuest", RpcTarget.MasterClient);
+            Debug.Log("!!!");
+            PlayerManager.Instance.SelectChk = false;
+            for (int i = 0; i < transform.GetChild(0).childCount; i++)
+            {
+                if (transform.GetChild(0).GetChild(i).GetComponent<CharacterSelectController>().isSelect)
+                    PlayerSprite[i].sprite = ImageSprite[transform.GetChild(0).GetChild(i).GetComponent<CharacterSelectController>().selectCharacterNum];
+            }
         }
+
+
+
+
+    }
+    public void OnClick()
+    {
+        Debug.Log("!!");
+        PlayerSprite[0].sprite = ImageSprite[0];
+        selectNumber = 0;
+        PlayerManager.Instance.IsSelect = true;
+        PlayerManager.Instance.characterNum = 0;
     }
 }
 

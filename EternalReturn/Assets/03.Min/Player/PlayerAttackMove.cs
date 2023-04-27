@@ -8,14 +8,19 @@ public class PlayerAttackMove : IPlayerState
     public void StateEnter(PlayerController controller_)
     {
         this.playerController = controller_;
+        playerController.playerState = PlayerController.PlayerState.ATTACKMOVE;
+
         // playerController.player.playerAni.Rebind();
         playerController.ResetRange();
         playerController.player.playerAni.SetBool("isAttack", false);
         playerController.player.playerAni.SetBool("isSkill", false);
         playerController.player.playerAni.SetBool("skillStart", false);
         // playerController.player.playerAni.SetBool("isMove", false);
-
-        if (!playerController.player.playerAni.GetBool("isMove"))
+        if (playerController.player.playerAni.GetBool("isMove"))
+        {
+            playerController.player.playerAni.SetBool("isMove", true);
+        }
+        else
         {
             playerController.player.playerAni.SetBool("isMove", true);
         }
@@ -35,31 +40,28 @@ public class PlayerAttackMove : IPlayerState
     public void StateUpdate()
     {
         Collider[] enemys = Physics.OverlapSphere(playerController.transform.position, playerController.player.playerStat.attackRange);
-        playerController.player.Move();
 
-        if (playerController.player.enemy == null)
+        for (int i = 0; i < enemys.Length; i++)
         {
-            for (int i = 0; i < enemys.Length; i++)
+            if (enemys[i].CompareTag("Enemy"))
             {
-                if (enemys[i].CompareTag("Enemy"))
-                {
-                    playerController.player.enemy = enemys[i].gameObject;
-                    break;
-                }
+                playerController.player.enemy = enemys[i].gameObject;
+                break;
             }
         }
         if (playerController.player.enemy != null)
         {
             if (ExceptY.ExceptYDistance(ExceptY.ExceptYPos(playerController.player.transform.position), ExceptY.ExceptYPos(playerController.player.enemy.transform.position))
-            <= playerController.player.playerStat.attackRange)
+            <= playerController.player.playerTotalStat.attackRange)
             {
                 if (playerController.player.isAttackAble)
                 {
                     playerController.ChangeState(new PlayerAttack());
                 }
             }
-
         }
+        playerController.player.Move();
+
 
         if (!playerController.player.skillCooltimes[0])
         {

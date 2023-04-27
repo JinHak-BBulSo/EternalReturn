@@ -13,6 +13,6 @@ public class MiniMapPlayerIcon : MonoBehaviour
     }
     void Update()
     {
-        transform.position = targetPlayer.transform.position + offset;
+        transform.rotation = Quaternion.identity;
     }
 }
