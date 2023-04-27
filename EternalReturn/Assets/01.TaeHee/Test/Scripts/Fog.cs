@@ -66,6 +66,7 @@ public class Fog : MonoBehaviour
             {
                 data[3 + i * 2] = (hit.point.x - transform.position.x) / projectorSize + 0.5f;
                 data[4 + i * 2] = (hit.point.z - transform.position.z) / projectorSize + 0.5f;
+                //Debug.Log($"O {hit.transform.gameObject}");
             }
             else
             {

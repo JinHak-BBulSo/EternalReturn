@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class PlayerBase : MonoBehaviour, IHitHandler
 {
+
     protected PlayerController playerController = default;
     protected Vector3 destination = default;
     private int currentCorner = 0;
@@ -23,6 +24,9 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public GameObject[] SkillRange = new GameObject[5];
     public CharaterData charaterData = default;
     public PlayerStat playerStat = default;
+    public PlayerStat extraStat = default;
+    public PlayerStat playerTotalStat = default;
+
     [HideInInspector]
     public Animator playerAni = default;
     [HideInInspector]
@@ -47,10 +51,12 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     //[KJH] Add. MiniMap move
     private Camera miniMapCamera = default;
 
-
+    public GameObject itemBoxUi = default;
+    public ItemBoxSlotList itemBoxSlotList = default;
 
     protected virtual void Start()
     {
+        ItemManager.Instance.Player = this;
         playerController = GetComponent<PlayerController>();
         playerAni = GetComponent<Animator>();
         playerNav = GetComponent<NavMeshAgent>();
@@ -58,9 +64,14 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         attackRangeRender[0] = attackRange.GetComponent<SpriteRenderer>();
         attackRangeRender[1] = attackRange.transform.GetChild(0).GetComponent<SpriteRenderer>();
         InitStat();
-
         //KJH Add. MinimapCamera Add
         miniMapCamera = Camera.main.transform.parent.GetChild(1).GetComponent<Camera>();
+        //KJH Add. Each Player InventoryBoxUi Add
+
+        //GameObject itemBoxUi_ = Resources.Load<GameObject>("06.ItemBox/Prefab/ItemBoxUI/ItemBoxUi");
+
+        itemBoxUi = Instantiate(itemBoxUi, GameObject.Find("TestUi").transform);
+        itemBoxSlotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
     }
 
 
@@ -149,7 +160,6 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                     currentCorner = 0;
                 }
             }
-            Debug.Log(hit);
 
         }
     }
@@ -168,6 +178,57 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         playerStat.maxStamina = charaterData.stamina; // 스태미나
         playerStat.hpRegen = charaterData.hpRegen; // hp젠
         playerStat.staminaRegen = charaterData.staminaRegen; // 스태미나젠
+        playerStat.nowHp = playerStat.maxHp;
+        playerStat.nowStamina = playerStat.maxStamina;
+    }
+
+    public void AddExtraStat() // 아이템 추가스텟
+    {
+        extraStat.attackPower = ItemManager.Instance.equipmentTotalState.attackPower;
+        extraStat.defense = ItemManager.Instance.equipmentTotalState.defense;
+        extraStat.armorReduce = ItemManager.Instance.equipmentTotalState.armorReduce;
+        extraStat.attackRange = ItemManager.Instance.equipmentTotalState.attackRange;
+        extraStat.attackSpeed = ItemManager.Instance.equipmentTotalState.attackSpeed;
+        extraStat.basicAttackPower = ItemManager.Instance.equipmentTotalState.basicAttackPower;
+        extraStat.coolDown = ItemManager.Instance.equipmentTotalState.coolDown;
+        extraStat.criticalDamage = ItemManager.Instance.equipmentTotalState.criticalDamage;
+        extraStat.criticalPercent = ItemManager.Instance.equipmentTotalState.criticalPercent;
+        extraStat.damageReduce = ItemManager.Instance.equipmentTotalState.damageReduce;
+        extraStat.extraHp = ItemManager.Instance.equipmentTotalState.extraHp;
+        extraStat.extraStamina = ItemManager.Instance.equipmentTotalState.extraStamina;
+        extraStat.hpRegen = ItemManager.Instance.equipmentTotalState.hpRegen;
+        extraStat.lifeSteel = ItemManager.Instance.equipmentTotalState.lifeSteel;
+        extraStat.staminaRegen = ItemManager.Instance.equipmentTotalState.staminaRegen;
+        extraStat.moveSpeed = ItemManager.Instance.equipmentTotalState.moveSpeed;
+        extraStat.skillPower = ItemManager.Instance.equipmentTotalState.skillPower;
+        extraStat.tenacity = ItemManager.Instance.equipmentTotalState.tenacity;
+        extraStat.visionRange = ItemManager.Instance.equipmentTotalState.visionRange;
+    }
+
+    public void AddTotalStat() // 플레이어 총 스탯
+    {
+        AddExtraStat();
+        playerTotalStat.attackPower = playerStat.attackPower + extraStat.attackPower;
+        playerTotalStat.defense = playerStat.defense + extraStat.defense;
+        playerTotalStat.armorReduce = playerStat.armorReduce + extraStat.armorReduce;
+        playerTotalStat.attackRange = playerStat.attackRange + extraStat.attackRange + ItemManager.Instance.equipmentTotalState.weaponAttackRangePercent;
+        playerTotalStat.attackSpeed = (playerStat.attackSpeed + extraStat.attackSpeed) + ItemManager.Instance.equipmentTotalState.weaponAttackSpeedPercent;
+        playerTotalStat.basicAttackPower = playerStat.basicAttackPower + extraStat.basicAttackPower;
+        playerTotalStat.coolDown = playerStat.coolDown + extraStat.coolDown;
+        playerTotalStat.criticalDamage = playerStat.criticalDamage + extraStat.criticalDamage;
+        playerTotalStat.criticalPercent = playerStat.criticalPercent + extraStat.criticalPercent;
+        playerTotalStat.damageReduce = playerStat.damageReduce + extraStat.damageReduce;
+        playerTotalStat.extraHp = playerStat.extraHp + extraStat.extraHp;
+        playerTotalStat.extraStamina = playerStat.extraStamina + extraStat.extraStamina;
+        playerTotalStat.hpRegen = playerStat.hpRegen + extraStat.hpRegen;
+        playerTotalStat.lifeSteel = playerStat.lifeSteel + extraStat.lifeSteel;
+        playerTotalStat.staminaRegen = playerStat.staminaRegen + extraStat.staminaRegen;
+        playerTotalStat.moveSpeed = playerStat.moveSpeed + extraStat.moveSpeed;
+        playerTotalStat.skillPower = playerStat.skillPower + extraStat.skillPower;
+        playerTotalStat.tenacity = playerStat.tenacity + extraStat.tenacity;
+        playerTotalStat.visionRange = playerStat.visionRange + extraStat.visionRange;
+        playerTotalStat.maxHp = playerStat.maxHp + playerTotalStat.extraHp;
+        playerTotalStat.maxStamina = playerStat.maxStamina + playerTotalStat.extraStamina;
     }
 
     private void LevelUp(PlayerExp playerExp_)
@@ -203,7 +264,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     public virtual void Attack()
     {
-        playerAni.SetFloat("MotionSpeed", playerStat.attackSpeed);
+        playerAni.SetFloat("MotionSpeed", playerTotalStat.attackSpeed);
         transform.LookAt(enemy.transform);
         switch (attackType)
         {
@@ -274,7 +335,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         {
             attackRangeRender[0].color = new Color(attackRangeRender[0].color.r, attackRangeRender[0].color.g, attackRangeRender[0].color.b, 0.5f);
             attackRangeRender[1].color = new Color(attackRangeRender[1].color.r, attackRangeRender[1].color.g, attackRangeRender[1].color.b, 1f);
-            attackRange.localScale = new Vector3(0.01f * playerStat.attackRange * 4f, 0.01f * playerStat.attackRange * 4f, 0.01f);
+            attackRange.localScale = new Vector3(0.01f * playerTotalStat.attackRange * 4f, 0.01f * playerTotalStat.attackRange * 4f, 0.01f);
             isAttackRangeShow = true;
         }
     }
@@ -319,7 +380,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public void Move()
     {
 
-        if (isMove || isAttackMove)
+        if (isMove)
         {
             if (corners.Count > 0 && currentCorner < corners.Count)
             {
@@ -333,13 +394,18 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                     Quaternion viewroate = Quaternion.LookRotation(dir);
                     viewroate = Quaternion.Euler(transform.rotation.x, viewroate.eulerAngles.y, transform.rotation.z);
                     transform.rotation = Quaternion.Slerp(transform.rotation, viewroate, 6f * Time.deltaTime);
-                    transform.position += dir.normalized * Time.deltaTime * playerStat.moveSpeed;
+                    transform.position += dir.normalized * Time.deltaTime * playerTotalStat.moveSpeed;
                 }
                 else
                 {
                     isMove = false;
                     isAttackMove = false;
-                    playerAni.SetBool("isMove", false);
+                    playerController.ChangeState(new PlayerIdle());
+                    if (playerController.playerState == PlayerController.PlayerState.IDLE)
+                    {
+                        playerAni.SetBool("isMove", false);
+                    }
+
                 }
             }
         }
@@ -381,7 +447,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     /// <param name="message"></param>
     public void TakeDamage(DamageMessage message)
     {
-        playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerStat.defense)));
+        playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
     }
     public void TakeDamage(DamageMessage message, float damageAmount)
     {
