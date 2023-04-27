@@ -18,11 +18,12 @@ public class ItemBoxSlot : Slot
     {
         if (slotItem == default) return;
 
+        fullInvenTxt.SetActive(false);
+        ItemStat item = new ItemStat(slotItem);
+        ItemManager.Instance.GetItem(item);
+
         if (!ItemManager.Instance.isInventoryFull)
         {
-            fullInvenTxt.SetActive(false);
-            ItemStat item = new ItemStat(slotItem);
-            ItemManager.Instance.GetItem(item);
             slotItem.count--;
 
             if (slotItem.count == 0)
@@ -35,6 +36,6 @@ public class ItemBoxSlot : Slot
         else
         {
             fullInvenTxt.SetActive(true);
-        }  
+        }
     }
 }
