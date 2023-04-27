@@ -25,6 +25,10 @@ public class MoveCamera : MonoBehaviour
         SetCameraSpeed(50f);
         SetScreenResolution(Screen.width, Screen.height);
     }
+    void Start()
+    {
+        player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
+    }
 
     void Update()
     {
@@ -69,7 +73,7 @@ public class MoveCamera : MonoBehaviour
             }
 
             transform.position += cameraMoveVec * cameraSpeed * Time.deltaTime;
-            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -MAP_BOUNDARY_POS, MAP_BOUNDARY_POS), 
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -MAP_BOUNDARY_POS, MAP_BOUNDARY_POS),
                 transform.position.y,
                 Mathf.Clamp(transform.position.z, -MAP_BOUNDARY_POS, MAP_BOUNDARY_POS));
         }

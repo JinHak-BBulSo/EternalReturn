@@ -72,5 +72,6 @@ MonoBehaviour:
   playerTotalNumber: 0
   isEnter: 0
   isSelect: 0
-  anotherSelect: 0
   selectNumber: 0
+  selectCharacterNum: 0
+  selectViewID: 0

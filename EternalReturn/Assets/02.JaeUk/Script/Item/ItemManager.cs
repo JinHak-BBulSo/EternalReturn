@@ -20,7 +20,7 @@ public class ItemManager : SingleTonBase<ItemManager>
     public List<ItemStat> equipmentInven = new List<ItemStat>();
     public ItemStat equipmentTotalState = default;
     public bool isItemDrop = true;
-    public bool isItemPick = true;
+    public bool isItemPick = false;
     public bool isInventoryFull = false;
 
 

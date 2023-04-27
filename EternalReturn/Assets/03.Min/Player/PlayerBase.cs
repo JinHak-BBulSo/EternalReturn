@@ -55,6 +55,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     protected virtual void Start()
     {
+        transform.SetParent(PlayerManager.Instance.canvas.transform, false);
         ItemManager.Instance.Player = this;
         playerController = GetComponent<PlayerController>();
         playerAni = GetComponent<Animator>();

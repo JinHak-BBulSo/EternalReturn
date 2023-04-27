@@ -14,6 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/02.JaeUk/Scene/CharacterSelect.unity
     guid: 5800d1565daf6b84dbe0a23aaa524cdd
+  - enabled: 1
+    path: Assets/02.JaeUk/Scene/ItemTest.unity
+    guid: 851a17b9899828847b46c165ce85b7fe
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: c0a5e86ad81fd0e439d2e6e82fb91b66,
       type: 2}
