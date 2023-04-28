@@ -48,6 +48,12 @@ MonoBehaviour:
   - ReadyCheck
   - SetImageChange
   - ChageImage
+  - LoadingGame
+  - LoadingFinish
+  - InstanatePlayer
+  - SetSingltonNum
+  - IncreasePlayer
+  - SceneChanger
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

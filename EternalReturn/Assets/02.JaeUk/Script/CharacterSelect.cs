@@ -13,6 +13,8 @@ public class CharacterSelect : MonoBehaviourPun
     public bool isSelect;
     public int selectNumber;
 
+    public int ReadyPlayerNum;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +35,7 @@ public class CharacterSelect : MonoBehaviourPun
         {
             Debug.Log("!!!");
             PlayerManager.Instance.SelectChk = false;
+            ReadyPlayerNum++;
             for (int i = 0; i < transform.GetChild(0).childCount; i++)
             {
                 if (transform.GetChild(0).GetChild(i).GetComponent<CharacterSelectController>().isSelect)
