@@ -18,6 +18,8 @@ public class CharacterSelectController : MonoBehaviourPun
     public int selectCharacterNum;
     public int selectViewID;
 
+    public int ReadyPlayerNum;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +39,6 @@ public class CharacterSelectController : MonoBehaviourPun
     {
         if (isSelect)
         {
-            isSelect = false;
             PlayerManager.Instance.SelectChk = true;
 
         }
@@ -48,6 +49,12 @@ public class CharacterSelectController : MonoBehaviourPun
         }
 
     }
+    [PunRPC]
+    void LoadingGame()
+    {
+        PhotonNetwork.LoadLevel("ItemTest");
+    }
+
     [PunRPC]
     void EnterGuest()
     {
@@ -65,14 +72,11 @@ public class CharacterSelectController : MonoBehaviourPun
     void SetPlayerList()
     {
 
-        if (PhotonNetwork.IsMasterClient)
+        if (photonView.IsMine)
         {
-        }
-        else if (photonView.IsMine)
-        {
-            playerNumber++;
+
             isEnter = true;
-            PlayerManager.Instance.PlayerNumber = playerNumber;
+            PlayerManager.Instance.PlayerNumber++;
 
         }
 
@@ -80,9 +84,23 @@ public class CharacterSelectController : MonoBehaviourPun
     [PunRPC]
     void ReadyCheck(int ViewID)
     {
+        int chk = 0;
         isSelect = true;
         PlayerManager.Instance.characterNum = selectCharacterNum;
         selectViewID = ViewID;
+        ReadyPlayerNum++;
+        for (int i = 0; i < transform.parent.childCount; i++)
+        {
+            if (transform.parent.GetChild(i).GetComponent<CharacterSelectController>().ReadyPlayerNum == 1)
+            {
+                chk++;
+            }
+        }
+        if (chk == transform.parent.childCount)
+        {
+            Debug.Log(transform.parent.childCount);
+            photonView.RPC("LoadingGame", RpcTarget.All);
+        }
 
 
     }

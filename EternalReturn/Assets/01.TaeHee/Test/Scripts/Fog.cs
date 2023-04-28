@@ -28,8 +28,9 @@ public class Fog : MonoBehaviour
 
     private void Start()
     {
-        cookieMask = new RenderTexture(textureResolution, textureResolution, 0);
-        cookieBlurred = new RenderTexture(textureResolution, textureResolution, 0);
+        Center = PlayerManager.Instance.Player.transform;
+        cookieMask = new RenderTexture(TextureResolution, TextureResolution, 0);
+        cookieBlurred = new RenderTexture(TextureResolution, TextureResolution, 0);
         //PastTexCount = CookieBlur.GetInt("_PastTexCount");
         pastMasks = new RenderTexture[pastTexCount];
         for (int i = 0; i < pastTexCount; i++)

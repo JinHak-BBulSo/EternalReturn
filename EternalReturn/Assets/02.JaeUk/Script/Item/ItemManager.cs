@@ -8,6 +8,7 @@ public class ItemManager : SingleTonBase<ItemManager>
     public GameObject ItemCanvas;
     public PlayerBase Player;
     public ItemDefine itemDefine = new ItemDefine();
+    [SerializeField]
     public Dictionary<int, GameObject> itemListObj = new Dictionary<int, GameObject>();
     public List<ItemStat> itemList = new List<ItemStat>();
     public Dictionary<ItemDefine, int> itemCombineDictionary = new Dictionary<ItemDefine, int>();
@@ -20,7 +21,7 @@ public class ItemManager : SingleTonBase<ItemManager>
     public List<ItemStat> equipmentInven = new List<ItemStat>();
     public ItemStat equipmentTotalState = default;
     public bool isItemDrop = true;
-    public bool isItemPick = true;
+    public bool isItemPick = false;
     public bool isInventoryFull = false;
 
 
@@ -252,7 +253,7 @@ public class ItemManager : SingleTonBase<ItemManager>
 
                 if (targetItem_ != default && targetItem_.id != 0 && targetItem_.maxCount > targetItem_.count)
                 {
-                    
+
                     Debug.Log($"현재 인벤토리에서 가져온 아이템의 칸{i}");
                     break;
                 }
@@ -449,11 +450,12 @@ public class ItemManager : SingleTonBase<ItemManager>
         for (int i = 0; i < item.Count; i++)
         {
             itemKey = int.Parse(item[i].name.Split(".")[0]);
+            Debug.Log(itemKey);
             itemListObj.Add(itemKey, item[i]);
         }
 
 
-        for (int i = 1; i < itemListObj.Count; i++)
+        for (int i = 1; i < itemListObj.Count + 1; i++)
         {
             if (itemListObj[i] == null)
             {
