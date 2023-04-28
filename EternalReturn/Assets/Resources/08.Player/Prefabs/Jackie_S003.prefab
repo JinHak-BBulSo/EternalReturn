@@ -1374,6 +1374,7 @@ MonoBehaviour:
   - 0
   - 0
   corners: []
+  stunFBX: {fileID: 0}
   itemBoxUi: {fileID: 7458879648041901250, guid: 935c3719471578743bca9af8a24ceb1b,
     type: 3}
   itemBoxSlotList: {fileID: 0}
