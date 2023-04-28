@@ -22,15 +22,15 @@ public class FocusedItem : MonoBehaviour
         if (item == null)
             return;
 
-        focused = item;
-        itemSlotImage.sprite = WishListSetting.ItemBgSpritesRO[focused.rare];
-        itemImage.sprite = ItemManager.Instance.itemListObj[focused.id].GetComponent<SpriteRenderer>().sprite;
-        itemName.text = focused.name;
+        //focused = item;
+        //itemSlotImage.sprite = WishListSetting.ItemBgSpritesRO[focused.rare];
+        //itemImage.sprite = ItemManager.Instance.itemListObj[focused.id].GetComponent<SpriteRenderer>().sprite;
+        //itemName.text = focused.name;
 
         int itemTreeHeight = UpdateFocusedItemSlots(item, 1, 0);
         Debug.Log(itemTreeHeight);
 
-
+        transform.localPosition = new Vector2(-365f, 64 + (itemTreeHeight - 1) * 40);
     }
 
     private int UpdateFocusedItemSlots(ItemStat item, int currentHeight, float xPos)
@@ -45,9 +45,13 @@ public class FocusedItem : MonoBehaviour
         inst.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = ItemManager.Instance.itemListObj[item.id].GetComponent<SpriteRenderer>().sprite;
         inst.transform.GetChild(1).GetComponent<Text>().text = item.name;
 
+        inst.transform.GetChild(1).GetComponent<Text>().fontSize = 19 - currentHeight * 1;
+
         float width = inst.GetComponent<RectTransform>().rect.width;
         float height = inst.GetComponent<RectTransform>().rect.height;
         Vector2 localSize = inst.transform.GetChild(0).GetComponent<RectTransform>().localScale = new Vector2(Mathf.Pow(1.2f, 1 - currentHeight), Mathf.Pow(1.2f, 1 - currentHeight));
+
+        inst.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta = new Vector2(width * localSize.x, inst.transform.GetChild(1).GetComponent<RectTransform>().rect.height);
 
         inst.GetComponent<RectTransform>().SetParent(transform, false);
         inst.GetComponent<RectTransform>().anchoredPosition = new Vector2(xPos, 0 - (currentHeight - 1) * height);
