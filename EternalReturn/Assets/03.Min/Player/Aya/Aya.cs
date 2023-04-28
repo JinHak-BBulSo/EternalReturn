@@ -9,6 +9,7 @@ public class Aya : PlayerBase
     protected override void Start()
     {
         base.Start();
+        ItemManager.Instance.GetItem(ItemManager.Instance.itemList[0]);
     }
 
     public override void Attack()
