@@ -51,9 +51,13 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         Debug.Log("Enter the Room");
-        PhotonNetwork.LoadLevel("CharacterSelect");
+        photonView.RPC("IncreasePlayer", RpcTarget.All);
     }
-
+    [PunRPC]
+    void IncreasePlayer()
+    {
+        RoomCheckManager.Instance.TotalPlayerNumber++;
+    }
     // Update is called once per frame
 
 }
