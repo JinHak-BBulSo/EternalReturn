@@ -92,7 +92,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 NavMeshHit navHit;
                 //[KJH] Add. 마우스 클릭 타겟 기록
                 clickTarget = hit.collider.gameObject;
-
+                Debug.Log(hit.point);
                 if (clickTarget.GetComponent<Outline>() != null && clickTarget.GetComponent<Outline>().monster != null)
                 {
                     Monster monster = clickTarget.GetComponent<Outline>().monster;
