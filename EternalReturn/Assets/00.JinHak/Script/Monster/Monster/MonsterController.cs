@@ -110,6 +110,12 @@ public class MonsterController : MonoBehaviour
             return;
         }
 
+        if (isInSkillUse)
+        {
+            monsterStateMachine.SetState(monsterStateDic[MonsterState.SKILL]);
+            return;
+        }
+
         if (actionDelay)
         {
             monsterStateMachine.SetState(monsterStateDic[MonsterState.DELAY]);
@@ -122,7 +128,9 @@ public class MonsterController : MonoBehaviour
             return;
         }
 
-        if(targetPlayer == null && encountPlayerCount == 0)
+        
+
+        if (targetPlayer == null && encountPlayerCount == 0)
         {
             monsterStateMachine.SetState(monsterStateDic[MonsterState.IDLE]);
         }
@@ -152,24 +160,8 @@ public class MonsterController : MonoBehaviour
                     {
                         monsterStateMachine.SetState(monsterStateDic[MonsterState.ATTACk]);
                     }
-
-                    if (isInSkillUse)
-                    {
-                        monsterStateMachine.SetState(monsterStateDic[MonsterState.SKILL]);
-                        return;
-                    }
                 }
             }
         }
     }
-
-    /*protected virtual void UseSkill()
-    {
-        isInSkillUse = true;
-        skillActive();
-    }
-    protected virtual void EndSkill()
-    {
-        isInSkillUse = false;
-    }*/
 }

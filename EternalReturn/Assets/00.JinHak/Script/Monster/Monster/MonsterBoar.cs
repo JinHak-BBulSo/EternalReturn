@@ -6,39 +6,79 @@ public class MonsterBoar : Monster
 {
     [SerializeField]
     GameObject skillRange = default;
+
+    private List<PlayerBase> collisionTarget = new List<PlayerBase>();
     private float skillCoolTime = 15f;
+    private bool isAssult = false;
+
+    protected override void SetStatus()
+    {
+        base.SetStatus();
+        monsterController.isSkillAble = true;
+    }
 
     public override void Skill()
     {
         base.Skill();
         StartCoroutine(SkillReady());
     }
-    private void Update()
-    {
-        Vector3 len = Camera.main.ScreenToWorldPoint(ExceptY.ExceptYPos(Input.mousePosition) - ExceptY.ExceptYPos(transform.position));
-        float y = Mathf.Atan2(len.z, len.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0, y, 0);
-    }
+
     IEnumerator SkillReady()
     {
         StartCoroutine(SkillCoolTime(skillCoolTime));
         skillRange.SetActive(true);
         monsterController.monsterAni.SetBool("isSkillReady", true);
         monsterController.navMeshAgent.enabled = false;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
         SkillAssult();
     }
 
     void SkillAssult()
     {
+        isAssult = true;
+        monsterController.monsterRigid.velocity = transform.forward * 10f;
         monsterController.monsterAni.SetBool("isSkillReady", false);
+        monsterController.monsterAni.SetBool("isSkill", true);
         skillRange.SetActive(false);
+    }
+
+    public void SkillEnd()
+    {
+        isAssult = false;
+        monsterController.monsterRigid.velocity = Vector3.zero;
         monsterController.navMeshAgent.enabled = true;
+        monsterController.isInSkillUse = false;
+        monsterController.monsterAni.SetBool("isSkill", false);
+        collisionTarget.Clear();
     }
 
     IEnumerator SkillCoolTime(float coolTime_)
     {
         yield return new WaitForSeconds(coolTime_);
         monsterController.isSkillAble = true;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(isAssult && other.tag == "Player")
+        {
+            PlayerBase nowTargetPlayer_ = other.GetComponent<PlayerBase>();
+            if (!collisionTarget.Contains(other.GetComponent<PlayerBase>()))
+            {
+                DamageMessage dm = new DamageMessage(this.gameObject, 100);
+                nowTargetPlayer_.TakeDamage(dm);
+
+                collisionTarget.Add(other.GetComponent<PlayerBase>());
+                Rigidbody rigid_ = other.GetComponent<Rigidbody>();
+                rigid_.AddForce(transform.forward * 45, ForceMode.Impulse);
+                StartCoroutine(NuckBackEnd(rigid_));
+            }
+        }
+    }
+
+    IEnumerator NuckBackEnd(Rigidbody targetRigid_)
+    {
+        yield return new WaitForSeconds(0.1f);
+        targetRigid_.velocity = Vector3.zero;
     }
 }

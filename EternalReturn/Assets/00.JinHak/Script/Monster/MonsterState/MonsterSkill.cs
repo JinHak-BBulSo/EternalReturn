@@ -25,9 +25,6 @@ public class MonsterSkill : IMonsterState
     }
     public virtual void ExitSkill()
     {
-        monsterController.monsterAni.SetBool("isSkill", false);
-        monsterController.isInSkillUse = false;
-        IMonsterState nextState = new MonsterDelay();
-        monsterController.MonsterStateMachine.monsterStateChange(nextState);
+        
     }
 }

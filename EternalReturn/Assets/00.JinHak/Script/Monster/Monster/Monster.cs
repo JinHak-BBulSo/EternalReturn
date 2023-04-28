@@ -19,9 +19,7 @@ public class Monster : MonoBehaviour, IHitHandler
     public string monsterName = default;
     [SerializeField]
     private MonsterData monsterData;
-    
-    public bool isSkillAble = false;
-    public bool isAttackAble = false;
+
     public bool isBattleAreaOut = false;
 
     public bool[] applyDebuffCheck = new bool[10];      // 해당 디버프가 걸렸는지 체크
@@ -75,6 +73,7 @@ public class Monster : MonoBehaviour, IHitHandler
 
         monsterController.navMeshAgent.enabled = true;
         monsterController.monster.monsterItemBox.enabled = false;
+        monsterController.targetPlayer = default;
 
         // 몬스터 아이템 셋팅
         //monsterItemBox.SetItems();
@@ -89,8 +88,6 @@ public class Monster : MonoBehaviour, IHitHandler
         monsterStatus.attackSpeed = monsterData.AttackSpeed;
         monsterStatus.attackRange = monsterData.AttackRange;
         monsterStatus.moveSpeed = monsterData.MoveSpeed;
-
-        isSkillAble = true;
     }
 
     protected virtual void SetDebuffData()
@@ -260,6 +257,75 @@ public class Monster : MonoBehaviour, IHitHandler
         if (!outline.isClick)
         {
             outline.enabled = false;
+        }
+    }
+
+    public void Debuff(DamageMessage message, int debuffIndex_, float continousTime_)
+    {
+        StartCoroutine(DebuffStart(message, debuffIndex_, continousTime_));
+    }
+
+    public IEnumerator DebuffStart(DamageMessage message, int debuffIndex_, float continousTime_)
+    {
+        // 이미 상태이상이 걸린 경우
+        if (applyDebuffCheck[debuffIndex_])
+        {
+            if (continousTime_ > debuffRemainTime[debuffIndex_])
+                debuffRemainTime[debuffIndex_] = continousTime_;
+        }
+        // 상태이상이 걸려있지 않은 경우
+        else
+        {
+            // 상태이상 남은 시간 기록
+            debuffRemainTime[debuffIndex_] = continousTime_;
+
+            switch (debuffIndex_)
+            {
+                // 스턴
+                case 2:
+                    monsterController.MonsterStateMachine.SetState(new MonsterIdle());
+                    monsterController.enabled = false;
+                    break;
+                // 속박
+                case 3:
+                    monsterController.MonsterStateMachine.SetState(new MonsterIdle());
+                    monsterController.enabled = false;
+                    break;
+            }
+
+            while (debuffRemainTime[debuffIndex_] > 0)
+            {
+                // 프레임마다 지속시간 감소
+                debuffRemainTime[debuffIndex_] -= Time.deltaTime;
+
+                // 상태이상 종류 체크
+                if (debuffIndex_ == 3 || debuffIndex_ == 4)
+                {
+                    monsterController.enabled = false;
+                    monsterController.navMeshAgent.enabled = false;
+                }
+
+                yield return null;
+            }
+
+            // 디버프 종류
+            switch (debuffIndex_)
+            {
+                // 스턴
+                case 2:
+                    monsterController.MonsterStateMachine.SetState(new MonsterIdle());
+                    monsterController.enabled = true;
+                    break;
+                // 속박
+                case 3:
+                    monsterController.MonsterStateMachine.SetState(new MonsterIdle());
+                    monsterController.enabled = true;
+                    break;
+            }
+
+            // 지속 종료시 리셋
+            debuffRemainTime[debuffIndex_] = 0;
+            applyDebuffCheck[debuffIndex_] = false;
         }
     }
 }
