@@ -75,3 +75,4 @@ MonoBehaviour:
   selectNumber: 0
   selectCharacterNum: 0
   selectViewID: 0
+  ReadyPlayerNum: 0

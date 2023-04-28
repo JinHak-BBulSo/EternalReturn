@@ -52,10 +52,7 @@ public class CharacterSelectController : MonoBehaviourPun
     [PunRPC]
     void LoadingGame()
     {
-        if (photonView.IsMine)
-        {
-            PhotonNetwork.LoadLevel("ItemTest");
-        }
+        PhotonNetwork.LoadLevel("ItemTest");
     }
 
     [PunRPC]
@@ -75,14 +72,11 @@ public class CharacterSelectController : MonoBehaviourPun
     void SetPlayerList()
     {
 
-        if (PhotonNetwork.IsMasterClient)
+        if (photonView.IsMine)
         {
-        }
-        else if (photonView.IsMine)
-        {
-            playerNumber++;
+
             isEnter = true;
-            PlayerManager.Instance.PlayerNumber = playerNumber;
+            PlayerManager.Instance.PlayerNumber++;
 
         }
 
