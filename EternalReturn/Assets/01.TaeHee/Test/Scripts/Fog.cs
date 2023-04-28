@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class Fog : MonoBehaviour
 {
-    public Material CookieCreator;
-    public Material CookieBlur;
-    public Transform Center;
-    public int CastResolution = 128;
-    public int TextureResolution = 128;
+    public Material cookieCreator;
+    public Material cookieBlur;
+    public Transform center;
+    public int castResolution = 128;
+    public int textureResolution = 128;
 
     //public GameObject CastPointGO;
-    public float CastPointHeight = 1.5f;
+    public float castPointHeight = 1.5f;
     [Range(0, 12)]
-    public int PastTexCount = 12;
-    public float Radius = 3;
+    public int pastTexCount = 12;
+    public float radius = 3;
 
     private RenderTexture cookieMask, cookieBlurred;
     private Projector projector;
@@ -28,42 +28,42 @@ public class Fog : MonoBehaviour
 
     private void Start()
     {
-        Center = PlayerManager.Instance.Player.transform;
-        cookieMask = new RenderTexture(TextureResolution, TextureResolution, 0);
-        cookieBlurred = new RenderTexture(TextureResolution, TextureResolution, 0);
+        center = PlayerManager.Instance.Player.transform;
+        cookieMask = new RenderTexture(textureResolution, textureResolution, 0);
+        cookieBlurred = new RenderTexture(textureResolution, textureResolution, 0);
         //PastTexCount = CookieBlur.GetInt("_PastTexCount");
-        pastMasks = new RenderTexture[PastTexCount];
-        for (int i = 0; i < PastTexCount; i++)
+        pastMasks = new RenderTexture[pastTexCount];
+        for (int i = 0; i < pastTexCount; i++)
         {
-            pastMasks[i] = new RenderTexture(TextureResolution / 2, TextureResolution / 2, 0);
-            CookieBlur.SetTexture("_PastTex" + i.ToString(), pastMasks[i]);
+            pastMasks[i] = new RenderTexture(textureResolution / 2, textureResolution / 2, 0);
+            cookieBlur.SetTexture("_PastTex" + i.ToString(), pastMasks[i]);
         }
 
         projector = GetComponent<Projector>();
         projector.material.SetTexture("_ShadowTex", cookieBlurred);
         projectorSize = projector.orthographicSize * 2;
 
-        data = new float[CastResolution * 2 + 3];
-        data[0] = CastResolution;
-        d_angle = 360 * Mathf.Deg2Rad / CastResolution;
+        data = new float[castResolution * 2 + 3];
+        data[0] = castResolution;
+        d_angle = 360 * Mathf.Deg2Rad / castResolution;
     }
 
     public void SetCookie()
     {
-        CookieBlur.SetInt("_PastTexCount", PastTexCount);
+        cookieBlur.SetInt("_PastTexCount", pastTexCount);
 
-        Vector3 castPoint = Center.position;
+        Vector3 castPoint = center.position;
         //castPoint.y = CastPointHeight;
 
         //castPoint.y = CastPointGO.transform.position.y;
-        castPoint.y = Center.position.y + CastPointHeight - 1f;
-        for (int i = 0; i < CastResolution; i++)
+        castPoint.y = center.position.y + castPointHeight - 1f;
+        for (int i = 0; i < castResolution; i++)
         {
             Vector3 dir = Vector3.one;
             dir.x *= Mathf.Cos(d_angle * i);
             dir.z *= Mathf.Sin(d_angle * i);
             dir.y = 0;
-            if (Physics.Raycast(castPoint, dir, out hit, Radius))
+            if (Physics.Raycast(castPoint, dir, out hit, radius))
             {
                 data[3 + i * 2] = (hit.point.x - transform.position.x) / projectorSize + 0.5f;
                 data[4 + i * 2] = (hit.point.z - transform.position.z) / projectorSize + 0.5f;
@@ -71,18 +71,18 @@ public class Fog : MonoBehaviour
             }
             else
             {
-                Vector3 point = dir.normalized * Radius + Center.transform.position;
+                Vector3 point = dir.normalized * radius + center.transform.position;
                 data[3 + i * 2] = (point.x - transform.position.x) / projectorSize + 0.5f;
                 data[4 + i * 2] = (point.z - transform.position.z) / projectorSize + 0.5f;
             }
         }
         data[1] = (castPoint.x - transform.position.x) / projectorSize + 0.5f;
         data[2] = (castPoint.z - transform.position.z) / projectorSize + 0.5f;
-        CookieCreator.SetFloatArray("_Data", data);
-        Graphics.Blit(null, cookieMask, CookieCreator);
-        Graphics.Blit(cookieMask, cookieBlurred, CookieBlur);
+        cookieCreator.SetFloatArray("_Data", data);
+        Graphics.Blit(null, cookieMask, cookieCreator);
+        Graphics.Blit(cookieMask, cookieBlurred, cookieBlur);
         Graphics.Blit(cookieBlurred, pastMasks[pastMaskIndex]);
 
-        pastMaskIndex = pastMaskIndex >= (PastTexCount - 1) ? 0 : pastMaskIndex + 1;
+        pastMaskIndex = pastMaskIndex >= (pastTexCount - 1) ? 0 : pastMaskIndex + 1;
     }
 }
