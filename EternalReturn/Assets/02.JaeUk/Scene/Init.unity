@@ -393,7 +393,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 0}
+  Player: {fileID: 0}
   PlayerNumber: 0
+  IsSelect: 0
+  characterNum: 0
+  SelectChk: 0
+  LoadingFinishPlayer: 0
+  IsGameStart: 0
 --- !u!1 &1259390826
 GameObject:
   m_ObjectHideFlags: 0
