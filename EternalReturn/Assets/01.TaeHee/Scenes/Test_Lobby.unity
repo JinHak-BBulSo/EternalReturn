@@ -526,6 +526,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 953363321}
     m_Modifications:
+    - target: {fileID: 9187169089422973654, guid: 2b6e0abf0da319740b2e4ea108166b08,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.5188679
+      objectReference: {fileID: 0}
+    - target: {fileID: 9187169089422973654, guid: 2b6e0abf0da319740b2e4ea108166b08,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.5188679
+      objectReference: {fileID: 0}
+    - target: {fileID: 9187169089422973654, guid: 2b6e0abf0da319740b2e4ea108166b08,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.5188679
+      objectReference: {fileID: 0}
     - target: {fileID: 9187169089422973656, guid: 2b6e0abf0da319740b2e4ea108166b08,
         type: 3}
       propertyPath: m_Pivot.x
@@ -746,6 +761,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de99088fd576c19429c02be8ad17346b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemSlotWithNamePrefab: {fileID: 3602421626343493562, guid: fde00bb32b183a6449ed3473cbeff4a4,
+    type: 3}
 --- !u!1 &694297421
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,7 +861,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &703911642
 RectTransform:
   m_ObjectHideFlags: 0

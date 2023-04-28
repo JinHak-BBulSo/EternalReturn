@@ -6,10 +6,17 @@ public class ItemTypeButton : MonoBehaviour
     private static WishListSetting wishListSetting;
 
     [SerializeField] private ItemType itemType;
-    private Text buttonText;
+    private Image buttonImage;
+    //private Text buttonText;
 
     public void OnClickButton()
     {
+        for (int i = 0; i < transform.parent.childCount; i++)
+        {
+            transform.parent.GetChild(i).GetComponent<Image>().color = Color.white;
+        }
+
+        buttonImage.color = Color.gray;
         wishListSetting.SetFocusedItemType(itemType);
     }
 
@@ -19,6 +26,8 @@ public class ItemTypeButton : MonoBehaviour
         {
             wishListSetting = transform.parent.parent.GetComponent<WishListSetting>();
         }
+
+        buttonImage = GetComponent<Image>();
 
         //buttonText = transform.GetChild(0).GetComponent<Text>();
         //switch (buttonText.text)

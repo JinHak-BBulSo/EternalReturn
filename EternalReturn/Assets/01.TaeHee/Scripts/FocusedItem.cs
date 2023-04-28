@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
@@ -11,6 +12,8 @@ public class FocusedItem : MonoBehaviour
     private Image itemSlotImage;
     private Image itemImage;
     private Text itemName;
+
+    [SerializeField] private GameObject itemSlotWithNamePrefab;
 
     private ItemDefine itemDefine = new ItemDefine();
 
@@ -24,26 +27,50 @@ public class FocusedItem : MonoBehaviour
         itemImage.sprite = ItemManager.Instance.itemListObj[focused.id].GetComponent<SpriteRenderer>().sprite;
         itemName.text = focused.name;
 
-        int itemTreeHeight = UpdateInferiorItems(item, 1);
+        int itemTreeHeight = UpdateFocusedItemSlots(item, 1, 0);
         Debug.Log(itemTreeHeight);
+
+
     }
 
-    private int UpdateInferiorItems(ItemStat item, int currentHeight)
+    private int UpdateFocusedItemSlots(ItemStat item, int currentHeight, float xPos)
     {
-        if (item == null || item.rare == (int)ItemRarityType.Common)
+        if (item == null)
         {
+            return currentHeight - 1;
+        }
+
+        GameObject inst = Instantiate(itemSlotWithNamePrefab);
+        inst.transform.GetChild(0).GetComponent<Image>().sprite = WishListSetting.ItemBgSpritesRO[item.rare];
+        inst.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = ItemManager.Instance.itemListObj[item.id].GetComponent<SpriteRenderer>().sprite;
+        inst.transform.GetChild(1).GetComponent<Text>().text = item.name;
+
+        float width = inst.GetComponent<RectTransform>().rect.width;
+        float height = inst.GetComponent<RectTransform>().rect.height;
+        Vector2 localSize = inst.transform.GetChild(0).GetComponent<RectTransform>().localScale = new Vector2(Mathf.Pow(1.2f, 1 - currentHeight), Mathf.Pow(1.2f, 1 - currentHeight));
+
+        inst.GetComponent<RectTransform>().SetParent(transform, false);
+        inst.GetComponent<RectTransform>().anchoredPosition = new Vector2(xPos, 0 - (currentHeight - 1) * height);
+
+        if (item.rare == (int)ItemRarityType.Common)
+        {
+            Debug.Log(item.id);
             return currentHeight;
         }
 
-        int inferiorItemID1 = itemDefine.FineInferiorItemId(ItemManager.Instance.itemCombineDictionary, item.id).itemId_1;
-        int inferiorItemID2 = itemDefine.FineInferiorItemId(ItemManager.Instance.itemCombineDictionary, item.id).itemId_2;
+        Debug.Log(item.id);
+        int inferiorItemId1 = itemDefine.FineInferiorItemId(ItemManager.Instance.itemCombineDictionary, item.id).itemId_1;
+        int inferiorItemId2 = itemDefine.FineInferiorItemId(ItemManager.Instance.itemCombineDictionary, item.id).itemId_2;
 
-        Debug.Log($"1){inferiorItemID1 - 1} {ItemManager.Instance.itemList[inferiorItemID1 - 1].name}, 2){inferiorItemID2 - 1} {ItemManager.Instance.itemList[inferiorItemID2 - 1].name}");
+        Debug.Log(inferiorItemId1);
+        Debug.Log(inferiorItemId2);
+        Debug.Log($"1){inferiorItemId1 - 1} {ItemManager.Instance.itemList[inferiorItemId1 - 1].name}, 2){inferiorItemId2 - 1} {ItemManager.Instance.itemList[inferiorItemId2 - 1].name}");
 
-        ItemStat inferiorItemL = ItemManager.Instance.itemList[inferiorItemID1 - 1];
-        ItemStat inferiorItemR = ItemManager.Instance.itemList[inferiorItemID2 - 1];
+        ItemStat inferiorItemL = ItemManager.Instance.itemList[inferiorItemId1 - 1];
+        ItemStat inferiorItemR = ItemManager.Instance.itemList[inferiorItemId2 - 1];
 
-        return Mathf.Max(UpdateInferiorItems(inferiorItemL, currentHeight + 1), UpdateInferiorItems(inferiorItemR, currentHeight + 1));
+        return Mathf.Max(UpdateFocusedItemSlots(inferiorItemL, currentHeight + 1, xPos - width * Mathf.Pow(localSize.x, 3)), 
+            UpdateFocusedItemSlots(inferiorItemR, currentHeight + 1, xPos + width * Mathf.Pow(localSize.x, 3)));
     }
 
     private void Awake()
