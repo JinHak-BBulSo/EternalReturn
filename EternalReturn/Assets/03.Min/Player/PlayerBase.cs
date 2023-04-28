@@ -138,7 +138,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             if (Physics.Raycast(miniMapCamera.ScreenPointToRay(Input.mousePosition), out hit))
             {
                 Vector3 clickPos = Input.mousePosition;
-                if(clickPos.x < 625 || clickPos.x > 735 ||
+                if (clickPos.x < 625 || clickPos.x > 735 ||
                     clickPos.y < 10 || clickPos.y > 110)
                 {
                     return;
@@ -285,13 +285,15 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         }
     }
 
-
+    public virtual void ExtraAni()
+    {
+    }
     private void MotionStart()
     {
         playerAni.SetBool("skillStart", true);
     }
 
-    private void MotionEnd()
+    public virtual void MotionEnd()
     {
         playerController.ResetAni();
         playerController.ResetRange();

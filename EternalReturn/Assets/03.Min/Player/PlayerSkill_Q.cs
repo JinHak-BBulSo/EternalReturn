@@ -11,14 +11,7 @@ public class PlayerSkill_Q : IPlayerState
         playerController.playerState = PlayerController.PlayerState.Skill_Q;
         playerController.ResetAni();
         playerController.ResetRange();
-        if (playerController.player.SkillRange[0] == null)
-        {
-            playerController.player.Skill_Q();
-        }
-        else
-        {
-            playerController.player.SkillRange[0].SetActive(true);
-        }
+        playerController.player.Skill_Q();
     }
     public void StateExit()
     {
@@ -31,17 +24,5 @@ public class PlayerSkill_Q : IPlayerState
 
     public void StateUpdate()
     {
-        if (playerController.player.SkillRange[0].activeSelf)
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                playerController.player.Skill_Q();
-            }
-            else if (Input.anyKeyDown)
-            {
-                playerController.player.SkillRange[0].SetActive(false);
-                playerController.ChangeState(new PlayerIdle());
-            }
-        }
     }
 }
