@@ -28,10 +28,7 @@ public class RoomCheckManager : MonoBehaviourPun
 
     private void Update()
     {
-        if (TotalPlayerNumber == 2)
-        {
-            PhotonNetwork.LoadLevel("CharacterSelect");
-        }
+       
     }
 
 

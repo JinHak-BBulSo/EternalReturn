@@ -35,7 +35,7 @@ public class PlayerInstanate : MonoBehaviourPun
         {
             case 0:
                 PlayerManager.Instance.canvas = transform.gameObject;
-                GameObject playerClone = PhotonNetwork.Instantiate("08.Player/Prefabs/Jackie_S003", new Vector3(0, 0, 0), Quaternion.identity, 0);
+                GameObject playerClone = PhotonNetwork.Instantiate("08.Player/Prefabs/Jackie_S003", PlayerManager.Instance.PlayerPos, Quaternion.identity, 0);
                 PlayerManager.Instance.Player = playerClone;
                 playerClone.transform.SetParent(transform, false);
                 PlayerManager.Instance.IsGameStart = true;

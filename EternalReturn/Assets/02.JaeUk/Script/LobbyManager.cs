@@ -56,8 +56,18 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void IncreasePlayer()
     {
-        RoomCheckManager.Instance.TotalPlayerNumber++;
+        int number = RoomCheckManager.Instance.TotalPlayerNumber;
+        number++;
+        RoomCheckManager.Instance.TotalPlayerNumber = number;
+        if (photonView.IsMine && RoomCheckManager.Instance.TotalPlayerNumber == 2)
+        {
+            photonView.RPC("SceneChanger", RpcTarget.All);
+        }
+    }
+    [PunRPC]
+    void SceneChanger()
+    {
+        PhotonNetwork.LoadLevel("CharacterSelect");
     }
     // Update is called once per frame
-
 }
