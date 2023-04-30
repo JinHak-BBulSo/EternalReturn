@@ -11,6 +11,8 @@ public class Aya : PlayerBase
     private Vector3 dir;
     private float distance;
     public bool isWon = false;
+    [SerializeField]
+    private GameObject RRange = default;
     protected override void Start()
     {
         base.Start();
@@ -272,22 +274,82 @@ public class Aya : PlayerBase
         base.Skill_R();
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 3);
+        RRange.SetActive(true);
         StartCoroutine(RDamage());
     }
 
     IEnumerator RDamage()
     {
+        enemyPlayer.Clear();
+        enemyHunt.Clear();
         float time = 0f;
         while (true)
         {
             if (time >= 0.5f && Input.GetKeyDown(KeyCode.R))
             {
+                RaycastHit[] hits;
+                hits = Physics.SphereCastAll(transform.position, 1.0f, Vector3.up, 0f);
+                foreach (var hit in hits)
+                {
+                    if (hit.transform.gameObject.GetComponent<Monster>() != null)
+                    {
+                        enemyHunt.Add(hit.transform.gameObject.GetComponent<Monster>());
+                    }
+                    else if (hit.transform.gameObject.GetComponent<PlayerBase>() != null)
+                    {
+                        enemyPlayer.Add(hit.transform.gameObject.GetComponent<PlayerBase>());
+                    }
+                }
+                float damage = 0f;
+                damage = (400 + 0.8f * playerTotalStat.attackPower + 1.2f * playerTotalStat.skillPower)
+                - (200 + 0.4f * playerTotalStat.attackPower + 0.6f * playerTotalStat.skillPower) * (time / 1.5f)
+                + (200 + 0.4f * playerTotalStat.attackPower + 0.6f * playerTotalStat.skillPower);
+                DamageMessage dm = new DamageMessage(gameObject, damage);
+
+                for (int i = 0; i < enemyHunt.Count; i++)
+                {
+                    enemyHunt[i].TakeDamage(dm);
+                }
+                for (int i = 0; i < enemyPlayer.Count; i++)
+                {
+                    enemyPlayer[i].TakeDamage(dm);
+                }
+                RRange.SetActive(false);
                 playerAni.SetBool("isREnd", true);
                 StartCoroutine(SkillCooltime(3, 80f));
                 yield break;
             }
             if (time >= 1.5f)
             {
+                RaycastHit[] hits;
+                hits = Physics.SphereCastAll(transform.position, 1.0f, Vector3.up, 0f);
+
+                float damage = 0f;
+                damage = (400 + 0.8f * playerTotalStat.attackPower + 1.2f * playerTotalStat.skillPower)
+                - (200 + 0.4f * playerTotalStat.attackPower + 0.6f * playerTotalStat.skillPower) * (time / 1.5f)
+                + (200 + 0.4f * playerTotalStat.attackPower + 0.6f * playerTotalStat.skillPower);
+                DamageMessage dm = new DamageMessage(gameObject, damage);
+
+                for (int i = 0; i < enemyHunt.Count; i++)
+                {
+                    enemyHunt[i].TakeDamage(dm);
+                }
+                for (int i = 0; i < enemyPlayer.Count; i++)
+                {
+                    enemyPlayer[i].TakeDamage(dm);
+                }
+                foreach (var hit in hits)
+                {
+                    if (hit.transform.gameObject.GetComponent<Monster>() != null)
+                    {
+                        enemyHunt.Add(hit.transform.gameObject.GetComponent<Monster>());
+                    }
+                    else if (hit.transform.gameObject.GetComponent<PlayerBase>() != null)
+                    {
+                        enemyPlayer.Add(hit.transform.gameObject.GetComponent<PlayerBase>());
+                    }
+                }
+                RRange.SetActive(false);
                 StartCoroutine(SkillCooltime(3, 80f));
                 playerAni.SetBool("isREnd", true);
                 yield break;
