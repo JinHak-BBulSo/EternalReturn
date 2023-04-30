@@ -7,7 +7,6 @@ public class ItemTypeButton : MonoBehaviour
 
     [SerializeField] private ItemType itemType;
     private Image buttonImage;
-    //private Text buttonText;
 
     public void OnClickButton()
     {
@@ -28,28 +27,5 @@ public class ItemTypeButton : MonoBehaviour
         }
 
         buttonImage = GetComponent<Image>();
-
-        //buttonText = transform.GetChild(0).GetComponent<Text>();
-        //switch (buttonText.text)
-        //{
-        //    case "옷":
-        //        itemType = ItemType.Chest;
-        //        break;
-        //    case "머리":
-        //        itemType = ItemType.Head;
-        //        break;
-        //    case "팔":
-        //        itemType = ItemType.Arm;
-        //        break;
-        //    case "다리":
-        //        itemType = ItemType.Leg;
-        //        break;
-        //    case "장식":
-        //        itemType = ItemType.Accessory;
-        //        break;
-        //    default:
-        //        itemType = ItemType.All;
-        //        break;
-        //}
     }
 }

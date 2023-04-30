@@ -1,4 +1,3 @@
-using Photon.Pun.Demo.Cockpit;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,14 +17,15 @@ using WebSocketSharp;
 
 public enum ItemType
 {
-    All = -1,
+    All = -2,
+    Weapon = -1,
     Material = 0,
     Head = 14,
     Chest = 15,
     Arm = 16,
     Leg = 17,
     Accessory = 18,
-    Food,
+    Axe = 19,
     Beverage = 20
 }
 
@@ -50,6 +50,8 @@ public class WishListSetting : MonoBehaviour
     [SerializeField] private GameObject itemSlotPrefab;
     private InputField inputField;
     private int maxItemCount;
+    private float maxScrollViewContentHeight;
+
     private float itemSlotWidth;
     private float itemSlotHeight;
 
@@ -161,15 +163,16 @@ public class WishListSetting : MonoBehaviour
 
             itemSlotList.Add(itemSlot.GetComponent<ItemSlot>());
         }
+
+        maxScrollViewContentHeight = itemSlotHeight * ((maxItemCount / 5) + 1);
     }
 
     private void UpdateItemSlotUI(List<ItemStat> itemList)
     {
-        float yStartPos, yPos;
         int itemListCount = itemList?.Count ?? 0;
 
         scrollViewContent.sizeDelta = new Vector2(0, itemSlotHeight * ((itemListCount / 5) + 1));
-        yStartPos = (scrollViewContent.rect.height - itemSlotHeight) / 2;
+        itemSlotParent.anchoredPosition = new Vector2(0, (scrollViewContent.sizeDelta.y - maxScrollViewContentHeight) / 2);
 
         for (int i = 0; i < maxItemCount; i++)
         {
@@ -180,9 +183,7 @@ public class WishListSetting : MonoBehaviour
             }
 
             itemSlotList[i].gameObject.SetActive(true);
-            yPos = yStartPos - (itemSlotHeight * (i / 5));
-
-            itemSlotList[i].UpdateNewItem(itemList[i], yPos);
+            itemSlotList[i].UpdateNewItem(itemList[i]);
         }
     }
 
@@ -211,10 +212,11 @@ public class WishListSetting : MonoBehaviour
     private void InitalizeCachedItemPool()
     {
         cachedItemPool.Add(ItemType.All, ItemManager.Instance.itemList);
+        List<ItemStat> cachedWeaponItemPool = GetCachedItemList((int)ItemType.Material, (int)ItemType.Head);
+        cachedWeaponItemPool.AddRange(GetCachedItemList(ItemType.Axe));
+        cachedItemPool.Add(ItemType.Weapon, cachedWeaponItemPool);
 
-        Debug.Log($"itemtype {Enum.IsDefined(typeof(ItemType), 0)}");
-
-        int itemTypeMax = (int)Enum.GetValues(typeof(ItemType)).Cast<ItemType>().Max();
+        int itemTypeMax = Enum.GetValues(typeof(ItemType)).Cast<int>().Max();
 
         for (int i = 0; i <= itemTypeMax; i++)
         {
@@ -231,6 +233,19 @@ public class WishListSetting : MonoBehaviour
         foreach (var item in ItemManager.Instance.itemList)
         {
             if (item.type == (int)itemType)
+            {
+                cachedItemPool.Add(item);
+            }
+        }
+        return cachedItemPool;
+    }
+
+    private List<ItemStat> GetCachedItemList(int exclusiveMin, int exclusiveMax)
+    {
+        List<ItemStat> cachedItemPool = new List<ItemStat>();
+        foreach (var item in ItemManager.Instance.itemList)
+        {
+            if (item.type > exclusiveMin && item.type < exclusiveMax)
             {
                 cachedItemPool.Add(item);
             }
