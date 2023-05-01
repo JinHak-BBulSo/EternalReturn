@@ -1887,8 +1887,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 38e9be2b429b75541bba1973e8bfcc30, type: 3}
   - {fileID: 21300000, guid: 959a82e36aa74bd408e6cbeaacf83a02, type: 3}
   BgSprite:
-  - {fileID: 21300000, guid: 5480465feadf1574b9327f3d8f9e68ac, type: 3}
-  - {fileID: 21300000, guid: 2bacd2e4cc557e049aafd22d4dfa99d0, type: 3}
+  - {fileID: 21300000, guid: dbc8a0c4d2e3e5b4ebff99d6ebf5a801, type: 3}
+  - {fileID: 21300000, guid: f313df1d9d3955c409e968ac151d7410, type: 3}
   startBtn: {fileID: 0}
   selectPlayerBg: {fileID: 2125991458}
   isSelect: 0
@@ -2900,7 +2900,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f313df1d9d3955c409e968ac151d7410, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dbc8a0c4d2e3e5b4ebff99d6ebf5a801, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
