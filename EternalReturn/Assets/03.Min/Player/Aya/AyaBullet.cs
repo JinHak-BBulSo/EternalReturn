@@ -6,6 +6,7 @@ public class AyaBullet : MonoBehaviour
 {
     public float damage = 0f;
     public PlayerBase shootPlayer = default;
+    private float distance;
 
     // Start is called before the first frame update
     void Start()
@@ -16,8 +17,13 @@ public class AyaBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += Vector3.forward * 8f * Time.deltaTime * 3f;
+        transform.position += Vector3.forward * 8f * Time.deltaTime * 2f;
+        distance += 8f * Time.deltaTime;
 
+        if (distance >= 8f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

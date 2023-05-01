@@ -13,6 +13,8 @@ public class Aya : PlayerBase
     public bool isWon = false;
     [SerializeField]
     private GameObject RRange = default;
+    [SerializeField]
+    private GameObject Bullet = default;
     protected override void Start()
     {
         base.Start();
@@ -173,6 +175,12 @@ public class Aya : PlayerBase
         StartCoroutine(WSkill());
     }
 
+    private void Shot()
+    {
+        AyaBullet bullet = Instantiate(Bullet, weapon.transform).GetComponent<AyaBullet>();
+        bullet.damage = 30 + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.25f);
+        bullet.shootPlayer = this;
+    }
     IEnumerator WSkill()
     {
         float time = 0f;
