@@ -26,7 +26,8 @@ public enum ItemType
     Leg = 17,
     Accessory = 18,
     Axe = 19,
-    Beverage = 20
+    Beverage = 20,
+    Food = 21
 }
 
 public class WishListSetting : MonoBehaviour
@@ -217,6 +218,7 @@ public class WishListSetting : MonoBehaviour
         cachedItemPool.Add(ItemType.Weapon, cachedWeaponItemPool);
 
         int itemTypeMax = Enum.GetValues(typeof(ItemType)).Cast<int>().Max();
+        Debug.Log($"MAX {itemTypeMax} {Enum.IsDefined(typeof(ItemType), 21)}");
 
         for (int i = 0; i <= itemTypeMax; i++)
         {
@@ -232,6 +234,11 @@ public class WishListSetting : MonoBehaviour
         List<ItemStat> cachedItemPool = new List<ItemStat>();
         foreach (var item in ItemManager.Instance.itemList)
         {
+            //if (itemType == ItemType.Food)
+            //{
+            //    Debug.Log($"{item.name}, {item.type}");
+            //}
+
             if (item.type == (int)itemType)
             {
                 cachedItemPool.Add(item);

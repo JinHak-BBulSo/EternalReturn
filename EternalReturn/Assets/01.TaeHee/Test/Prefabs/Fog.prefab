@@ -64,13 +64,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7fdc67838aae9b408f9846805df7a0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CookieCreator: {fileID: 2100000, guid: 02232c83883af194aae442cb088b4f31, type: 2}
-  CookieBlur: {fileID: 2100000, guid: 9bfc35dc3eaacd64d9f7670a1b6b4fe8, type: 2}
-  Center: {fileID: 0}
-  CastResolution: 128
-  TextureResolution: 128
-  CastPointHeight: 1.5
-  PastTexCount: 12
-  Radius: 10
+  cookieCreator: {fileID: 2100000, guid: 02232c83883af194aae442cb088b4f31, type: 2}
+  cookieBlur: {fileID: 2100000, guid: 9bfc35dc3eaacd64d9f7670a1b6b4fe8, type: 2}
+  center: {fileID: 0}
+  castResolution: 128
+  textureResolution: 128
+  castPointHeight: 1.5
+  pastTexCount: 12
+  radius: 3
   data: []
   data_sec: []
