@@ -5,10 +5,11 @@ using UnityEngine.AI;
 
 public class PlayerBase : MonoBehaviour, IHitHandler
 {
-
     protected PlayerController playerController = default;
     protected Vector3 destination = default;
     protected int currentCorner = 0;
+    public List<PlayerBase> enemyPlayer = new List<PlayerBase>();
+    public List<Monster> enemyHunt = new List<Monster>();
     public Vector3 nowMousePoint = default;
     public GameObject weapon = default;
     public GameObject fishingRod = default;
@@ -566,7 +567,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         {
             // 상태이상 남은 시간 기록
             debuffRemainTime[debuffIndex_] = continousTime_;
-            
+
             switch (debuffIndex_)
             {
                 // 스턴

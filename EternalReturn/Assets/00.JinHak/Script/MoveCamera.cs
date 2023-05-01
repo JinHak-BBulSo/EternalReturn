@@ -27,7 +27,7 @@ public class MoveCamera : MonoBehaviour
     }
     void Start()
     {
-        player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
+        // player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
     }
 
     void Update()
