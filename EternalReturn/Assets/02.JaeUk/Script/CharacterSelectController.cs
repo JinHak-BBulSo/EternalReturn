@@ -52,7 +52,7 @@ public class CharacterSelectController : MonoBehaviourPun
     [PunRPC]
     void LoadingGame()
     {
-        PhotonNetwork.LoadLevel("LumiaIslandScene");
+        transform.parent.parent.GetComponent<CharacterSelect>().totalTime = 50;
     }
 
     [PunRPC]

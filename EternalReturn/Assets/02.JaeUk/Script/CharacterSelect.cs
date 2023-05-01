@@ -4,16 +4,21 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class CharacterSelect : MonoBehaviourPun
 {
     public GameObject player;
-    public Image[] PlayerSprite = null;
+    public Image[] PlayerSprite;
     public Sprite[] ImageSprite;
+    public Sprite[] BgSprite;
     public Button startBtn;
+    public GameObject selectPlayerBg;
     public bool isSelect;
     public int selectNumber;
-
+    public Image gage;
+    public Text timer;
     public int ReadyPlayerNum;
+    public float totalTime;
 
 
     // Start is called before the first frame update
@@ -42,18 +47,25 @@ public class CharacterSelect : MonoBehaviourPun
                     PlayerSprite[i].sprite = ImageSprite[transform.GetChild(0).GetChild(i).GetComponent<CharacterSelectController>().selectCharacterNum];
             }
         }
-
-
-
-
+        totalTime += Time.deltaTime;
+        timer.text = $"{55 - (int)totalTime}";
+        gage.fillAmount = totalTime / 55f;
+        if (totalTime == 55f)
+        {
+            SceneManager.LoadScene("LumiaIslandScene");
+        }
+    }
+    public void SelectChar(int i)
+    {
+        PlayerSprite[0].sprite = ImageSprite[i - 1];
+        selectPlayerBg.transform.GetChild(0).GetComponent<Image>().sprite = BgSprite[i - 1];
+        selectNumber = i - 1;
     }
     public void OnClick()
     {
         Debug.Log("!!");
-        PlayerSprite[0].sprite = ImageSprite[0];
-        selectNumber = 0;
         PlayerManager.Instance.IsSelect = true;
-        PlayerManager.Instance.characterNum = 0;
+        PlayerManager.Instance.characterNum = selectNumber;
     }
 }
 
