@@ -426,8 +426,9 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         destination = dest_;
         isMove = true;
     }
-
-
+    public virtual void ExtraRange()
+    {
+    }
 
     public void Rest()
     {
@@ -506,6 +507,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         // 상태이상이 걸려있지 않은 경우
         else
         {
+            applyDebuffCheck[debuffIndex_] = true;
             // 상태이상 남은 시간 기록
             debuffRemainTime[debuffIndex_] = continousTime_;
             // 상태이상 데미지를 저장

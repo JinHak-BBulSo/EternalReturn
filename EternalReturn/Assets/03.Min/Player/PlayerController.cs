@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
                 player.SkillRange[i].SetActive(false);
             }
         }
+        player.ExtraRange();
     }
 
     public void ResetAni()
@@ -177,26 +178,6 @@ public class PlayerController : MonoBehaviour
                 ChangeState(new PlayerSkill_D());
             }
         }
-        // if (useSkillRange == player.SkillRange[0])
-        // {
-        //     // ChangeState(new PlayerSkill_Q());
-        // }
-        // else if (useSkillRange == player.SkillRange[1])
-        // {
-        //     ChangeState(new PlayerSkill_W());
-        // }
-        // else if (useSkillRange == player.SkillRange[2])
-        // {
-        //     ChangeState(new PlayerSkill_E());
-        // }
-        // else if (useSkillRange == player.SkillRange[3])
-        // {
-        //     ChangeState(new PlayerSkill_R());
-        // }
-        // else if (useSkillRange == player.SkillRange[4])
-        // {
-        //     ChangeState(new PlayerSkill_D());
-        // }
 
     }
 }
