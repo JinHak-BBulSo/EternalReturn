@@ -127,7 +127,7 @@ public class WishListSetting : MonoBehaviour
 
         ItemBgSpritesRO = new ReadOnlyCollection<Sprite>(itemBgSprites);
 
-        inputField = transform.GetChild(0).GetComponent<InputField>();
+        inputField = transform.GetChild(1).GetComponent<InputField>();
 
         itemSlotWidth = itemSlotPrefab.GetComponent<RectTransform>().rect.width;
         itemSlotHeight = itemSlotPrefab.GetComponent<RectTransform>().rect.height;
@@ -218,7 +218,6 @@ public class WishListSetting : MonoBehaviour
         cachedItemPool.Add(ItemType.Weapon, cachedWeaponItemPool);
 
         int itemTypeMax = Enum.GetValues(typeof(ItemType)).Cast<int>().Max();
-        Debug.Log($"MAX {itemTypeMax} {Enum.IsDefined(typeof(ItemType), 21)}");
 
         for (int i = 0; i <= itemTypeMax; i++)
         {
