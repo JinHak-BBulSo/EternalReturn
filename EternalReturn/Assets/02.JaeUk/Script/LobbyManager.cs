@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
     private string gameVersion = "1.0.0";
+    public bool isChk = false;
+    public GameObject startButton;
+    public AudioSource audio;
 
     // Start is called before the first frame update
     private void Start()
@@ -20,6 +24,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
+        RoomCheckManager.Instance.isEnter = true;
         Debug.Log("Enter the Server");
     }
     public override void OnDisconnected(DisconnectCause cause)
@@ -30,16 +35,35 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
     public void Connect()
     {
-        if (PhotonNetwork.IsConnected)
+        if (!isChk)
         {
-            Debug.Log("Try to Enter the room");
-            PhotonNetwork.JoinRandomRoom();
+            if (PhotonNetwork.IsConnected)
+            {
+                Debug.Log("Try to Enter the room");
+                PhotonNetwork.JoinRandomRoom();
+                isChk = true;
+                audio.Play();
+                startButton.transform.GetChild(2).GetComponent<Text>().text = "매칭 중";
+
+            }
+            else
+            {
+                Debug.Log("Failed to Enter the Server. ReTrying... ");
+                PhotonNetwork.ConnectUsingSettings();
+            }
         }
         else
         {
-            Debug.Log("Failed to Enter the Server. ReTrying... ");
-            PhotonNetwork.ConnectUsingSettings();
+            if (PhotonNetwork.InRoom)
+            {
+                PhotonNetwork.LeaveRoom();
+                RoomCheckManager.Instance.TotalPlayerNumber--;
+                startButton.transform.GetChild(2).GetComponent<Text>().text = "게임 시작";
+                audio.Play();
+                isChk = false;
+            }
         }
+
     }
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
