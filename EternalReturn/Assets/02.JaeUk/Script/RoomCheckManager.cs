@@ -25,10 +25,11 @@ public class RoomCheckManager : MonoBehaviourPun
         }
     }
     public int TotalPlayerNumber;
+    public bool isEnter = false;
 
     private void Update()
     {
-       
+
     }
 
 
