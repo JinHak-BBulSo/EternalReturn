@@ -50,7 +50,7 @@ public class Fog : MonoBehaviour
 
     public void SetCookie()
     {
-        cookieBlur.SetInt("_PastTexCount", pastTexCount);
+        // cookieBlur.SetInt("_PastTexCount", pastTexCount);
 
         Vector3 castPoint = center.position;
         //castPoint.y = CastPointHeight;

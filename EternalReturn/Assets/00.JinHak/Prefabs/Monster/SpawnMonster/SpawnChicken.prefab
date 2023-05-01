@@ -107,6 +107,11 @@ PrefabInstance:
       propertyPath: spawnDelay
       value: 120
       objectReference: {fileID: 0}
+    - target: {fileID: 9039394542087057774, guid: 9d1c2359969fc3640baf4c6f232567d4,
+        type: 3}
+      propertyPath: respawnDelay
+      value: 110
+      objectReference: {fileID: 0}
     - target: {fileID: 9039394542087057775, guid: 9d1c2359969fc3640baf4c6f232567d4,
         type: 3}
       propertyPath: m_Enabled

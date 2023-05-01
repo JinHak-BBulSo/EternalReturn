@@ -87,6 +87,16 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 9039394542087057774, guid: 9d1c2359969fc3640baf4c6f232567d4,
+        type: 3}
+      propertyPath: respawnDelay
+      value: 165
+      objectReference: {fileID: 0}
+    - target: {fileID: 9039394542087057774, guid: 9d1c2359969fc3640baf4c6f232567d4,
+        type: 3}
+      propertyPath: firstSpawnDelay
+      value: 70
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d1c2359969fc3640baf4c6f232567d4, type: 3}
 --- !u!4 &4765644807449274424 stripped
@@ -176,6 +186,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bat_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 8043052580104603191, guid: fa4592f8085ffac4a9e3207c54bdef56,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8043052580104603191, guid: fa4592f8085ffac4a9e3207c54bdef56,
         type: 3}

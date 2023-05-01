@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Jackie : PlayerBase
 {
-    public List<PlayerBase> enemyPlayer = new List<PlayerBase>();
-    public List<Monster> enemyHunt = new List<Monster>();
+
     public BoxCollider QBoxCol = default;
     [SerializeField]
     private bool isWBuffOn = false;
@@ -285,6 +284,8 @@ public class Jackie : PlayerBase
 
     private void EDamage()
     {
+        enemyPlayer.Clear();
+        enemyHunt.Clear();
         RaycastHit[] hits;
         hits = Physics.SphereCastAll(transform.position, 1.0f, Vector3.up, 0f);
         foreach (var hit in hits)
