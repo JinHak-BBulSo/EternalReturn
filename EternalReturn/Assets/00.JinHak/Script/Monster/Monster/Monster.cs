@@ -67,6 +67,7 @@ public class Monster : MonoBehaviour, IHitHandler
 
         spawnPoint.monster = this;
         monsterBattleArea.monster = this;
+        monsterController.monster.isDie = false;
 
         Appear();
         SetStatus();
@@ -75,8 +76,14 @@ public class Monster : MonoBehaviour, IHitHandler
         monsterController.monster.monsterItemBox.enabled = false;
         monsterController.targetPlayer = default;
 
-        // 몬스터 아이템 셋팅
-        //monsterItemBox.SetItems();
+        //몬스터 아이템 셋팅
+        monsterItemBox.SetItems(0);
+        
+        if(monsterItemBox.itemPrefabs.Count > 1)
+        {
+            int itemIndex_ = Random.Range(1, monsterItemBox.itemPrefabs.Count);
+            monsterItemBox.SetItems(itemIndex_);
+        }
     }
     
     protected virtual void SetStatus()

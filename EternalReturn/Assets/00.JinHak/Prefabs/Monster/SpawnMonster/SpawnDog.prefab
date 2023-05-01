@@ -7,6 +7,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3214226632272968467, guid: 95597e75c58c2d145a2a4d4f9b1380da,
+        type: 3}
+      propertyPath: respawnDelay
+      value: 170
+      objectReference: {fileID: 0}
+    - target: {fileID: 3214226632272968467, guid: 95597e75c58c2d145a2a4d4f9b1380da,
+        type: 3}
+      propertyPath: firstSpawnDelay
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 3214226632272968475, guid: 95597e75c58c2d145a2a4d4f9b1380da,
         type: 3}
       propertyPath: m_Name
@@ -111,6 +121,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 10.714282
+      objectReference: {fileID: 0}
+    - target: {fileID: 6712671006999370006, guid: 95597e75c58c2d145a2a4d4f9b1380da,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6712671006999370006, guid: 95597e75c58c2d145a2a4d4f9b1380da,
         type: 3}

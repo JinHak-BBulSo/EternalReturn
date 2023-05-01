@@ -53,6 +53,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public GameObject stunFBX = default;
     public GameObject itemBoxUi = default;
     public ItemBoxSlotList itemBoxSlotList = default;
+    private bool isMoveAble = true;
 
     protected virtual void Start()
     {
@@ -73,6 +74,8 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
         itemBoxUi = Instantiate(itemBoxUi, GameObject.Find("TestUi").transform);
         itemBoxSlotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
+
+        stunFBX = transform.GetChild(2).gameObject;
     }
 
 
@@ -84,7 +87,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mousePoint);
         nowMousePoint = mousePoint.point;
 
-        if (Input.GetMouseButtonDown(1) || (isAttackMove && Input.GetMouseButtonDown(0)))
+        if (isMoveAble && Input.GetMouseButtonDown(1) || (isAttackMove && Input.GetMouseButtonDown(0)))
         {
 
             RaycastHit hit;
@@ -570,6 +573,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 // 스턴
                 case 2:
                     isMove = false;
+                    isMoveAble = false;
                     playerController.enabled = false;
                     stunFBX.SetActive(true);
                     yield return null;
@@ -577,7 +581,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 // 속박
                 case 3:
                     isMove = false;
-                    playerController.enabled = false;
+                    isMoveAble = false;
                     yield return null;
                     break;
             }
@@ -599,11 +603,12 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 // 스턴
                 case 2:
                     stunFBX.SetActive(false);
+                    isMoveAble = true;
                     playerController.enabled = true;
                     break;
                 // 속박
                 case 3:
-                    playerController.enabled = true;
+                    isMoveAble = true;
                     break;
             }
 
