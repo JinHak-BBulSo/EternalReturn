@@ -41,11 +41,9 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public bool[] skillCooltimes = new bool[5];
     public bool[] applyDebuffCheck = new bool[10];      // 해당 디버프가 걸렸는지 체크
     public float[] debuffContinousTime = new float[10]; // 디버프 유지 시간
-    public float[] debuffDelayTime = new float[10];     // 디버프 틱 간격
     public float[] debuffRemainTime = new float[10];    // 디버프 남은 시간
     public float[] debuffDamage = new float[10];        // 디버프 데미지
-    public Queue<float>[] debuffDamageQueues = new Queue<float>[10];
-    public List<float>[] debuffRemainList = new List<float>[10];
+
     public List<Vector3> corners = new List<Vector3>();
     private SpriteRenderer[] attackRangeRender = new SpriteRenderer[2];
 
