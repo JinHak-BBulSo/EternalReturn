@@ -6,8 +6,7 @@ public class ItemSlot : MonoBehaviour
 {
     private static FocusedItem focusedItem;
 
-    private ItemStat item = null;
-    private RectTransform rectTransform;
+    private ItemStat item;
     private Image slotImage;
     private Image itemImage;
 
@@ -15,26 +14,26 @@ public class ItemSlot : MonoBehaviour
     {
         if (focusedItem == null)
         {
-            focusedItem = transform.root.GetChild(3).GetChild(3).GetComponent<FocusedItem>();
+            //
+            //focusedItem = transform.root.GetChild(3).GetChild(3).GetComponent<FocusedItem>();
+            focusedItem = GameObject.Find("Focused Item").GetComponent<FocusedItem>();
         }
 
-        rectTransform = GetComponent<RectTransform>();
         slotImage = GetComponent<Image>();
         itemImage = transform.GetChild(0).GetComponent<Image>();
     }
 
-    public void UpdateNewItem(ItemStat newItem, float yPos)
+    public void UpdateNewItem(ItemStat newItem)
     {
         item = newItem;
 
         slotImage.sprite = WishListSetting.ItemBgSpritesRO[item.rare];
         itemImage.sprite = ItemManager.Instance.itemListObj[item.id].GetComponent<SpriteRenderer>().sprite;
-
-        rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, yPos);
     }
 
     public void OnClickButton()
     {
+        //Debug.Log($"Type: {item.type}");
         //Debug.Log(item?.name ?? "null");
         focusedItem.UpdateFocusedItem(item);
     }

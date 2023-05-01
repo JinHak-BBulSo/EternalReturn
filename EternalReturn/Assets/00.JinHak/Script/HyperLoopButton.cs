@@ -17,6 +17,7 @@ public class HyperLoopButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
         hyperLoop = hyperLoopPointList.hyperLoops[index];
         image = GetComponent<Image>();
         hyperLoopUi = transform.parent.parent.gameObject;
+        hyperLoopPointList = GameObject.Find("TestUi").transform.GetChild(2).GetComponent<HyperLoopPointList>();
     }
     public void OnClickHyperLoop()
     {
