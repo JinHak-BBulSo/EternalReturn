@@ -17,8 +17,8 @@ public class AyaBullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += Vector3.forward * 8f * Time.deltaTime * 2f;
-        distance += 8f * Time.deltaTime;
+        transform.position += shootPlayer.transform.forward * 24f * Time.deltaTime;
+        distance += 24f * Time.deltaTime;
 
         if (distance >= 8f)
         {
@@ -30,9 +30,12 @@ public class AyaBullet : MonoBehaviour
     {
         if (other.GetComponent<PlayerBase>() != null)
         {
-            DamageMessage dm = new DamageMessage(shootPlayer.gameObject, damage);
-            other.GetComponent<PlayerBase>().TakeDamage(dm);
-            Destroy(gameObject);
+            if (other.GetComponent<PlayerBase>() != shootPlayer)
+            {
+                DamageMessage dm = new DamageMessage(shootPlayer.gameObject, damage);
+                other.GetComponent<PlayerBase>().TakeDamage(dm);
+                Destroy(gameObject);
+            }
         }
         else if (other.GetComponent<Monster>() != null)
         {
