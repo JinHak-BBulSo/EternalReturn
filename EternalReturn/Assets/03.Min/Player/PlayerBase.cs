@@ -73,6 +73,8 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
         itemBoxUi = Instantiate(itemBoxUi, GameObject.Find("TestUi").transform);
         itemBoxSlotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
+
+        stunFBX = transform.GetChild(2).gameObject;
     }
 
 
