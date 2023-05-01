@@ -29,11 +29,27 @@ public class MonsterRecall : IMonsterState
         yield return null;
         RecallStart();
         monsterController.navMeshAgent.SetDestination(monsterController.monster.SpawnPoint.transform.position);
-        
+        float healDelay_ = 0f;
+
         while (true)
         {
             Vector3 monsterPos_ = monsterController.transform.localPosition;
             Vector3 recallPos_ = monsterController.monster.MonsterBattleArea.transform.localPosition;
+            healDelay_ += Time.deltaTime;
+
+            if(healDelay_ > 0.25f)
+            {
+                monsterController.monster.monsterStatus.nowHp +=
+                    (int)(monsterController.monster.monsterStatus.maxHp * 0.1f);
+                healDelay_ = 0;
+                if(monsterController.monster.monsterStatus.nowHp > monsterController.monster.monsterStatus.maxHp)
+                {
+                    monsterController.monster.monsterStatus.nowHp = monsterController.monster.monsterStatus.maxHp;
+                }
+
+                monsterController.monster.monsterHpBar.fillAmount =
+                    monsterController.monster.monsterStatus.nowHp / monsterController.monster.monsterStatus.maxHp;
+            }
 
             if (ExceptY.ExceptYDistance(monsterPos_, recallPos_) < 0.01f)
             {

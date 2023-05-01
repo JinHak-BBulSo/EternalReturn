@@ -39,5 +39,6 @@ public class MonsterDie : IMonsterState
         monsterController.monsterAni.SetTrigger("Die");
         monsterController.navMeshAgent.enabled = false;
         monsterController.targetPlayer = default;
+        monsterController.monster.monsterStatusUi.SetActive(false);
     }
 }
