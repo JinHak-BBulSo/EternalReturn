@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public PlayerBase player = default;
     public IPlayerState currentState = new PlayerIdle();
     public PlayerState playerState = PlayerState.NONE;
+    public GameObject useSkillRange = default;
 
     public void Start()
     {
@@ -57,7 +58,10 @@ public class PlayerController : MonoBehaviour
     {
         for (int i = 0; i < player.SkillRange.Length; i++)
         {
-            player.SkillRange[i].SetActive(false);
+            if (player.SkillRange[i] != null)
+            {
+                player.SkillRange[i].SetActive(false);
+            }
         }
     }
 
@@ -68,12 +72,132 @@ public class PlayerController : MonoBehaviour
         player.playerAni.SetBool("isSkill", false);
         player.playerAni.SetBool("skillStart", false);
         player.playerAni.SetBool("isCollect", false);
+        player.ExtraAni();
     }
 
     public void toolReset()
     {
         player.weapon.SetActive(true);
         player.fishingRod.SetActive(false);
+    }
+
+    public void ShowAllRange()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+        }
+        else if (Input.anyKeyDown)
+        {
+            ResetRange();
+        }
+        ShowRange(0, KeyCode.Q);
+        ShowRange(1, KeyCode.W);
+        ShowRange(2, KeyCode.E);
+        ShowRange(3, KeyCode.R);
+        ShowRange(4, KeyCode.D);
+    }
+    private void ShowRange(int index_, KeyCode inputKey_)
+    {
+        if (!player.skillCooltimes[index_])
+        {
+            if (Input.GetKeyDown(inputKey_))
+            {
+                ResetRange();
+                if (player.SkillRange[index_] != null)
+                {
+                    player.SkillRange[index_].SetActive(true);
+                }
+                else
+                {
+                    switch (inputKey_)
+                    {
+                        case KeyCode.Q:
+                            ChangeState(new PlayerSkill_Q());
+                            break;
+                        case KeyCode.W:
+                            ChangeState(new PlayerSkill_W());
+                            break;
+                        case KeyCode.E:
+                            ChangeState(new PlayerSkill_E());
+                            break;
+                        case KeyCode.R:
+                            ChangeState(new PlayerSkill_R());
+                            break;
+                        case KeyCode.D:
+                            ChangeState(new PlayerSkill_D());
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    public void SkillUse()
+    {
+        for (int i = 0; i < player.SkillRange.Length; i++)
+        {
+            if (player.SkillRange[i] != null && player.SkillRange[i].activeSelf)
+            {
+                useSkillRange = player.SkillRange[i];
+                break;
+            }
+            else if (player.SkillRange[i] != null && !player.SkillRange[i].activeSelf)
+            {
+                useSkillRange = default;
+            }
+        }
+        if (useSkillRange != null)
+        {
+            Vector3 distance = ExceptY.ExceptYPos(player.nowMousePoint) - ExceptY.ExceptYPos(useSkillRange.transform.position);
+            Vector3 dir = Vector3.Normalize(distance);
+            useSkillRange.transform.forward = dir;
+            useSkillRange.transform.rotation *= Quaternion.Euler(0, 0, -90);
+        }
+
+        if (Input.GetMouseButtonDown(0) && useSkillRange != null)
+        {
+            if (useSkillRange == player.SkillRange[0])
+            {
+                ChangeState(new PlayerSkill_Q());
+            }
+            else if (useSkillRange == player.SkillRange[1])
+            {
+                ChangeState(new PlayerSkill_W());
+            }
+            else if (useSkillRange == player.SkillRange[2])
+            {
+                ChangeState(new PlayerSkill_E());
+            }
+            else if (useSkillRange == player.SkillRange[3])
+            {
+                ChangeState(new PlayerSkill_R());
+            }
+            else if (useSkillRange == player.SkillRange[4])
+            {
+                ChangeState(new PlayerSkill_D());
+            }
+        }
+        // if (useSkillRange == player.SkillRange[0])
+        // {
+        //     // ChangeState(new PlayerSkill_Q());
+        // }
+        // else if (useSkillRange == player.SkillRange[1])
+        // {
+        //     ChangeState(new PlayerSkill_W());
+        // }
+        // else if (useSkillRange == player.SkillRange[2])
+        // {
+        //     ChangeState(new PlayerSkill_E());
+        // }
+        // else if (useSkillRange == player.SkillRange[3])
+        // {
+        //     ChangeState(new PlayerSkill_R());
+        // }
+        // else if (useSkillRange == player.SkillRange[4])
+        // {
+        //     ChangeState(new PlayerSkill_D());
+        // }
+
     }
 }
 

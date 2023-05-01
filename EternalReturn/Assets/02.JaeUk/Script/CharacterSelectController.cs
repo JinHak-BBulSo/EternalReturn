@@ -52,7 +52,7 @@ public class CharacterSelectController : MonoBehaviourPun
     [PunRPC]
     void LoadingGame()
     {
-        PhotonNetwork.LoadLevel("ItemTest");
+        PhotonNetwork.LoadLevel("LumiaIslandScene");
     }
 
     [PunRPC]

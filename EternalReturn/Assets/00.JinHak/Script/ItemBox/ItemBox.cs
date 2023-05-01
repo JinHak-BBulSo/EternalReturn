@@ -26,9 +26,14 @@ public class ItemBox : MonoBehaviour
         foreach (var item in itemPrefabs)
         {
             ItemStat item_ = new ItemStat(item.GetComponent<ItemController>().item);
-            ItemStat boxItem_ = item_;
-            boxItems.Add(boxItem_);
+            boxItems.Add(item_);
         }
+    }
+
+    public void SetItems(int index_)
+    {
+        ItemStat item_ = new ItemStat(itemPrefabs[index_].GetComponent<ItemController>().item);
+        boxItems.Add(item_);
     }
 
     public void SetSlot()

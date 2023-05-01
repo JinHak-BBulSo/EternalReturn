@@ -11,6 +11,7 @@ public class MonsterDie : IMonsterState
         monsterController.monsterState = MonsterController.MonsterState.DIE;
         Die();
         monsterController.CallCoroutine(EraseMonster());
+        monsterController.monster.SpawnPoint.RespawnMonster();
     }
     public void StateFixedUpdate()
     {

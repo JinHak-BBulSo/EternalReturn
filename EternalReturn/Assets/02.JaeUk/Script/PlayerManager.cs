@@ -12,6 +12,7 @@ public class PlayerManager : SingleTonBase<PlayerManager>
     public bool SelectChk;
     public int LoadingFinishPlayer;
     public bool IsGameStart;
+    public Vector3 PlayerPos;
     protected override void Awake()
     {
         base.Awake();

@@ -351,7 +351,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPrefabs: []
+  itemPrefabs:
+  - {fileID: 1247747957805755363, guid: 0c183ff67843d8f49b4acc7e37f7dab5, type: 3}
+  - {fileID: 1717071963454020853, guid: 6f9733d935f8e9e43864859910a1089e, type: 3}
+  - {fileID: 1292316887580044609, guid: 6e67cd7dc0369cd48836c9049842930e, type: 3}
+  - {fileID: 4648483736831257754, guid: bdfcac11e07ce2d4a84c03a84dcbaba7, type: 3}
+  - {fileID: 4549859253607518687, guid: 0bba7c8084c8b704489c142420ab1ca7, type: 3}
+  - {fileID: 6007713625348733715, guid: bcc7b5f50b5b8ed46809c8941d073a1f, type: 3}
+  - {fileID: 8970677083020728944, guid: 096e2224bbb33844898f0e9f177665de, type: 3}
+  - {fileID: 7450171043865038947, guid: 7c11d33d8c86c4e4ab38b03df2ef81ff, type: 3}
+  - {fileID: 3393955854815123969, guid: f6b1ee82ee6332f4fb170404e0740f6d, type: 3}
+  - {fileID: 3725460624759598701, guid: dda30baf68b414e4dbb3b796b134408c, type: 3}
+  - {fileID: 128326693349668107, guid: cbe993ec3aa02874a86d5acb54a46145, type: 3}
+  - {fileID: 3145208476862874968, guid: 8b0825012f4b87a499a297626f147edd, type: 3}
+  - {fileID: 7629641562199611263, guid: b51d763e338211346a13c6ae11e0ae3b, type: 3}
+  - {fileID: 5857124902264671329, guid: 7dfd688a9ca6e2a44b8b2f55b7a22722, type: 3}
+  - {fileID: 7567753242853611801, guid: bbc2dba0701126944997518c583e8623, type: 3}
+  - {fileID: 3503717343114826403, guid: c1d34c5626470914a9451ee8f42f2bee, type: 3}
+  - {fileID: 4292213374811616031, guid: dc6684eaba9e50f4ba02f2c45d0bd223, type: 3}
+  - {fileID: 7732175946490787922, guid: c31ede091145992439fdf62f87f83e01, type: 3}
+  - {fileID: 525277261749320497, guid: 7ba6523e1d44c2a49807730354756e22, type: 3}
+  - {fileID: 9066917562530459715, guid: 3ee2d9d28ae067748a72bbc21c7453b1, type: 3}
   boxItems: []
   playerItemBoxSlotList: []
   contactPlayer: []

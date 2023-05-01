@@ -49,7 +49,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     //[KJH] Add. MiniMap move
     private Camera miniMapCamera = default;
-
+    public GameObject stunFBX = default;
     public GameObject itemBoxUi = default;
     public ItemBoxSlotList itemBoxSlotList = default;
 
@@ -138,7 +138,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             if (Physics.Raycast(miniMapCamera.ScreenPointToRay(Input.mousePosition), out hit))
             {
                 Vector3 clickPos = Input.mousePosition;
-                if(clickPos.x < 625 || clickPos.x > 735 ||
+                if (clickPos.x < 625 || clickPos.x > 735 ||
                     clickPos.y < 10 || clickPos.y > 110)
                 {
                     return;
@@ -285,13 +285,15 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         }
     }
 
-
+    public virtual void ExtraAni()
+    {
+    }
     private void MotionStart()
     {
         playerAni.SetBool("skillStart", true);
     }
 
-    private void MotionEnd()
+    public virtual void MotionEnd()
     {
         playerController.ResetAni();
         playerController.ResetRange();
@@ -532,6 +534,80 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             // 지속 종료시 리셋
             debuffRemainTime[debuffIndex_] = 0;
             debuffDamage[debuffIndex_] = 0;
+            applyDebuffCheck[debuffIndex_] = false;
+        }
+    }
+
+    /// <summary>
+    /// debuffIndex의 순서
+    /// 0 = 출혈, 1 = 독, 2 = 스턴, 3 = 속박
+    /// </summary>
+    /// <param name="message"></param>
+    /// <param name="debuffIndex_"></param>
+    /// <returns></returns>
+    /// 
+    public void Debuff(DamageMessage message, int debuffIndex_, float continousTime_)
+    {
+        StartCoroutine(DebuffStart(message, debuffIndex_, continousTime_));
+    }
+    public IEnumerator DebuffStart(DamageMessage message, int debuffIndex_, float continousTime_)
+    {
+        // 이미 상태이상이 걸린 경우
+        if (applyDebuffCheck[debuffIndex_])
+        {
+            if (continousTime_ > debuffRemainTime[debuffIndex_])
+                debuffRemainTime[debuffIndex_] = continousTime_;
+        }
+        // 상태이상이 걸려있지 않은 경우
+        else
+        {
+            // 상태이상 남은 시간 기록
+            debuffRemainTime[debuffIndex_] = continousTime_;
+            
+            switch (debuffIndex_)
+            {
+                // 스턴
+                case 2:
+                    isMove = false;
+                    playerController.enabled = false;
+                    stunFBX.SetActive(true);
+                    yield return null;
+                    break;
+                // 속박
+                case 3:
+                    isMove = false;
+                    playerController.enabled = false;
+                    yield return null;
+                    break;
+            }
+
+            while (debuffRemainTime[debuffIndex_] > 0)
+            {
+                // 프레임마다 지속시간 감소
+                debuffRemainTime[debuffIndex_] -= Time.deltaTime;
+
+                // 상태이상 종류 체크
+                if (debuffIndex_ == 3 || debuffIndex_ == 4) isMove = false;
+
+                yield return null;
+            }
+
+            // 디버프 종류
+            switch (debuffIndex_)
+            {
+                // 스턴
+                case 2:
+                    stunFBX.SetActive(false);
+                    playerController.enabled = true;
+                    break;
+                // 속박
+                case 3:
+                    playerController.enabled = true;
+                    break;
+            }
+
+            // 지속 종료시 리셋
+            debuffRemainTime[debuffIndex_] = 0;
             applyDebuffCheck[debuffIndex_] = false;
         }
     }
