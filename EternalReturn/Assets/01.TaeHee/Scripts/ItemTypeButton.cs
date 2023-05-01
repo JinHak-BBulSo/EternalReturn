@@ -21,11 +21,16 @@ public class ItemTypeButton : MonoBehaviour
 
     private void Awake()
     {
+        buttonImage = GetComponent<Image>();
+        if (itemType == ItemType.All)
+        {
+            buttonImage.color = Color.gray;
+        }
+
         if (wishListSetting == null)
         {
             wishListSetting = transform.parent.parent.GetComponent<WishListSetting>();
         }
 
-        buttonImage = GetComponent<Image>();
     }
 }

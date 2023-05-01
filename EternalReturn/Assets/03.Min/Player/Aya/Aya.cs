@@ -61,7 +61,14 @@ public class Aya : PlayerBase
             {
                 if (hit.transform.GetComponent<Monster>() || hit.transform.GetComponent<PlayerBase>())
                 {
-                    enemy = hit.transform.gameObject;
+                    if (hit.transform.GetComponent<PlayerBase>() == this)
+                    {
+
+                    }
+                    else
+                    {
+                        enemy = hit.transform.gameObject;
+                    }
                 }
             }
         }
@@ -178,7 +185,8 @@ public class Aya : PlayerBase
 
     private void Shot()
     {
-        AyaBullet bullet = Instantiate(Bullet, weapon.transform).GetComponent<AyaBullet>();
+        AyaBullet bullet = Instantiate(Bullet).GetComponent<AyaBullet>();
+        bullet.transform.position = weapon.transform.position;
         bullet.damage = 30 + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.25f);
         bullet.shootPlayer = this;
     }
@@ -187,7 +195,7 @@ public class Aya : PlayerBase
         float time = 0f;
         while (true)
         {
-            if (time >= 3f)
+            if (time >= 3.3f)
             {
                 isWon = false;
                 playerAni.SetBool("isSkill", false);
@@ -297,7 +305,7 @@ public class Aya : PlayerBase
             if (time >= 0.5f && Input.GetKeyDown(KeyCode.R))
             {
                 RaycastHit[] hits;
-                hits = Physics.SphereCastAll(transform.position, 1.0f, Vector3.up, 0f);
+                hits = Physics.SphereCastAll(transform.position, 4.5f, Vector3.up, 0f);
                 foreach (var hit in hits)
                 {
                     if (hit.transform.gameObject.GetComponent<Monster>() != null)
@@ -306,22 +314,33 @@ public class Aya : PlayerBase
                     }
                     else if (hit.transform.gameObject.GetComponent<PlayerBase>() != null)
                     {
-                        enemyPlayer.Add(hit.transform.gameObject.GetComponent<PlayerBase>());
+                        if (hit.transform.GetComponent<PlayerBase>() == this)
+                        {
+
+                        }
+                        else
+                        {
+                            enemyPlayer.Add(hit.transform.gameObject.GetComponent<PlayerBase>());
+                        }
                     }
                 }
                 float damage = 0f;
                 damage = (400 + 0.8f * playerTotalStat.attackPower + 1.2f * playerTotalStat.skillPower)
                 - (200 + 0.4f * playerTotalStat.attackPower + 0.6f * playerTotalStat.skillPower) * (time / 1.5f)
                 + (200 + 0.4f * playerTotalStat.attackPower + 0.6f * playerTotalStat.skillPower);
+
+                Debug.Log(damage);
                 DamageMessage dm = new DamageMessage(gameObject, damage);
 
                 for (int i = 0; i < enemyHunt.Count; i++)
                 {
                     enemyHunt[i].TakeDamage(dm);
+                    enemyHunt[i].Debuff(dm, 3, time);
                 }
                 for (int i = 0; i < enemyPlayer.Count; i++)
                 {
                     enemyPlayer[i].TakeDamage(dm);
+                    enemyPlayer[i].Debuff(dm, 3, time);
                 }
                 RRange.SetActive(false);
                 playerAni.SetBool("isREnd", true);
@@ -331,22 +350,9 @@ public class Aya : PlayerBase
             if (time >= 1.5f)
             {
                 RaycastHit[] hits;
-                hits = Physics.SphereCastAll(transform.position, 1.0f, Vector3.up, 0f);
+                hits = Physics.SphereCastAll(transform.position, 4.5f, Vector3.up, 0f);
 
-                float damage = 0f;
-                damage = (400 + 0.8f * playerTotalStat.attackPower + 1.2f * playerTotalStat.skillPower)
-                - (200 + 0.4f * playerTotalStat.attackPower + 0.6f * playerTotalStat.skillPower) * (time / 1.5f)
-                + (200 + 0.4f * playerTotalStat.attackPower + 0.6f * playerTotalStat.skillPower);
-                DamageMessage dm = new DamageMessage(gameObject, damage);
 
-                for (int i = 0; i < enemyHunt.Count; i++)
-                {
-                    enemyHunt[i].TakeDamage(dm);
-                }
-                for (int i = 0; i < enemyPlayer.Count; i++)
-                {
-                    enemyPlayer[i].TakeDamage(dm);
-                }
                 foreach (var hit in hits)
                 {
                     if (hit.transform.gameObject.GetComponent<Monster>() != null)
@@ -357,6 +363,18 @@ public class Aya : PlayerBase
                     {
                         enemyPlayer.Add(hit.transform.gameObject.GetComponent<PlayerBase>());
                     }
+                }
+                float damage = 0f;
+                damage = (400 + 0.8f * playerTotalStat.attackPower + 1.2f * playerTotalStat.skillPower);
+                Debug.Log(damage);
+                DamageMessage dm = new DamageMessage(gameObject, damage);
+                for (int i = 0; i < enemyHunt.Count; i++)
+                {
+                    enemyHunt[i].TakeDamage(dm);
+                }
+                for (int i = 0; i < enemyPlayer.Count; i++)
+                {
+                    enemyPlayer[i].TakeDamage(dm);
                 }
                 RRange.SetActive(false);
                 StartCoroutine(SkillCooltime(3, 80f));

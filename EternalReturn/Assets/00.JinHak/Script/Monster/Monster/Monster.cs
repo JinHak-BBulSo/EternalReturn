@@ -128,13 +128,16 @@ public class Monster : MonoBehaviour, IHitHandler
 
     public void FirstAttackCheck(DamageMessage message)
     {
+        Debug.Log("타겟지정호출");
         if (firstAttackPlayer == default)
         {
             firstAttackPlayer = message.causer.GetComponent<PlayerBase>();
             monsterController.targetPlayer = firstAttackPlayer;
+            Debug.Log(firstAttackPlayer);
         }
         else
         {
+            Debug.Log("설마여기");
             return;
         }
     }
@@ -304,13 +307,6 @@ public class Monster : MonoBehaviour, IHitHandler
             {
                 // 프레임마다 지속시간 감소
                 debuffRemainTime[debuffIndex_] -= Time.deltaTime;
-
-                // 상태이상 종류 체크
-                if (debuffIndex_ == 3 || debuffIndex_ == 4)
-                {
-                    monsterController.enabled = false;
-                    monsterController.navMeshAgent.enabled = false;
-                }
 
                 yield return null;
             }
