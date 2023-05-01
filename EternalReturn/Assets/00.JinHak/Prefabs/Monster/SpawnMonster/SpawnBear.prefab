@@ -1783,7 +1783,11 @@ MonoBehaviour:
   - 0
   firstAttackPlayer: {fileID: 0}
   isDie: 0
+  worldCanvas: {fileID: 0}
   monsterItemBox: {fileID: 0}
+  monsterUiPrefab: {fileID: 9025128624376774088, guid: edc63de1e5f984b478e2b518ccc0f16c,
+    type: 3}
+  monsterStatusUi: {fileID: 0}
   skillRange: {fileID: 609582755}
   bearSkillMesh: {fileID: 0}
 --- !u!114 &1974856843

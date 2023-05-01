@@ -18,6 +18,9 @@ public class PreRenderCalls : MonoBehaviour
         else
             timer = 0f;
 
-        fog.SetCookie();
+        if (fog.gameObject.activeSelf)
+        {
+            fog.SetCookie();
+        }
     }
 }
