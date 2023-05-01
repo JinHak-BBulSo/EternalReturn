@@ -340,7 +340,7 @@ public class Aya : PlayerBase
                 for (int i = 0; i < enemyPlayer.Count; i++)
                 {
                     enemyPlayer[i].TakeDamage(dm);
-                    enemyPlayer[i].Debuff(dm, 3, time);
+                    enemyPlayer[i].Debuff(3, time);
                 }
                 RRange.SetActive(false);
                 playerAni.SetBool("isREnd", true);
