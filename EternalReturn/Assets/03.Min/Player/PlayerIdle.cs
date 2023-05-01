@@ -29,48 +29,8 @@ public class PlayerIdle : IPlayerState
             playerController.ChangeState(new PlayerAttackMove());
         }
 
-        if (!playerController.player.skillCooltimes[0])
-        {
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                playerController.ChangeState(new PlayerSkill_Q());
-            }
-        }
-
-        if (!playerController.player.skillCooltimes[1])
-        {
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                playerController.ChangeState(new PlayerSkill_W());
-            }
-        }
-
-        if (!playerController.player.skillCooltimes[2])
-        {
-
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                playerController.ChangeState(new PlayerSkill_E());
-            }
-        }
-
-        if (!playerController.player.skillCooltimes[3])
-        {
-
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                playerController.ChangeState(new PlayerSkill_R());
-            }
-        }
-
-        if (!playerController.player.skillCooltimes[4])
-        {
-
-            if (Input.GetKeyDown(KeyCode.D))
-            {
-                playerController.ChangeState(new PlayerSkill_D());
-            }
-        }
+        playerController.ShowAllRange();
+        playerController.SkillUse();
 
     }
 }

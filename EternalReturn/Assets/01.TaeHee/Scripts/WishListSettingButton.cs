@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class WishListSettingButton : MonoBehaviour
 {
+    [SerializeField] GameObject wishListSettingWindow;
+
     public void OnClickButton()
     {
-        Debug.Log("세팅 창 열기");
+        wishListSettingWindow.SetActive(true);
     }
 }

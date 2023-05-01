@@ -121,7 +121,7 @@ public class ItemCombineLoad : MonoBehaviour
         // itemInferiorRare = ItemManager.Instance.ItemInferiorRare;
         // itemInferiorUncommon = ItemManager.Instance.ItemInferiorUncommon;
 
-        SceneManager.LoadScene("Lobby");
+        //SceneManager.LoadScene("Lobby");
         // func(ItemManager.Instance.itemList, false);
     }
     public void func(List<ItemStat> list, bool flag)

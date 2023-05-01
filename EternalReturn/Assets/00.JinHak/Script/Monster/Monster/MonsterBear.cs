@@ -7,8 +7,7 @@ public class MonsterBear : Monster
     [SerializeField]
     GameObject skillRange = default;
 
-    private List<PlayerBase> collisionTarget = new List<PlayerBase>();
-    private float skillCoolTime = 15f;
+    private float skillCoolTime = 20f;
     private bool isAssult = false;
     public BearSkill bearSkillMesh = default;
 
