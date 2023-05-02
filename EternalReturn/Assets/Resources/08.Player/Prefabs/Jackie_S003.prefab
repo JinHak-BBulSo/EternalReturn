@@ -1239,6 +1239,9 @@ MonoBehaviour:
   nowMousePoint: {x: 0, y: 0, z: 0}
   weapon: {fileID: 3592125941435965840}
   fishingRod: {fileID: 4517869508586924568}
+  craftTool: {fileID: 0}
+  hammer: {fileID: 0}
+  driver: {fileID: 0}
   enemy: {fileID: 0}
   clickTarget: {fileID: 0}
   outline: {fileID: 0}
@@ -1380,10 +1383,16 @@ MonoBehaviour:
   itemBoxUi: {fileID: 7458879648041901250, guid: 935c3719471578743bca9af8a24ceb1b,
     type: 3}
   itemBoxSlotList: {fileID: 0}
-  QBoxCol: {fileID: 0}
-  isWBuffOn: 0
-  isRBuffOn: 0
+  playerAudioClip: []
+  playerStatusUiPrefab: {fileID: 0}
+  playerStatusUi: {fileID: 0}
+  playerHpBar: {fileID: 0}
+  playerMpBar: {fileID: 0}
+  playerLevelTxt: {fileID: 0}
+  worldCanvas: {fileID: 0}
   weaponStack: 100
+  skillQ: {fileID: 0}
+  skillE: {fileID: 0}
 --- !u!114 &393600095421115742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1471,6 +1480,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 7759753043265850726}
+  - {fileID: 3490042607327427655}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1504,8 +1514,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 0
+    Name: isMove
+  - Type: 4
+    SynchronizeType: 0
+    Name: isAttack
+  - Type: 4
+    SynchronizeType: 0
+    Name: isSkill
+  - Type: 4
+    SynchronizeType: 0
+    Name: skillStart
+  - Type: 4
+    SynchronizeType: 0
+    Name: isRbuff
+  - Type: 4
+    SynchronizeType: 0
+    Name: isCollect
+  - Type: 4
+    SynchronizeType: 0
+    Name: isCraft
+  - Type: 4
+    SynchronizeType: 0
+    Name: isDie
+  - Type: 1
+    SynchronizeType: 0
+    Name: AttackType
+  - Type: 1
+    SynchronizeType: 0
+    Name: MotionSpeed
+  - Type: 1
+    SynchronizeType: 0
+    Name: SkillType
+  - Type: 1
+    SynchronizeType: 0
+    Name: CollectType
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &1431738604640560163
 GameObject:
   m_ObjectHideFlags: 0
