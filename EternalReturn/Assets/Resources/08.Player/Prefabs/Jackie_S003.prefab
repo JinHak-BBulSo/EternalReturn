@@ -1549,17 +1549,6 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  debuffDelayTime:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
   debuffRemainTime:
   - 0
   - 0
@@ -1588,7 +1577,8 @@ MonoBehaviour:
     type: 3}
   itemBoxSlotList: {fileID: 0}
   playerAudioClip: []
-  playerStatusUiPrefab: {fileID: 0}
+  playerStatusUiPrefab: {fileID: 1394638143415854229, guid: 3c2d08be8010d1f469978c5b57441b8b,
+    type: 3}
   playerStatusUi: {fileID: 0}
   playerHpBar: {fileID: 0}
   playerMpBar: {fileID: 0}
@@ -1713,7 +1703,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: -6953079362479384986}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
