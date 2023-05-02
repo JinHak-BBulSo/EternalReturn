@@ -90,7 +90,6 @@ public class CharacterSelectController : MonoBehaviourPun
         int chk = 0;
         isSelect = true;
         selectCharacterNum = selectCharacterNum_;
-        PlayerManager.Instance.characterNum = selectCharacterNum_;
         selectViewID = ViewID;
         ReadyPlayerNum++;
         for (int i = 0; i < transform.parent.childCount; i++)
@@ -108,40 +107,7 @@ public class CharacterSelectController : MonoBehaviourPun
 
 
     }
-    [PunRPC]
-    void SetImageChange()
-    {
-        if (photonView.IsMine)
-        {
-        }
-
-    }
-
-    [PunRPC]
-    void Select(int Selectnum)
-    {
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-
-        }
-        else
-        {
-            playerNumber++;
-        }
 
 
-    }
-    [PunRPC]
-    void ChageImage(int viewID, int characterNum)
-    {
-        for (int i = 0; i < transform.parent.childCount; i++)
-        {
-            if (transform.parent.GetChild(i).GetComponent<PhotonView>().ViewID == viewID)
-            {
-                selectNumber = i;
-            }
-        }
-        selectCharacterNum = characterNum;
-    }
+
 }
