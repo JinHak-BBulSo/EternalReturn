@@ -63,7 +63,7 @@ public class ItemDistributer : MonoBehaviourPun
 
             for (int i = 0; i < 10; i++)
             {
-                photonView.RPC("Shuffle", RpcTarget.All);
+                photonView.RPC("Shuffle", RpcTarget.All, indexArray);
             }
 
             int r = Random.Range(2, 6 + 1);
@@ -75,6 +75,7 @@ public class ItemDistributer : MonoBehaviourPun
                 itemCountList[indexArray[i]]--;
             }
 
+            itemBox.boxItems.Clear();
             itemBox.SetItems();
         }
     }
