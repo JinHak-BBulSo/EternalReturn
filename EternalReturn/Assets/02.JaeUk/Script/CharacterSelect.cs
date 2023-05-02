@@ -50,7 +50,7 @@ public class CharacterSelect : MonoBehaviourPun
         totalTime += Time.deltaTime;
         timer.text = $"{55 - (int)totalTime}";
         gage.fillAmount = totalTime / 55f;
-        if (totalTime == 55f)
+        if (totalTime >= 55f)
         {
             SceneManager.LoadScene("LumiaIslandScene");
         }
@@ -60,12 +60,13 @@ public class CharacterSelect : MonoBehaviourPun
         PlayerSprite[0].sprite = ImageSprite[i - 1];
         selectPlayerBg.transform.GetChild(0).GetComponent<Image>().sprite = BgSprite[i - 1];
         selectNumber = i - 1;
+        PlayerManager.Instance.characterNum = selectNumber;
     }
     public void OnClick()
     {
         Debug.Log("!!");
         PlayerManager.Instance.IsSelect = true;
-        PlayerManager.Instance.characterNum = selectNumber;
+
     }
 }
 

@@ -45,16 +45,18 @@ public class CharacterSelectController : MonoBehaviourPun
         if (PlayerManager.Instance.IsSelect)
         {
             PlayerManager.Instance.IsSelect = false;
-            photonView.RPC("ReadyCheck", RpcTarget.All, selectViewID);
+            selectCharacterNum = PlayerManager.Instance.characterNum;
+            photonView.RPC("ReadyCheck", RpcTarget.All, selectViewID, PlayerManager.Instance.characterNum);
+
         }
 
     }
     [PunRPC]
     void LoadingGame()
     {
-        transform.parent.parent.GetComponent<CharacterSelect>().totalTime = 50;
+        transform.parent.parent.GetComponent<CharacterSelect>().totalTime = 40;
+        transform.parent.parent.GetComponent<AudioSource>().time = 40f;
     }
-
     [PunRPC]
     void EnterGuest()
     {
@@ -67,6 +69,30 @@ public class CharacterSelectController : MonoBehaviourPun
         {
 
         }
+    }
+    [PunRPC]
+    void ReadyCheck(int ViewID, int selectCharacterNum_)
+    {
+        int chk = 0;
+        isSelect = true;
+        selectCharacterNum = selectCharacterNum_;
+        PlayerManager.Instance.characterNum = selectCharacterNum_;
+        selectViewID = ViewID;
+        ReadyPlayerNum++;
+        for (int i = 0; i < transform.parent.childCount; i++)
+        {
+            if (transform.parent.GetChild(i).GetComponent<CharacterSelectController>().ReadyPlayerNum == 1)
+            {
+                chk++;
+            }
+        }
+        if (chk == transform.parent.childCount)
+        {
+            Debug.Log(transform.parent.childCount);
+            photonView.RPC("LoadingGame", RpcTarget.All);
+        }
+
+
     }
     [PunRPC]
     void SetPlayerList()

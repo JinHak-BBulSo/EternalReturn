@@ -1234,6 +1234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb4600c565993e41a5e7255d9fcc8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyPlayer: []
+  enemyHunt: []
   nowMousePoint: {x: 0, y: 0, z: 0}
   weapon: {fileID: 3592125941435965840}
   fishingRod: {fileID: 4517869508586924568}
@@ -1378,8 +1380,6 @@ MonoBehaviour:
   itemBoxUi: {fileID: 7458879648041901250, guid: 935c3719471578743bca9af8a24ceb1b,
     type: 3}
   itemBoxSlotList: {fileID: 0}
-  enemyPlayer: []
-  enemyHunt: []
   QBoxCol: {fileID: 0}
   isWBuffOn: 0
   isRBuffOn: 0
@@ -1398,6 +1398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   playerState: -1
+  useSkillRange: {fileID: 0}
 --- !u!136 &1011313909
 CapsuleCollider:
   m_ObjectHideFlags: 0
