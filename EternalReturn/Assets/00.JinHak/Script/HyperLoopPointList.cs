@@ -4,6 +4,5 @@ using UnityEngine;
 
 public class HyperLoopPointList : MonoBehaviour
 {
-    public PlayerBase player = default;
-    public List<HyperLoop> hyperLoops = new List<HyperLoop>();
+    public List<HyperLoopPoint> hyperLoopPoints = new List<HyperLoopPoint>();
 }

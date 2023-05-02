@@ -13,12 +13,16 @@ public class ItemBox : MonoBehaviour
 
     public List<ItemBoxSlotList> playerItemBoxSlotList = new List<ItemBoxSlotList>();
     public List<PlayerBase> contactPlayer = new List<PlayerBase>();
+    public List<PlayerBase> contactedPlayer = new List<PlayerBase>();
+
+    public AudioSource itemBoxAudio = default;
 
     protected virtual void Awake()
     {
         /*itemBoxUi = GameObject.Find("TestUi").transform.GetChild(1).gameObject;
         slotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();*/
         outline = GetComponent<Outline>();
+        itemBoxAudio = transform.parent.GetComponent<AudioSource>();
     }
 
     private void OnDisable()
@@ -116,13 +120,18 @@ public class ItemBox : MonoBehaviour
             {
                 if (!contactPlayer.Contains(nowContactPlayer))
                 {
-                    contactPlayer.Add(other.GetComponent<PlayerBase>());
+                    contactPlayer.Add(nowContactPlayer);
                     playerItemBoxSlotList.Add(nowContactPlayer.itemBoxSlotList);
                     
                     SetSlot();
                     nowContactPlayer.itemBoxSlotList.nowOpenItemBox = this;
                     nowContactPlayer.itemBoxSlotList.nowOpenItemBox = this;
                     nowContactPlayer.itemBoxUi.SetActive(true);
+                }
+                if(!contactedPlayer.Contains(nowContactPlayer))
+                {
+                    contactedPlayer.Add(nowContactPlayer);
+                    nowContactPlayer.GetExp(20, PlayerStat.PlayerExpType.SEARCH);
                 }
             }
         }
