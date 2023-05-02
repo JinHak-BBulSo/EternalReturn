@@ -29,6 +29,13 @@ public class HyperLoopButton : MonoBehaviour, IPointerEnterHandler, IPointerExit
         hyperLoopUi.SetActive(false);
     }
 
+    public void OnClickSetPlayerPos()
+    {
+        int random_ = Random.Range(0, hyperLoop.telePoints.Length);
+        PlayerManager.Instance.PlayerPos = hyperLoop.telePoints[random_].transform.position;
+        image.color = new Color(255, 255, 255, 0);
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         image.color = new Color(255, 255, 255, 130);
