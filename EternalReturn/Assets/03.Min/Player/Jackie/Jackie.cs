@@ -203,15 +203,15 @@ public class Jackie : PlayerBase
         base.Skill_Q();
         transform.LookAt(nowMousePoint);
         skillQ.SetActive(true);
-        photonView.RPC("ShowRangeJackieQ", RpcTarget.All);
+        photonView.RPC("ShowRangeJackieQ", RpcTarget.All, true);
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 0);
         StartCoroutine(SkillCooltime(0, 9f));
     }
     [PunRPC]
-    public void ShowRangeJackieQ()
+    public void ShowRangeJackieQ(bool flag)
     {
-        skillQ.SetActive(true);
+        skillQ.SetActive(flag);
     }
 
     public override void Skill_W()
@@ -274,6 +274,7 @@ public class Jackie : PlayerBase
     {
         base.ExtraRange();
         skillQ.SetActive(false);
+        photonView.RPC("ShowRangeJackieQ", RpcTarget.All, false);
         skillE.SetActive(false);
     }
     IEnumerator JackieJump()
