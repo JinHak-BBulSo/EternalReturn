@@ -19,8 +19,4 @@ public class StartPointBtn : MonoBehaviour
         hyperLoopPointList = hyperLoopUi.GetComponent<HyperLoopUi>().hyperLoopPointList;
         hyperLoop = hyperLoopPointList.hyperLoops[index];
     }
-    public void OnClickStartPointBtn()
-    {
-        PlayerManager.Instance.PlayerPos = 
-    }
 }
