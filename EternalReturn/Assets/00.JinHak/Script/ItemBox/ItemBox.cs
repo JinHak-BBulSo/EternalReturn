@@ -21,6 +21,14 @@ public class ItemBox : MonoBehaviour
         outline = GetComponent<Outline>();
     }
 
+    private void OnDisable()
+    {
+        foreach(var player in contactPlayer)
+        {
+            player.itemBoxUi.SetActive(false);
+        }
+    }
+
     public void SetItems()
     {
         foreach (var item in itemPrefabs)

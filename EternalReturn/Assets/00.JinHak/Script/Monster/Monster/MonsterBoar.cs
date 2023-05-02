@@ -80,5 +80,6 @@ public class MonsterBoar : Monster
     {
         yield return new WaitForSeconds(0.1f);
         targetRigid_.velocity = Vector3.zero;
+        targetRigid_.GetComponent<PlayerBase>().Debuff(4, 1.2f);
     }
 }
