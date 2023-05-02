@@ -34,11 +34,27 @@ public class GatheringItemBox : MonoBehaviour
         outline = GetComponent<Outline>();
         gatheringItem = itemPrefab.GetComponent<ItemController>().item;
         gatherAble = true;
+
+        if(itemType == GatherItemType.FISHING)
+        {
+            respawnItemTime = 180;
+        }
+        else if(itemType == GatherItemType.WATERPOINT)
+        {
+            respawnItemTime = 120;
+        }
     }
 
     IEnumerator RespawnItem(float respawnTime_)
     {
-        transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
+        if (itemType == GatherItemType.FISHING)
+        {
+            /* Do nothing */
+        }
+        else
+        {
+            transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
+        }
         yield return new WaitForSeconds(respawnTime_);
         transform.localScale = new Vector3(1, 1, 1);
         gatherAble = true;
