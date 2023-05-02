@@ -19,6 +19,7 @@ public class ItemDistributer : MonoBehaviourPun
         photonView.RPC("ItemSet", RpcTarget.All);
     }
 
+    [PunRPC]
     private void Shuffle(int[] array)
     {
         int n = array.Length;
@@ -62,7 +63,7 @@ public class ItemDistributer : MonoBehaviourPun
 
             for (int i = 0; i < 10; i++)
             {
-                Shuffle(indexArray);
+                photonView.RPC("Shuffle", RpcTarget.All);
             }
 
             int r = Random.Range(2, 6 + 1);

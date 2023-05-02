@@ -26,7 +26,11 @@ public class ItemBox : MonoBehaviour
 
     private void OnDisable()
     {
-        PlayerManager.Instance.Player.GetComponent<PlayerBase>().itemBoxUi.SetActive(false);
+        if (PlayerManager.Instance.Player != default &&
+            PlayerManager.Instance.Player.GetComponent<PlayerBase>().itemBoxUi.activeSelf)
+        {
+            PlayerManager.Instance.Player.GetComponent<PlayerBase>().itemBoxUi.SetActive(false);
+        }
     }
 
     public void SetItems()
@@ -85,17 +89,6 @@ public class ItemBox : MonoBehaviour
             slot.slotItem = default;
         }
     }
-    /*private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == "Player")
-        {
-            if (other.GetComponent<PlayerBase>().clickTarget == this.gameObject)
-            {
-                SetSlot();
-                slotList.nowOpenItemBox = this;
-            }
-        }
-    }*/
 
     private void OnTriggerStay(Collider other)
     {
@@ -107,10 +100,10 @@ public class ItemBox : MonoBehaviour
             {
                 nowContactPlayer.itemBoxSlotList.nowOpenItemBox = this;
                 nowContactPlayer.itemBoxUi.SetActive(true);
+                SetSlot();
 
                 if (!contactedPlayer.Contains(nowContactPlayer))
                 {
-                    SetSlot();
                     contactedPlayer.Add(nowContactPlayer);
                     nowContactPlayer.GetExp(20, PlayerStat.PlayerExpType.SEARCH);
                 }
