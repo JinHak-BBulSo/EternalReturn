@@ -23,11 +23,11 @@ public class Monster : MonoBehaviour, IHitHandler
 
     public bool isBattleAreaOut = false;
 
-    public bool[] applyDebuffCheck = new bool[10];      // 해당 디버프가 걸렸는지 체크
-    public float[] debuffDelayTime = new float[10];     // 디버프 틱 간격
-    public float[] debuffRemainTime = new float[10];    // 디버프 남은 시간
-    public float[] debuffDamage = new float[10];        // 디버프 데미지
-
+    public bool[] applyDebuffCheck = new bool[2];      // 해당 디버프가 걸렸는지 체크
+    public float[] debuffDelayTime = new float[2];     // 디버프 틱 간격
+    public float[] debuffRemainTime = new float[2];    // 디버프 남은 시간
+    public float[] debuffDamage = new float[2];        // 디버프 데미지
+    
     public PlayerBase firstAttackPlayer = default;
     public bool isDie = false;
 
@@ -80,6 +80,8 @@ public class Monster : MonoBehaviour, IHitHandler
 
     void OnEnable()
     {
+        monsterItemBox.boxItems.Clear();
+
         spawnPoint.enterPlayer -= EnterPlayer;
         spawnPoint.enterPlayer += EnterPlayer;
 
@@ -108,19 +110,21 @@ public class Monster : MonoBehaviour, IHitHandler
         else
         {
             monsterStatusUi.SetActive(true);
-            monsterLeveltxt.text = monsterStatus.level.ToString();
         }
+
+        monsterLeveltxt.text = monsterStatus.level.ToString();
+        monsterHpBar.fillAmount = 1;
 
         //몬스터 아이템 셋팅
         monsterItemBox.SetItems(0);
-
-        if (monsterItemBox.itemPrefabs.Count > 1)
+        
+        if(monsterItemBox.itemPrefabs.Count > 1)
         {
             int itemIndex_ = Random.Range(1, monsterItemBox.itemPrefabs.Count);
             monsterItemBox.SetItems(itemIndex_);
         }
     }
-
+    
     protected virtual void SetStatus()
     {
         monsterStatus.maxHp = monsterData.Hp;
@@ -134,7 +138,7 @@ public class Monster : MonoBehaviour, IHitHandler
 
     protected virtual void SetDebuffData()
     {
-
+        
     }
     public virtual void LevelUp()
     {
@@ -144,7 +148,7 @@ public class Monster : MonoBehaviour, IHitHandler
     public virtual void Skill()
     {
         /* each monster override using */
-
+        
         // 공격형 스킬의 경우 예시
         /*GameObject target_ = monsterController.gameObject;
         float damageAmount_ = monsterController.monster.monsterStatus.attackPower;
@@ -175,6 +179,15 @@ public class Monster : MonoBehaviour, IHitHandler
         }
     }
 
+    public void DieCheck(DamageMessage message)
+    {
+        if (monsterStatus.nowHp < 0)
+        {
+            monsterStatus.nowHp = 0;
+            isDie = true;
+        }
+    }
+
     /// <summary>
     /// 기본 공격 공식
     /// 공격력 * 기본공격증폭 = message.damageAmount
@@ -191,6 +204,11 @@ public class Monster : MonoBehaviour, IHitHandler
         if (message.debuffIndex == -1)
             monsterStatus.nowHp -= (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
         monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
+
+        if (!isDie)
+        {
+            DieCheck(message);
+        }
     }
     // 필요없을듯?
     public void TakeDamage(DamageMessage message, float damageAmount)
@@ -198,6 +216,11 @@ public class Monster : MonoBehaviour, IHitHandler
         FirstAttackCheck(message);
         monsterStatus.nowHp -= damageAmount;
         monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
+
+        if (!isDie)
+        {
+            DieCheck(message);
+        }
     }
 
     /// <summary>
@@ -214,6 +237,11 @@ public class Monster : MonoBehaviour, IHitHandler
     {
         monsterStatus.nowHp -= message.damageAmount;
         monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
+
+        if (!isDie)
+        {
+            DieCheck(message);
+        }
     }
 
 
@@ -221,6 +249,11 @@ public class Monster : MonoBehaviour, IHitHandler
     {
         monsterStatus.nowHp -= damageAmount;
         monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
+
+        if (!isDie)
+        {
+            DieCheck(message);
+        }
     }
 
     /// <summary>
@@ -230,6 +263,7 @@ public class Monster : MonoBehaviour, IHitHandler
     /// <param name="message"></param>
     /// <param name="debuffIndex_"></param>
     /// <returns></returns>
+    /// 서로 다른 플레이어라면 각자 출혈을 걸도록 고쳐야할 필요가 있음
     public IEnumerator ContinousDamage(DamageMessage message, int debuffIndex_, float continousTime_, float tickTime_)
     {
         // 이미 상태이상이 걸린 경우
@@ -244,7 +278,6 @@ public class Monster : MonoBehaviour, IHitHandler
         // 상태이상이 걸려있지 않은 경우
         else
         {
-            applyDebuffCheck[debuffIndex_] = true;
             // 상태이상 남은 시간 기록
             debuffRemainTime[debuffIndex_] = continousTime_;
             // 상태이상 데미지를 저장
@@ -265,7 +298,7 @@ public class Monster : MonoBehaviour, IHitHandler
                 //resetDamageCount += Time.deltaTime;
 
                 // 딜레이 시간이 다 되었을시 대미지를 입힘
-                if (delayTime_ > tickTime_)
+                if(delayTime_ > tickTime_)
                 {
                     TakeSolidDamage(message, debuffDamage[debuffIndex_]);
                     delayTime_ = 0;

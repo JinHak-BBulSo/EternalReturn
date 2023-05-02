@@ -103,9 +103,8 @@ public class MonsterController : MonoBehaviour
 
     private void UpdateState()
     {
-        if(monster.monsterStatus.nowHp <= 0)
+        if(monster.isDie)
         {
-            monster.monsterStatus.nowHp = 0;
             monsterStateMachine.SetState(monsterStateDic[MonsterState.DIE]);
             return;
         }
