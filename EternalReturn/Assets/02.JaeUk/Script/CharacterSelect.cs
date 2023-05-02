@@ -66,7 +66,7 @@ public class CharacterSelect : MonoBehaviourPun
     {
         Debug.Log("!!");
         PlayerManager.Instance.IsSelect = true;
-        PlayerManager.Instance.characterNum = selectNumber;
+
     }
 }
 

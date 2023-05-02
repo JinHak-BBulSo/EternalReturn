@@ -107,7 +107,4 @@ public class CharacterSelectController : MonoBehaviourPun
 
 
     }
-
-
-
 }

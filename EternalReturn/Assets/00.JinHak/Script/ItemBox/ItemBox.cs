@@ -23,9 +23,12 @@ public class ItemBox : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach(var player in contactPlayer)
+        if (contactPlayer.Count != 0)
         {
-            player.itemBoxUi.SetActive(false);
+            foreach (var player in contactPlayer)
+            {
+                player.itemBoxUi.SetActive(false);
+            }
         }
     }
 
