@@ -1377,9 +1377,9 @@ GameObject:
   - component: {fileID: 1011313909}
   - component: {fileID: 1341785562}
   - component: {fileID: 1341785563}
-  - component: {fileID: 1762491757574522387}
   - component: {fileID: -6953079362479384986}
   - component: {fileID: 3870816739093016760}
+  - component: {fileID: 3982394258855017623}
   m_Layer: 0
   m_Name: Jackie_S003
   m_TagString: Player
@@ -1654,21 +1654,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 0
---- !u!114 &1762491757574522387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1358739485631446351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 177bddf229f8d8445a70c0652f03b7df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DisconnectAfterKeepAlive: 0
-  KeepAliveInBackground: 60000
-  ApplyDontDestroyOnLoad: 1
 --- !u!114 &-6953079362479384986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1705,9 +1690,64 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: -6953079362479384986}
+  - {fileID: 3982394258855017623}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &3982394258855017623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358739485631446351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 2
+    Name: isMove
+  - Type: 4
+    SynchronizeType: 2
+    Name: isAttack
+  - Type: 4
+    SynchronizeType: 2
+    Name: isSkill
+  - Type: 4
+    SynchronizeType: 2
+    Name: skillStart
+  - Type: 4
+    SynchronizeType: 2
+    Name: isRbuff
+  - Type: 4
+    SynchronizeType: 2
+    Name: isCollect
+  - Type: 4
+    SynchronizeType: 2
+    Name: isCraft
+  - Type: 4
+    SynchronizeType: 2
+    Name: isDie
+  - Type: 1
+    SynchronizeType: 2
+    Name: AttackType
+  - Type: 1
+    SynchronizeType: 2
+    Name: MotionSpeed
+  - Type: 1
+    SynchronizeType: 2
+    Name: SkillType
+  - Type: 1
+    SynchronizeType: 2
+    Name: CollectType
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &1431738604640560163
 GameObject:
   m_ObjectHideFlags: 0

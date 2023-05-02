@@ -756,4 +756,9 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         yield return new WaitForSeconds(debuffContinousTime_);
         debuffDamage[debuffIndex_] -= debuffDamage_;
     }
+    [PunRPC]
+    public void SetAnimationBool(string name, bool flag)
+    {
+        playerAni.SetBool(name, flag);
+    }
 }
