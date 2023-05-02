@@ -107,29 +107,7 @@ public class CharacterSelectController : MonoBehaviourPun
         }
 
     }
-    [PunRPC]
-    void ReadyCheck(int ViewID)
-    {
-        int chk = 0;
-        isSelect = true;
-        PlayerManager.Instance.characterNum = selectCharacterNum;
-        selectViewID = ViewID;
-        ReadyPlayerNum++;
-        for (int i = 0; i < transform.parent.childCount; i++)
-        {
-            if (transform.parent.GetChild(i).GetComponent<CharacterSelectController>().ReadyPlayerNum == 1)
-            {
-                chk++;
-            }
-        }
-        if (chk == transform.parent.childCount)
-        {
-            Debug.Log(transform.parent.childCount);
-            photonView.RPC("LoadingGame", RpcTarget.All);
-        }
 
-
-    }
     [PunRPC]
     void SetImageChange()
     {
