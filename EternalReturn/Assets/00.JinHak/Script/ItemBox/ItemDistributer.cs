@@ -15,8 +15,8 @@ public class ItemDistributer : MonoBehaviourPun
     void Start()
     {
         areaItemBoxes = GetComponentsInChildren<ItemBox>();
-        ItemSet();
-        //photonView.RPC("ItemSet", RpcTarget.All);
+        //ItemSet();
+        photonView.RPC("ItemSet", RpcTarget.All);
     }
 
     private void Shuffle(int[] array)
