@@ -4,31 +4,78 @@ using UnityEngine;
 
 public class Jackie : PlayerBase
 {
-
-    public BoxCollider QBoxCol = default;
-    [SerializeField]
+    public int weaponStack = 0;
     private bool isWBuffOn = false;
-    [SerializeField]
     private bool isRBuffOn = false;
+    [SerializeField]
+    private GameObject skillQ = default;
+    [SerializeField]
+    private GameObject skillE = default;
     private Vector3 targetPos;
     private Vector3 exceptYTragetPos;
     private Vector3 nowPos;
     private Vector3 dir;
     private float distance;
     private bool isWeaponPassiveOn = true;
-    public int weaponStack = 0;
+    private bool hasBuff = false;
+    private bool watchDebuff = false;
+    private float increaseMoveSpeedBuff = 0f;
+
 
     protected override void Start()
     {
         base.Start();
-        QBoxCol = SkillRange[0].transform.GetChild(0).GetChild(0).GetComponent<BoxCollider>();
         skillCooltimes[4] = true;
-        // Debug.Log(QBoxCol);
     }
 
     public override void Attack()
     {
         base.Attack();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+        if (isWBuffOn)
+        {
+            watchDebuff = false;
+            Collider[] hits;
+            hits = Physics.OverlapSphere(transform.position, 5.5f);
+
+            foreach (var hit in hits)
+            {
+                Vector3 direction = hit.transform.position - transform.position;
+                float angleBetween = Vector3.Angle(transform.forward, direction);
+                if (angleBetween < 120f * 0.5f)
+                {
+                    if (hit.CompareTag("Enemy"))
+                    {
+                        if (hit.GetComponent<Monster>().applyDebuffCheck[0])
+                        {
+                            if (!hasBuff)
+                            {
+                                playerTotalStat.moveSpeed += increaseMoveSpeedBuff;
+                                hasBuff = true;
+                            }
+                            watchDebuff = true;
+                            break;
+                        }
+                    }
+
+                }
+            }
+            if (!watchDebuff && hasBuff)
+            {
+                playerTotalStat.moveSpeed -= increaseMoveSpeedBuff;
+                hasBuff = false;
+            }
+            // hits에 applyDebuffCheck[0]이 없는 경우 이동속도를 줄여라
+        }
+        else if (hasBuff)
+        {
+            playerTotalStat.moveSpeed -= increaseMoveSpeedBuff;
+            hasBuff = false;
+        }
     }
 
     protected override void AttackEnd()
@@ -153,9 +200,9 @@ public class Jackie : PlayerBase
     {
         base.Skill_Q();
         transform.LookAt(nowMousePoint);
+        skillQ.SetActive(true);
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 0);
-        SkillRange[0].SetActive(true);
         StartCoroutine(SkillCooltime(0, 9f));
     }
 
@@ -164,6 +211,8 @@ public class Jackie : PlayerBase
     {
         base.Skill_W();
         isWBuffOn = true;
+        playerController.ChangeState(new PlayerIdle());
+        increaseMoveSpeedBuff = playerTotalStat.moveSpeed * 0.05f;
         StartCoroutine(SkillCooltime(1, 19f));
         StartCoroutine(buffCool());
     }
@@ -213,14 +262,25 @@ public class Jackie : PlayerBase
 
 
     }
+
+    public override void ExtraRange()
+    {
+        base.ExtraRange();
+        skillQ.SetActive(false);
+        skillE.SetActive(false);
+    }
     IEnumerator JackieJump()
     {
         float time = 0f;
         while (true)
         {
-            transform.position += (dir * distance) * Time.deltaTime;
+            if (time >= 0.15f)
+            {
+                transform.position += (dir * distance) * Time.deltaTime;
+            }
             if (time >= 0.7f)
             {
+                skillE.SetActive(true);
                 yield break;
             }
             yield return null;
@@ -229,7 +289,7 @@ public class Jackie : PlayerBase
     }
     IEnumerator buffCool()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(500f);
         isWBuffOn = false;
     }
 
@@ -263,25 +323,6 @@ public class Jackie : PlayerBase
         playerController.ChangeState(new PlayerIdle());
         StartCoroutine(SkillCooltime(3, 70f));
     }
-    private void TriggerOn()
-    {
-        QBoxCol.isTrigger = true;
-    }
-
-    private void TriggerExit(int index_)
-    {
-        switch (index_)
-        {
-            case 1:
-                FirstQDamage();
-                break;
-            case 2:
-                SecondQDamage();
-                break;
-        }
-        QBoxCol.isTrigger = false;
-    }
-
     private void EDamage()
     {
         enemyPlayer.Clear();
@@ -316,6 +357,33 @@ public class Jackie : PlayerBase
     {
         enemyPlayer.Clear();
         enemyHunt.Clear();
+
+        Collider[] hits;
+        hits = Physics.OverlapSphere(transform.position, 2.5f);
+
+        foreach (var hit in hits)
+        {
+            Vector3 direction = hit.transform.position - transform.position;
+            float angleBetween = Vector3.Angle(transform.forward, direction);
+            if (angleBetween < 150f * 0.5f)
+            {
+                if (hit.transform.gameObject.GetComponent<Monster>() != null)
+                {
+                    enemyHunt.Add(hit.transform.gameObject.GetComponent<Monster>());
+                }
+                else if (hit.transform.gameObject.GetComponent<PlayerBase>() != null)
+                {
+                    if (hit.transform.GetComponent<PlayerBase>() == this)
+                    {
+
+                    }
+                    else
+                    {
+                        enemyPlayer.Add(hit.transform.gameObject.GetComponent<PlayerBase>());
+                    }
+                }
+            }
+        }
         for (int i = 0; i < enemyPlayer.Count; i++)
         {
             DamageMessage dm = new DamageMessage(gameObject, 25 + (playerTotalStat.attackPower * 0.45f) + (playerTotalStat.skillPower * 0.40f));
@@ -334,7 +402,37 @@ public class Jackie : PlayerBase
     }
 
     private void SecondQDamage()
+
     {
+        enemyPlayer.Clear();
+        enemyHunt.Clear();
+        Collider[] hits;
+
+        hits = Physics.OverlapSphere(transform.position, 2.5f);
+
+        foreach (var hit in hits)
+        {
+            Vector3 direction = hit.transform.position - transform.position;
+            float angleBetween = Vector3.Angle(transform.forward, direction);
+            if (angleBetween < 150f * 0.5f)
+            {
+                if (hit.transform.gameObject.GetComponent<Monster>() != null)
+                {
+                    enemyHunt.Add(hit.transform.gameObject.GetComponent<Monster>());
+                }
+                else if (hit.transform.gameObject.GetComponent<PlayerBase>() != null)
+                {
+                    if (hit.transform.GetComponent<PlayerBase>() == this)
+                    {
+
+                    }
+                    else
+                    {
+                        enemyPlayer.Add(hit.transform.gameObject.GetComponent<PlayerBase>());
+                    }
+                }
+            }
+        }
         for (int i = 0; i < enemyPlayer.Count; i++)
         {
             DamageMessage dm = new DamageMessage(gameObject, 25 + (playerTotalStat.attackPower * 0.7f) + (playerTotalStat.skillPower * 0.6f));
