@@ -109,7 +109,16 @@ public class InventorySlot : Slot, IDragHandler, IEndDragHandler, IBeginDragHand
     {
         if (Vector3.Distance(eventData.position, pos) >= 70f)
         {
-            ItemManager.Instance.DropItem(ItemManager.Instance.inventory[myNum], Player, canvas);
+            ItemManager.Instance.DropItem(ItemManager.Instance.itemList[ItemManager.Instance.inventory[myNum].id - 1], ItemManager.Instance.Player.gameObject, ItemManager.Instance.ItemCanvas);
+            if (ItemManager.Instance.inventory[myNum].count > 1)
+            {
+                ItemManager.Instance.inventory[myNum].count--;
+            }
+            else if (ItemManager.Instance.inventory[myNum].count == 1)
+            {
+                ItemManager.Instance.inventory[myNum] = new ItemStat();
+            }
+            ItemManager.Instance.InventoryChange();
         }
 
         transform.GetChild(0).position = transform.position;
