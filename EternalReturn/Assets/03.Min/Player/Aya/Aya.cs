@@ -361,7 +361,14 @@ public class Aya : PlayerBase
                     }
                     else if (hit.transform.gameObject.GetComponent<PlayerBase>() != null)
                     {
-                        enemyPlayer.Add(hit.transform.gameObject.GetComponent<PlayerBase>());
+                        if (hit.transform.GetComponent<PlayerBase>() == this)
+                        {
+
+                        }
+                        else
+                        {
+                            enemyPlayer.Add(hit.transform.gameObject.GetComponent<PlayerBase>());
+                        }
                     }
                 }
                 float damage = 0f;
