@@ -1699,6 +1699,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   playerState: -1
+  useSkillRange: {fileID: 0}
 --- !u!114 &3384395866207608147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1711,6 +1712,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1240e1179fb86d54c8fb034efc751e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyPlayer: []
+  enemyHunt: []
   nowMousePoint: {x: 0, y: 0, z: 0}
   weapon: {fileID: 2465337934373799494}
   fishingRod: {fileID: 2533143214111931852}
@@ -1851,9 +1854,19 @@ MonoBehaviour:
   - 0
   - 0
   corners: []
+  stunFBX: {fileID: 0}
   itemBoxUi: {fileID: 7458879648041901250, guid: 935c3719471578743bca9af8a24ceb1b,
     type: 3}
   itemBoxSlotList: {fileID: 0}
+  playerStatusUiPrefab: {fileID: 0}
+  playerStatusUi: {fileID: 0}
+  playerHpBar: {fileID: 0}
+  playerMpBar: {fileID: 0}
+  playerLevelTxt: {fileID: 0}
+  worldCanvas: {fileID: 0}
+  isWon: 0
+  RRange: {fileID: 0}
+  Bullet: {fileID: 0}
 --- !u!1 &2533143214111931852
 GameObject:
   m_ObjectHideFlags: 0

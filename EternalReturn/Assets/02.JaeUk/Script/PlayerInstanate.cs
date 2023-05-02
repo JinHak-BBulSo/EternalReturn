@@ -5,7 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 public class PlayerInstanate : MonoBehaviourPun
 {
-
+    public int startPlayerNum;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +22,11 @@ public class PlayerInstanate : MonoBehaviourPun
             PlayerManager.Instance.LoadingFinishPlayer = 0;
             photonView.RPC("InstanatePlayer", RpcTarget.All);
         }
+        if (startPlayerNum == 2)
+        {
+            PlayerManager.Instance.IsGameStart = true;
+            Destroy(this);
+        }
     }
     [PunRPC]
     void SetSingltonNum()
@@ -31,15 +36,23 @@ public class PlayerInstanate : MonoBehaviourPun
     [PunRPC]
     void InstanatePlayer()
     {
+        Debug.Log(PlayerManager.Instance.characterNum);
         switch (PlayerManager.Instance.characterNum)
         {
             case 0:
                 PlayerManager.Instance.canvas = transform.gameObject;
-                GameObject playerClone = PhotonNetwork.Instantiate("08.Player/Prefabs/Jackie_S003", PlayerManager.Instance.PlayerPos, Quaternion.identity, 0);
+                GameObject playerClone = PhotonNetwork.Instantiate("08.Player/Prefabs/Aya_S002", PlayerManager.Instance.PlayerPos, Quaternion.identity, 0);
                 PlayerManager.Instance.Player = playerClone;
                 playerClone.transform.SetParent(transform, false);
-                PlayerManager.Instance.IsGameStart = true;
+                break;
+            case 1:
+                PlayerManager.Instance.canvas = transform.gameObject;
+                playerClone = PhotonNetwork.Instantiate("08.Player/Prefabs/Jackie_S003", PlayerManager.Instance.PlayerPos, Quaternion.identity, 0);
+                PlayerManager.Instance.Player = playerClone;
+                playerClone.transform.SetParent(transform, false);
                 break;
         }
+        startPlayerNum++;
+
     }
 }

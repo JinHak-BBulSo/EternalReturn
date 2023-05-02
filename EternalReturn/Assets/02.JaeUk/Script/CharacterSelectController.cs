@@ -55,8 +55,9 @@ public class CharacterSelectController : MonoBehaviourPun
     void LoadingGame()
     {
         transform.parent.parent.GetComponent<CharacterSelect>().totalTime = 40;
-        transform.parent.parent.GetComponent<AudioSource>().time = 40f;
+        transform.parent.parent.GetComponent<AudioSource>().time = 45f;
     }
+
     [PunRPC]
     void EnterGuest()
     {
@@ -71,12 +72,24 @@ public class CharacterSelectController : MonoBehaviourPun
         }
     }
     [PunRPC]
+    void SetPlayerList()
+    {
+
+        if (photonView.IsMine)
+        {
+
+            isEnter = true;
+            PlayerManager.Instance.PlayerNumber++;
+
+        }
+
+    }
+    [PunRPC]
     void ReadyCheck(int ViewID, int selectCharacterNum_)
     {
         int chk = 0;
         isSelect = true;
         selectCharacterNum = selectCharacterNum_;
-        PlayerManager.Instance.characterNum = selectCharacterNum_;
         selectViewID = ViewID;
         ReadyPlayerNum++;
         for (int i = 0; i < transform.parent.childCount; i++)
@@ -93,55 +106,5 @@ public class CharacterSelectController : MonoBehaviourPun
         }
 
 
-    }
-    [PunRPC]
-    void SetPlayerList()
-    {
-
-        if (photonView.IsMine)
-        {
-
-            isEnter = true;
-            PlayerManager.Instance.PlayerNumber++;
-
-        }
-
-    }
-
-    [PunRPC]
-    void SetImageChange()
-    {
-        if (photonView.IsMine)
-        {
-        }
-
-    }
-
-    [PunRPC]
-    void Select(int Selectnum)
-    {
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-
-        }
-        else
-        {
-            playerNumber++;
-        }
-
-
-    }
-    [PunRPC]
-    void ChageImage(int viewID, int characterNum)
-    {
-        for (int i = 0; i < transform.parent.childCount; i++)
-        {
-            if (transform.parent.GetChild(i).GetComponent<PhotonView>().ViewID == viewID)
-            {
-                selectNumber = i;
-            }
-        }
-        selectCharacterNum = characterNum;
     }
 }

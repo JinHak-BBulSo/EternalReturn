@@ -450,7 +450,6 @@ public class ItemManager : SingleTonBase<ItemManager>
         for (int i = 0; i < item.Count; i++)
         {
             itemKey = int.Parse(item[i].name.Split(".")[0]);
-            Debug.Log(itemKey);
             itemListObj.Add(itemKey, item[i]);
         }
 
