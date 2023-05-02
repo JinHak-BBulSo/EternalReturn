@@ -34,6 +34,10 @@ public class PlayerCraft : IPlayerState
         time = ItemManager.Instance.combineAbleList[0].craftTime - Time.deltaTime;
         if (time <= 0f)
         {
+            ItemManager.Instance.CombineItem(ItemManager.Instance.combineAbleList[0], ItemManager.Instance.itemCombineDictionary);
+            ItemManager.Instance.DeleteInferiorList(ItemManager.Instance.combineAbleList[0]);
+            ItemManager.Instance.combineAbleList.RemoveAt(0);
+            ItemManager.Instance.InventoryChange();
             playerController.ChangeState(new PlayerIdle());
         }
         playerController.ShowAllRange();

@@ -9,7 +9,12 @@ public class PlayerDie : IPlayerState
     {
         this.playerController = controller_;
         playerController.playerState = PlayerController.PlayerState.DIE;
-
+        playerController.ResetAni();
+        playerController.ResetRange();
+        playerController.player.weapon.SetActive(false);
+        playerController.player.playerAni.SetBool("isDie", true);
+        // playerController.player.enabled = false;
+        // playerController.enabled = false;
     }
     public void StateExit()
     {
