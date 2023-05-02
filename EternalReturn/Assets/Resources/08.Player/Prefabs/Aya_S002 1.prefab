@@ -2069,40 +2069,40 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isMove
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isAttack
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isSkill
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: skillStart
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isREnd
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isCollect
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isDie
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isCraft
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: AttackType
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: MotionSpeed
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: SkillType
   - Type: 1
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: CollectType
   m_SynchronizeLayers:
   - SynchronizeType: 0
