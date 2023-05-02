@@ -265,9 +265,6 @@ public class Jackie : PlayerBase
             weaponStack = 0;
             skillCooltimes[4] = true;
         }
-
-
-
     }
 
     public override void ExtraRange()
@@ -276,6 +273,7 @@ public class Jackie : PlayerBase
         skillQ.SetActive(false);
         photonView.RPC("ShowRangeJackieQ", RpcTarget.All, false);
         skillE.SetActive(false);
+        photonView.RPC("ShowRangeJackieE", RpcTarget.All, false);
     }
     IEnumerator JackieJump()
     {
@@ -288,6 +286,7 @@ public class Jackie : PlayerBase
             }
             if (time >= 0.7f)
             {
+                photonView.RPC("ShowRangeJackieE", RpcTarget.All, true);
                 skillE.SetActive(true);
                 yield break;
             }
@@ -360,6 +359,12 @@ public class Jackie : PlayerBase
             DamageMessage dm = new DamageMessage(gameObject, 50 + (playerTotalStat.attackPower * 0.42f) + (playerTotalStat.skillPower * 0.60f));
             enemyHunt[i].TakeDamage(dm);
         }
+    }
+
+    [PunRPC]
+    public void ShowRangeJackieE(bool flag)
+    {
+        skillE.SetActive(flag);
     }
     private void FirstQDamage()
     {

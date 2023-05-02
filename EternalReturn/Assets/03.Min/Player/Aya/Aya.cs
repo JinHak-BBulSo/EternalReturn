@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -250,8 +251,8 @@ public class Aya : PlayerBase
                 transform.position += dir.normalized * Time.deltaTime * playerTotalStat.moveSpeed;
             }
         }
-
     }
+
     public override void Skill_E()
     {
         base.Skill_E();
@@ -286,12 +287,18 @@ public class Aya : PlayerBase
         }
     }
 
+    [PunRPC]
+    public void ShowRangeAyaR(bool flag)
+    {
+        RRange.SetActive(flag);
+    }
     public override void Skill_R()
     {
         base.Skill_R();
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 3);
         RRange.SetActive(true);
+        photonView.RPC("ShowRangeAyaR", RpcTarget.All, true);
         StartCoroutine(RDamage());
     }
 
@@ -328,8 +335,6 @@ public class Aya : PlayerBase
                 damage = (400 + 0.8f * playerTotalStat.attackPower + 1.2f * playerTotalStat.skillPower)
                 - (200 + 0.4f * playerTotalStat.attackPower + 0.6f * playerTotalStat.skillPower) * (time / 1.5f)
                 + (200 + 0.4f * playerTotalStat.attackPower + 0.6f * playerTotalStat.skillPower);
-
-                Debug.Log(damage);
                 DamageMessage dm = new DamageMessage(gameObject, damage);
 
                 for (int i = 0; i < enemyHunt.Count; i++)
@@ -343,6 +348,7 @@ public class Aya : PlayerBase
                     enemyPlayer[i].Debuff(3, time);
                 }
                 RRange.SetActive(false);
+                photonView.RPC("ShowRangeAyaR", RpcTarget.All, false);
                 playerAni.SetBool("isREnd", true);
                 StartCoroutine(SkillCooltime(3, 80f));
                 yield break;
@@ -384,6 +390,7 @@ public class Aya : PlayerBase
                     enemyPlayer[i].TakeDamage(dm);
                 }
                 RRange.SetActive(false);
+                photonView.RPC("ShowRangeAyaR", RpcTarget.All, false);
                 StartCoroutine(SkillCooltime(3, 80f));
                 playerAni.SetBool("isREnd", true);
                 yield break;
