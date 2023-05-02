@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPun
 {
 
     public enum PlayerState
@@ -57,6 +59,7 @@ public class PlayerController : MonoBehaviour
 
     public void ResetRange()
     {
+        if (!photonView.IsMine) { return; }
         for (int i = 0; i < player.SkillRange.Length; i++)
         {
             if (player.SkillRange[i] != null)
@@ -69,6 +72,7 @@ public class PlayerController : MonoBehaviour
 
     public void ResetAni()
     {
+        if (!photonView.IsMine) { return; }
         player.playerAni.SetBool("isMove", false);
         player.playerAni.SetBool("isAttack", false);
         player.playerAni.SetBool("isSkill", false);
@@ -80,6 +84,7 @@ public class PlayerController : MonoBehaviour
 
     public void toolReset()
     {
+        if (!photonView.IsMine) { return; }
         player.weapon.SetActive(true);
         player.fishingRod.SetActive(false);
         player.craftTool.SetActive(false);
@@ -89,6 +94,7 @@ public class PlayerController : MonoBehaviour
 
     public void ShowAllRange()
     {
+        if (!photonView.IsMine) { return; }
         if (Input.GetMouseButtonDown(0))
         {
         }
@@ -104,6 +110,7 @@ public class PlayerController : MonoBehaviour
     }
     private void ShowRange(int index_, KeyCode inputKey_)
     {
+        if (!photonView.IsMine) { return; }
         if (!player.skillCooltimes[index_])
         {
             if (Input.GetKeyDown(inputKey_))
@@ -140,6 +147,7 @@ public class PlayerController : MonoBehaviour
 
     public void SkillUse()
     {
+        if (!photonView.IsMine) { return; }
         for (int i = 0; i < player.SkillRange.Length; i++)
         {
             if (player.SkillRange[i] != null && player.SkillRange[i].activeSelf)

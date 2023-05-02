@@ -19,12 +19,14 @@ public class PlayerAttackMove : IPlayerState
         if (playerController.player.playerAni.GetBool("isMove"))
         {
             playerController.player.playerAni.SetBool("isMove", true);
+            playerController.player.photonView.RPC("SetAnimationBool", Photon.Pun.RpcTarget.All, "isMove", true);
         }
         else
         {
             playerController.player.playerAni.SetBool("isMove", true);
         }
     }
+
 
     public void StateExit()
     {
