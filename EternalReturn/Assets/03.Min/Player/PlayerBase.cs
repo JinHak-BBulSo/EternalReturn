@@ -31,7 +31,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public PlayerStat playerStat = default;
     public PlayerStat extraStat = default;
     public PlayerStat playerTotalStat = default;
-
     [HideInInspector]
     public Animator playerAni = default;
     [HideInInspector]
@@ -576,7 +575,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public void TakeDamage(DamageMessage message)
     {
         playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
-
         playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
     }
     public void TakeDamage(DamageMessage message, float damageAmount)

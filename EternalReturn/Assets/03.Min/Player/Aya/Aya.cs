@@ -1,8 +1,9 @@
-using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
+using Photon.Realtime;
 
 public class Aya : PlayerBase
 {
@@ -184,7 +185,13 @@ public class Aya : PlayerBase
         StartCoroutine(WSkill());
     }
 
+
     private void Shot()
+    {
+        photonView.RPC("Shotas", RpcTarget.All);
+    }
+    [PunRPC]
+    private void Shotas()
     {
         AyaBullet bullet = Instantiate(Bullet).GetComponent<AyaBullet>();
         bullet.transform.position = weapon.transform.position;
