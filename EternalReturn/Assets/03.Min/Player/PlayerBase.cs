@@ -58,11 +58,9 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public AudioClip[] playerAudioClip = default;
 
     //[KJH] Add. PlayerStatusUi
+    public GameObject mainUi = default;
     public GameObject playerStatusUiPrefab = default;
-    public GameObject playerStatusUi = default;
-    public Image playerHpBar = default;
-    public Image playerMpBar = default;
-    public Text playerLevelTxt = default;
+    public PlayerStatusUI playerStatusUi = default;
     public GameObject worldCanvas = default;
 
     protected virtual void Start()
@@ -82,17 +80,14 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
         //GameObject itemBoxUi_ = Resources.Load<GameObject>("06.ItemBox/Prefab/ItemBoxUI/ItemBoxUi");
 
-        itemBoxUi = Instantiate(itemBoxUi, GameObject.Find("TestUi").transform);
+        mainUi = GameObject.Find("TestUi");
+        itemBoxUi = Instantiate(itemBoxUi, mainUi.transform);
         itemBoxSlotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
         craftTool.transform.GetChild(0).GetComponent<CraftTool>().craftPlayer = this;
         stunFBX = transform.GetChild(2).gameObject;
 
         worldCanvas = GameObject.Find("WorldCanvas");
-        playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform);
-        playerHpBar = playerStatusUi.transform.GetChild(1).GetComponent<Image>();
-        playerMpBar = playerStatusUi.transform.GetChild(3).GetComponent<Image>();
-        playerLevelTxt = playerStatusUi.transform.GetChild(4).GetChild(0).GetComponent<Text>();
-        playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform).GetComponent<PlayerStatusUI>();
     }
 
 
@@ -119,6 +114,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 NavMeshHit navHit;
                 //[KJH] Add. 마우스 클릭 타겟 기록
                 clickTarget = hit.collider.gameObject;
+                enemy = default;
 
                 if (clickTarget.GetComponent<Outline>() != null && clickTarget.GetComponent<Outline>().monster != null)
                 {
@@ -280,15 +276,49 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             else
             {
                 playerExp_.level++;
+
+                if (playerExp_ != playerStat.playerExp)
+                {
+                    playerStat.playerExp.nowExp += playerExp_.maxExp;
+                    LevelUp(playerStat.playerExp);
+                    playerStatusUi.playerExpBar.fillAmount = playerExp_.nowExp / playerExp_.maxExp;
+                }
+                
                 playerExp_.nowExp -= playerExp_.maxExp;
                 playerExp_.maxExp += playerExp_.expDelta;
             }
         }
     }
 
-    public void GetExp(float exp_)
+    public void GetExp(float exp_, PlayerStat.PlayerExpType exptype_)
     {
-
+        switch (exptype_)
+        {
+            case PlayerStat.PlayerExpType.WEAPON:
+                playerStat.weaponExp.nowExp += exp_;
+                LevelUp(playerStat.weaponExp);
+                break;
+            case PlayerStat.PlayerExpType.CRAFT:
+                playerStat.craftExp.nowExp += exp_;
+                LevelUp(playerStat.craftExp);
+                break;
+            case PlayerStat.PlayerExpType.SEARCH:
+                playerStat.searchExp.nowExp += exp_;
+                LevelUp(playerStat.searchExp);
+                break;
+            case PlayerStat.PlayerExpType.MOVE:
+                playerStat.moveExp.nowExp += exp_;
+                LevelUp(playerStat.moveExp);
+                break;
+            case PlayerStat.PlayerExpType.HEALTH:
+                playerStat.healthExp.nowExp += exp_;
+                LevelUp(playerStat.healthExp);
+                break;
+            case PlayerStat.PlayerExpType.DEF:
+                playerStat.defExp.nowExp += exp_;
+                LevelUp(playerStat.defExp);
+                break;
+        }
     }
     public void Craft()
     {
@@ -336,6 +366,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     protected virtual void AttackEnd()
     {
         isAttackAble = false;
+        
         AnimatorStateInfo currentAnimationState = playerAni.GetCurrentAnimatorStateInfo(0);
         float delay_ = currentAnimationState.length - currentAnimationState.length * currentAnimationState.normalizedTime;
         switch (attackType)
@@ -363,6 +394,11 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         // Debug.Log(delay_);
         yield return new WaitForSeconds(delay_);
         isAttackAble = true;
+
+        if(isAttackAble && enemy != default)
+        {
+            playerController.ChangeState(new PlayerAttackMove());
+        }
     }
 
     protected virtual void ShowAttackRange()
@@ -486,11 +522,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     {
         playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
 
-        playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-    }
-    public void TakeDamage(DamageMessage message, float damageAmount)
-    {
-        throw new System.NotImplementedException();
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
     }
 
     /// <summary>
@@ -506,14 +538,14 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public void TakeSolidDamage(DamageMessage message)
     {
         playerStat.nowHp -= message.damageAmount;
-        playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
     }
 
 
     public void TakeSolidDamage(DamageMessage message, float damageAmount)
     {
         playerStat.nowHp -= damageAmount;
-        playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
     }
 
     /// <summary>

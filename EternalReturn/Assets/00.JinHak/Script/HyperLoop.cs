@@ -15,4 +15,12 @@ public class HyperLoop : MonoBehaviour
         }
         player = transform.parent.GetComponent<HyperLoopPointList>().player;
     }
+
+    private void Update()
+    {
+        if(player == default)
+        {
+            player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
+        }
+    }
 }

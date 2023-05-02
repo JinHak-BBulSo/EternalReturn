@@ -134,6 +134,8 @@ public class Monster : MonoBehaviour, IHitHandler
         monsterStatus.attackSpeed = monsterData.AttackSpeed;
         monsterStatus.attackRange = monsterData.AttackRange;
         monsterStatus.moveSpeed = monsterData.MoveSpeed;
+        monsterStatus.level = monsterData.MonsterLevel;
+        monsterStatus.maxLevel = monsterData.MonsterMaxLevel;
     }
 
     protected virtual void SetDebuffData()
@@ -185,6 +187,8 @@ public class Monster : MonoBehaviour, IHitHandler
         {
             monsterStatus.nowHp = 0;
             isDie = true;
+            PlayerBase attackPlayer_ = message.causer.GetComponent<PlayerBase>();
+            attackPlayer_.enemy = default;
         }
     }
 
@@ -201,22 +205,14 @@ public class Monster : MonoBehaviour, IHitHandler
     public void TakeDamage(DamageMessage message)
     {
         FirstAttackCheck(message);
+        float damageAmount_ = (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
         if (message.debuffIndex == -1)
-            monsterStatus.nowHp -= (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
+            monsterStatus.nowHp -= damageAmount_;
         monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
 
-        if (!isDie)
-        {
-            DieCheck(message);
-        }
-    }
-    // 필요없을듯?
-    public void TakeDamage(DamageMessage message, float damageAmount)
-    {
-        FirstAttackCheck(message);
-        monsterStatus.nowHp -= damageAmount;
-        monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
-
+        PlayerBase attackPlayer_ = message.causer.GetComponent<PlayerBase>();
+        attackPlayer_.GetExp(damageAmount_ / 20, PlayerStat.PlayerExpType.WEAPON);
+        
         if (!isDie)
         {
             DieCheck(message);
@@ -238,17 +234,21 @@ public class Monster : MonoBehaviour, IHitHandler
         monsterStatus.nowHp -= message.damageAmount;
         monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
 
+        PlayerBase attackPlayer_ = message.causer.GetComponent<PlayerBase>();
+        attackPlayer_.GetExp(message.damageAmount / 20, PlayerStat.PlayerExpType.WEAPON);
+
         if (!isDie)
         {
             DieCheck(message);
         }
     }
-
-
     public void TakeSolidDamage(DamageMessage message, float damageAmount)
     {
         monsterStatus.nowHp -= damageAmount;
         monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
+
+        PlayerBase attackPlayer_ = message.causer.GetComponent<PlayerBase>();
+        attackPlayer_.GetExp(damageAmount / 20, PlayerStat.PlayerExpType.WEAPON);
 
         if (!isDie)
         {
