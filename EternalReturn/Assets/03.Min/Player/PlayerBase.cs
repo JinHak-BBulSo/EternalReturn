@@ -13,6 +13,9 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public Vector3 nowMousePoint = default;
     public GameObject weapon = default;
     public GameObject fishingRod = default;
+    public GameObject craftTool = default;
+    public GameObject hammer = default;
+    public GameObject driver = default;
 
     public GameObject enemy = default;
 
@@ -47,13 +50,13 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public List<float>[] debuffRemainList = new List<float>[10];
     public List<Vector3> corners = new List<Vector3>();
     private SpriteRenderer[] attackRangeRender = new SpriteRenderer[2];
-
     //[KJH] Add. MiniMap move
     private Camera miniMapCamera = default;
     public GameObject stunFBX = default;
     public GameObject itemBoxUi = default;
     public ItemBoxSlotList itemBoxSlotList = default;
     private bool isMoveAble = true;
+    public AudioClip[] playerAudioClip = default;
 
     protected virtual void Start()
     {
@@ -74,7 +77,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
         itemBoxUi = Instantiate(itemBoxUi, GameObject.Find("TestUi").transform);
         itemBoxSlotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
-
+        craftTool.transform.GetChild(0).GetComponent<CraftTool>().craftPlayer = this;
         stunFBX = transform.GetChild(2).gameObject;
     }
 
