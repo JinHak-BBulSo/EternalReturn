@@ -45,6 +45,10 @@ public class GatheringItemBox : MonoBehaviour
         }
     }
 
+    public void Respawn()
+    {
+        StartCoroutine(RespawnItem(respawnItemTime));
+    }
     IEnumerator RespawnItem(float respawnTime_)
     {
         if (itemType == GatherItemType.FISHING)
