@@ -1381,7 +1381,7 @@ GameObject:
   - component: {fileID: 5392971066224245366}
   - component: {fileID: 6477311113540160925}
   m_Layer: 0
-  m_Name: Jackie_S003
+  m_Name: Jackie_S003 2
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
