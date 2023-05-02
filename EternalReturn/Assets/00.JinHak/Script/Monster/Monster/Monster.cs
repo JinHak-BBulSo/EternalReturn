@@ -80,6 +80,8 @@ public class Monster : MonoBehaviour, IHitHandler
 
     void OnEnable()
     {
+        monsterItemBox.boxItems.Clear();
+
         spawnPoint.enterPlayer -= EnterPlayer;
         spawnPoint.enterPlayer += EnterPlayer;
 
