@@ -5,10 +5,6 @@ using Photon.Pun;
 using Photon.Realtime;
 public class PlayerInstanate : MonoBehaviourPun
 {
-<<<<<<< HEAD
-
-=======
->>>>>>> 835513cb8ca077d2ab8a8abaa3bb4c92f88e3764
     // Start is called before the first frame update
     void Start()
     {
@@ -56,10 +52,6 @@ public class PlayerInstanate : MonoBehaviourPun
                 break;
         }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 835513cb8ca077d2ab8a8abaa3bb4c92f88e3764
 
     }
 }

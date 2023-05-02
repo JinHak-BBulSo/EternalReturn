@@ -68,11 +68,9 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     protected virtual void Start()
     {
         transform.SetParent(PlayerManager.Instance.canvas.transform, false);
-        ItemManager.Instance.Player = this;
         playerController = GetComponent<PlayerController>();
         playerAni = GetComponent<Animator>();
         playerNav = GetComponent<NavMeshAgent>();
-        Camera.main.transform.parent.GetComponent<MoveCamera>().player = this;
         attackRangeRender[0] = attackRange.GetComponent<SpriteRenderer>();
         attackRangeRender[1] = attackRange.transform.GetChild(0).GetComponent<SpriteRenderer>();
         InitStat();
