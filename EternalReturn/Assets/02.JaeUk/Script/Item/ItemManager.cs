@@ -471,7 +471,7 @@ public class ItemManager : SingleTonBase<ItemManager>
     {
         GameObject itemObj = Instantiate(itemListObj[item.id]);
         itemObj.transform.SetParent(canvas.transform, false);
-        itemObj.transform.position = player.transform.position;
+        itemObj.transform.position = new Vector3(player.transform.position.x, 1, player.transform.position.z);
 
     }
     public List<int> EquipmentListIsBlank()
