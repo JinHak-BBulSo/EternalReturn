@@ -16208,6 +16208,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fog
       objectReference: {fileID: 0}
+    - target: {fileID: 5129609079952680582, guid: 405c56c90ba610e458645e6ad9eb79f8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 405c56c90ba610e458645e6ad9eb79f8, type: 3}
 --- !u!1 &1371608598 stripped
@@ -18387,7 +18392,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1573656576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19505,12 +19510,12 @@ GameObject:
   - component: {fileID: 1698278690}
   - component: {fileID: 1698278689}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: WorldCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1698278689
 MonoBehaviour:
   m_ObjectHideFlags: 0

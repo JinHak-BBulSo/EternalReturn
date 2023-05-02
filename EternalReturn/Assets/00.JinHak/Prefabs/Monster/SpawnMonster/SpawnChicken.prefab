@@ -148,6 +148,12 @@ PrefabInstance:
       objectReference: {fileID: 747737480}
     - target: {fileID: 8285957622584676095, guid: ae8884a678f7d0b48acf68c59db3586b,
         type: 3}
+      propertyPath: monsterUiPrefab
+      value: 
+      objectReference: {fileID: 9025128624376774088, guid: edc63de1e5f984b478e2b518ccc0f16c,
+        type: 3}
+    - target: {fileID: 8285957622584676095, guid: ae8884a678f7d0b48acf68c59db3586b,
+        type: 3}
       propertyPath: monsterStatus.maxLevel
       value: 7
       objectReference: {fileID: 0}

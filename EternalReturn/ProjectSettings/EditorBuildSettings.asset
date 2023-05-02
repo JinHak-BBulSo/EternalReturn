@@ -9,14 +9,14 @@ EditorBuildSettings:
     path: Assets/02.JaeUk/Scene/Init.unity
     guid: 7fecd7b46f83d1c4baf21137f0df9ddb
   - enabled: 1
-    path: Assets/02.JaeUk/Scene/Lobby.unity
-    guid: e520b0f106e73e94c879fa07ff185677
-  - enabled: 1
-    path: Assets/02.JaeUk/Scene/CharacterSelect.unity
-    guid: 5800d1565daf6b84dbe0a23aaa524cdd
+    path: Assets/02.JaeUk/Scene/01.LobbyScene.unity
+    guid: a8d67c0081aeb81449bb7eab62c63ed0
   - enabled: 1
     path: Assets/00.JinHak/LumiaIslandScene.unity
     guid: 6ab71d1e52dc58a4f9db8590f983b692
+  - enabled: 1
+    path: Assets/02.JaeUk/Scene/CharacterSelect.unity
+    guid: 5800d1565daf6b84dbe0a23aaa524cdd
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: c0a5e86ad81fd0e439d2e6e82fb91b66,
       type: 2}

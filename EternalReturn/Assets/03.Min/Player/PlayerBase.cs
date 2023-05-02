@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class PlayerBase : MonoBehaviour, IHitHandler
 {
@@ -58,6 +59,14 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     private bool isMoveAble = true;
     public AudioClip[] playerAudioClip = default;
 
+    //[KJH] Add. PlayerStatusUi
+    public GameObject playerStatusUiPrefab = default;
+    public GameObject playerStatusUi = default;
+    public Image playerHpBar = default;
+    public Image playerMpBar = default;
+    public Text playerLevelTxt = default;
+    public GameObject worldCanvas = default;
+
     protected virtual void Start()
     {
         transform.SetParent(PlayerManager.Instance.canvas.transform, false);
@@ -79,6 +88,12 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         itemBoxSlotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
         craftTool.transform.GetChild(0).GetComponent<CraftTool>().craftPlayer = this;
         stunFBX = transform.GetChild(2).gameObject;
+
+        playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform);
+        playerHpBar = playerStatusUi.transform.GetChild(1).GetComponent<Image>();
+        playerMpBar = playerStatusUi.transform.GetChild(3).GetComponent<Image>();
+        playerLevelTxt = playerStatusUi.transform.GetChild(4).GetChild(0).GetComponent<Text>();
+        playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
     }
 
 
@@ -103,9 +118,12 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 if (clickTarget.GetComponent<Outline>() != null && clickTarget.GetComponent<Outline>().monster != null)
                 {
                     Monster monster = clickTarget.GetComponent<Outline>().monster;
-                    enemy = monster.gameObject;
-                    isAttackMove = true;
-                    playerController.ChangeState(new PlayerAttackMove());
+                    if (!monster.isDie)
+                    {
+                        enemy = monster.gameObject;
+                        isAttackMove = true;
+                        playerController.ChangeState(new PlayerAttackMove());
+                    }
                 }
                 //[KJH] Add. 클릭 타겟 Outline 표시
                 //외곽선 초기화
@@ -462,6 +480,8 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public void TakeDamage(DamageMessage message)
     {
         playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
+
+        playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
     }
     public void TakeDamage(DamageMessage message, float damageAmount)
     {
@@ -481,12 +501,14 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public void TakeSolidDamage(DamageMessage message)
     {
         playerStat.nowHp -= message.damageAmount;
+        playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
     }
 
 
     public void TakeSolidDamage(DamageMessage message, float damageAmount)
     {
         playerStat.nowHp -= damageAmount;
+        playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
     }
 
     /// <summary>
@@ -549,17 +571,17 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     /// <summary>
     /// debuffIndex의 순서
-    /// 0 = 출혈, 1 = 독, 2 = 스턴, 3 = 속박
+    /// 0 = 출혈, 1 = 독, 2 = 스턴, 3 = 속박, 4 = 에어본
     /// </summary>
     /// <param name="message"></param>
     /// <param name="debuffIndex_"></param>
     /// <returns></returns>
     /// 
-    public void Debuff(DamageMessage message, int debuffIndex_, float continousTime_)
+    public void Debuff(int debuffIndex_, float continousTime_)
     {
-        StartCoroutine(DebuffStart(message, debuffIndex_, continousTime_));
+        StartCoroutine(DebuffStart(debuffIndex_, continousTime_));
     }
-    public IEnumerator DebuffStart(DamageMessage message, int debuffIndex_, float continousTime_)
+    public IEnumerator DebuffStart(int debuffIndex_, float continousTime_)
     {
         // 이미 상태이상이 걸린 경우
         if (applyDebuffCheck[debuffIndex_])
@@ -581,13 +603,18 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                     isMoveAble = false;
                     playerController.enabled = false;
                     stunFBX.SetActive(true);
-                    yield return null;
                     break;
                 // 속박
                 case 3:
                     isMove = false;
                     isMoveAble = false;
-                    yield return null;
+                    break;
+                // 에어본
+                case 4:
+                    isMove = false;
+                    isMoveAble = false;
+                    playerController.player.playerNav.enabled = false;
+                    playerController.GetComponent<Rigidbody>().AddForce(new Vector3(0, 6, 0), ForceMode.Impulse);
                     break;
             }
 
@@ -597,8 +624,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 debuffRemainTime[debuffIndex_] -= Time.deltaTime;
 
                 // 상태이상 종류 체크
-                if (debuffIndex_ == 3 || debuffIndex_ == 4) isMove = false;
-
+                if (debuffIndex_ == 2 || debuffIndex_ == 3) isMove = false;
                 yield return null;
             }
 
@@ -614,6 +640,12 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 // 속박
                 case 3:
                     isMoveAble = true;
+                    break;
+                // 에어본
+                case 4:
+                    isMoveAble = true;
+                    playerController.player.playerNav.enabled = true;
+                    playerController.enabled = true;
                     break;
             }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Monster : MonoBehaviour, IHitHandler
 {
@@ -30,7 +31,15 @@ public class Monster : MonoBehaviour, IHitHandler
     public PlayerBase firstAttackPlayer = default;
     public bool isDie = false;
 
+    public GameObject worldCanvas = default;
     public ItemBox monsterItemBox = default;
+    public GameObject monsterUiPrefab = default;
+    public GameObject monsterStatusUi = default;
+    public Image monsterHpBar = default;
+    private Text monsterLeveltxt = default;
+    private Vector3 statusUiOffset = new Vector3(-0.3f, 2.7f, 0);
+
+    private bool isFirstSpawn = false;
 
     void Awake()
     {
@@ -52,6 +61,21 @@ public class Monster : MonoBehaviour, IHitHandler
         }
 
         monsterController.AwakeOrder();
+        worldCanvas = GameObject.Find("WorldCanvas");
+
+        if(monsterUiPrefab != default)
+        {
+            monsterStatusUi = Instantiate(monsterUiPrefab, worldCanvas.transform);
+            monsterHpBar = monsterStatusUi.transform.GetChild(1).GetComponent<Image>();
+            monsterLeveltxt = monsterStatusUi.transform.GetChild(2).GetChild(0).GetComponent<Text>();
+            monsterStatusUi.transform.position = transform.position + statusUiOffset;
+            monsterStatusUi.SetActive(false);
+        }
+    }
+
+    private void Update()
+    {
+        monsterStatusUi.transform.position = transform.position + statusUiOffset;
     }
 
     void OnEnable()
@@ -75,6 +99,17 @@ public class Monster : MonoBehaviour, IHitHandler
         monsterController.navMeshAgent.enabled = true;
         monsterController.monster.monsterItemBox.enabled = false;
         monsterController.targetPlayer = default;
+        firstAttackPlayer = default;
+
+        if (!isFirstSpawn)
+        {
+            isFirstSpawn = true;
+        }
+        else
+        {
+            monsterStatusUi.SetActive(true);
+            monsterLeveltxt.text = monsterStatus.level.ToString();
+        }
 
         //몬스터 아이템 셋팅
         monsterItemBox.SetItems(0);
@@ -128,7 +163,6 @@ public class Monster : MonoBehaviour, IHitHandler
 
     public void FirstAttackCheck(DamageMessage message)
     {
-        Debug.Log("타겟지정호출");
         if (firstAttackPlayer == default)
         {
             firstAttackPlayer = message.causer.GetComponent<PlayerBase>();
@@ -137,7 +171,6 @@ public class Monster : MonoBehaviour, IHitHandler
         }
         else
         {
-            Debug.Log("설마여기");
             return;
         }
     }
@@ -157,12 +190,14 @@ public class Monster : MonoBehaviour, IHitHandler
         FirstAttackCheck(message);
         if (message.debuffIndex == -1)
             monsterStatus.nowHp -= (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
+        monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
     }
     // 필요없을듯?
     public void TakeDamage(DamageMessage message, float damageAmount)
     {
         FirstAttackCheck(message);
         monsterStatus.nowHp -= damageAmount;
+        monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
     }
 
     /// <summary>
@@ -178,12 +213,14 @@ public class Monster : MonoBehaviour, IHitHandler
     public void TakeSolidDamage(DamageMessage message)
     {
         monsterStatus.nowHp -= message.damageAmount;
+        monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
     }
 
 
     public void TakeSolidDamage(DamageMessage message, float damageAmount)
     {
         monsterStatus.nowHp -= damageAmount;
+        monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
     }
 
     /// <summary>

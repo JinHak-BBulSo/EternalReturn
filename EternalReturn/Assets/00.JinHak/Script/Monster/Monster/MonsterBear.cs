@@ -30,7 +30,7 @@ public class MonsterBear : Monster
         {
             DamageMessage dm = new DamageMessage(this.gameObject, 100, 3, 1.5f);
             player.TakeDamage(dm);
-            player.Debuff(dm, 2, 1.5f);
+            player.Debuff(2, 1.5f);
         }
         skillRange.SetActive(false);
         StartCoroutine(SkillCoolTime(skillCoolTime));
