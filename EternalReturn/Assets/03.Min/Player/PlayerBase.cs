@@ -85,6 +85,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
         craftTool.transform.GetChild(0).GetComponent<CraftTool>().craftPlayer = this;
         stunFBX = transform.GetChild(2).gameObject;
 
+        worldCanvas = GameObject.Find("WorldCanvas");
         playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform);
         playerHpBar = playerStatusUi.transform.GetChild(1).GetComponent<Image>();
         playerMpBar = playerStatusUi.transform.GetChild(3).GetComponent<Image>();
@@ -95,6 +96,12 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     protected virtual void Update()
     {
+        if (playerStat.nowHp <= 0)
+        {
+            playerStat.nowHp = 0;
+            playerController.ChangeState(new PlayerDie());
+            return;
+        }
         ShowAttackRange();
         DisableAttackRange();
         RaycastHit mousePoint;
