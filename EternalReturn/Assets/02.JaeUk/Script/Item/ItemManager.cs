@@ -450,7 +450,6 @@ public class ItemManager : SingleTonBase<ItemManager>
         for (int i = 0; i < item.Count; i++)
         {
             itemKey = int.Parse(item[i].name.Split(".")[0]);
-            Debug.Log(itemKey);
             itemListObj.Add(itemKey, item[i]);
         }
 
@@ -624,5 +623,448 @@ public class ItemManager : SingleTonBase<ItemManager>
         equipmentTotalState = new ItemStat(attackPower, skillPower, basicAttackPower, defense, attackSpeed, coolDown, criticalPercent, criticalDamage, moveSpeed, visionRange, attackRange, damageReduce, tenacity, armorReduce,
         lifeSteel, extraHp, extraStamina, hpRegen, staminaRegen, weaponAttackSpeedPercent, weaponAttackRangePercent);
         Player.AddTotalStat();
+    }
+    public void InventoryChange()
+    {
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            AddAbleCombineList(inventory[i], itemCombineDictionary);
+
+        }
+        for (int i = 0; i < equipmentInven.Count; i++)
+        {
+            AddAbleCombineList(equipmentInven[i], itemCombineDictionary);
+
+
+        }
+        for (int i = 0; i < combineAbleList.Count; i++)
+        {
+            DeleteImpossibleCombine(combineAbleList[i], itemCombineDictionary);
+        }
+        ListSortRareAndUseable(combineAbleList);
+        isItemPick = true;
+
+    }
+    public void func(List<ItemStat> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            Debug.Log($"아이템 이름 : {list[i].name}, 아이템 개수 : {list[i].count},아이템 레어도 : {list[i].rare}");
+        }
+    }
+    public void func(List<ItemStat> list, int type = 0)
+    {
+        switch (type)
+        {
+            case 1:
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i].rare == 0)
+                    {
+                        Debug.Log($"아이템 이름 : {list[i].name}, 아이템 id : {list[i].id},아이템 타입: {list[i].type}");
+                    }
+                }
+
+                break;
+
+            default:
+                for (int i = 0; i < list.Count; i++)
+                {
+                    Debug.Log($"아이템 이름 : {list[i].name}, 아이템 개수 : {list[i].count},아이템 레어도 : {list[i].rare}");
+                }
+                break;
+        }
+
+    }
+
+    //CombinList의 우선 순위를 나타 내기 위한 솔팅 메서드
+    public void ListSortRareAndUseable(List<ItemStat> items_) // 콤바인 리스트
+    {
+        List<ItemStat> toSortWishList = new List<ItemStat>(); // 위시리스트가 아닌 템들을 저장하기 위한 리스트
+        List<ItemStat> toSortRareList = new List<ItemStat>();
+        List<ItemStat> toSortUncommonList = new List<ItemStat>();
+        ItemStat item1 = default;
+        // 위시리스트 아이템 리스트랑, 위시리스트가 아닌 아이템 리스트 구별
+
+
+
+        foreach (ItemStat item_ in items_.ToList())
+        {
+            if (item_.rare == 1)
+            {
+                item1 = item_;
+                items_.Remove(item_);
+                toSortUncommonList.Add(item1);
+
+            }
+            else if (item_.rare == 2)
+            {
+                item1 = item_;
+                items_.Remove(item_);
+                toSortRareList.Add(item1);
+            }
+        }
+
+        items_.AddRange(toSortRareList);
+        items_.AddRange(toSortUncommonList);
+
+
+        // 위시 리스트 나누기
+
+        foreach (ItemStat item_ in items_.ToList())
+        {
+            if (!item_.isItemWishList)
+            {
+                item1 = item_;
+                items_.Remove(item_);
+                toSortWishList.Add(item1);
+
+            }
+
+        }
+        items_.AddRange(toSortWishList);
+
+
+    }
+    //! 아이템 생성 및 획득 시 자신의 inferiorList에 있는 아이템을 삭제하는 메서드
+    public void DeleteInferiorList(ItemStat item)
+    {
+        int count = 0;
+
+        switch (item.rare)
+        {
+            case 0:
+                DeleteInferiorList(item.id);
+                break;
+            case 1:
+                for (int i = 0; i < ItemInferiorUncommon.Count; i++)
+                {
+                    ItemStat tier1 = ItemInferiorUncommon[i];
+                    if (tier1.id == item.id)
+                    {
+                        DeleteInferiorList(item.id);
+                    }
+                }
+                break;
+            case 2:
+                Debug.Log(item.name);
+                for (int i = 0; i < ItemInferiorRare.Count; i++)
+                {
+                    ItemStat tier2 = ItemInferiorRare[i];
+                    if (tier2.id == item.id)
+                    {
+                        Debug.Log("!!");
+                        DeleteInferiorList(item.id);
+                    }
+                }
+                break;
+            case 3:
+                for (int i = 0; i < itemWishList.Count; i++)
+                {
+                    ItemStat tier1 = itemWishList[i];
+                    if (tier1.id == item.id)
+                    {
+                        Debug.Log("!!");
+                        DeleteInferiorList(item.id);
+                    }
+                }
+                break;
+        }
+    }
+    //! 아이템 제작 시 아이템 생성 및 재료 아이템을 삭제하는 메서드 
+    public void CombineItem(ItemStat item, Dictionary<ItemDefine, int> dic)
+    {
+        int[] needItem = ADDCombineItemToInven(item.id);
+        bool idchk1 = false;
+        bool idchk2 = false;
+        List<int> itemSlot1 = new List<int>();
+        List<int> itemSlot2 = new List<int>();
+        for (int i = 0; i < equipmentInven.Count; i++)
+        {
+            if (equipmentInven[i].id == needItem[0])
+            {
+                itemSlot2.Add(i);
+                idchk1 = true;
+            }
+            else if (equipmentInven[i].id == needItem[1])
+            {
+                itemSlot2.Add(i);
+                idchk2 = true;
+            }
+        }
+
+
+        if (!idchk1 || !idchk2)
+        {
+
+            for (int i = 0; i < inventory.Count; i++)
+            {
+                if (inventory[i].id == needItem[0])
+                {
+                    itemSlot1.Add(i);
+                    idchk1 = true;
+                }
+                else if (inventory[i].id == needItem[1])
+                {
+                    itemSlot1.Add(i);
+                    idchk2 = true;
+                }
+            }
+
+        }
+        if (idchk1 && idchk2)
+        {
+            for (int i = itemSlot1.Count - 1; i >= 0; i--)
+            {
+
+                if (inventory[itemSlot1[i]].count < 2)
+                {
+                    inventory[itemSlot1[i]] = new ItemStat();
+                }
+                else
+                {
+                    inventory[itemSlot1[i]].count--;
+                }
+
+            }
+            for (int i = itemSlot2.Count - 1; i >= 0; i--)
+            {
+
+                if (equipmentInven[itemSlot2[i]].count < 2)
+                {
+                    equipmentInven[itemSlot2[i]] = new ItemStat();
+                }
+
+            }
+            if (EquipmentListIsBlank() != null)
+            {
+                bool chk = false;
+                foreach (int i in EquipmentListIsBlank())
+                {
+                    if (i == item.type)
+                    {
+                        EquipmentListSet(item);
+                        chk = true;
+                    }
+
+
+
+                }
+                if (inventory.Count < 10 && !chk)
+                {
+                    PickItem(item);
+                }
+                else if (!chk)
+                {
+                    DropItem(item, Player.gameObject, ItemCanvas);
+                }
+
+            }
+            else if (EquipmentListIsBlank() == null && inventory.Count < 10)
+            {
+                PickItem(item);
+            }
+            else
+            {
+                DropItem(item, Player.gameObject, ItemCanvas);
+            }
+
+
+
+        }
+
+
+
+    }
+    //! 아이템 생성 및 버리기를 통해 아이템 인벤토리가 변경될때, CombinList를 설정해주는 메서드
+    public void DeleteImpossibleCombine(ItemStat item, Dictionary<ItemDefine, int> dic)
+    {
+        ItemDefine itemDefine = new ItemDefine();
+        bool idchk1 = false;
+        bool idchk2 = false;
+        int id_1 = itemDefine.FineInferiorItemId(itemCombineDictionary, item.id).itemId_1;
+        int id_2 = itemDefine.FineInferiorItemId(itemCombineDictionary, item.id).itemId_2;
+        for (int i = 0; i < ItemManager.Instance.equipmentInven.Count; i++)
+        {
+            if (equipmentInven[i].id == id_1)
+            {
+
+                idchk1 = true;
+            }
+            else if (equipmentInven[i].id == id_2)
+            {
+
+                idchk2 = true;
+            }
+        }
+        if (!idchk1 || !idchk2)
+        {
+
+            for (int i = 0; i < inventory.Count; i++)
+            {
+                if (inventory[i].id == id_1)
+                {
+                    idchk1 = true;
+                }
+                else if (inventory[i].id == id_2)
+                {
+                    idchk2 = true;
+                }
+            }
+
+        }
+        if (!idchk1 || !idchk2)
+        {
+            combineAbleList.RemoveAt(combineAbleList.IndexOf(item));
+        }
+    }
+    // CombineList 에 있는 아이템이 내가 만들어야하는 아이템인지 구분 해주기 위한 메서드;
+    public bool isItemNeed(List<ItemStat> List1_, List<ItemStat> List2_, List<ItemStat> List3_, ItemStat item_)
+    {
+        for (int i = 0; i < List1_.Count; i++)
+        {
+            if (List1_[i].id == item_.id)
+            {
+                return true;
+            }
+        }
+        for (int i = 0; i < List2_.Count; i++)
+        {
+            if (List2_[i].id == item_.id)
+            {
+                return true;
+            }
+        }
+        for (int i = 0; i < List3_.Count; i++)
+        {
+            if (List3_[i].id == item_.id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    // CombineList에 생성할 수 있는 아이템을 추가 해 주는 메서드
+    public void AddAbleCombineList(ItemStat item, Dictionary<ItemDefine, int> dic)
+    {
+        bool isEquipment = false;
+        ItemStat cachingItem = default;
+        for (int i = 0; i < equipmentInven.Count; i++)
+        {
+
+            if (equipmentInven[i] != null && equipmentInven[i].id != 0)
+            {
+                Debug.Log(item.id);
+                ItemDefine define = new ItemDefine(item.id, equipmentInven[i].id);
+
+                if (define.itemId_2 >= define.itemId_1)
+                {
+
+                    if (define.IsitemCombineValue(dic))
+                    {
+                        if (define.GetitemCombineValue(dic) == null)
+                        {
+
+                        }
+                        else
+                        {
+                            cachingItem = itemList[dic[define.GetitemCombineValue(dic)] - 1];
+                            if (!combineAbleList.Contains(cachingItem))
+                            {
+                                cachingItem.isItemWishList = isItemNeed(itemWishList, ItemInferiorRare, ItemInferiorUncommon, cachingItem);
+                                combineAbleList.Add(cachingItem);
+                                // Debug.Log(cachingItem.isItemWishList);
+                                isEquipment = true;
+                            }
+                        }
+
+
+                    }
+                }
+
+                else
+                {
+                    (define.itemId_1, define.itemId_2) = (define.itemId_2, define.itemId_1);
+                    if (define.IsitemCombineValue(dic))
+                    {
+                        if (define.GetitemCombineValue(dic) == null)
+                        {
+
+                        }
+                        else
+                        {
+                            cachingItem = itemList[dic[define.GetitemCombineValue(dic)] - 1];
+                            if (!combineAbleList.Contains(cachingItem))
+                            {
+                                cachingItem.isItemWishList = isItemNeed(itemWishList, ItemInferiorRare, ItemInferiorUncommon, cachingItem);
+                                combineAbleList.Add(cachingItem);
+                                Debug.Log(cachingItem.isItemWishList);
+                                isEquipment = true;
+                            }
+
+                        }
+
+
+                    }
+                }
+            }
+        }
+        if (!isEquipment)
+        {
+            for (int i = 0; i < inventory.Count; i++)
+            {
+                ItemDefine define = new ItemDefine(item.id, inventory[i].id);
+
+                if (define.itemId_2 >= define.itemId_1)
+                {
+                    if (define.IsitemCombineValue(dic))
+                    {
+                        if (define.GetitemCombineValue(dic) == null)
+                        {
+
+                        }
+                        else
+                        {
+                            cachingItem = itemList[dic[define.GetitemCombineValue(dic)] - 1];
+                            if (!combineAbleList.Contains(cachingItem))
+                            {
+                                cachingItem.isItemWishList = isItemNeed(itemWishList, ItemInferiorRare, ItemInferiorUncommon, cachingItem);
+                                combineAbleList.Add(cachingItem);
+                                // Debug.Log(cachingItem.isItemWishList);
+                                isEquipment = true;
+                            }
+                        }
+
+
+                    }
+
+                }
+                else
+                {
+                    (define.itemId_1, define.itemId_2) = (define.itemId_2, define.itemId_1);
+                    if (define.IsitemCombineValue(dic))
+                    {
+                        if (define.GetitemCombineValue(dic) == null)
+                        {
+
+                        }
+                        else
+                        {
+                            cachingItem = itemList[dic[define.GetitemCombineValue(dic)] - 1];
+                            if (!combineAbleList.Contains(cachingItem))
+                            {
+                                cachingItem.isItemWishList = isItemNeed(itemWishList, ItemInferiorRare, ItemInferiorUncommon, cachingItem);
+                                combineAbleList.Add(cachingItem);
+                                Debug.Log(cachingItem.isItemWishList);
+                                isEquipment = true;
+                            }
+
+                        }
+
+
+                    }
+                }
+            }
+        }
     }
 }

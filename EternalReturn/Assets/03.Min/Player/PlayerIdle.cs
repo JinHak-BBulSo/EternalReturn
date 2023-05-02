@@ -29,6 +29,11 @@ public class PlayerIdle : IPlayerState
             playerController.ChangeState(new PlayerAttackMove());
         }
 
+        if (Input.GetKeyDown(KeyCode.Z) && ItemManager.Instance.combineAbleList.Count > 0)
+        {
+            playerController.ChangeState(new PlayerCraft());
+        }
+
         playerController.ShowAllRange();
         playerController.SkillUse();
 
