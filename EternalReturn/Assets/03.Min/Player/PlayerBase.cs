@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
-
-public class PlayerBase : MonoBehaviour, IHitHandler
+using Photon.Realtime;
+using Photon.Pun;
+public class PlayerBase : MonoBehaviourPun, IHitHandler
 {
     protected PlayerController playerController = default;
     protected Vector3 destination = default;
@@ -68,11 +69,9 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     protected virtual void Start()
     {
         transform.SetParent(PlayerManager.Instance.canvas.transform, false);
-        ItemManager.Instance.Player = this;
         playerController = GetComponent<PlayerController>();
         playerAni = GetComponent<Animator>();
         playerNav = GetComponent<NavMeshAgent>();
-        Camera.main.transform.parent.GetComponent<MoveCamera>().player = this;
         attackRangeRender[0] = attackRange.GetComponent<SpriteRenderer>();
         attackRangeRender[1] = attackRange.transform.GetChild(0).GetComponent<SpriteRenderer>();
         InitStat();
@@ -98,103 +97,108 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     protected virtual void Update()
     {
-        if (playerStat.nowHp <= 0)
-        {
-            playerStat.nowHp = 0;
-            playerController.ChangeState(new PlayerDie());
-            return;
-        }
-        ShowAttackRange();
-        DisableAttackRange();
-        RaycastHit mousePoint;
-        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mousePoint);
-        nowMousePoint = mousePoint.point;
-
-        if (isMoveAble && Input.GetMouseButtonDown(1) || (isAttackMove && Input.GetMouseButtonDown(0)))
+        if (photonView.IsMine)
         {
 
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+
+            if (playerStat.nowHp <= 0)
             {
-                NavMeshHit navHit;
-                //[KJH] Add. 마우스 클릭 타겟 기록
-                clickTarget = hit.collider.gameObject;
-
-                if (clickTarget.GetComponent<Outline>() != null && clickTarget.GetComponent<Outline>().monster != null)
-                {
-                    Monster monster = clickTarget.GetComponent<Outline>().monster;
-                    if (!monster.isDie)
-                    {
-                        enemy = monster.gameObject;
-                        isAttackMove = true;
-                        playerController.ChangeState(new PlayerAttackMove());
-                    }
-                }
-                //[KJH] Add. 클릭 타겟 Outline 표시
-                //외곽선 초기화
-                if (outline != default)
-                {
-                    outline.enabled = false;
-                    outline.isClick = false;
-                    outline = default;
-                }
-                if (clickTarget.GetComponent<Outline>() != null)
-                {
-                    outline = clickTarget.GetComponent<Outline>();
-                    outline.isClick = true;
-                    outline.enabled = true;
-                }
-
-                if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
-                {
-                    // destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);
-                    //SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
-                    //[KJH] ADD. destionation yPos 변경
-                    SetDestination(new Vector3(navHit.position.x, navHit.position.y, navHit.position.z));
-
-                    path = new NavMeshPath();
-                    playerNav.CalculatePath(destination, path);
-                    corners.Clear();
-                    for (int i = 0; i < path.corners.Length; i++)
-                    {
-                        corners.Add(path.corners[i]);
-                    }
-                    currentCorner = 0;
-                }
-                //SetDestination(hit.point);
+                playerStat.nowHp = 0;
+                playerController.ChangeState(new PlayerDie());
+                return;
             }
+            ShowAttackRange();
+            DisableAttackRange();
+            RaycastHit mousePoint;
+            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mousePoint);
+            nowMousePoint = mousePoint.point;
 
-            // MiniMap Click Player Move
-            if (Physics.Raycast(miniMapCamera.ScreenPointToRay(Input.mousePosition), out hit))
+            if (isMoveAble && Input.GetMouseButtonDown(1) || (isAttackMove && Input.GetMouseButtonDown(0)))
             {
-                Vector3 clickPos = Input.mousePosition;
-                if (clickPos.x < 625 || clickPos.x > 735 ||
-                    clickPos.y < 10 || clickPos.y > 110)
-                {
-                    return;
-                }
-                //if(clickPos.x < 625 || clickPos.x > 735)
-                //630, 10 ~ 110 734.5
 
-                NavMeshHit navHit;
-                if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
                 {
-                    // destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);
-                    //SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
-                    //[KJH] ADD. destionation yPos 변경
-                    SetDestination(new Vector3(navHit.position.x, navHit.position.y, navHit.position.z));
+                    NavMeshHit navHit;
+                    //[KJH] Add. 마우스 클릭 타겟 기록
+                    clickTarget = hit.collider.gameObject;
 
-                    path = new NavMeshPath();
-                    playerNav.CalculatePath(destination, path);
-                    corners.Clear();
-                    for (int i = 0; i < path.corners.Length; i++)
+                    if (clickTarget.GetComponent<Outline>() != null && clickTarget.GetComponent<Outline>().monster != null)
                     {
-                        corners.Add(path.corners[i]);
+                        Monster monster = clickTarget.GetComponent<Outline>().monster;
+                        if (!monster.isDie)
+                        {
+                            enemy = monster.gameObject;
+                            isAttackMove = true;
+                            playerController.ChangeState(new PlayerAttackMove());
+                        }
                     }
-                    currentCorner = 0;
-                }
-            }
+                    //[KJH] Add. 클릭 타겟 Outline 표시
+                    //외곽선 초기화
+                    if (outline != default)
+                    {
+                        outline.enabled = false;
+                        outline.isClick = false;
+                        outline = default;
+                    }
+                    if (clickTarget.GetComponent<Outline>() != null)
+                    {
+                        outline = clickTarget.GetComponent<Outline>();
+                        outline.isClick = true;
+                        outline.enabled = true;
+                    }
 
+                    if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
+                    {
+                        // destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);
+                        //SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
+                        //[KJH] ADD. destionation yPos 변경
+                        SetDestination(new Vector3(navHit.position.x, navHit.position.y, navHit.position.z));
+
+                        path = new NavMeshPath();
+                        playerNav.CalculatePath(destination, path);
+                        corners.Clear();
+                        for (int i = 0; i < path.corners.Length; i++)
+                        {
+                            corners.Add(path.corners[i]);
+                        }
+                        currentCorner = 0;
+                    }
+                    //SetDestination(hit.point);
+                }
+
+                // MiniMap Click Player Move
+                if (Physics.Raycast(miniMapCamera.ScreenPointToRay(Input.mousePosition), out hit))
+                {
+                    Vector3 clickPos = Input.mousePosition;
+                    if (clickPos.x < 625 || clickPos.x > 735 ||
+                        clickPos.y < 10 || clickPos.y > 110)
+                    {
+                        return;
+                    }
+                    //if(clickPos.x < 625 || clickPos.x > 735)
+                    //630, 10 ~ 110 734.5
+
+                    NavMeshHit navHit;
+                    if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
+                    {
+                        // destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);
+                        //SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
+                        //[KJH] ADD. destionation yPos 변경
+                        SetDestination(new Vector3(navHit.position.x, navHit.position.y, navHit.position.z));
+
+                        path = new NavMeshPath();
+                        playerNav.CalculatePath(destination, path);
+                        corners.Clear();
+                        for (int i = 0; i < path.corners.Length; i++)
+                        {
+                            corners.Add(path.corners[i]);
+                        }
+                        currentCorner = 0;
+                    }
+                }
+
+            }
         }
     }
 
@@ -298,6 +302,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     public virtual void Attack()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         playerAni.SetFloat("MotionSpeed", playerTotalStat.attackSpeed);
         transform.LookAt(enemy.transform);
         switch (attackType)
@@ -313,6 +321,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 playerController.ChangeState(new PlayerIdle());
                 break;
         }
+
     }
 
     public virtual void ExtraAni()
@@ -320,21 +329,37 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     }
     private void MotionStart()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         playerAni.SetBool("skillStart", true);
     }
 
     public virtual void MotionEnd()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         playerController.ResetAni();
         playerController.ResetRange();
     }
 
     private void SkillEnd()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         playerController.ChangeState(new PlayerIdle());
     }
     protected virtual void AttackEnd()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         isAttackAble = false;
         AnimatorStateInfo currentAnimationState = playerAni.GetCurrentAnimatorStateInfo(0);
         float delay_ = currentAnimationState.length - currentAnimationState.length * currentAnimationState.normalizedTime;
@@ -354,11 +379,16 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     private void AttackAniEnd()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         playerAni.SetBool("isAttack", false);
     }
 
     IEnumerator MotionDelay(float delay_)
     {
+
         // 공격불가 시간
         // Debug.Log(delay_);
         yield return new WaitForSeconds(delay_);
@@ -367,6 +397,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     protected virtual void ShowAttackRange()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.A))
         {
             attackRangeRender[0].color = new Color(attackRangeRender[0].color.r, attackRangeRender[0].color.g, attackRangeRender[0].color.b, 0.5f);
@@ -379,6 +413,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     protected virtual void DisableAttackRange()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         if (isAttackRangeShow)
         {
 
@@ -400,6 +438,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     public void MoveCheck()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         if (playerNav.enabled)
         {
             if (playerNav.remainingDistance <= playerNav.stoppingDistance)
@@ -416,6 +458,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     public void Move()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         if (isMove)
         {
             if (corners.Count > 0 && currentCorner < corners.Count)
@@ -449,6 +495,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     protected void SetDestination(Vector3 dest_)
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         destination = dest_;
         isMove = true;
     }
@@ -458,20 +508,61 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     public void Rest()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         playerStat.nowHp += playerStat.maxHp * 0.1f;
     }
 
-    public virtual void Skill_Q() { }
+    public virtual void Skill_Q()
+    {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+    }
 
-    public virtual void Skill_W() { }
 
-    public virtual void Skill_E() { }
+    public virtual void Skill_W()
+    {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+    }
 
-    public virtual void Skill_R() { }
+    public virtual void Skill_E()
+    {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+    }
 
-    public virtual void Skill_D() { }
+    public virtual void Skill_R()
+    {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+    }
 
-    public virtual void Skill_T() { }
+    public virtual void Skill_D()
+    {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+    }
+
+    public virtual void Skill_T()
+    {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+    }
     /// <summary>
     /// 기본 공격 공식
     /// 공격력 * 기본공격증폭 = message.damageAmount
@@ -664,5 +755,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     {
         yield return new WaitForSeconds(debuffContinousTime_);
         debuffDamage[debuffIndex_] -= debuffDamage_;
+    }
+    [PunRPC]
+    public void SetAnimationBool(string name, bool flag)
+    {
+        playerAni.SetBool(name, flag);
     }
 }

@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Photon.Realtime;
+using Photon.Pun;
 public class Jackie : PlayerBase
 {
     public int weaponStack = 0;
@@ -196,16 +197,22 @@ public class Jackie : PlayerBase
         }
         enemy = null;
     }
+
     public override void Skill_Q()
     {
         base.Skill_Q();
         transform.LookAt(nowMousePoint);
         skillQ.SetActive(true);
+        photonView.RPC("ShowRangeJackieQ", RpcTarget.All, true);
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 0);
         StartCoroutine(SkillCooltime(0, 9f));
     }
-
+    [PunRPC]
+    public void ShowRangeJackieQ(bool flag)
+    {
+        skillQ.SetActive(flag);
+    }
 
     public override void Skill_W()
     {
@@ -267,6 +274,7 @@ public class Jackie : PlayerBase
     {
         base.ExtraRange();
         skillQ.SetActive(false);
+        photonView.RPC("ShowRangeJackieQ", RpcTarget.All, false);
         skillE.SetActive(false);
     }
     IEnumerator JackieJump()
