@@ -98,6 +98,12 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     protected virtual void Update()
     {
+        if (playerStat.nowHp <= 0)
+        {
+            playerStat.nowHp = 0;
+            playerController.ChangeState(new PlayerDie());
+            return;
+        }
         ShowAttackRange();
         DisableAttackRange();
         RaycastHit mousePoint;

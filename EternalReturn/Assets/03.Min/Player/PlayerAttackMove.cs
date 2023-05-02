@@ -39,7 +39,7 @@ public class PlayerAttackMove : IPlayerState
 
     public void StateUpdate()
     {
-        Collider[] enemys = Physics.OverlapSphere(playerController.transform.position, playerController.player.playerStat.attackRange);
+        Collider[] enemys = Physics.OverlapSphere(playerController.transform.position, playerController.player.playerTotalStat.attackRange);
 
         for (int i = 0; i < enemys.Length; i++)
         {

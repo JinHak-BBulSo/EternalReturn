@@ -335,7 +335,7 @@ public class Jackie : PlayerBase
             {
                 enemyHunt.Add(hit.transform.gameObject.GetComponent<Monster>());
             }
-            else if (hit.transform.gameObject.GetComponent<PlayerBase>() != null)
+            else if (hit.transform.gameObject.GetComponent<PlayerBase>() != null && hit.transform.gameObject != this.gameObject)
             {
                 enemyPlayer.Add(hit.transform.gameObject.GetComponent<PlayerBase>());
             }

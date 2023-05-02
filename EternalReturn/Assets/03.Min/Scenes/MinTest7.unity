@@ -10819,6 +10819,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Aya_S002
       objectReference: {fileID: 0}
+    - target: {fileID: 2465337935834244234, guid: 69a47678d53162343bea5d327a5404c0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2989672613695045168, guid: 69a47678d53162343bea5d327a5404c0,
         type: 3}
       propertyPath: m_RootOrder
@@ -16966,6 +16971,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2169151231393109129, guid: 6dd299709838dc44c893a92467caddd6,
+        type: 3}
+      propertyPath: playerStatusUiPrefab
+      value: 
+      objectReference: {fileID: 1394638143415854229, guid: 3c2d08be8010d1f469978c5b57441b8b,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6dd299709838dc44c893a92467caddd6, type: 3}
 --- !u!1 &1151239507
