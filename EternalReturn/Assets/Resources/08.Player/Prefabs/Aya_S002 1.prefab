@@ -2027,6 +2027,7 @@ MonoBehaviour:
     type: 3}
   itemBoxSlotList: {fileID: 0}
   playerAudioClip: []
+  item: 000000000000000000000000000000000000000000000000
   mainUi: {fileID: 0}
   playerStatusUiPrefab: {fileID: 1394638143415854229, guid: 3c2d08be8010d1f469978c5b57441b8b,
     type: 3}
