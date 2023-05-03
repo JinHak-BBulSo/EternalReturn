@@ -20,6 +20,9 @@ public class SkillInfo
 
     public void AddLevel()
     {
+        if (CurrentLevel >= MaxLevel)
+            return;
+
         ++CurrentLevel;
     }
 }
