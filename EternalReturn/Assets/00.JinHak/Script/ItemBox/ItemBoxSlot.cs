@@ -48,11 +48,17 @@ public class ItemBoxSlot : MonoBehaviourPun
     public void ItemRemove(int itemBoxIndex_, int itemIndex_)
     {
         int index = 0;
+        PlayerBase player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
         foreach (var item in allItemBox.allItemBoxes[itemBoxIndex_].boxItems)
         {
             if (item.id == itemIndex_)
             {
                 allItemBox.allItemBoxes[itemBoxIndex_].boxItems.RemoveAt(index);
+                if(slotList.nowOpenItemBox.itemBoxIndex == itemBoxIndex_ && player.itemBoxUi.activeSelf)
+                {
+                    slotList.nowOpenItemBox.ResetSlot();
+                    slotList.nowOpenItemBox.SetSlot();
+                }
                 return;
             }
             else
