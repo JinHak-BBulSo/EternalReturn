@@ -70,10 +70,13 @@ public class ItemDistributer : MonoBehaviourPun
 
             if (PhotonNetwork.IsMasterClient)
             {
+                int index = 0;
                 foreach (var i in indexArray)
                 {
+                    if (index >= r) break;
                     int itemIndex = itemList[i].GetComponent<ItemController>().item.id;
                     photonView.RPC("BoxSet", RpcTarget.All, itemBox.itemBoxIndex, itemIndex);
+                    index++;
                 }
             }
         }
