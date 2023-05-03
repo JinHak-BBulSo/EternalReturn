@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Linq;
 
 public class ItemDistributer : MonoBehaviourPun
 {
@@ -42,7 +43,7 @@ public class ItemDistributer : MonoBehaviourPun
     [PunRPC]
     private void ItemIndexSet(int[] array_)
     {
-        indexArray = array_;
+        indexArray = array_.ToArray();
     }
     
     public void ItemSetStart()
