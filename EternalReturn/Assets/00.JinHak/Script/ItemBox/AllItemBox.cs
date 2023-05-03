@@ -8,6 +8,7 @@ public class AllItemBox : MonoBehaviour
 {
     public List<ItemBox> allItemBoxes = new List<ItemBox>();
     public List<ItemDistributer> allDistributers = new List<ItemDistributer>();
+    private bool isGameStart = false;
 
     private void Start()
     {
@@ -18,18 +19,28 @@ public class AllItemBox : MonoBehaviour
             index++;
         }
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            StartCoroutine(Delay());
-        }
+        
     }
 
-    IEnumerator Delay()
+    private void Update()
     {
-        yield return new WaitForSeconds(4f);
+        if (PlayerManager.Instance.IsGameStart && !isGameStart)
+        {
+            isGameStart = true;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                Delay();
+            }
+        }
+        
+    }
+
+    private void Delay()
+    {
         foreach (var distributer in allDistributers)
         {
             distributer.ItemSet();
         }
+        this.enabled = false;
     }
 }
