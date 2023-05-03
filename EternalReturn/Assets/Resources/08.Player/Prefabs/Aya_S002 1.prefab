@@ -2029,6 +2029,7 @@ MonoBehaviour:
   itemBoxUi: {fileID: 7458879648041901250, guid: 935c3719471578743bca9af8a24ceb1b,
     type: 3}
   itemBoxSlotList: {fileID: 0}
+<<<<<<< HEAD
   audioClips:
   - {fileID: 8300000, guid: e0362129de39af44d830da8bf87f7285, type: 3}
   - {fileID: 8300000, guid: 25db8bbe9fe3ddd42bd920f2ac1a4358, type: 3}
@@ -2114,6 +2115,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0d76c7c85edbfd94e9621772b68df736, type: 3}
   - {fileID: 8300000, guid: 5e3dd882460bd364b99764818331a881, type: 3}
   - {fileID: 8300000, guid: 36bc23861e0fe0e46829151f400d1fb0, type: 3}
+=======
+  playerAudioClip: []
+  item: 000000000000000000000000000000000000000000000000
+>>>>>>> c28cdbfbf3ebcf7675e71e3f277f499b25407379
   mainUi: {fileID: 0}
   playerStatusUiPrefab: {fileID: 1394638143415854229, guid: 3c2d08be8010d1f469978c5b57441b8b,
     type: 3}
