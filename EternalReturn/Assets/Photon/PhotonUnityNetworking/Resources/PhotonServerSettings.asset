@@ -61,6 +61,8 @@ MonoBehaviour:
   - CallShot
   - ItemIndexSet
   - BoxSet
+  - ShowRangeAyaR
+  - ShowRangeJackieE
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

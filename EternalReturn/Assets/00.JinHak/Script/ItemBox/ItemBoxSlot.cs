@@ -45,8 +45,20 @@ public class ItemBoxSlot : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void ItemRemove(int itemBoxIndex_, int index_)
+    public void ItemRemove(int itemBoxIndex_, int itemIndex_)
     {
-        allItemBox.allItemBoxes[itemBoxIndex_].boxItems.Remove(slotItem);
+        int index = 0;
+        foreach (var item in allItemBox.allItemBoxes[itemBoxIndex_].boxItems)
+        {
+            if (item.id == itemIndex_)
+            {
+                allItemBox.allItemBoxes[itemBoxIndex_].boxItems.RemoveAt(index);
+                return;
+            }
+            else
+            {
+                index++;
+            }
+        }
     }
 }

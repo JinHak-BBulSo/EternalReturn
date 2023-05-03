@@ -51,7 +51,6 @@ public class ItemBox : MonoBehaviour
 
     public void AddItem(int itemIndex_)
     {
-        Debug.Log(itemIndex_);
         ItemStat item_ = new ItemStat(ItemManager.Instance.itemList[itemIndex_ - 1]);
         boxItems.Add(item_);
     }
