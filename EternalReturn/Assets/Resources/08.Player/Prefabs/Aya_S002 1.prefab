@@ -2119,6 +2119,8 @@ MonoBehaviour:
     type: 3}
   playerStatusUi: {fileID: 0}
   worldCanvas: {fileID: 0}
+  skillSystem: {fileID: 0}
+  weaponType: 0
   isWon: 0
   RRange: {fileID: 3384395866084856133}
   Bullet: {fileID: 2593041214829080384, guid: 399eb737b5937ee498277e6cea842a06, type: 3}
