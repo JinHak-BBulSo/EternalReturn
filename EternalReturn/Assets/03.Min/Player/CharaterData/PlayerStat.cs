@@ -16,6 +16,17 @@ public class PlayerStat : Stat
     public PlayerExp moveExp = new PlayerExp(300f, 20f);
     public PlayerExp healthExp = new PlayerExp(180f, 110f);
     public PlayerExp defExp = new PlayerExp(230f, 270);
+
+    public enum PlayerExpType
+    {
+        None = -1,
+        WEAPON,
+        CRAFT,
+        SEARCH,
+        MOVE,
+        HEALTH,
+        DEF
+    }
 }
 
 public class PlayerExp

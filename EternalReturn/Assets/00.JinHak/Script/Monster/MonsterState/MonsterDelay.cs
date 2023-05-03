@@ -28,7 +28,9 @@ public class MonsterDelay : IMonsterState
     }
     IEnumerator Delay()
     {
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(1.1f);
+        monsterController.monsterAni.SetBool("isAttack", false);
+        monsterController.monsterAni.SetBool("isSkill", false);
         monsterController.actionDelay = false;
     }
 }

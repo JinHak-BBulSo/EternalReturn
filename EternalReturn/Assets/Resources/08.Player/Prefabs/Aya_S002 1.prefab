@@ -2116,9 +2116,6 @@ MonoBehaviour:
   playerStatusUiPrefab: {fileID: 1394638143415854229, guid: 3c2d08be8010d1f469978c5b57441b8b,
     type: 3}
   playerStatusUi: {fileID: 0}
-  playerHpBar: {fileID: 0}
-  playerMpBar: {fileID: 0}
-  playerLevelTxt: {fileID: 0}
   worldCanvas: {fileID: 0}
   isWon: 0
   RRange: {fileID: 3384395866084856133}

@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using Photon.Pun;
 using Photon.Realtime;
+using Photon.Pun;
 
 public class Aya : PlayerBase
 {
@@ -205,12 +205,24 @@ public class Aya : PlayerBase
         bullet.transform.position = weapon.transform.position;
         bullet.damage = 30 + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.25f);
         bullet.shootPlayer = this;
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("CallShot", RpcTarget.MasterClient);
+        }
+        else
+        {
+            photonView.RPC("CallShot", RpcTarget.Others);
+        }
     }
     [PunRPC]
-    private void Shotas()
+    private void CallShot()
     {
-        ShotOther();
+        AyaBullet bullet = Instantiate(Bullet).GetComponent<AyaBullet>();
+        bullet.transform.position = weapon.transform.position;
+        bullet.damage = 30 + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.25f);
+        bullet.shootPlayer = this;
     }
+
     IEnumerator WSkill()
     {
         float time = 0f;

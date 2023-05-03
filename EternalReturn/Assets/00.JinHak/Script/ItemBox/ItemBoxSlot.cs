@@ -26,8 +26,8 @@ public class ItemBoxSlot : MonoBehaviourPun
 
         if (!ItemManager.Instance.isInventoryFull)
         {
-            //photonView.RPC("ItemRemove", RpcTarget.All);
-            ItemRemove();
+            photonView.RPC("ItemRemove", RpcTarget.All);
+            //ItemRemove();
         }
         else
         {
