@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class ItemDistributer : MonoBehaviour
+public class ItemDistributer : MonoBehaviourPun
 {
     public List<GameObject> itemList = new List<GameObject>();
     public List<int> itemCountList = new List<int>();
@@ -14,6 +16,7 @@ public class ItemDistributer : MonoBehaviour
     {
         areaItemBoxes = GetComponentsInChildren<ItemBox>();
         ItemSet();
+        //photonView.RPC("ItemSet", RpcTarget.All);
     }
 
     private void Shuffle(int[] array)
@@ -36,6 +39,7 @@ public class ItemDistributer : MonoBehaviour
         }
     }
 
+    [PunRPC]
     private void ItemSet()
     {
         foreach(var itemBox in areaItemBoxes)
@@ -61,7 +65,7 @@ public class ItemDistributer : MonoBehaviour
                 Shuffle(indexArray);
             }
 
-            int r = Random.Range(4, 6 + 1);
+            int r = Random.Range(2, 6 + 1);
             for (int i = 0; i < r; i++)
             {
                 if (i >= itemList.Count) break;

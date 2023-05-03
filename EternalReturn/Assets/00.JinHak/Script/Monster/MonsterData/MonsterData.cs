@@ -23,4 +23,11 @@ public class MonsterData : ScriptableObject
     [SerializeField]
     private float attackRange;
     public float AttackRange { get {  return attackRange; } }
+    [SerializeField]
+    private int monsterLevel;
+    public int MonsterLevel { get {  return monsterLevel; } }
+    [SerializeField]
+    private int monsterMaxLevel;
+    public int MonsterMaxLevel { get { return monsterMaxLevel; } }
+    
 }

@@ -18,8 +18,6 @@ public class DamageMessage
 public interface IHitHandler
 {
     public void TakeDamage(DamageMessage message);
-    public void TakeDamage(DamageMessage message, float damageAmount);
     public void TakeSolidDamage(DamageMessage message);
-    public void TakeSolidDamage(DamageMessage message, float damageAmount);
     IEnumerator ContinousDamage(DamageMessage message, int debuffIndex_, float continousTime_, float tickTime_);
 }
