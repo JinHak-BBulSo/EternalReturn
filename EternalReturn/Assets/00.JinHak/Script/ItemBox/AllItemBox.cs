@@ -11,12 +11,21 @@ public class AllItemBox : MonoBehaviour
     private void Start()
     {
         int index = 0;
-        foreach(var itemBox in allItemBoxes)
+        foreach (var itemBox in allItemBoxes)
         {
             itemBox.itemBoxIndex = index;
             index++;
         }
 
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(Delay());
+        }
+    }
+
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(4f);
         foreach (var distributer in allDistributers)
         {
             if (PhotonNetwork.IsMasterClient)
