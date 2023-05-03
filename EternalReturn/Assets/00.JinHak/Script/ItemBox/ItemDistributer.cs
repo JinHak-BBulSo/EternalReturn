@@ -7,6 +7,7 @@ using System.Linq;
 
 public class ItemDistributer : MonoBehaviourPun
 {
+    private AllItemBox allItemBox = default;
     public List<GameObject> itemList = new List<GameObject>();
     public List<int> itemCountList = new List<int>();
 
@@ -15,13 +16,6 @@ public class ItemDistributer : MonoBehaviourPun
 
     private ItemBox[] areaItemBoxes;
     
-    void Start()
-    {
-        areaItemBoxes = GetComponentsInChildren<ItemBox>();
-
-        ItemSetStart();
-    }
-
     private void Shuffle(int[] array)
     {
         int n = array.Length;
@@ -41,22 +35,13 @@ public class ItemDistributer : MonoBehaviourPun
             array[idxB] = temp;
         }
     }
+   
+    public void ItemSet()
+    {
+        allItemBox = transform.parent.GetComponent<AllItemBox>();
+        areaItemBoxes = GetComponentsInChildren<ItemBox>();
 
-    [PunRPC]
-    private void ItemIndexSet(int[] array_, int r_)
-    {
-        indexArray = array_.ToArray();
-        r = r_;
-    }
-    
-    public void ItemSetStart()
-    {
-        StartCoroutine(ItemSet());
-    }
-
-    IEnumerator ItemSet()
-    {
-        foreach(var itemBox in areaItemBoxes)
+        foreach (var itemBox in areaItemBoxes)
         {
             //indexArray = new int[itemList.Count];
 
@@ -81,44 +66,22 @@ public class ItemDistributer : MonoBehaviourPun
                 {
                     Shuffle(indexArray);
                 }
-
-                photonView.RPC("ItemIndexSet", RpcTarget.Others, indexArray, r);
             }
 
             if (PhotonNetwork.IsMasterClient)
             {
-                BoxSet(itemBox, r);
-                yield return new WaitForSeconds(0.15f);
-            }
-            else
-            {
-                while (true)
+                foreach (var i in indexArray)
                 {
-                    if (indexArray != default)
-                    {
-                        BoxSet(itemBox, r);
-                        break;
-                    }
-                    else
-                    {
-                        yield return null;
-                    }
+                    int index = itemList[i].GetComponent<ItemController>().item.id;
+                    photonView.RPC("BoxSet", RpcTarget.All, itemBox.itemBoxIndex, index);
                 }
             }
         }
     }
 
-    private void BoxSet(ItemBox itemBox_, int r_)
+    [PunRPC]
+    private void BoxSet(int itemBoxIndex_, int index_)
     {
-        for (int i = 0; i < r_; i++)
-        {
-            if (i >= itemList.Count) break;
-
-            itemBox_.itemPrefabs.Add(itemList[indexArray[i]]);
-            itemCountList[indexArray[i]]--;
-        }
-        Debug.Log("BoxSet");
-        itemBox_.SetItems();
-        indexArray = default;
+        allItemBox.allItemBoxes[itemBoxIndex_].AddItem(index_);
     }
 }
