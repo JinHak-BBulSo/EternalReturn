@@ -10,6 +10,7 @@ public class ItemBoxSlot : MonoBehaviourPun
     public ItemStat slotItem = new ItemStat();
     public ItemStat cloneItem = new ItemStat();
     public GameObject fullInvenTxt = default;
+    public AllItemBox allItemBox = default;
 
     public void OnClick()
     {
@@ -26,7 +27,15 @@ public class ItemBoxSlot : MonoBehaviourPun
 
         if (!ItemManager.Instance.isInventoryFull)
         {
-            photonView.RPC("ItemRemove", RpcTarget.All);
+            slotItem.count--;
+
+            if (slotItem.count == 0)
+            {
+                photonView.RPC("ItemRemove", RpcTarget.All, slotList.nowOpenItemBox.itemBoxIndex, slotItem.id);
+                slotList.nowOpenItemBox.ResetSlot();
+                slotList.nowOpenItemBox.SetSlot();
+                //ItemRemove();
+            }
             //ItemRemove();
         }
         else
@@ -36,15 +45,8 @@ public class ItemBoxSlot : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void ItemRemove()
+    public void ItemRemove(int itemBoxIndex_, int index_)
     {
-        slotItem.count--;
-
-        if (slotItem.count == 0)
-        {
-            slotList.nowOpenItemBox.boxItems.Remove(slotItem);
-            slotList.nowOpenItemBox.ResetSlot();
-            slotList.nowOpenItemBox.SetSlot();
-        }
+        allItemBox.allItemBoxes[itemBoxIndex_].boxItems.Remove(slotItem);
     }
 }
