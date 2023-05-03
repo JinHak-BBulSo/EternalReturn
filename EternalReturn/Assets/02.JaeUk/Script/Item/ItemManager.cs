@@ -29,6 +29,8 @@ public class ItemManager : SingleTonBase<ItemManager>
     {
         AddPrefabs();
         base.Awake();
+        Debug.Log(itemListObj[1]);
+        Debug.Log(itemListObj[2]);
 
     }
     public void SetDefault()
@@ -471,7 +473,7 @@ public class ItemManager : SingleTonBase<ItemManager>
     {
         GameObject itemObj = Instantiate(itemListObj[item.id]);
         itemObj.transform.SetParent(canvas.transform, false);
-        itemObj.transform.position = player.transform.position;
+        itemObj.transform.position = new Vector3(player.transform.position.x, 1, player.transform.position.z);
 
     }
     public List<int> EquipmentListIsBlank()
