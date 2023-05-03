@@ -11,7 +11,7 @@ public class PlayerStatusUI : MonoBehaviour
     public Image playerMpBar = default;
     public Image playerExpBar = default;
     public Text playerLevelTxt = default;
-    private PlayerBase player = default;
+    public PlayerBase player = default;
     private Vector3 offset = new Vector3(0, 2.5f, 0);
 
     private void Start()
@@ -29,10 +29,6 @@ public class PlayerStatusUI : MonoBehaviour
 
     private void Update()
     {
-        if(player != default)
-        {
-            player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
-        }
         transform.position = player.transform.position + offset;
     }
 }

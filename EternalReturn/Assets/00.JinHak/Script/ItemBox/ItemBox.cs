@@ -7,12 +7,13 @@ using UnityEngine.UI;
 public class ItemBox : MonoBehaviour
 {
     private Outline outline = default;
+    public int itemBoxIndex = -1;
 
     public List<GameObject> itemPrefabs = new List<GameObject>();
     public List<ItemStat> boxItems = new List<ItemStat>();
 
     public List<PlayerBase> contactedPlayer = new List<PlayerBase>();
-    private ItemBoxSlotList slotList = default;
+    public ItemBoxSlotList slotList = default;
 
     public AudioSource itemBoxAudio = default;
 
@@ -48,6 +49,12 @@ public class ItemBox : MonoBehaviour
         boxItems.Add(item_);
     }
 
+    public void AddItem(int itemIndex_)
+    {
+        ItemStat item_ = new ItemStat(ItemManager.Instance.itemList[itemIndex_ - 1]);
+        boxItems.Add(item_);
+    }
+
     public void SetSlot()
     {
         int slotIndex_ = 0;
@@ -57,6 +64,7 @@ public class ItemBox : MonoBehaviour
 
         foreach (var item in boxItems)
         {
+            Debug.Log(slotIndex_);
             slotItemImage = slotList.boxSlotList[slotIndex_].transform.GetChild(0).GetComponent<Image>();
             slotItemCountTxt = slotList.boxSlotList[slotIndex_].transform.GetChild(1).GetComponent<Text>();
 
@@ -90,7 +98,7 @@ public class ItemBox : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player" && PlayerManager.Instance.Player == other.gameObject)
         {

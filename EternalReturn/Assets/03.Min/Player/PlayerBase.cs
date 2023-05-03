@@ -31,7 +31,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public PlayerStat playerStat = default;
     public PlayerStat extraStat = default;
     public PlayerStat playerTotalStat = default;
-
     [HideInInspector]
     public Animator playerAni = default;
     [HideInInspector]
@@ -56,16 +55,20 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public GameObject itemBoxUi = default;
     public ItemBoxSlotList itemBoxSlotList = default;
     private bool isMoveAble = true;
-    public AudioClip[] playerAudioClip = default;
-
+    public AudioClip[] audioClips = default;
+    protected AudioSource playerAudio = default;
     //[KJH] Add. PlayerStatusUi
     public GameObject mainUi = default;
     public GameObject playerStatusUiPrefab = default;
     public PlayerStatusUI playerStatusUi = default;
     public GameObject worldCanvas = default;
+    public PlayerSkillSystem skillSystem = default;
+    public int weaponType = 0;
+
 
     protected virtual void Start()
     {
+        playerAudio = GetComponent<AudioSource>();
         transform.SetParent(PlayerManager.Instance.canvas.transform, false);
         playerController = GetComponent<PlayerController>();
         playerAni = GetComponent<Animator>();
@@ -80,13 +83,14 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         //GameObject itemBoxUi_ = Resources.Load<GameObject>("06.ItemBox/Prefab/ItemBoxUI/ItemBoxUi");
 
         mainUi = GameObject.Find("TestUi");
-        itemBoxUi = Instantiate(itemBoxUi, mainUi.transform);
+        itemBoxUi = mainUi.transform.GetChild(3).gameObject;
         itemBoxSlotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
         craftTool.transform.GetChild(0).GetComponent<CraftTool>().craftPlayer = this;
         stunFBX = transform.GetChild(2).gameObject;
 
         worldCanvas = GameObject.Find("WorldCanvas");
         playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform).GetComponent<PlayerStatusUI>();
+        playerStatusUi.player = this;
     }
 
 
@@ -94,8 +98,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
         if (photonView.IsMine)
         {
-
-
             if (playerStat.nowHp <= 0)
             {
                 playerStat.nowHp = 0;
@@ -111,13 +113,13 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             if (isMoveAble && Input.GetMouseButtonDown(1) || (isAttackMove && Input.GetMouseButtonDown(0)))
             {
 
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
-            {
-                NavMeshHit navHit;
-                //[KJH] Add. 마우스 클릭 타겟 기록
-                clickTarget = hit.collider.gameObject;
-                enemy = default;
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+                {
+                    NavMeshHit navHit;
+                    //[KJH] Add. 마우스 클릭 타겟 기록
+                    clickTarget = hit.collider.gameObject;
+                    enemy = default;
 
                     if (clickTarget.GetComponent<Outline>() != null && clickTarget.GetComponent<Outline>().monster != null)
                     {
@@ -198,9 +200,16 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         }
     }
 
+    protected void PlayAudio(AudioClip audioClip_)
+    {
+        if (!playerAudio.isPlaying)
+        {
+            playerAudio.clip = audioClip_;
+        }
+    }
 
     // 스탯 초기값 할당
-    private void InitStat()
+    protected virtual void InitStat()
     {
         playerStat.attackPower = charaterData.attackPower; // 공격력
         playerStat.defense = charaterData.defense; // 방어력
@@ -280,16 +289,17 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             else
             {
                 playerExp_.level++;
-
                 if (playerExp_ != playerStat.playerExp)
                 {
                     playerStat.playerExp.nowExp += playerExp_.maxExp;
                     LevelUp(playerStat.playerExp);
                     playerStatusUi.playerExpBar.fillAmount = playerExp_.nowExp / playerExp_.maxExp;
                 }
-                
                 playerExp_.nowExp -= playerExp_.maxExp;
                 playerExp_.maxExp += playerExp_.expDelta;
+                PlayerUI.Instance.UpdatePlayerLevelUI(playerStat.playerExp.level);
+                PlayerUI.Instance.UpdateExpUI(playerStat.playerExp.nowExp, playerStat.playerExp.maxExp);
+                PlayerUI.Instance.UpdateSkillLevelUpUI(skillSystem.GetTotalSkillLevel(), skillSystem.GetWeaponSkillLevel(), playerStat.playerExp.level, playerStat.weaponExp.level);
             }
         }
     }
@@ -391,7 +401,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             return;
         }
         isAttackAble = false;
-        
+
         AnimatorStateInfo currentAnimationState = playerAni.GetCurrentAnimatorStateInfo(0);
         float delay_ = currentAnimationState.length - currentAnimationState.length * currentAnimationState.normalizedTime;
         switch (attackType)
@@ -425,7 +435,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         yield return new WaitForSeconds(delay_);
         isAttackAble = true;
 
-        if(isAttackAble && enemy != default)
+        if (isAttackAble && enemy != default)
         {
             playerController.ChangeState(new PlayerAttackMove());
         }
@@ -614,9 +624,10 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (PhotonNetwork.IsMasterClient)
         {
 
-
         playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
 
+
+            playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
             playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
 
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
@@ -642,6 +653,9 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         playerStat.nowHp -= message.damageAmount;
         playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
 
+        playerStat.nowHp -= message.damageAmount;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
         if (PhotonNetwork.IsMasterClient)
         {
             playerStat.nowHp -= message.damageAmount;
@@ -652,6 +666,10 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     public void TakeSolidDamage(DamageMessage message, float damageAmount)
     {
+
+        playerStat.nowHp -= damageAmount;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
         playerStat.nowHp -= damageAmount;
         playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
 
