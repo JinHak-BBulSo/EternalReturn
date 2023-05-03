@@ -45,8 +45,6 @@ public class PlayerUI : SingleTonBase<PlayerUI>
     {
         base.Update();
 
-        UpdateSkillLevelUpUI(1, 1, 3, 3);
-
         //chp -= Time.deltaTime * 1000;
         //csp -= Time.deltaTime * 500;
         //cexp += Time.deltaTime * 200;
