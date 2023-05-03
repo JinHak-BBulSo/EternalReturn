@@ -31,6 +31,10 @@ public class AllItemBox : MonoBehaviour
             {
                 Delay();
             }
+            else
+            {
+                this.enabled = false;
+            }
         }
         
     }

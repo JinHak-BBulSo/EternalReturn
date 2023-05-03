@@ -623,21 +623,10 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (PhotonNetwork.IsMasterClient)
         {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-=======
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
+
 
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-
->>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
             playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
 
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
@@ -660,73 +649,34 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     /// <returns></returns>
     public void TakeSolidDamage(DamageMessage message)
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        playerStat.nowHp -= message.damageAmount;
-        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-=======
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
         playerStat.nowHp -= message.damageAmount;
         playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
 
->>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
+        playerStat.nowHp -= message.damageAmount;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
         if (PhotonNetwork.IsMasterClient)
         {
             playerStat.nowHp -= message.damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
     }
 
 
     public void TakeSolidDamage(DamageMessage message, float damageAmount)
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        playerStat.nowHp -= damageAmount;
-        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-=======
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
+
         playerStat.nowHp -= damageAmount;
         playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
 
->>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
+        playerStat.nowHp -= damageAmount;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
         if (PhotonNetwork.IsMasterClient)
         {
             playerStat.nowHp -= damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
     }
 
     /// <summary>
