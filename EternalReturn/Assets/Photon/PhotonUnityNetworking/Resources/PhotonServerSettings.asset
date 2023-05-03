@@ -55,6 +55,9 @@ MonoBehaviour:
   - IncreasePlayer
   - SceneChanger
   - ItemRemove
+  - SetAnimationBool
+  - ShowRangeJackieQ
+  - MasterCallShot
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
