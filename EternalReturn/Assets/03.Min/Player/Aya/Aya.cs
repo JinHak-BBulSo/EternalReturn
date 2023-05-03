@@ -195,29 +195,14 @@ public class Aya : PlayerBase
     {
         if (!PhotonNetwork.IsMasterClient && photonView.IsMine)
         {
-            photonView.RPC("Shotas", RpcTarget.MasterClient);
-        }
-        else if (PhotonNetwork.IsMasterClient && photonView.IsMine)
-        {
-
-        }
-    }
-
-    private void ShotOther()
-    {
-        AyaBullet bullet = Instantiate(Bullet).GetComponent<AyaBullet>();
-        bullet.transform.position = weapon.transform.position;
-        bullet.damage = 30 + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.25f);
-        bullet.shootPlayer = this;
-        if (!PhotonNetwork.IsMasterClient)
-        {
             photonView.RPC("CallShot", RpcTarget.MasterClient);
         }
-        else
+        else if (PhotonNetwork.IsMasterClient && photonView.IsMine)
         {
             photonView.RPC("CallShot", RpcTarget.Others);
         }
     }
+
     [PunRPC]
     private void CallShot()
     {
