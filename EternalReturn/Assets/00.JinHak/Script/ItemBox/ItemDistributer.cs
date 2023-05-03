@@ -9,7 +9,9 @@ public class ItemDistributer : MonoBehaviourPun
 {
     public List<GameObject> itemList = new List<GameObject>();
     public List<int> itemCountList = new List<int>();
+
     public int[] indexArray = default;
+    public int r = default;
 
     private ItemBox[] areaItemBoxes;
     
@@ -41,9 +43,10 @@ public class ItemDistributer : MonoBehaviourPun
     }
 
     [PunRPC]
-    private void ItemIndexSet(int[] array_)
+    private void ItemIndexSet(int[] array_, int r_)
     {
         indexArray = array_.ToArray();
+        r = r_;
     }
     
     public void ItemSetStart()
@@ -53,7 +56,6 @@ public class ItemDistributer : MonoBehaviourPun
 
     IEnumerator ItemSet()
     {
-        int r_ = -1;
         foreach(var itemBox in areaItemBoxes)
         {
             //indexArray = new int[itemList.Count];
@@ -67,7 +69,7 @@ public class ItemDistributer : MonoBehaviourPun
 
             if (PhotonNetwork.IsMasterClient)
             {
-                r_ = Random.Range(2, 6 + 1);
+                r = Random.Range(2, 6 + 1);
                 indexArray = new int[itemList.Count];
 
                 for (int i = 0; i < indexArray.Length; i++)
@@ -80,12 +82,12 @@ public class ItemDistributer : MonoBehaviourPun
                     Shuffle(indexArray);
                 }
 
-                photonView.RPC("ItemIndexSet", RpcTarget.Others, indexArray);
+                photonView.RPC("ItemIndexSet", RpcTarget.Others, indexArray, r);
             }
 
             if (PhotonNetwork.IsMasterClient)
             {
-                BoxSet(itemBox, r_);
+                BoxSet(itemBox, r);
                 yield return new WaitForSeconds(0.2f);
             }
             else
@@ -94,7 +96,7 @@ public class ItemDistributer : MonoBehaviourPun
                 {
                     if (indexArray != default)
                     {
-                        BoxSet(itemBox, r_);
+                        BoxSet(itemBox, r);
                         break;
                     }
                     else
@@ -115,7 +117,7 @@ public class ItemDistributer : MonoBehaviourPun
             itemBox_.itemPrefabs.Add(itemList[indexArray[i]]);
             itemCountList[indexArray[i]]--;
         }
-
+        Debug.Log("BoxSet");
         itemBox_.SetItems();
         indexArray = default;
     }
