@@ -7,22 +7,23 @@ using UnityEngine.UI;
 public class SkillUI : MonoBehaviour
 {
     private static GameObject skillLevel;
+    private static PlayerSkillSystem playerSkillSystem;
+
+    private const string INGAME_PREFABS_PATH = "09.InGameUI/Prefabs/";
+    private const string SKILL_LEVEL_PREFAB_NAME = "Skill Level";
 
     protected Button button;
     protected SkillInfo skillInfo;
     protected RectTransform skillLevelBgRect;
 
-    //
-    private static PlayerSkillSystem playerSkillSystem;
-
     protected virtual void Awake()
     {
-        button = transform.GetChild(1).GetComponent<Button>();
-
         if (skillLevel == null)
         {
-            skillLevel = Resources.Load("09.UI/Prefabs/Skill Level") as GameObject;
+            skillLevel = Resources.Load($"{ INGAME_PREFABS_PATH}{SKILL_LEVEL_PREFAB_NAME}") as GameObject;
         }
+
+        button = transform.GetChild(1).GetComponent<Button>();
         skillLevelBgRect = transform.GetChild(0).GetComponent<RectTransform>();
     }
 
@@ -30,8 +31,7 @@ public class SkillUI : MonoBehaviour
     {
         if (playerSkillSystem == null)
         {
-            //player = PlayerManager.Instance.Player;
-            playerSkillSystem = GameObject.Find("Test Player").GetComponent<PlayerSkillSystem>();
+            playerSkillSystem = PlayerManager.Instance.Player.GetComponent<PlayerSkillSystem>();
         }
         skillInfo = playerSkillSystem.skillInfos[transform.GetSiblingIndex()];
 
@@ -63,8 +63,8 @@ public class SkillUI : MonoBehaviour
             return;
 
         skillInfo.AddLevel();
-        skillLevelBgRect.GetChild(skillInfo.CurrentLevel - 1).GetComponent<Image>().color = Color.white;
 
+        skillLevelBgRect.GetChild(skillInfo.CurrentLevel - 1).GetComponent<Image>().color = Color.white;
         PlayerUI.Instance.UpdateSkillLevelUpUI(playerSkillSystem.GetTotalSkillLevel(), playerSkillSystem.GetWeaponSkillLevel(), 5, 1);
 
         Debug.Log($"SkillLv: {skillInfo.CurrentLevel}");

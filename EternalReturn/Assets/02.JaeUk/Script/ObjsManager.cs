@@ -38,6 +38,7 @@ public class ObjsManager : MonoBehaviour
             CameraPivot.GetComponent<MoveCamera>().player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
             ItemManager.Instance.Player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
             ItemManager.Instance.ItemCanvas = itemCanvas;
+            PlayerUI.Instance.InitializeCharacterUI();
             Destroy(this.gameObject);
         }
     }

@@ -1380,6 +1380,7 @@ GameObject:
   - component: {fileID: -6953079362479384986}
   - component: {fileID: 3870816739093016760}
   - component: {fileID: 3982394258855017623}
+  - component: {fileID: -9213579780496402402}
   m_Layer: 0
   m_Name: Jackie_S003
   m_TagString: Player
@@ -1746,6 +1747,19 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
+--- !u!114 &-9213579780496402402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358739485631446351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78256e77029937c4fb980245ce93d4f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerModels: []
 --- !u!1 &1431738604640560163
 GameObject:
   m_ObjectHideFlags: 0

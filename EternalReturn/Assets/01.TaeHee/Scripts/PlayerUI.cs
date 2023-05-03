@@ -38,8 +38,6 @@ public class PlayerUI : SingleTonBase<PlayerUI>
         {
             skillUIs.Add(skillBg.transform.GetChild(i).GetComponent<SkillUI>());
         }
-
-        InitializeCharacterUI();
     }
 
     // Update is called once per frame
@@ -47,19 +45,24 @@ public class PlayerUI : SingleTonBase<PlayerUI>
     {
         base.Update();
 
-        chp -= Time.deltaTime * 1000;
-        csp -= Time.deltaTime * 500;
-        cexp += Time.deltaTime * 200;
+        UpdateSkillLevelUpUI(1, 1, 3, 3);
 
-        UpdateHpUI(chp, mhp);
-        UpdateSpUI(csp, msp);
-        UpdateExpUI(cexp % mexp, mexp);
-        UpdatePlayerLevelUI((int)cexp);
+        //chp -= Time.deltaTime * 1000;
+        //csp -= Time.deltaTime * 500;
+        //cexp += Time.deltaTime * 200;
+
+        //UpdateHpUI(chp, mhp);
+        //UpdateSpUI(csp, msp);
+        //UpdateExpUI(cexp % mexp, mexp);
+        //UpdatePlayerLevelUI((int)cexp);
     }
 
     public void InitializeCharacterUI()
     {
-
+        foreach (var skillUI in skillUIs)
+        {
+            skillUI.gameObject.SetActive(true);
+        }
     }
 
     public void UpdatePlayerLevelUI(int playerLevel)
