@@ -575,9 +575,13 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     /// <param name="message"></param>
     public void TakeDamage(DamageMessage message)
     {
-        playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
+        if (PhotonNetwork.IsMasterClient)
+        {
 
-        playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+            playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
+
+            playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        }
     }
     public void TakeDamage(DamageMessage message, float damageAmount)
     {
@@ -596,15 +600,21 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     /// <returns></returns>
     public void TakeSolidDamage(DamageMessage message)
     {
-        playerStat.nowHp -= message.damageAmount;
-        playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            playerStat.nowHp -= message.damageAmount;
+            playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        }
     }
 
 
     public void TakeSolidDamage(DamageMessage message, float damageAmount)
     {
-        playerStat.nowHp -= damageAmount;
-        playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            playerStat.nowHp -= damageAmount;
+            playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        }
     }
 
     /// <summary>
