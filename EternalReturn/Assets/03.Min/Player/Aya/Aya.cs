@@ -20,7 +20,11 @@ public class Aya : PlayerBase
     protected override void Start()
     {
         base.Start();
-        ItemManager.Instance.GetItem(ItemManager.Instance.itemList[0]);
+        weaponType = 10;
+        if (photonView.IsMine)
+        {
+            ItemManager.Instance.GetItem(ItemManager.Instance.itemList[14]);
+        }
     }
 
     protected override void Update()
