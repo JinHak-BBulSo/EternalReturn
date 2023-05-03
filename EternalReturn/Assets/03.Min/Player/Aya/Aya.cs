@@ -193,10 +193,6 @@ public class Aya : PlayerBase
 
     private void Shot()
     {
-        AyaBullet bullet = Instantiate(Bullet).GetComponent<AyaBullet>();
-        bullet.transform.position = weapon.transform.position;
-        bullet.damage = 30 + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.25f);
-        bullet.shootPlayer = this;
         if (!PhotonNetwork.IsMasterClient && photonView.IsMine)
         {
             photonView.RPC("CallShot", RpcTarget.MasterClient);
