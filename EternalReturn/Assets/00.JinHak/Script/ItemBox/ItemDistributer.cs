@@ -72,8 +72,8 @@ public class ItemDistributer : MonoBehaviourPun
             {
                 foreach (var i in indexArray)
                 {
-                    int index = itemList[i].GetComponent<ItemController>().item.id;
-                    photonView.RPC("BoxSet", RpcTarget.All, itemBox.itemBoxIndex, index);
+                    int itemIndex = itemList[i].GetComponent<ItemController>().item.id;
+                    photonView.RPC("BoxSet", RpcTarget.All, itemBox.itemBoxIndex, itemIndex);
                 }
             }
         }
