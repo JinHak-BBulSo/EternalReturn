@@ -19,12 +19,14 @@ public class PlayerAttackMove : IPlayerState
         if (playerController.player.playerAni.GetBool("isMove"))
         {
             playerController.player.playerAni.SetBool("isMove", true);
+            playerController.player.photonView.RPC("SetAnimationBool", Photon.Pun.RpcTarget.All, "isMove", true);
         }
         else
         {
             playerController.player.playerAni.SetBool("isMove", true);
         }
     }
+
 
     public void StateExit()
     {
@@ -39,7 +41,7 @@ public class PlayerAttackMove : IPlayerState
 
     public void StateUpdate()
     {
-        Collider[] enemys = Physics.OverlapSphere(playerController.transform.position, playerController.player.playerStat.attackRange);
+        Collider[] enemys = Physics.OverlapSphere(playerController.transform.position, playerController.player.playerTotalStat.attackRange);
 
         for (int i = 0; i < enemys.Length; i++)
         {

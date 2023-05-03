@@ -17,4 +17,6 @@ MonoBehaviour:
   moveSpeed: 2.9
   defense: 29
   attackSpeed: 0.9
-  attackRange: 1.2
+  attackRange: 1.9
+  monsterLevel: 3
+  monsterMaxLevel: 17

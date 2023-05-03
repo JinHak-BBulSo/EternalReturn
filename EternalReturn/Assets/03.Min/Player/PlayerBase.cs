@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
-
-public class PlayerBase : MonoBehaviour, IHitHandler
+using Photon.Realtime;
+using Photon.Pun;
+public class PlayerBase : MonoBehaviourPun, IHitHandler
 {
     protected PlayerController playerController = default;
     protected Vector3 destination = default;
@@ -44,11 +45,9 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public bool[] skillCooltimes = new bool[5];
     public bool[] applyDebuffCheck = new bool[10];      // 해당 디버프가 걸렸는지 체크
     public float[] debuffContinousTime = new float[10]; // 디버프 유지 시간
-    public float[] debuffDelayTime = new float[10];     // 디버프 틱 간격
     public float[] debuffRemainTime = new float[10];    // 디버프 남은 시간
     public float[] debuffDamage = new float[10];        // 디버프 데미지
-    public Queue<float>[] debuffDamageQueues = new Queue<float>[10];
-    public List<float>[] debuffRemainList = new List<float>[10];
+
     public List<Vector3> corners = new List<Vector3>();
     private SpriteRenderer[] attackRangeRender = new SpriteRenderer[2];
     //[KJH] Add. MiniMap move
@@ -60,21 +59,17 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public AudioClip[] playerAudioClip = default;
 
     //[KJH] Add. PlayerStatusUi
+    public GameObject mainUi = default;
     public GameObject playerStatusUiPrefab = default;
-    public GameObject playerStatusUi = default;
-    public Image playerHpBar = default;
-    public Image playerMpBar = default;
-    public Text playerLevelTxt = default;
+    public PlayerStatusUI playerStatusUi = default;
     public GameObject worldCanvas = default;
 
     protected virtual void Start()
     {
         transform.SetParent(PlayerManager.Instance.canvas.transform, false);
-        ItemManager.Instance.Player = this;
         playerController = GetComponent<PlayerController>();
         playerAni = GetComponent<Animator>();
         playerNav = GetComponent<NavMeshAgent>();
-        Camera.main.transform.parent.GetComponent<MoveCamera>().player = this;
         attackRangeRender[0] = attackRange.GetComponent<SpriteRenderer>();
         attackRangeRender[1] = attackRange.transform.GetChild(0).GetComponent<SpriteRenderer>();
         InitStat();
@@ -84,29 +79,37 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
         //GameObject itemBoxUi_ = Resources.Load<GameObject>("06.ItemBox/Prefab/ItemBoxUI/ItemBoxUi");
 
-        itemBoxUi = Instantiate(itemBoxUi, GameObject.Find("TestUi").transform);
+        mainUi = GameObject.Find("TestUi");
+        itemBoxUi = Instantiate(itemBoxUi, mainUi.transform);
         itemBoxSlotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
         craftTool.transform.GetChild(0).GetComponent<CraftTool>().craftPlayer = this;
         stunFBX = transform.GetChild(2).gameObject;
 
-        playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform);
-        playerHpBar = playerStatusUi.transform.GetChild(1).GetComponent<Image>();
-        playerMpBar = playerStatusUi.transform.GetChild(3).GetComponent<Image>();
-        playerLevelTxt = playerStatusUi.transform.GetChild(4).GetChild(0).GetComponent<Text>();
-        playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        worldCanvas = GameObject.Find("WorldCanvas");
+        playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform).GetComponent<PlayerStatusUI>();
     }
 
 
     protected virtual void Update()
     {
-        ShowAttackRange();
-        DisableAttackRange();
-        RaycastHit mousePoint;
-        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mousePoint);
-        nowMousePoint = mousePoint.point;
-
-        if (isMoveAble && Input.GetMouseButtonDown(1) || (isAttackMove && Input.GetMouseButtonDown(0)))
+        if (photonView.IsMine)
         {
+
+
+            if (playerStat.nowHp <= 0)
+            {
+                playerStat.nowHp = 0;
+                playerController.ChangeState(new PlayerDie());
+                return;
+            }
+            ShowAttackRange();
+            DisableAttackRange();
+            RaycastHit mousePoint;
+            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mousePoint);
+            nowMousePoint = mousePoint.point;
+
+            if (isMoveAble && Input.GetMouseButtonDown(1) || (isAttackMove && Input.GetMouseButtonDown(0)))
+            {
 
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
@@ -114,82 +117,84 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 NavMeshHit navHit;
                 //[KJH] Add. 마우스 클릭 타겟 기록
                 clickTarget = hit.collider.gameObject;
+                enemy = default;
 
-                if (clickTarget.GetComponent<Outline>() != null && clickTarget.GetComponent<Outline>().monster != null)
-                {
-                    Monster monster = clickTarget.GetComponent<Outline>().monster;
-                    if (!monster.isDie)
+                    if (clickTarget.GetComponent<Outline>() != null && clickTarget.GetComponent<Outline>().monster != null)
                     {
-                        enemy = monster.gameObject;
-                        isAttackMove = true;
-                        playerController.ChangeState(new PlayerAttackMove());
+                        Monster monster = clickTarget.GetComponent<Outline>().monster;
+                        if (!monster.isDie)
+                        {
+                            enemy = monster.gameObject;
+                            isAttackMove = true;
+                            playerController.ChangeState(new PlayerAttackMove());
+                        }
+                    }
+                    //[KJH] Add. 클릭 타겟 Outline 표시
+                    //외곽선 초기화
+                    if (outline != default)
+                    {
+                        outline.enabled = false;
+                        outline.isClick = false;
+                        outline = default;
+                    }
+                    if (clickTarget.GetComponent<Outline>() != null)
+                    {
+                        outline = clickTarget.GetComponent<Outline>();
+                        outline.isClick = true;
+                        outline.enabled = true;
+                    }
+
+                    if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
+                    {
+                        // destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);
+                        //SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
+                        //[KJH] ADD. destionation yPos 변경
+                        SetDestination(new Vector3(navHit.position.x, navHit.position.y, navHit.position.z));
+
+                        path = new NavMeshPath();
+                        playerNav.CalculatePath(destination, path);
+                        corners.Clear();
+                        for (int i = 0; i < path.corners.Length; i++)
+                        {
+                            corners.Add(path.corners[i]);
+                        }
+                        currentCorner = 0;
+                    }
+                    //SetDestination(hit.point);
+                }
+
+                // MiniMap Click Player Move
+                if (Physics.Raycast(miniMapCamera.ScreenPointToRay(Input.mousePosition), out hit))
+                {
+                    Vector3 clickPos = Input.mousePosition;
+                    if (clickPos.x < 625 || clickPos.x > 735 ||
+                        clickPos.y < 10 || clickPos.y > 110)
+                    {
+                        return;
+                    }
+                    //if(clickPos.x < 625 || clickPos.x > 735)
+                    //630, 10 ~ 110 734.5
+
+                    NavMeshHit navHit;
+                    if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
+                    {
+                        // destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);
+                        //SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
+                        //[KJH] ADD. destionation yPos 변경
+                        SetDestination(new Vector3(navHit.position.x, navHit.position.y, navHit.position.z));
+
+                        path = new NavMeshPath();
+                        playerNav.CalculatePath(destination, path);
+                        corners.Clear();
+                        for (int i = 0; i < path.corners.Length; i++)
+                        {
+                            corners.Add(path.corners[i]);
+                        }
+                        currentCorner = 0;
                     }
                 }
-                //[KJH] Add. 클릭 타겟 Outline 표시
-                //외곽선 초기화
-                if (outline != default)
-                {
-                    outline.enabled = false;
-                    outline.isClick = false;
-                    outline = default;
-                }
-                if (clickTarget.GetComponent<Outline>() != null)
-                {
-                    outline = clickTarget.GetComponent<Outline>();
-                    outline.isClick = true;
-                    outline.enabled = true;
-                }
 
-                if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
-                {
-                    // destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);
-                    //SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
-                    //[KJH] ADD. destionation yPos 변경
-                    SetDestination(new Vector3(navHit.position.x, navHit.position.y, navHit.position.z));
-
-                    path = new NavMeshPath();
-                    playerNav.CalculatePath(destination, path);
-                    corners.Clear();
-                    for (int i = 0; i < path.corners.Length; i++)
-                    {
-                        corners.Add(path.corners[i]);
-                    }
-                    currentCorner = 0;
-                }
-                //SetDestination(hit.point);
             }
-
-            // MiniMap Click Player Move
-            if (Physics.Raycast(miniMapCamera.ScreenPointToRay(Input.mousePosition), out hit))
-            {
-                Vector3 clickPos = Input.mousePosition;
-                if (clickPos.x < 625 || clickPos.x > 735 ||
-                    clickPos.y < 10 || clickPos.y > 110)
-                {
-                    return;
-                }
-                //if(clickPos.x < 625 || clickPos.x > 735)
-                //630, 10 ~ 110 734.5
-
-                NavMeshHit navHit;
-                if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
-                {
-                    // destination = new Vector3(navHit.position.x, hit.point.y, navHit.position.z);
-                    //SetDestination(new Vector3(navHit.position.x, hit.point.y, navHit.position.z));
-                    //[KJH] ADD. destionation yPos 변경
-                    SetDestination(new Vector3(navHit.position.x, navHit.position.y, navHit.position.z));
-
-                    path = new NavMeshPath();
-                    playerNav.CalculatePath(destination, path);
-                    corners.Clear();
-                    for (int i = 0; i < path.corners.Length; i++)
-                    {
-                        corners.Add(path.corners[i]);
-                    }
-                    currentCorner = 0;
-                }
-            }
-
         }
     }
 
@@ -275,15 +280,49 @@ public class PlayerBase : MonoBehaviour, IHitHandler
             else
             {
                 playerExp_.level++;
+
+                if (playerExp_ != playerStat.playerExp)
+                {
+                    playerStat.playerExp.nowExp += playerExp_.maxExp;
+                    LevelUp(playerStat.playerExp);
+                    playerStatusUi.playerExpBar.fillAmount = playerExp_.nowExp / playerExp_.maxExp;
+                }
+                
                 playerExp_.nowExp -= playerExp_.maxExp;
                 playerExp_.maxExp += playerExp_.expDelta;
             }
         }
     }
 
-    public void GetExp(float exp_)
+    public void GetExp(float exp_, PlayerStat.PlayerExpType exptype_)
     {
-
+        switch (exptype_)
+        {
+            case PlayerStat.PlayerExpType.WEAPON:
+                playerStat.weaponExp.nowExp += exp_;
+                LevelUp(playerStat.weaponExp);
+                break;
+            case PlayerStat.PlayerExpType.CRAFT:
+                playerStat.craftExp.nowExp += exp_;
+                LevelUp(playerStat.craftExp);
+                break;
+            case PlayerStat.PlayerExpType.SEARCH:
+                playerStat.searchExp.nowExp += exp_;
+                LevelUp(playerStat.searchExp);
+                break;
+            case PlayerStat.PlayerExpType.MOVE:
+                playerStat.moveExp.nowExp += exp_;
+                LevelUp(playerStat.moveExp);
+                break;
+            case PlayerStat.PlayerExpType.HEALTH:
+                playerStat.healthExp.nowExp += exp_;
+                LevelUp(playerStat.healthExp);
+                break;
+            case PlayerStat.PlayerExpType.DEF:
+                playerStat.defExp.nowExp += exp_;
+                LevelUp(playerStat.defExp);
+                break;
+        }
     }
     public void Craft()
     {
@@ -293,6 +332,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     public virtual void Attack()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         playerAni.SetFloat("MotionSpeed", playerTotalStat.attackSpeed);
         transform.LookAt(enemy.transform);
         switch (attackType)
@@ -308,6 +351,7 @@ public class PlayerBase : MonoBehaviour, IHitHandler
                 playerController.ChangeState(new PlayerIdle());
                 break;
         }
+
     }
 
     public virtual void ExtraAni()
@@ -315,22 +359,39 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     }
     private void MotionStart()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         playerAni.SetBool("skillStart", true);
     }
 
     public virtual void MotionEnd()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         playerController.ResetAni();
         playerController.ResetRange();
     }
 
     private void SkillEnd()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         playerController.ChangeState(new PlayerIdle());
     }
     protected virtual void AttackEnd()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         isAttackAble = false;
+        
         AnimatorStateInfo currentAnimationState = playerAni.GetCurrentAnimatorStateInfo(0);
         float delay_ = currentAnimationState.length - currentAnimationState.length * currentAnimationState.normalizedTime;
         switch (attackType)
@@ -349,19 +410,33 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     private void AttackAniEnd()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         playerAni.SetBool("isAttack", false);
     }
 
     IEnumerator MotionDelay(float delay_)
     {
+
         // 공격불가 시간
         // Debug.Log(delay_);
         yield return new WaitForSeconds(delay_);
         isAttackAble = true;
+
+        if(isAttackAble && enemy != default)
+        {
+            playerController.ChangeState(new PlayerAttackMove());
+        }
     }
 
     protected virtual void ShowAttackRange()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.A))
         {
             attackRangeRender[0].color = new Color(attackRangeRender[0].color.r, attackRangeRender[0].color.g, attackRangeRender[0].color.b, 0.5f);
@@ -374,6 +449,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     protected virtual void DisableAttackRange()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         if (isAttackRangeShow)
         {
 
@@ -395,6 +474,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     public void MoveCheck()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         if (playerNav.enabled)
         {
             if (playerNav.remainingDistance <= playerNav.stoppingDistance)
@@ -411,6 +494,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     public void Move()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         if (isMove)
         {
             if (corners.Count > 0 && currentCorner < corners.Count)
@@ -444,6 +531,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     protected void SetDestination(Vector3 dest_)
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         destination = dest_;
         isMove = true;
     }
@@ -453,20 +544,61 @@ public class PlayerBase : MonoBehaviour, IHitHandler
 
     public void Rest()
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         playerStat.nowHp += playerStat.maxHp * 0.1f;
     }
 
-    public virtual void Skill_Q() { }
+    public virtual void Skill_Q()
+    {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+    }
 
-    public virtual void Skill_W() { }
 
-    public virtual void Skill_E() { }
+    public virtual void Skill_W()
+    {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+    }
 
-    public virtual void Skill_R() { }
+    public virtual void Skill_E()
+    {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+    }
 
-    public virtual void Skill_D() { }
+    public virtual void Skill_R()
+    {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+    }
 
-    public virtual void Skill_T() { }
+    public virtual void Skill_D()
+    {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+    }
+
+    public virtual void Skill_T()
+    {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
+    }
     /// <summary>
     /// 기본 공격 공식
     /// 공격력 * 기본공격증폭 = message.damageAmount
@@ -479,9 +611,16 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     /// <param name="message"></param>
     public void TakeDamage(DamageMessage message)
     {
-        playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
+        if (PhotonNetwork.IsMasterClient)
+        {
 
-        playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
+            playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
+
+            playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        }
     }
     public void TakeDamage(DamageMessage message, float damageAmount)
     {
@@ -501,14 +640,26 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     public void TakeSolidDamage(DamageMessage message)
     {
         playerStat.nowHp -= message.damageAmount;
-        playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            playerStat.nowHp -= message.damageAmount;
+            playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        }
     }
 
 
     public void TakeSolidDamage(DamageMessage message, float damageAmount)
     {
         playerStat.nowHp -= damageAmount;
-        playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            playerStat.nowHp -= damageAmount;
+            playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        }
     }
 
     /// <summary>
@@ -659,5 +810,10 @@ public class PlayerBase : MonoBehaviour, IHitHandler
     {
         yield return new WaitForSeconds(debuffContinousTime_);
         debuffDamage[debuffIndex_] -= debuffDamage_;
+    }
+    [PunRPC]
+    public void SetAnimationBool(string name, bool flag)
+    {
+        playerAni.SetBool(name, flag);
     }
 }

@@ -1,8 +1,10 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemBoxSlot : Slot
+public class ItemBoxSlot : MonoBehaviourPun
 {   
     public ItemBoxSlotList slotList = default;
     public ItemStat slotItem = new ItemStat();
@@ -24,18 +26,25 @@ public class ItemBoxSlot : Slot
 
         if (!ItemManager.Instance.isInventoryFull)
         {
-            slotItem.count--;
-
-            if (slotItem.count == 0)
-            {
-                slotList.nowOpenItemBox.boxItems.Remove(slotItem);
-                slotList.nowOpenItemBox.ResetSlot();
-                slotList.nowOpenItemBox.SetSlot();
-            }
+            photonView.RPC("ItemRemove", RpcTarget.All);
+            //ItemRemove();
         }
         else
         {
             fullInvenTxt.SetActive(true);
+        }
+    }
+
+    [PunRPC]
+    public void ItemRemove()
+    {
+        slotItem.count--;
+
+        if (slotItem.count == 0)
+        {
+            slotList.nowOpenItemBox.boxItems.Remove(slotItem);
+            slotList.nowOpenItemBox.ResetSlot();
+            slotList.nowOpenItemBox.SetSlot();
         }
     }
 }

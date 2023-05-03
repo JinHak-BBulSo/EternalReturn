@@ -38,7 +38,7 @@ public class CharacterSelect : MonoBehaviourPun
     {
         if (PlayerManager.Instance.SelectChk)
         {
-            Debug.Log("!!!");
+            //Debug.Log("!!!");
             PlayerManager.Instance.SelectChk = false;
             ReadyPlayerNum++;
             for (int i = 0; i < transform.GetChild(0).childCount; i++)

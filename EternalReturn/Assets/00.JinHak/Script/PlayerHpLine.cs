@@ -6,7 +6,7 @@ public class PlayerHpLine : MonoBehaviour
 {
     PlayerBase player = default;
     private List<GameObject> hpLineList = new List<GameObject>();
-    private Vector3 offset = new Vector3(0, 2.5f, 0);
+    
     void Start()
     {
         player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
@@ -19,7 +19,7 @@ public class PlayerHpLine : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.parent.position = player.transform.position + offset;
+        
     }
 
     public void SetHpBar()

@@ -40,7 +40,6 @@ public class MonsterAttack : IMonsterState
 
         monsterController.navMeshAgent.enabled = true;
         monsterController.targetPlayer.TakeDamage(dm);
-        monsterController.monsterAni.SetBool("isAttack", false);
         monsterController.navMeshAgent.enabled = true;
     }
 }

@@ -35,6 +35,9 @@ public class ObjsManager : MonoBehaviour
             itemCanvas.gameObject.SetActive(true);
             fog.gameObject.SetActive(true);
             CameraPivot.GetComponent<MoveCamera>().enabled = true;
+            CameraPivot.GetComponent<MoveCamera>().player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
+            ItemManager.Instance.Player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
+            ItemManager.Instance.ItemCanvas = itemCanvas;
             Destroy(this.gameObject);
         }
     }
