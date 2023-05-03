@@ -1578,7 +1578,6 @@ MonoBehaviour:
   itemBoxUi: {fileID: 7458879648041901250, guid: 935c3719471578743bca9af8a24ceb1b,
     type: 3}
   itemBoxSlotList: {fileID: 0}
-  item: 000000000000000000000000000000000000000000000000
   audioClips:
   - {fileID: 8300000, guid: 8cb0bd6fae2b5ff4885d0d4de3d3ce86, type: 3}
   - {fileID: 8300000, guid: 1901c3d285af8424c85c841c71c33ea6, type: 3}
@@ -1657,13 +1656,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 18a8b3f9ffdb1c242833cbc9260672b3, type: 3}
   - {fileID: 8300000, guid: 054e5891aa05302408c3388d0f5ae4a2, type: 3}
   - {fileID: 8300000, guid: d9049390a9dfb964cb23711e742dc960, type: 3}
-  mainUi: {fileID: 0}
   playerStatusUiPrefab: {fileID: 1394638143415854229, guid: 3c2d08be8010d1f469978c5b57441b8b,
     type: 3}
   playerStatusUi: {fileID: 0}
   worldCanvas: {fileID: 0}
-  skillSystem: {fileID: 0}
-  weaponType: 0
   weaponStack: 0
   skillQ: {fileID: 634131373}
   skillE: {fileID: 8981070518534526685}

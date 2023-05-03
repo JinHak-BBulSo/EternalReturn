@@ -55,8 +55,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public GameObject itemBoxUi = default;
     public ItemBoxSlotList itemBoxSlotList = default;
     private bool isMoveAble = true;
-    public int[] item = new int[6];
-
     public AudioClip[] audioClips = default;
     protected AudioSource playerAudio = default;
     //[KJH] Add. PlayerStatusUi
@@ -100,15 +98,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
         if (photonView.IsMine)
         {
-            if (ItemManager.Instance.isItemChage)
-            {
-                ItemManager.Instance.isItemChage = false;
-                for (int i = 0; i < 6; i++)
-                {
-                    item[i] = ItemManager.Instance.equipmentInven[i].id;
-                }
-            }
-
             if (playerStat.nowHp <= 0)
             {
                 playerStat.nowHp = 0;
@@ -238,29 +227,25 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     public void AddExtraStat() // 아이템 추가스텟
     {
-        for (int i = 0; i < 6; i++)
-        {
-            extraStat.attackPower += ItemManager.Instance.itemList[item[i] - 1].attackPower;
-            extraStat.defense += ItemManager.Instance.itemList[item[i] - 1].defense;
-            extraStat.armorReduce += ItemManager.Instance.itemList[item[i] - 1].armorReduce;
-            extraStat.attackRange += ItemManager.Instance.itemList[item[i] - 1].attackRange;
-            extraStat.attackSpeed += ItemManager.Instance.itemList[item[i] - 1].attackSpeed;
-            extraStat.basicAttackPower += ItemManager.Instance.itemList[item[i] - 1].basicAttackPower;
-            extraStat.coolDown += ItemManager.Instance.itemList[item[i] - 1].coolDown;
-            extraStat.criticalDamage += ItemManager.Instance.itemList[item[i] - 1].criticalDamage;
-            extraStat.criticalPercent += ItemManager.Instance.itemList[item[i] - 1].criticalPercent;
-            extraStat.damageReduce += ItemManager.Instance.itemList[item[i] - 1].damageReduce;
-            extraStat.extraHp += ItemManager.Instance.itemList[item[i] - 1].extraHp;
-            extraStat.extraStamina += ItemManager.Instance.itemList[item[i] - 1].extraStamina;
-            extraStat.hpRegen += ItemManager.Instance.itemList[item[i] - 1].hpRegen;
-            extraStat.lifeSteel += ItemManager.Instance.itemList[item[i] - 1].lifeSteel;
-            extraStat.staminaRegen += ItemManager.Instance.itemList[item[i] - 1].staminaRegen;
-            extraStat.moveSpeed += ItemManager.Instance.itemList[item[i] - 1].moveSpeed;
-            extraStat.skillPower += ItemManager.Instance.itemList[item[i] - 1].skillPower;
-            extraStat.tenacity += ItemManager.Instance.itemList[item[i] - 1].tenacity;
-            extraStat.visionRange += ItemManager.Instance.itemList[item[i] - 1].visionRange;
-        }
-
+        extraStat.attackPower = ItemManager.Instance.equipmentTotalState.attackPower;
+        extraStat.defense = ItemManager.Instance.equipmentTotalState.defense;
+        extraStat.armorReduce = ItemManager.Instance.equipmentTotalState.armorReduce;
+        extraStat.attackRange = ItemManager.Instance.equipmentTotalState.attackRange;
+        extraStat.attackSpeed = ItemManager.Instance.equipmentTotalState.attackSpeed;
+        extraStat.basicAttackPower = ItemManager.Instance.equipmentTotalState.basicAttackPower;
+        extraStat.coolDown = ItemManager.Instance.equipmentTotalState.coolDown;
+        extraStat.criticalDamage = ItemManager.Instance.equipmentTotalState.criticalDamage;
+        extraStat.criticalPercent = ItemManager.Instance.equipmentTotalState.criticalPercent;
+        extraStat.damageReduce = ItemManager.Instance.equipmentTotalState.damageReduce;
+        extraStat.extraHp = ItemManager.Instance.equipmentTotalState.extraHp;
+        extraStat.extraStamina = ItemManager.Instance.equipmentTotalState.extraStamina;
+        extraStat.hpRegen = ItemManager.Instance.equipmentTotalState.hpRegen;
+        extraStat.lifeSteel = ItemManager.Instance.equipmentTotalState.lifeSteel;
+        extraStat.staminaRegen = ItemManager.Instance.equipmentTotalState.staminaRegen;
+        extraStat.moveSpeed = ItemManager.Instance.equipmentTotalState.moveSpeed;
+        extraStat.skillPower = ItemManager.Instance.equipmentTotalState.skillPower;
+        extraStat.tenacity = ItemManager.Instance.equipmentTotalState.tenacity;
+        extraStat.visionRange = ItemManager.Instance.equipmentTotalState.visionRange;
     }
 
     public void AddTotalStat() // 플레이어 총 스탯
@@ -269,8 +254,8 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         playerTotalStat.attackPower = playerStat.attackPower + extraStat.attackPower;
         playerTotalStat.defense = playerStat.defense + extraStat.defense;
         playerTotalStat.armorReduce = playerStat.armorReduce + extraStat.armorReduce;
-        playerTotalStat.attackRange = playerStat.attackRange + extraStat.attackRange + ItemManager.Instance.itemList[item[0]].weaponAttackRangePercent;
-        playerTotalStat.attackSpeed = (playerStat.attackSpeed + extraStat.attackSpeed) + ItemManager.Instance.itemList[item[0]].weaponAttackSpeedPercent;
+        playerTotalStat.attackRange = playerStat.attackRange + extraStat.attackRange + ItemManager.Instance.equipmentTotalState.weaponAttackRangePercent;
+        playerTotalStat.attackSpeed = (playerStat.attackSpeed + extraStat.attackSpeed) + ItemManager.Instance.equipmentTotalState.weaponAttackSpeedPercent;
         playerTotalStat.basicAttackPower = playerStat.basicAttackPower + extraStat.basicAttackPower;
         playerTotalStat.coolDown = playerStat.coolDown + extraStat.coolDown;
         playerTotalStat.criticalDamage = playerStat.criticalDamage + extraStat.criticalDamage;
@@ -638,32 +623,13 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (PhotonNetwork.IsMasterClient)
         {
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-=======
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> origin/Dev
+
 
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-
->>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
             playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
 
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-<<<<<<< HEAD
-
-            photonView.RPC("SetPlayerHp", RpcTarget.Others, playerStat.nowHp, playerStat.nowStamina);
-=======
->>>>>>> origin/Dev
         }
     }
     public void TakeDamage(DamageMessage message, float damageAmount)
@@ -683,87 +649,34 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     /// <returns></returns>
     public void TakeSolidDamage(DamageMessage message)
     {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        playerStat.nowHp -= message.damageAmount;
-        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-=======
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
         playerStat.nowHp -= message.damageAmount;
         playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
 
->>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
->>>>>>> origin/Dev
+        playerStat.nowHp -= message.damageAmount;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
         if (PhotonNetwork.IsMasterClient)
         {
             playerStat.nowHp -= message.damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-<<<<<<< HEAD
-            photonView.RPC("SetPlayerHp", RpcTarget.Others, playerStat.nowHp, playerStat.nowStamina);
-=======
->>>>>>> origin/Dev
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
     }
 
 
     public void TakeSolidDamage(DamageMessage message, float damageAmount)
     {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        playerStat.nowHp -= damageAmount;
-        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-=======
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
+
         playerStat.nowHp -= damageAmount;
         playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
 
->>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
->>>>>>> origin/Dev
+        playerStat.nowHp -= damageAmount;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
         if (PhotonNetwork.IsMasterClient)
         {
             playerStat.nowHp -= damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-<<<<<<< HEAD
-            photonView.RPC("SetPlayerHp", RpcTarget.Others, playerStat.nowHp, playerStat.nowStamina);
-=======
->>>>>>> origin/Dev
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
-=======
->>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
     }
 
     /// <summary>
@@ -920,21 +833,4 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
         playerAni.SetBool(name, flag);
     }
-    [PunRPC]
-    public void SetPlayerStat(int level_, float hp_, float mp_, int[] item_, int[] skill)
-    {
-        playerStat.playerExp.level = level_;
-        playerStat.nowHp = hp_;
-        playerStat.nowStamina = mp_;
-        item = item_;
-
-    }
-
-    [PunRPC]
-    public void SetPlayerHp(float hp_, float mp_)
-    {
-        playerStat.nowHp = hp_;
-        playerStat.nowStamina = mp_;
-    }
-
 }
