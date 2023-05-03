@@ -1380,8 +1380,8 @@ GameObject:
   - component: {fileID: 4144769640816366234}
   - component: {fileID: 5392971066224245366}
   - component: {fileID: 6477311113540160925}
-  - component: {fileID: 6006015283362274653}
   - component: {fileID: -6734051769537532298}
+  - component: {fileID: -8804324994532699519}
   m_Layer: 0
   m_Name: Jackie_S003
   m_TagString: Player
@@ -1656,10 +1656,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 18a8b3f9ffdb1c242833cbc9260672b3, type: 3}
   - {fileID: 8300000, guid: 054e5891aa05302408c3388d0f5ae4a2, type: 3}
   - {fileID: 8300000, guid: d9049390a9dfb964cb23711e742dc960, type: 3}
+  mainUi: {fileID: 0}
   playerStatusUiPrefab: {fileID: 1394638143415854229, guid: 3c2d08be8010d1f469978c5b57441b8b,
     type: 3}
   playerStatusUi: {fileID: 0}
   worldCanvas: {fileID: 0}
+  skillSystem: {fileID: 0}
+  weaponType: 0
   weaponStack: 0
   skillQ: {fileID: 634131373}
   skillE: {fileID: 8981070518534526685}
@@ -1824,14 +1827,6 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
---- !u!81 &6006015283362274653
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1358739485631446351}
-  m_Enabled: 1
 --- !u!82 &-6734051769537532298
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1928,6 +1923,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-8804324994532699519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358739485631446351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93587f2b5874db44786a24c5f6e3152b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1431738604640560163
 GameObject:
   m_ObjectHideFlags: 0

@@ -225,7 +225,9 @@ public class Aya : PlayerBase
     {
         AyaBullet bullet = Instantiate(Bullet).GetComponent<AyaBullet>();
         bullet.transform.position = weapon.transform.position;
-        bullet.damage = 30 + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.25f);
+        bullet.damage = 30 + (25 * (skillSystem.skillInfos[1].CurrentLevel - 1))
+        + (playerTotalStat.attackPower * (0.2f + (0.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))))
+        + (playerTotalStat.skillPower * (0.25f + (0.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))));
         bullet.shootPlayer = this;
         if (!PhotonNetwork.IsMasterClient)
         {
