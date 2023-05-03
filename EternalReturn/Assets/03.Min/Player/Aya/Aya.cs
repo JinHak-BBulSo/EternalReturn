@@ -208,6 +208,7 @@ public class Aya : PlayerBase
         bullet.damage = 30 + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.25f);
         bullet.shootPlayer = this;
     }
+
     IEnumerator WSkill()
     {
         float time = 0f;
