@@ -55,8 +55,8 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public GameObject itemBoxUi = default;
     public ItemBoxSlotList itemBoxSlotList = default;
     private bool isMoveAble = true;
-    public AudioClip[] playerAudioClip = default;
-
+    public AudioClip[] audioClips = default;
+    protected AudioSource playerAudio = default;
     //[KJH] Add. PlayerStatusUi
     public GameObject playerStatusUiPrefab = default;
     public GameObject playerStatusUi = default;
@@ -65,8 +65,10 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public Text playerLevelTxt = default;
     public GameObject worldCanvas = default;
 
+
     protected virtual void Start()
     {
+        playerAudio = GetComponent<AudioSource>();
         transform.SetParent(PlayerManager.Instance.canvas.transform, false);
         playerController = GetComponent<PlayerController>();
         playerAni = GetComponent<Animator>();
@@ -98,8 +100,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
         if (photonView.IsMine)
         {
-
-
             if (playerStat.nowHp <= 0)
             {
                 playerStat.nowHp = 0;
@@ -201,6 +201,13 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         }
     }
 
+    protected void PlayAudio(AudioClip audioClip_)
+    {
+        if (!playerAudio.isPlaying)
+        {
+            playerAudio.clip = audioClip_;
+        }
+    }
 
     // 스탯 초기값 할당
     private void InitStat()

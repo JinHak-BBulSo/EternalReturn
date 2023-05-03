@@ -48,6 +48,7 @@ public class Aya : PlayerBase
             DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower);
             enemy.GetComponent<PlayerBase>().TakeDamage(dm);
         }
+
     }
 
 
@@ -188,15 +189,27 @@ public class Aya : PlayerBase
 
     private void Shot()
     {
-        photonView.RPC("Shotas", RpcTarget.All);
+        if (!PhotonNetwork.IsMasterClient && photonView.IsMine)
+        {
+            photonView.RPC("Shotas", RpcTarget.MasterClient);
+        }
+        else if (PhotonNetwork.IsMasterClient && photonView.IsMine)
+        {
+
+        }
     }
-    [PunRPC]
-    private void Shotas()
+
+    private void ShotOther()
     {
         AyaBullet bullet = Instantiate(Bullet).GetComponent<AyaBullet>();
         bullet.transform.position = weapon.transform.position;
         bullet.damage = 30 + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.25f);
         bullet.shootPlayer = this;
+    }
+    [PunRPC]
+    private void Shotas()
+    {
+        ShotOther();
     }
     IEnumerator WSkill()
     {
