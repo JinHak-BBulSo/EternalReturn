@@ -69,7 +69,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinRandomFailed(returnCode, message);
         Debug.Log("Empty room doesn't exist, make a Empty Room");
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 4 });
+        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 2 });
     }
     public override void OnJoinedRoom()
     {
