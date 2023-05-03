@@ -53,6 +53,7 @@ public class ItemDistributer : MonoBehaviourPun
 
     IEnumerator ItemSet()
     {
+        int r_ = -1;
         foreach(var itemBox in areaItemBoxes)
         {
             //indexArray = new int[itemList.Count];
@@ -66,6 +67,7 @@ public class ItemDistributer : MonoBehaviourPun
 
             if (PhotonNetwork.IsMasterClient)
             {
+                r_ = Random.Range(2, 6 + 1);
                 indexArray = new int[itemList.Count];
 
                 for (int i = 0; i < indexArray.Length; i++)
@@ -83,8 +85,8 @@ public class ItemDistributer : MonoBehaviourPun
 
             if (PhotonNetwork.IsMasterClient)
             {
-                BoxSet(itemBox);
-                yield return new WaitForSeconds(0.15f);
+                BoxSet(itemBox, r_);
+                yield return new WaitForSeconds(0.2f);
             }
             else
             {
@@ -92,7 +94,7 @@ public class ItemDistributer : MonoBehaviourPun
                 {
                     if (indexArray != default)
                     {
-                        BoxSet(itemBox);
+                        BoxSet(itemBox, r_);
                         break;
                     }
                     else
@@ -104,10 +106,9 @@ public class ItemDistributer : MonoBehaviourPun
         }
     }
 
-    private void BoxSet(ItemBox itemBox_)
+    private void BoxSet(ItemBox itemBox_, int r_)
     {
-        int r = Random.Range(2, 6 + 1);
-        for (int i = 0; i < r; i++)
+        for (int i = 0; i < r_; i++)
         {
             if (i >= itemList.Count) break;
 
@@ -116,5 +117,6 @@ public class ItemDistributer : MonoBehaviourPun
         }
 
         itemBox_.SetItems();
+        indexArray = default;
     }
 }
