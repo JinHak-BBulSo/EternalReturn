@@ -12,7 +12,9 @@ public class SkillInfo
 {
     public int CurrentLevel { get; private set; }
     public int MaxLevel { get; private set; }
-
+    public float cooltime;
+    public float reduceCooltime;
+    public float currentCooltime;
     public SkillInfo(int maxLevel_)
     {
         MaxLevel = maxLevel_;
@@ -24,5 +26,6 @@ public class SkillInfo
             return;
 
         ++CurrentLevel;
+        cooltime = cooltime - (reduceCooltime * (CurrentLevel - 1));
     }
 }

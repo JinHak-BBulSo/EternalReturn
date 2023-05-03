@@ -208,7 +208,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     }
 
     // 스탯 초기값 할당
-    private void InitStat()
+    protected virtual void InitStat()
     {
         playerStat.attackPower = charaterData.attackPower; // 공격력
         playerStat.defense = charaterData.defense; // 방어력
@@ -288,16 +288,17 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             else
             {
                 playerExp_.level++;
-
                 if (playerExp_ != playerStat.playerExp)
                 {
                     playerStat.playerExp.nowExp += playerExp_.maxExp;
                     LevelUp(playerStat.playerExp);
                     playerStatusUi.playerExpBar.fillAmount = playerExp_.nowExp / playerExp_.maxExp;
                 }
-
                 playerExp_.nowExp -= playerExp_.maxExp;
                 playerExp_.maxExp += playerExp_.expDelta;
+                PlayerUI.Instance.UpdatePlayerLevelUI(playerStat.playerExp.level);
+                PlayerUI.Instance.UpdateExpUI(playerStat.playerExp.nowExp, playerStat.playerExp.maxExp);
+                PlayerUI.Instance.UpdateSkillLevelUpUI(skillSystem.GetTotalSkillLevel(), skillSystem.GetWeaponSkillLevel(), playerStat.playerExp.level, playerStat.weaponExp.level);
             }
         }
     }

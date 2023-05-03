@@ -34,12 +34,27 @@ public class Jackie : PlayerBase
             ItemManager.Instance.GetItem(ItemManager.Instance.itemList[227]);
         }
     }
-
     public override void Attack()
     {
         base.Attack();
     }
 
+    protected override void InitStat()
+    {
+        base.InitStat();
+        skillSystem.skillInfos[0].cooltime = 9f;
+        skillSystem.skillInfos[0].reduceCooltime = 0.5f;
+        skillSystem.skillInfos[1].cooltime = 19f;
+        skillSystem.skillInfos[1].reduceCooltime = 1.5f;
+        skillSystem.skillInfos[2].cooltime = 24f;
+        skillSystem.skillInfos[2].reduceCooltime = 2f;
+        skillSystem.skillInfos[3].cooltime = 70f;
+        skillSystem.skillInfos[3].reduceCooltime = 10f;
+        skillSystem.skillInfos[4].cooltime = 0f;
+        skillSystem.skillInfos[4].reduceCooltime = 0f;
+        skillSystem.skillInfos[5].cooltime = 0f;
+        skillSystem.skillInfos[5].reduceCooltime = 0f;
+    }
     protected override void Update()
     {
         base.Update();
@@ -218,7 +233,7 @@ public class Jackie : PlayerBase
         photonView.RPC("ShowRangeJackieQ", RpcTarget.All, true);
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 0);
-        StartCoroutine(SkillCooltime(0, 9f - (1.5f * (skillSystem.skillInfos[0].CurrentLevel - 1))));
+        StartCoroutine(SkillCooltime(0, skillSystem.skillInfos[0].cooltime * playerTotalStat.coolDown));
     }
     [PunRPC]
     public void ShowRangeJackieQ(bool flag)
@@ -232,7 +247,7 @@ public class Jackie : PlayerBase
         isWBuffOn = true;
         playerController.ChangeState(new PlayerIdle());
         increaseMoveSpeedBuff = playerTotalStat.moveSpeed * 0.05f + (0.04f * (skillSystem.skillInfos[1].CurrentLevel - 1));
-        StartCoroutine(SkillCooltime(1, 19f - (1.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))));
+        StartCoroutine(SkillCooltime(1, skillSystem.skillInfos[1].cooltime * playerTotalStat.coolDown));
         StartCoroutine(buffCool());
     }
 
@@ -254,7 +269,7 @@ public class Jackie : PlayerBase
         }
         isMove = false;
         StartCoroutine(JackieJump());
-        StartCoroutine(SkillCooltime(2, 24f - (2f * (skillSystem.skillInfos[2].CurrentLevel - 1))));
+        StartCoroutine(SkillCooltime(2, skillSystem.skillInfos[2].cooltime * playerTotalStat.coolDown));
     }
 
     public override void Skill_R()
@@ -324,13 +339,21 @@ public class Jackie : PlayerBase
         }
     }
 
-
-    // (9f - ((skillLevel - 1) * 0.5) *  playerStat.coolDown)
     IEnumerator SkillCooltime(int skillType_, float cooltime_)
     {
         skillCooltimes[skillType_] = true;
-        yield return new WaitForSeconds(cooltime_);
-        skillCooltimes[skillType_] = false;
+        skillSystem.skillInfos[skillType_].currentCooltime = skillSystem.skillInfos[skillType_].cooltime * playerTotalStat.coolDown;
+        while (true)
+        {
+            if (skillSystem.skillInfos[skillType_].currentCooltime <= 0f)
+            {
+                skillCooltimes[skillType_] = false;
+                yield break;
+            }
+            Debug.Log(skillSystem.skillInfos[skillType_].currentCooltime);
+            skillSystem.skillInfos[skillType_].currentCooltime -= Time.deltaTime;
+            yield return null;
+        }
     }
 
     private void RBuffOff()
@@ -340,7 +363,7 @@ public class Jackie : PlayerBase
         playerAni.SetBool("isSkill", false);
         weapon.SetActive(true);
         playerController.ChangeState(new PlayerIdle());
-        StartCoroutine(SkillCooltime(3, 70f));
+        StartCoroutine(SkillCooltime(3, skillSystem.skillInfos[3].cooltime * playerTotalStat.coolDown));
     }
     private void EDamage()
     {
