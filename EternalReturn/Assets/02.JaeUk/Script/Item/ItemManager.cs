@@ -23,6 +23,7 @@ public class ItemManager : SingleTonBase<ItemManager>
     public bool isItemDrop = true;
     public bool isItemPick = false;
     public bool isInventoryFull = false;
+    public bool isItemChage = false;
 
 
     protected override void Awake()
