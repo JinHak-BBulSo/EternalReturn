@@ -572,6 +572,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemBoxUi
       objectReference: {fileID: 0}
+    - target: {fileID: 7458879648041901250, guid: 935c3719471578743bca9af8a24ceb1b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 935c3719471578743bca9af8a24ceb1b, type: 3}
 --- !u!224 &5356055 stripped
