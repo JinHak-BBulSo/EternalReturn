@@ -55,6 +55,10 @@ MonoBehaviour:
   - IncreasePlayer
   - SceneChanger
   - ItemRemove
+  - SetItems
+  - ItemSet
+  - SetAnimationBool
+  - ShowRangeJackieQ
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
