@@ -22,9 +22,10 @@ public class ItemManager : SingleTonBase<ItemManager>
     public ItemStat equipmentTotalState = default;
     public bool isItemDrop = true;
     public bool isItemPick = false;
+    public bool isEquipmentChang = false;
     public bool isInventoryFull = false;
     public bool isItemChage = false;
-
+    public int playerWeaponType;
 
     protected override void Awake()
     {
@@ -511,49 +512,12 @@ public class ItemManager : SingleTonBase<ItemManager>
 
     public void EquipmentListSet(ItemStat item)
     {
-
-
+        if (item.id == playerWeaponType)
+        {
+            equipmentInven[0] = item;
+        }
         switch (item.type)
         {
-            case 1:
-                equipmentInven[0] = item;
-                break;
-            case 2:
-                equipmentInven[0] = item;
-                break;
-            case 3:
-                equipmentInven[0] = item;
-                break;
-            case 4:
-                equipmentInven[0] = item;
-                break;
-            case 5:
-                equipmentInven[0] = item;
-                break;
-            case 6:
-                equipmentInven[0] = item;
-                break;
-            case 7:
-                equipmentInven[0] = item;
-                break;
-            case 8:
-                equipmentInven[0] = item;
-                break;
-            case 9:
-                equipmentInven[0] = item;
-                break;
-            case 10:
-                equipmentInven[0] = item;
-                break;
-            case 11:
-                equipmentInven[0] = item;
-                break;
-            case 12:
-                equipmentInven[0] = item;
-                break;
-            case 13:
-                equipmentInven[0] = item;
-                break;
             case 14:
                 equipmentInven[2] = item;
                 break;
@@ -573,6 +537,7 @@ public class ItemManager : SingleTonBase<ItemManager>
                 break;
 
         }
+        isEquipmentChang = true;
         SetequipmentTotalState();
 
     }

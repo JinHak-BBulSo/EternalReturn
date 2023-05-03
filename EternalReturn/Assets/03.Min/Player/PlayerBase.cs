@@ -633,7 +633,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
 
-            photonView.RPC("SetPlayerStat", RpcTarget.Others, playerStat.nowHp, playerStat.nowStamina);
+            photonView.RPC("SetPlayerHp", RpcTarget.Others, playerStat.nowHp, playerStat.nowStamina);
         }
     }
     public void TakeDamage(DamageMessage message, float damageAmount)
@@ -657,7 +657,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         {
             playerStat.nowHp -= message.damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-            photonView.RPC("SetPlayerStat", RpcTarget.Others, playerStat.nowHp, playerStat.nowStamina);
+            photonView.RPC("SetPlayerHp", RpcTarget.Others, playerStat.nowHp, playerStat.nowStamina);
         }
     }
 
@@ -668,7 +668,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         {
             playerStat.nowHp -= damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-            photonView.RPC("SetPlayerStat", RpcTarget.Others, playerStat.nowHp, playerStat.nowStamina);
+            photonView.RPC("SetPlayerHp", RpcTarget.Others, playerStat.nowHp, playerStat.nowStamina);
         }
     }
 
@@ -827,7 +827,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         playerAni.SetBool(name, flag);
     }
     [PunRPC]
-    private void SetPlayerStat(int level_, float hp_, float mp_, int[] item_, int[] skill)
+    public void SetPlayerStat(int level_, float hp_, float mp_, int[] item_, int[] skill)
     {
         playerStat.playerExp.level = level_;
         playerStat.nowHp = hp_;
@@ -837,7 +837,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     }
 
     [PunRPC]
-    private void SetPlayerStat(float hp_, float mp_)
+    public void SetPlayerHp(float hp_, float mp_)
     {
         playerStat.nowHp = hp_;
         playerStat.nowStamina = mp_;
