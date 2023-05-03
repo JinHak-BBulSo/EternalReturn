@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Linq;
 
 public class ItemDistributer : MonoBehaviourPun
 {
@@ -15,8 +16,8 @@ public class ItemDistributer : MonoBehaviourPun
     void Start()
     {
         areaItemBoxes = GetComponentsInChildren<ItemBox>();
-        ItemSet();
-        //photonView.RPC("ItemSet", RpcTarget.All);
+
+        ItemSetStart();
     }
 
     private void Shuffle(int[] array)
@@ -40,11 +41,22 @@ public class ItemDistributer : MonoBehaviourPun
     }
 
     [PunRPC]
-    private void ItemSet()
+    private void ItemIndexSet(int[] array_)
     {
+        indexArray = array_.ToArray();
+    }
+    
+    public void ItemSetStart()
+    {
+        StartCoroutine(ItemSet());
+    }
+
+    IEnumerator ItemSet()
+    {
+        int r_ = -1;
         foreach(var itemBox in areaItemBoxes)
         {
-            indexArray = new int[itemList.Count];
+            //indexArray = new int[itemList.Count];
 
             while (itemCountList.Contains(0))
             {
@@ -53,28 +65,58 @@ public class ItemDistributer : MonoBehaviourPun
                 itemList.RemoveAt(index);
             }
 
-            indexArray = new int[itemList.Count];
-            
-            for (int i = 0; i < indexArray.Length; i++)
+            if (PhotonNetwork.IsMasterClient)
             {
-                indexArray[i] = i;
+                r_ = Random.Range(2, 6 + 1);
+                indexArray = new int[itemList.Count];
+
+                for (int i = 0; i < indexArray.Length; i++)
+                {
+                    indexArray[i] = i;
+                }
+
+                for (int i = 0; i < 10; i++)
+                {
+                    Shuffle(indexArray);
+                }
+
+                photonView.RPC("ItemIndexSet", RpcTarget.Others, indexArray);
             }
 
-            for (int i = 0; i < 10; i++)
+            if (PhotonNetwork.IsMasterClient)
             {
-                Shuffle(indexArray);
+                BoxSet(itemBox, r_);
+                yield return new WaitForSeconds(0.2f);
             }
-
-            int r = Random.Range(2, 6 + 1);
-            for (int i = 0; i < r; i++)
+            else
             {
-                if (i >= itemList.Count) break;
-                
-                itemBox.itemPrefabs.Add(itemList[indexArray[i]]);
-                itemCountList[indexArray[i]]--;
+                while (true)
+                {
+                    if (indexArray != default)
+                    {
+                        BoxSet(itemBox, r_);
+                        break;
+                    }
+                    else
+                    {
+                        yield return null;
+                    }
+                }
             }
-
-            itemBox.SetItems();
         }
+    }
+
+    private void BoxSet(ItemBox itemBox_, int r_)
+    {
+        for (int i = 0; i < r_; i++)
+        {
+            if (i >= itemList.Count) break;
+
+            itemBox_.itemPrefabs.Add(itemList[indexArray[i]]);
+            itemCountList[indexArray[i]]--;
+        }
+
+        itemBox_.SetItems();
+        indexArray = default;
     }
 }

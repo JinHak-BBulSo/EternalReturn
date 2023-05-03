@@ -31,7 +31,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public PlayerStat playerStat = default;
     public PlayerStat extraStat = default;
     public PlayerStat playerTotalStat = default;
-
     [HideInInspector]
     public Animator playerAni = default;
     [HideInInspector]
@@ -56,16 +55,20 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public GameObject itemBoxUi = default;
     public ItemBoxSlotList itemBoxSlotList = default;
     private bool isMoveAble = true;
-    public AudioClip[] playerAudioClip = default;
-
+    public AudioClip[] audioClips = default;
+    protected AudioSource playerAudio = default;
     //[KJH] Add. PlayerStatusUi
     public GameObject mainUi = default;
     public GameObject playerStatusUiPrefab = default;
     public PlayerStatusUI playerStatusUi = default;
     public GameObject worldCanvas = default;
+    public PlayerSkillSystem skillSystem = default;
+    public int weaponType = 0;
+
 
     protected virtual void Start()
     {
+        playerAudio = GetComponent<AudioSource>();
         transform.SetParent(PlayerManager.Instance.canvas.transform, false);
         playerController = GetComponent<PlayerController>();
         playerAni = GetComponent<Animator>();
@@ -94,8 +97,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
         if (photonView.IsMine)
         {
-
-
             if (playerStat.nowHp <= 0)
             {
                 playerStat.nowHp = 0;
@@ -111,13 +112,13 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             if (isMoveAble && Input.GetMouseButtonDown(1) || (isAttackMove && Input.GetMouseButtonDown(0)))
             {
 
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
-            {
-                NavMeshHit navHit;
-                //[KJH] Add. 마우스 클릭 타겟 기록
-                clickTarget = hit.collider.gameObject;
-                enemy = default;
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+                {
+                    NavMeshHit navHit;
+                    //[KJH] Add. 마우스 클릭 타겟 기록
+                    clickTarget = hit.collider.gameObject;
+                    enemy = default;
 
                     if (clickTarget.GetComponent<Outline>() != null && clickTarget.GetComponent<Outline>().monster != null)
                     {
@@ -198,6 +199,13 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         }
     }
 
+    protected void PlayAudio(AudioClip audioClip_)
+    {
+        if (!playerAudio.isPlaying)
+        {
+            playerAudio.clip = audioClip_;
+        }
+    }
 
     // 스탯 초기값 할당
     private void InitStat()
@@ -287,7 +295,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                     LevelUp(playerStat.playerExp);
                     playerStatusUi.playerExpBar.fillAmount = playerExp_.nowExp / playerExp_.maxExp;
                 }
-                
+
                 playerExp_.nowExp -= playerExp_.maxExp;
                 playerExp_.maxExp += playerExp_.expDelta;
             }
@@ -391,7 +399,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             return;
         }
         isAttackAble = false;
-        
+
         AnimatorStateInfo currentAnimationState = playerAni.GetCurrentAnimatorStateInfo(0);
         float delay_ = currentAnimationState.length - currentAnimationState.length * currentAnimationState.normalizedTime;
         switch (attackType)
@@ -425,7 +433,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         yield return new WaitForSeconds(delay_);
         isAttackAble = true;
 
-        if(isAttackAble && enemy != default)
+        if (isAttackAble && enemy != default)
         {
             playerController.ChangeState(new PlayerAttackMove());
         }
@@ -617,21 +625,26 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
 =======
 =======
 >>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
 =======
 >>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+
+            playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
+>>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
             playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
 
-            playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+            playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
         }
     }
     public void TakeDamage(DamageMessage message, float damageAmount)
     {
         throw new System.NotImplementedException();
->>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
     }
 
     /// <summary>
@@ -649,6 +662,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         playerStat.nowHp -= message.damageAmount;
         playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
 =======
@@ -656,23 +670,32 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 >>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
 =======
 >>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+        playerStat.nowHp -= message.damageAmount;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
+>>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
         if (PhotonNetwork.IsMasterClient)
         {
             playerStat.nowHp -= message.damageAmount;
-            playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+            playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
         }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
 =======
 >>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
 =======
 >>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+>>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
     }
 
 
     public void TakeSolidDamage(DamageMessage message, float damageAmount)
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -683,18 +706,26 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 >>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
 =======
 >>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+        playerStat.nowHp -= damageAmount;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
+>>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
         if (PhotonNetwork.IsMasterClient)
         {
             playerStat.nowHp -= damageAmount;
-            playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+            playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
         }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
 =======
 >>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
 =======
 >>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+>>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
     }
 
     /// <summary>
