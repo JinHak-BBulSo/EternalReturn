@@ -111,13 +111,13 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             if (isMoveAble && Input.GetMouseButtonDown(1) || (isAttackMove && Input.GetMouseButtonDown(0)))
             {
 
-                RaycastHit hit;
-                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
-                {
-                    NavMeshHit navHit;
-                    //[KJH] Add. 마우스 클릭 타겟 기록
-                    clickTarget = hit.collider.gameObject;
-                    enemy = default;
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+            {
+                NavMeshHit navHit;
+                //[KJH] Add. 마우스 클릭 타겟 기록
+                clickTarget = hit.collider.gameObject;
+                enemy = default;
 
                     if (clickTarget.GetComponent<Outline>() != null && clickTarget.GetComponent<Outline>().monster != null)
                     {
@@ -287,7 +287,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                     LevelUp(playerStat.playerExp);
                     playerStatusUi.playerExpBar.fillAmount = playerExp_.nowExp / playerExp_.maxExp;
                 }
-
+                
                 playerExp_.nowExp -= playerExp_.maxExp;
                 playerExp_.maxExp += playerExp_.expDelta;
             }
@@ -391,7 +391,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             return;
         }
         isAttackAble = false;
-
+        
         AnimatorStateInfo currentAnimationState = playerAni.GetCurrentAnimatorStateInfo(0);
         float delay_ = currentAnimationState.length - currentAnimationState.length * currentAnimationState.normalizedTime;
         switch (attackType)
@@ -425,7 +425,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         yield return new WaitForSeconds(delay_);
         isAttackAble = true;
 
-        if (isAttackAble && enemy != default)
+        if(isAttackAble && enemy != default)
         {
             playerController.ChangeState(new PlayerAttackMove());
         }
@@ -614,6 +614,9 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (PhotonNetwork.IsMasterClient)
         {
 
+
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
             playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
 
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
@@ -636,6 +639,9 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     /// <returns></returns>
     public void TakeSolidDamage(DamageMessage message)
     {
+        playerStat.nowHp -= message.damageAmount;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
         if (PhotonNetwork.IsMasterClient)
         {
             playerStat.nowHp -= message.damageAmount;
@@ -646,6 +652,9 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     public void TakeSolidDamage(DamageMessage message, float damageAmount)
     {
+        playerStat.nowHp -= damageAmount;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
         if (PhotonNetwork.IsMasterClient)
         {
             playerStat.nowHp -= damageAmount;
