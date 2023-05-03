@@ -88,7 +88,7 @@ public class ItemDistributer : MonoBehaviourPun
             if (PhotonNetwork.IsMasterClient)
             {
                 BoxSet(itemBox, r);
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(0.15f);
             }
             else
             {

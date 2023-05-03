@@ -80,7 +80,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         //GameObject itemBoxUi_ = Resources.Load<GameObject>("06.ItemBox/Prefab/ItemBoxUI/ItemBoxUi");
 
         mainUi = GameObject.Find("TestUi");
-        itemBoxUi = Instantiate(itemBoxUi, mainUi.transform);
+        itemBoxUi = mainUi.transform.GetChild(3).gameObject;
         itemBoxSlotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
         craftTool.transform.GetChild(0).GetComponent<CraftTool>().craftPlayer = this;
         stunFBX = transform.GetChild(2).gameObject;
