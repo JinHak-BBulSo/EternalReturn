@@ -20,7 +20,11 @@ public class Aya : PlayerBase
     protected override void Start()
     {
         base.Start();
-        ItemManager.Instance.GetItem(ItemManager.Instance.itemList[0]);
+        weaponType = 10;
+        if (photonView.IsMine)
+        {
+            ItemManager.Instance.GetItem(ItemManager.Instance.itemList[14]);
+        }
     }
 
     protected override void Update()
@@ -48,6 +52,7 @@ public class Aya : PlayerBase
             DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower);
             enemy.GetComponent<PlayerBase>().TakeDamage(dm);
         }
+
     }
 
 
@@ -185,7 +190,20 @@ public class Aya : PlayerBase
         StartCoroutine(WSkill());
     }
 
+
     private void Shot()
+    {
+        if (!PhotonNetwork.IsMasterClient && photonView.IsMine)
+        {
+            photonView.RPC("Shotas", RpcTarget.MasterClient);
+        }
+        else if (PhotonNetwork.IsMasterClient && photonView.IsMine)
+        {
+
+        }
+    }
+
+    private void ShotOther()
     {
         AyaBullet bullet = Instantiate(Bullet).GetComponent<AyaBullet>();
         bullet.transform.position = weapon.transform.position;
@@ -269,8 +287,8 @@ public class Aya : PlayerBase
                 transform.position += dir.normalized * Time.deltaTime * playerTotalStat.moveSpeed;
             }
         }
-
     }
+
     public override void Skill_E()
     {
         base.Skill_E();
@@ -305,12 +323,18 @@ public class Aya : PlayerBase
         }
     }
 
+    [PunRPC]
+    public void ShowRangeAyaR(bool flag)
+    {
+        RRange.SetActive(flag);
+    }
     public override void Skill_R()
     {
         base.Skill_R();
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 3);
         RRange.SetActive(true);
+        photonView.RPC("ShowRangeAyaR", RpcTarget.All, true);
         StartCoroutine(RDamage());
     }
 
@@ -347,8 +371,6 @@ public class Aya : PlayerBase
                 damage = (400 + 0.8f * playerTotalStat.attackPower + 1.2f * playerTotalStat.skillPower)
                 - (200 + 0.4f * playerTotalStat.attackPower + 0.6f * playerTotalStat.skillPower) * (time / 1.5f)
                 + (200 + 0.4f * playerTotalStat.attackPower + 0.6f * playerTotalStat.skillPower);
-
-                Debug.Log(damage);
                 DamageMessage dm = new DamageMessage(gameObject, damage);
 
                 for (int i = 0; i < enemyHunt.Count; i++)
@@ -362,6 +384,7 @@ public class Aya : PlayerBase
                     enemyPlayer[i].Debuff(3, time);
                 }
                 RRange.SetActive(false);
+                photonView.RPC("ShowRangeAyaR", RpcTarget.All, false);
                 playerAni.SetBool("isREnd", true);
                 StartCoroutine(SkillCooltime(3, 80f));
                 yield break;
@@ -380,7 +403,14 @@ public class Aya : PlayerBase
                     }
                     else if (hit.transform.gameObject.GetComponent<PlayerBase>() != null)
                     {
-                        enemyPlayer.Add(hit.transform.gameObject.GetComponent<PlayerBase>());
+                        if (hit.transform.GetComponent<PlayerBase>() == this)
+                        {
+
+                        }
+                        else
+                        {
+                            enemyPlayer.Add(hit.transform.gameObject.GetComponent<PlayerBase>());
+                        }
                     }
                 }
                 float damage = 0f;
@@ -396,6 +426,7 @@ public class Aya : PlayerBase
                     enemyPlayer[i].TakeDamage(dm);
                 }
                 RRange.SetActive(false);
+                photonView.RPC("ShowRangeAyaR", RpcTarget.All, false);
                 StartCoroutine(SkillCooltime(3, 80f));
                 playerAni.SetBool("isREnd", true);
                 yield break;
