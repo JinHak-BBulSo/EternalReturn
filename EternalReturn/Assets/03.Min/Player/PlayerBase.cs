@@ -31,7 +31,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public PlayerStat playerStat = default;
     public PlayerStat extraStat = default;
     public PlayerStat playerTotalStat = default;
-
     [HideInInspector]
     public Animator playerAni = default;
     [HideInInspector]
@@ -65,9 +64,13 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public GameObject playerStatusUiPrefab = default;
     public PlayerStatusUI playerStatusUi = default;
     public GameObject worldCanvas = default;
+    public PlayerSkillSystem skillSystem = default;
+    public int weaponType = 0;
+
 
     protected virtual void Start()
     {
+        playerAudio = GetComponent<AudioSource>();
         transform.SetParent(PlayerManager.Instance.canvas.transform, false);
         playerController = GetComponent<PlayerController>();
         playerAni = GetComponent<Animator>();
@@ -207,6 +210,13 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         }
     }
 
+    protected void PlayAudio(AudioClip audioClip_)
+    {
+        if (!playerAudio.isPlaying)
+        {
+            playerAudio.clip = audioClip_;
+        }
+    }
 
     // 스탯 초기값 할당
     private void InitStat()
