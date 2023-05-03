@@ -31,7 +31,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public PlayerStat playerStat = default;
     public PlayerStat extraStat = default;
     public PlayerStat playerTotalStat = default;
-
     [HideInInspector]
     public Animator playerAni = default;
     [HideInInspector]
@@ -65,9 +64,13 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public GameObject playerStatusUiPrefab = default;
     public PlayerStatusUI playerStatusUi = default;
     public GameObject worldCanvas = default;
+    public PlayerSkillSystem skillSystem = default;
+    public int weaponType = 0;
+
 
     protected virtual void Start()
     {
+        playerAudio = GetComponent<AudioSource>();
         transform.SetParent(PlayerManager.Instance.canvas.transform, false);
         playerController = GetComponent<PlayerController>();
         playerAni = GetComponent<Animator>();
@@ -82,13 +85,14 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         //GameObject itemBoxUi_ = Resources.Load<GameObject>("06.ItemBox/Prefab/ItemBoxUI/ItemBoxUi");
 
         mainUi = GameObject.Find("TestUi");
-        itemBoxUi = Instantiate(itemBoxUi, mainUi.transform);
+        itemBoxUi = mainUi.transform.GetChild(3).gameObject;
         itemBoxSlotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
         craftTool.transform.GetChild(0).GetComponent<CraftTool>().craftPlayer = this;
         stunFBX = transform.GetChild(2).gameObject;
 
         worldCanvas = GameObject.Find("WorldCanvas");
         playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform).GetComponent<PlayerStatusUI>();
+        playerStatusUi.player = this;
     }
 
 
@@ -207,6 +211,13 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         }
     }
 
+    protected void PlayAudio(AudioClip audioClip_)
+    {
+        if (!playerAudio.isPlaying)
+        {
+            playerAudio.clip = audioClip_;
+        }
+    }
 
     // 스탯 초기값 할당
     private void InitStat()
@@ -627,14 +638,32 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (PhotonNetwork.IsMasterClient)
         {
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+=======
+=======
+>>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+>>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+>>>>>>> origin/Dev
 
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
 
+>>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
             playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
 
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+<<<<<<< HEAD
 
             photonView.RPC("SetPlayerHp", RpcTarget.Others, playerStat.nowHp, playerStat.nowStamina);
+=======
+>>>>>>> origin/Dev
         }
     }
     public void TakeDamage(DamageMessage message, float damageAmount)
@@ -654,23 +683,87 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     /// <returns></returns>
     public void TakeSolidDamage(DamageMessage message)
     {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+        playerStat.nowHp -= message.damageAmount;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+=======
+=======
+>>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+>>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+        playerStat.nowHp -= message.damageAmount;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
+>>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
+>>>>>>> origin/Dev
         if (PhotonNetwork.IsMasterClient)
         {
             playerStat.nowHp -= message.damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+<<<<<<< HEAD
             photonView.RPC("SetPlayerHp", RpcTarget.Others, playerStat.nowHp, playerStat.nowStamina);
+=======
+>>>>>>> origin/Dev
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+>>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+>>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+>>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
     }
 
 
     public void TakeSolidDamage(DamageMessage message, float damageAmount)
     {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+        playerStat.nowHp -= damageAmount;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+=======
+=======
+>>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+>>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+        playerStat.nowHp -= damageAmount;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
+>>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
+>>>>>>> origin/Dev
         if (PhotonNetwork.IsMasterClient)
         {
             playerStat.nowHp -= damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+<<<<<<< HEAD
             photonView.RPC("SetPlayerHp", RpcTarget.Others, playerStat.nowHp, playerStat.nowStamina);
+=======
+>>>>>>> origin/Dev
         }
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+>>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+>>>>>>> ca988b18be841db9b1eac7059c260bce72899c3a
+=======
+>>>>>>> 7af11bf953bb9fc86328ad5cf58525ad8ab1daab
     }
 
     /// <summary>

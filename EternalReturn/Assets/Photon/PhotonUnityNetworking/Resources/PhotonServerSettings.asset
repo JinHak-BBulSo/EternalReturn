@@ -62,6 +62,11 @@ MonoBehaviour:
   - ItemIndexSet
   - SetPlayerHp
   - SetPlayerStat
+<<<<<<< HEAD
+  - ShowRangeAyaR
+  - ShowRangeJackieE
+=======
+>>>>>>> a58d4811635dabfff56e12fd37fb93504fbaf832
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
