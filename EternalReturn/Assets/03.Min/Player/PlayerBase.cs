@@ -56,9 +56,10 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public GameObject itemBoxUi = default;
     public ItemBoxSlotList itemBoxSlotList = default;
     private bool isMoveAble = true;
-    public AudioClip[] playerAudioClip = default;
     public int[] item = new int[6];
 
+    public AudioClip[] audioClips = default;
+    protected AudioSource playerAudio = default;
     //[KJH] Add. PlayerStatusUi
     public GameObject mainUi = default;
     public GameObject playerStatusUiPrefab = default;
