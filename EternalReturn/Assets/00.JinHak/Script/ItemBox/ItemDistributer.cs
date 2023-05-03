@@ -85,6 +85,10 @@ public class ItemDistributer : MonoBehaviourPun
     [PunRPC]
     private void BoxSet(int itemBoxIndex_, int index_)
     {
+        if(allItemBox == default)
+        {
+            allItemBox = transform.parent.GetComponent<AllItemBox>();
+        }
         allItemBox.allItemBoxes[itemBoxIndex_].AddItem(index_);
     }
 }
