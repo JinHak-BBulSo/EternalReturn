@@ -41,11 +41,16 @@ public class Monster : MonoBehaviour, IHitHandler
 
     private bool isFirstSpawn = false;
 
+    public AudioSource audioSource = default;
+    // 0 = 어택, 1 = 히트, 2 = 사망, 3 = 레디
+    public List<AudioClip> sounds = new List<AudioClip>();
+
     void Awake()
     {
         monsterController = GetComponent<MonsterController>();
         spawnPoint = transform.parent.GetComponent<MonsterSpawnPoint>();
         monsterBattleArea = spawnPoint.transform.GetChild(0).GetComponent<MonsterBattleArea>();
+        audioSource = GetComponent<AudioSource>();
         monsterItemBox = GetComponent<ItemBox>();
 
         spawnPoint.monster = this;
@@ -157,10 +162,14 @@ public class Monster : MonoBehaviour, IHitHandler
         DamageMessage dm = new DamageMessage(target_, damageAmount_);
         monsterController.targetPlayer.TakeDamage(dm);*/
     }
-
+    public void SoundPlay()
+    {
+        audioSource.Play();
+    }
     public virtual void Appear()
     {
         monsterController.monsterAni.SetTrigger("Appear");
+        audioSource.clip = sounds[3];
     }
     public virtual void ExitAppear()
     {
@@ -173,7 +182,6 @@ public class Monster : MonoBehaviour, IHitHandler
         {
             firstAttackPlayer = message.causer.GetComponent<PlayerBase>();
             monsterController.targetPlayer = firstAttackPlayer;
-            Debug.Log(firstAttackPlayer);
         }
         else
         {

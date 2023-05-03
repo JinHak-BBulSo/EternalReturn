@@ -9,6 +9,7 @@ public class MonsterBeware : IMonsterState
     {
         this.monsterController = monsterCtrl_;
         monsterController.monsterState = MonsterController.MonsterState.BEWARE;
+        monsterController.monster.audioSource.clip = monsterController.monster.sounds[3];
         Beware();
     }
     public void StateFixedUpdate()

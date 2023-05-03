@@ -11,6 +11,7 @@ public class MonsterAttack : IMonsterState
         this.monsterController = monsterCtrl_;
         monsterController.monsterState = MonsterController.MonsterState.ATTACk;
         Attack();
+        monsterController.monster.audioSource.clip = monsterController.monster.sounds[0];
         monsterController.navMeshAgent.enabled = false;
     }
 

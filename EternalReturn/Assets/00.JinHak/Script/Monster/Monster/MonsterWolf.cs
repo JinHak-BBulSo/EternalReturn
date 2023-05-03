@@ -7,7 +7,7 @@ public class MonsterWolf : Monster
     [SerializeField]
     GameObject skillRange = default;
 
-    private float skillCoolTime = 30f;
+    private float skillCoolTime = 40f;
     private bool isAssult = false;
     public WolfSkill wolfSkillMesh = default;
 
@@ -20,6 +20,8 @@ public class MonsterWolf : Monster
     public override void Skill()
     {
         base.Skill();
+        int r_ = Random.Range(4, 5 + 1);
+        audioSource.clip = sounds[r_];
         monsterController.monsterAni.SetBool("isSkill", true);
         skillRange.SetActive(true);
     }
