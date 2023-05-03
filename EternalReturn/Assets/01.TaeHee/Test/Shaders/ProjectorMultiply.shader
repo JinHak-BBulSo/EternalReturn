@@ -5,7 +5,7 @@ Shader "TheFallenRealm/Fog/Projector" {
 		_StartTime ("time", float) = 0
 	}
 	Subshader {
-		Tags {"Queue"="Transparent"}
+		Tags {"Queue"="Transparent+100"}
 		Pass {
 			ZWrite Off
 			ColorMask RGB
