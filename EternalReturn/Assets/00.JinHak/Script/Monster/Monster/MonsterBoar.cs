@@ -25,11 +25,13 @@ public class MonsterBoar : Monster
 
     IEnumerator SkillReady()
     {
+        audioSource.clip = sounds[4];
         StartCoroutine(SkillCoolTime(skillCoolTime));
         skillRange.SetActive(true);
         monsterController.monsterAni.SetBool("isSkillReady", true);
         monsterController.navMeshAgent.enabled = false;
         yield return new WaitForSeconds(3f);
+        audioSource.clip = sounds[5];
         SkillAssult();
     }
 

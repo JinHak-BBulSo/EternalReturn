@@ -9,6 +9,7 @@ public class MonsterDie : IMonsterState
     {
         this.monsterController = monsterCtrl_;
         monsterController.monsterState = MonsterController.MonsterState.DIE;
+        monsterController.monster.audioSource.clip = monsterController.monster.sounds[2];
         Die();
         monsterController.CallCoroutine(EraseMonster());
         monsterController.monster.SpawnPoint.RespawnMonster();

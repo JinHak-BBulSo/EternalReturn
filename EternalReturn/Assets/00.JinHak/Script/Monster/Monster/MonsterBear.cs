@@ -20,12 +20,14 @@ public class MonsterBear : Monster
     public override void Skill()
     {
         base.Skill();
+        audioSource.clip = sounds[5];
         monsterController.monsterAni.SetBool("isSkill", true);
         skillRange.SetActive(true);
     }
 
     private void SkillAassult()
     {
+        audioSource.clip = sounds[6];
         foreach (var player in bearSkillMesh.targetPlayers)
         {
             DamageMessage dm = new DamageMessage(this.gameObject, 100, 3, 1.5f);

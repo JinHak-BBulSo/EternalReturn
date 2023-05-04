@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemBoxSlot : MonoBehaviourPun
 {   
@@ -11,6 +12,8 @@ public class ItemBoxSlot : MonoBehaviourPun
     public ItemStat cloneItem = new ItemStat();
     public GameObject fullInvenTxt = default;
     public AllItemBox allItemBox = default;
+    public Image slotItemImage = default;
+    public Text slotItemCount = default;
 
     public void OnClick()
     {

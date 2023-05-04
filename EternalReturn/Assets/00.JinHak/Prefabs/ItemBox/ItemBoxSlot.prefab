@@ -373,6 +373,9 @@ MonoBehaviour:
     isEquipment: 0
     isItemWishList: 0
   fullInvenTxt: {fileID: 0}
+  allItemBox: {fileID: 0}
+  slotItemImage: {fileID: 4500685525465525928}
+  slotItemCount: {fileID: 4500685524742235488}
 --- !u!114 &5233344830615412817
 MonoBehaviour:
   m_ObjectHideFlags: 0

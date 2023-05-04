@@ -60,6 +60,11 @@ MonoBehaviour:
   - MasterCallShot
   - CallShot
   - ItemIndexSet
+<<<<<<< HEAD
+  - SetPlayerHp
+  - SetPlayerStat
+=======
+>>>>>>> origin/Dev
   - ShowRangeAyaR
   - ShowRangeJackieE
   - BoxSet

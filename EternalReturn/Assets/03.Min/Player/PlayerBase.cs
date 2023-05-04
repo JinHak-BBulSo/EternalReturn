@@ -55,6 +55,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public GameObject itemBoxUi = default;
     public ItemBoxSlotList itemBoxSlotList = default;
     private bool isMoveAble = true;
+    public int[] item = new int[6];
     public AudioClip[] audioClips = default;
     protected AudioSource playerAudio = default;
     //[KJH] Add. PlayerStatusUi
@@ -64,6 +65,9 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public GameObject worldCanvas = default;
     public PlayerSkillSystem skillSystem = default;
     public int weaponType = 0;
+    private float regenTime = 0f;
+    public int huntKill = 0;
+    public int playerKill = 0;
 
 
     protected virtual void Start()
@@ -90,6 +94,10 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         worldCanvas = GameObject.Find("WorldCanvas");
         playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform).GetComponent<PlayerStatusUI>();
         playerStatusUi.player = this;
+        if (photonView.IsMine)
+        {
+            ItemManager.Instance.Player = this;
+        }
         skillSystem = GetComponent<PlayerSkillSystem>();
         InitStat();
     }
@@ -99,15 +107,25 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
         if (photonView.IsMine)
         {
-            TestLevelUp();
+            if (ItemManager.Instance.isEquipmentChang)
+            {
+                ItemManager.Instance.isEquipmentChang = false;
+
+                AddTotalStat();
+                ItemChang();
+
+            }
             if (playerStat.nowHp <= 0)
             {
                 playerStat.nowHp = 0;
                 playerController.ChangeState(new PlayerDie());
                 return;
             }
+            TestLevelUp();
             ShowAttackRange();
             DisableAttackRange();
+            Regen();
+            Skill_T();
             RaycastHit mousePoint;
             Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mousePoint);
             nowMousePoint = mousePoint.point;
@@ -238,29 +256,42 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     public void AddExtraStat() // 아이템 추가스텟
     {
-        extraStat.attackPower = ItemManager.Instance.equipmentTotalState.attackPower;
-        extraStat.defense = ItemManager.Instance.equipmentTotalState.defense;
-        extraStat.armorReduce = ItemManager.Instance.equipmentTotalState.armorReduce;
-        extraStat.attackRange = ItemManager.Instance.equipmentTotalState.attackRange;
-        extraStat.attackSpeed = ItemManager.Instance.equipmentTotalState.attackSpeed;
-        extraStat.basicAttackPower = ItemManager.Instance.equipmentTotalState.basicAttackPower;
-        extraStat.coolDown = ItemManager.Instance.equipmentTotalState.coolDown;
-        extraStat.criticalDamage = ItemManager.Instance.equipmentTotalState.criticalDamage;
-        extraStat.criticalPercent = ItemManager.Instance.equipmentTotalState.criticalPercent;
-        extraStat.damageReduce = ItemManager.Instance.equipmentTotalState.damageReduce;
-        extraStat.extraHp = ItemManager.Instance.equipmentTotalState.extraHp;
-        extraStat.extraStamina = ItemManager.Instance.equipmentTotalState.extraStamina;
-        extraStat.hpRegen = ItemManager.Instance.equipmentTotalState.hpRegen;
-        extraStat.lifeSteel = ItemManager.Instance.equipmentTotalState.lifeSteel;
-        extraStat.staminaRegen = ItemManager.Instance.equipmentTotalState.staminaRegen;
-        extraStat.moveSpeed = ItemManager.Instance.equipmentTotalState.moveSpeed;
-        extraStat.skillPower = ItemManager.Instance.equipmentTotalState.skillPower;
-        extraStat.tenacity = ItemManager.Instance.equipmentTotalState.tenacity;
-        extraStat.visionRange = ItemManager.Instance.equipmentTotalState.visionRange;
+        extraStat = new PlayerStat();
+        for (int i = 0; i < item.Length; i++)
+        {
+            if (item[i] != 0)
+            {
+                extraStat.attackPower += ItemManager.Instance.itemList[item[i] - 1].attackPower;
+                extraStat.defense += ItemManager.Instance.itemList[item[i] - 1].defense;
+                extraStat.armorReduce += ItemManager.Instance.itemList[item[i] - 1].armorReduce;
+                extraStat.attackRange += ItemManager.Instance.itemList[item[i] - 1].attackRange;
+                extraStat.attackSpeed += ItemManager.Instance.itemList[item[i] - 1].attackSpeed;
+                extraStat.basicAttackPower += ItemManager.Instance.itemList[item[i] - 1].basicAttackPower;
+                extraStat.coolDown += ItemManager.Instance.itemList[item[i] - 1].coolDown;
+                extraStat.criticalDamage += ItemManager.Instance.itemList[item[i] - 1].criticalDamage;
+                extraStat.criticalPercent += ItemManager.Instance.itemList[item[i] - 1].criticalPercent;
+                extraStat.damageReduce += ItemManager.Instance.itemList[item[i] - 1].damageReduce;
+                extraStat.extraHp += ItemManager.Instance.itemList[item[i] - 1].extraHp;
+                extraStat.extraStamina += ItemManager.Instance.itemList[item[i] - 1].extraStamina;
+                extraStat.hpRegen += ItemManager.Instance.itemList[item[i] - 1].hpRegen;
+                extraStat.lifeSteel += ItemManager.Instance.itemList[item[i] - 1].lifeSteel;
+                extraStat.staminaRegen += ItemManager.Instance.itemList[item[i] - 1].staminaRegen;
+                extraStat.moveSpeed += ItemManager.Instance.itemList[item[i] - 1].moveSpeed;
+                extraStat.skillPower += ItemManager.Instance.itemList[item[i] - 1].skillPower;
+                extraStat.tenacity += ItemManager.Instance.itemList[item[i] - 1].tenacity;
+                extraStat.visionRange += ItemManager.Instance.itemList[item[i] - 1].visionRange;
+            }
+
+        }
+
     }
 
     public void AddTotalStat() // 플레이어 총 스탯
     {
+        for (int i = 0; i < item.Length; i++)
+        {
+            item[i] = ItemManager.Instance.equipmentInven[i].id;
+        }
         AddExtraStat();
         playerTotalStat.attackPower = playerStat.attackPower + extraStat.attackPower;
         playerTotalStat.defense = playerStat.defense + extraStat.defense;
@@ -563,14 +594,37 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
     }
 
-    public void Rest()
+    public void Regen()
     {
-        if (!photonView.IsMine)
+        if (playerController.playerState == PlayerController.PlayerState.DIE)
         {
             return;
         }
-        playerStat.nowHp += playerStat.maxHp * 0.1f;
+        if (regenTime >= 0.5f)
+        {
+            regenTime = 0f;
+            if (playerStat.nowHp < playerTotalStat.maxHp)
+            {
+                playerStat.nowHp += playerTotalStat.hpRegen * 0.5f;
+                if (playerStat.nowHp >= playerTotalStat.maxHp)
+                {
+                    playerStat.nowHp = playerTotalStat.maxHp;
+                }
+            }
+            if (playerStat.nowStamina < playerTotalStat.maxStamina)
+            {
+                playerStat.nowStamina += playerTotalStat.staminaRegen * 0.5f;
+                if (playerStat.nowStamina >= playerTotalStat.maxStamina)
+                {
+                    playerStat.nowStamina = playerTotalStat.maxStamina;
+                }
+            }
+        }
+        regenTime += Time.deltaTime;
+
     }
+
+
 
     public virtual void Skill_Q()
     {
@@ -620,6 +674,20 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             return;
         }
     }
+
+    public void DieCheck(DamageMessage message)
+    {
+        if (playerStat.nowHp <= 0)
+        {
+            playerStat.nowHp = 0;
+            if (message.causer.GetComponent<PlayerBase>() != null)
+            {
+                message.causer.GetComponent<PlayerBase>().playerKill++;
+            }
+            playerController.ChangeState(new PlayerDie());
+            return;
+        }
+    }
     /// <summary>
     /// 기본 공격 공식
     /// 공격력 * 기본공격증폭 = message.damageAmount
@@ -634,14 +702,14 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
         if (PhotonNetwork.IsMasterClient)
         {
-
-            playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-
-
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
             playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
 
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
+            DieCheck(message);
+
+            photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
         }
     }
     public void TakeDamage(DamageMessage message, float damageAmount)
@@ -661,33 +729,24 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     /// <returns></returns>
     public void TakeSolidDamage(DamageMessage message)
     {
-        playerStat.nowHp -= message.damageAmount;
-        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-
-        playerStat.nowHp -= message.damageAmount;
-        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-
         if (PhotonNetwork.IsMasterClient)
         {
             playerStat.nowHp -= message.damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+            DieCheck(message);
+            photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
         }
     }
 
 
     public void TakeSolidDamage(DamageMessage message, float damageAmount)
     {
-
-        playerStat.nowHp -= damageAmount;
-        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-
-        playerStat.nowHp -= damageAmount;
-        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-
         if (PhotonNetwork.IsMasterClient)
         {
             playerStat.nowHp -= damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+            DieCheck(message);
+            photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
         }
     }
 
@@ -757,7 +816,15 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     /// <param name="debuffIndex_"></param>
     /// <returns></returns>
     /// 
+    [PunRPC]
     public void Debuff(int debuffIndex_, float continousTime_)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("DebuffSet", RpcTarget.All, debuffIndex_, continousTime_);
+        }
+    }
+    public void DebuffSet(int debuffIndex_, float continousTime_)
     {
         StartCoroutine(DebuffStart(debuffIndex_, continousTime_));
     }
@@ -834,6 +901,24 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             applyDebuffCheck[debuffIndex_] = false;
         }
     }
+    void ItemChang()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("SetPlayerStat", RpcTarget.MasterClient,
+            playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, new int[5]);
+        }
+        else
+        {
+            photonView.RPC("SetPlayerStat", RpcTarget.Others,
+             playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, new int[5]);
+        }
+    }
+    void MasterSpread()
+    {
+        photonView.RPC("SetPlayerStat", RpcTarget.Others,
+                     playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, new int[5]);
+    }
 
     IEnumerator ContinousDamageEnd(float debuffContinousTime_, int debuffIndex_, float debuffDamage_)
     {
@@ -844,5 +929,26 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public void SetAnimationBool(string name, bool flag)
     {
         playerAni.SetBool(name, flag);
+    }
+    [PunRPC]
+    public void SetPlayerStat(int level_, float hp_, float mp_, int[] item_, int[] Skill_)
+    {
+        playerStat.playerExp.level = level_;
+        playerStat.nowHp = hp_;
+        playerStat.nowStamina = mp_;
+        item = item_;
+        AddExtraStat();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            MasterSpread();
+        }
+
+    }
+    [PunRPC]
+    public void SetPlayerStat(float hp_, float mp_)
+    {
+        playerStat.nowHp = hp_;
+        playerStat.nowStamina = mp_;
+
     }
 }

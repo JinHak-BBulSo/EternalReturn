@@ -33,7 +33,7 @@ public class Equipment : SlotList
                 {
                     ItemSlot[i].transform.GetChild(1).GetComponent<Image>().sprite = ItemManager.Instance.itemListObj[equipment[i].id].GetComponent<SpriteRenderer>().sprite;
                     ItemSlot[i].transform.GetChild(1).gameObject.SetActive(true);
-                    switch (itemListClone[equipment[i].id].rare)
+                    switch (itemListClone[equipment[i].id - 1].rare)
                     {
                         case 1:
                             ItemSlot[i].transform.GetChild(0).GetComponent<Image>().color = new Color(0.3f, 0.43f, 0.29f, 1f);
