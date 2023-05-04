@@ -68,10 +68,13 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     private float regenTime = 0f;
     public int huntKill = 0;
     public int playerKill = 0;
-
+    private Outline playerOutLine = default;
 
     protected virtual void Start()
     {
+        playerOutLine = GetComponent<Outline>();
+        playerOutLine.player = this;
+        playerOutLine.enabled = false;
         playerAudio = GetComponent<AudioSource>();
         transform.SetParent(PlayerManager.Instance.canvas.transform, false);
         playerController = GetComponent<PlayerController>();
@@ -147,6 +150,16 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                         if (!monster.isDie)
                         {
                             enemy = monster.gameObject;
+                            isAttackMove = true;
+                            playerController.ChangeState(new PlayerAttackMove());
+                        }
+                    }
+                    else if (clickTarget.GetComponent<Outline>() != null && clickTarget.GetComponent<Outline>().player != null && clickTarget.gameObject != this.gameObject)
+                    {
+                        PlayerBase player = clickTarget.GetComponent<Outline>().player;
+                        if (playerController.playerState != PlayerController.PlayerState.DIE)
+                        {
+                            enemy = player.gameObject;
                             isAttackMove = true;
                             playerController.ChangeState(new PlayerAttackMove());
                         }
@@ -950,5 +963,20 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         playerStat.nowHp = hp_;
         playerStat.nowStamina = mp_;
 
+    }
+
+    private void OnMouseEnter()
+    {
+        if (this.gameObject != PlayerManager.Instance.Player)
+        {
+            playerOutLine.enabled = true;
+        }
+    }
+    private void OnMouseExit()
+    {
+        if (this.gameObject != PlayerManager.Instance.Player)
+        {
+            playerOutLine.enabled = false;
+        }
     }
 }

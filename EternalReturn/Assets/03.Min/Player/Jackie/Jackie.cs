@@ -355,7 +355,7 @@ public class Jackie : PlayerBase
     IEnumerator SkillCooltime(int skillType_, float cooltime_)
     {
         skillCooltimes[skillType_] = true;
-        skillSystem.skillInfos[skillType_].currentCooltime = skillSystem.skillInfos[skillType_].cooltime * playerTotalStat.coolDown;
+        skillSystem.skillInfos[skillType_].currentCooltime = skillSystem.skillInfos[skillType_].cooltime * ((100 - playerTotalStat.coolDown) / 100);
         while (true)
         {
             if (skillSystem.skillInfos[skillType_].currentCooltime <= 0f)
