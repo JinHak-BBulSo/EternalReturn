@@ -52,7 +52,7 @@ public class SkillUI : MonoBehaviour
     public virtual void UpdateInteractable(int playerLevel, int weaponMasteryLevel)
     {
         button.gameObject.SetActive(true);
-        //button.interactable = (skillInfo.CurrentLevel < skillInfo.MaxLevel) ? true : false;
+        button.interactable = (skillInfo.CurrentLevel < skillInfo.MaxLevel) ? true : false;
     }
 
     public void HideLevelUpUI()
