@@ -9657,42 +9657,42 @@ PrefabInstance:
     - target: {fileID: 1249314879715718232, guid: 935c3719471578743bca9af8a24ceb1b,
         type: 3}
       propertyPath: sceneViewId
-      value: 0
+      value: 230
       objectReference: {fileID: 0}
     - target: {fileID: 3396788204915541862, guid: 935c3719471578743bca9af8a24ceb1b,
         type: 3}
       propertyPath: sceneViewId
-      value: 0
+      value: 228
       objectReference: {fileID: 0}
     - target: {fileID: 3396788205071164123, guid: 935c3719471578743bca9af8a24ceb1b,
         type: 3}
       propertyPath: sceneViewId
-      value: 0
+      value: 226
       objectReference: {fileID: 0}
     - target: {fileID: 3396788205190012570, guid: 935c3719471578743bca9af8a24ceb1b,
         type: 3}
       propertyPath: sceneViewId
-      value: 0
+      value: 223
       objectReference: {fileID: 0}
     - target: {fileID: 3396788205503321238, guid: 935c3719471578743bca9af8a24ceb1b,
         type: 3}
       propertyPath: sceneViewId
-      value: 0
+      value: 224
       objectReference: {fileID: 0}
     - target: {fileID: 3396788206190957624, guid: 935c3719471578743bca9af8a24ceb1b,
         type: 3}
       propertyPath: sceneViewId
-      value: 0
+      value: 229
       objectReference: {fileID: 0}
     - target: {fileID: 3396788206343673604, guid: 935c3719471578743bca9af8a24ceb1b,
         type: 3}
       propertyPath: sceneViewId
-      value: 0
+      value: 227
       objectReference: {fileID: 0}
     - target: {fileID: 3396788206522946553, guid: 935c3719471578743bca9af8a24ceb1b,
         type: 3}
       propertyPath: sceneViewId
-      value: 0
+      value: 225
       objectReference: {fileID: 0}
     - target: {fileID: 6482621766886919248, guid: 935c3719471578743bca9af8a24ceb1b,
         type: 3}
@@ -10057,12 +10057,12 @@ PrefabInstance:
     - target: {fileID: 7458879648041901249, guid: 935c3719471578743bca9af8a24ceb1b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -640
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7458879648041901249, guid: 935c3719471578743bca9af8a24ceb1b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -360
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7458879648041901249, guid: 935c3719471578743bca9af8a24ceb1b,
         type: 3}
@@ -10083,6 +10083,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ItemBoxUi
+      objectReference: {fileID: 0}
+    - target: {fileID: 7458879648041901250, guid: 935c3719471578743bca9af8a24ceb1b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 935c3719471578743bca9af8a24ceb1b, type: 3}
