@@ -37,11 +37,9 @@ public class Jackie : PlayerBase
         {
             ItemManager.Instance.SetDefault(weaponType);
             ItemManager.Instance.GetItem(ItemManager.Instance.itemList[227]);
-
+            item[0] = 277;
         }
-        item[0] = 228;
         AddTotalStat();
-        ItemChang();
     }
     public override void Attack()
     {
@@ -249,7 +247,7 @@ public class Jackie : PlayerBase
         photonView.RPC("ShowRangeJackieQ", RpcTarget.All, true);
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 0);
-        StartCoroutine(SkillCooltime(0, skillSystem.skillInfos[0].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
+        StartCoroutine(SkillCooltime(0, skillSystem.skillInfos[0].cooltime * playerTotalStat.coolDown));
     }
     [PunRPC]
     public void ShowRangeJackieQ(bool flag)
@@ -263,7 +261,7 @@ public class Jackie : PlayerBase
         isWBuffOn = true;
         playerController.ChangeState(new PlayerIdle());
         increaseMoveSpeedBuff = playerTotalStat.moveSpeed * 0.05f + (0.04f * (skillSystem.skillInfos[1].CurrentLevel - 1));
-        StartCoroutine(SkillCooltime(1, skillSystem.skillInfos[1].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
+        StartCoroutine(SkillCooltime(1, skillSystem.skillInfos[1].cooltime * playerTotalStat.coolDown));
         StartCoroutine(buffCool());
     }
 
@@ -285,7 +283,7 @@ public class Jackie : PlayerBase
         }
         isMove = false;
         StartCoroutine(JackieJump());
-        StartCoroutine(SkillCooltime(2, skillSystem.skillInfos[2].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
+        StartCoroutine(SkillCooltime(2, skillSystem.skillInfos[2].cooltime * playerTotalStat.coolDown));
     }
 
     public override void Skill_R()
@@ -358,7 +356,7 @@ public class Jackie : PlayerBase
     IEnumerator SkillCooltime(int skillType_, float cooltime_)
     {
         skillCooltimes[skillType_] = true;
-        skillSystem.skillInfos[skillType_].currentCooltime = skillSystem.skillInfos[skillType_].cooltime * ((100 - playerTotalStat.coolDown) / 100);
+        skillSystem.skillInfos[skillType_].currentCooltime = skillSystem.skillInfos[skillType_].cooltime * playerTotalStat.coolDown;
         while (true)
         {
             if (skillSystem.skillInfos[skillType_].currentCooltime <= 0f)
@@ -379,7 +377,7 @@ public class Jackie : PlayerBase
         playerAni.SetBool("isSkill", false);
         weapon.SetActive(true);
         playerController.ChangeState(new PlayerIdle());
-        StartCoroutine(SkillCooltime(3, skillSystem.skillInfos[3].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
+        StartCoroutine(SkillCooltime(3, skillSystem.skillInfos[3].cooltime * playerTotalStat.coolDown));
     }
     private void EDamage()
     {
@@ -569,6 +567,8 @@ public class Jackie : PlayerBase
             {
                 // 코루틴 멈추기
                 StopCoroutine("PassiveBuff");
+                playerTotalStat.attackPower -= increaseAttackPower;
+                isPassiveOn = false;
                 StartCoroutine(PassiveBuff(1));
             }
             else
@@ -582,6 +582,8 @@ public class Jackie : PlayerBase
             if (isPassiveOn)
             {
                 StopCoroutine("PassiveBuff");
+                playerTotalStat.attackPower -= increaseAttackPower;
+                isPassiveOn = false;
                 StartCoroutine(PassiveBuff(0));
             }
             else
