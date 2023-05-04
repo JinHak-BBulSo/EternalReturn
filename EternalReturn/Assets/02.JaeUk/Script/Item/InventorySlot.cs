@@ -12,21 +12,19 @@ public class InventorySlot : Slot, IDragHandler, IEndDragHandler, IBeginDragHand
     public override void Start()
     {
         base.Start();
-        playerWeaponType = 1;
     }
     // Start is called before the first frame update
     public override void UseItem(int i)
     {
         if (!chk)
         {
-            Debug.Log("UnActive");
             if (ItemManager.Instance.inventory.Count < i + 1)
             {
 
             }
             else
             {
-                if (ItemManager.Instance.inventory[i].type == playerWeaponType)
+                if (ItemManager.Instance.inventory[i].type == ItemManager.Instance.Player.weaponType)
                 {
                     Switching(i, 0);
                 }
@@ -59,6 +57,7 @@ public class InventorySlot : Slot, IDragHandler, IEndDragHandler, IBeginDragHand
                     }
                 }
                 chk = false;
+                ItemManager.Instance.isEquipmentChang = true;
             }
 
         }
