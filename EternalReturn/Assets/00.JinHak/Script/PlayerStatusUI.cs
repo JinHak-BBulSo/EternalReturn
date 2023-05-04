@@ -29,7 +29,10 @@ public class PlayerStatusUI : MonoBehaviour
 
     private void Update()
     {
-        transform.position = player.transform.position + offset;
-        playerHpBar.fillAmount = player.playerStat.nowHp / player.playerStat.maxHp;
+        if (player != default)
+        {
+            transform.position = player.transform.position + offset;
+            playerHpBar.fillAmount = player.playerStat.nowHp / player.playerStat.maxHp;
+        }
     }
 }

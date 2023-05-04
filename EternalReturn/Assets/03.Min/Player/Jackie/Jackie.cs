@@ -37,8 +37,9 @@ public class Jackie : PlayerBase
         {
             ItemManager.Instance.SetDefault(weaponType);
             ItemManager.Instance.GetItem(ItemManager.Instance.itemList[227]);
-            AddTotalStat();
+            item[0] = 277;
         }
+        AddTotalStat();
     }
     public override void Attack()
     {
@@ -566,6 +567,8 @@ public class Jackie : PlayerBase
             {
                 // 코루틴 멈추기
                 StopCoroutine("PassiveBuff");
+                playerTotalStat.attackPower -= increaseAttackPower;
+                isPassiveOn = false;
                 StartCoroutine(PassiveBuff(1));
             }
             else
@@ -579,6 +582,8 @@ public class Jackie : PlayerBase
             if (isPassiveOn)
             {
                 StopCoroutine("PassiveBuff");
+                playerTotalStat.attackPower -= increaseAttackPower;
+                isPassiveOn = false;
                 StartCoroutine(PassiveBuff(0));
             }
             else

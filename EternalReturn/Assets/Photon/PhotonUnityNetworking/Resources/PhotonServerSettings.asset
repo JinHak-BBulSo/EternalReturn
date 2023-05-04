@@ -70,6 +70,8 @@ MonoBehaviour:
   - Debuff
   - Die
   - SetMonsterStat
+  - SetPlayerStat
+  - DebuffSet
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
