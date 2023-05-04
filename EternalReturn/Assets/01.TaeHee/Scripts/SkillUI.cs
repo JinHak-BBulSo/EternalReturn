@@ -6,12 +6,14 @@ using UnityEngine.UI;
 
 public class SkillUI : MonoBehaviour
 {
-    private static GameObject skillLevel;
+    private const string INGAME_PREFABS_PATH = "09.InGameUI/Prefabs/";
+    private const string INGAME_CHARACTER_PROFILES_PATH = "09.InGameUI/Sprite/CharacterProfiles/";
+    private const string INGAME_SKILL_ICONS_PATH = "09.InGameUI/Sprite/SKillIcons/";
+    private const string SKILL_LEVEL_PREFAB_NAME = "Skill Level";
+
     private static PlayerSkillSystem playerSkillSystem;
     private static PlayerBase playerBase;
 
-    private const string INGAME_PREFABS_PATH = "09.InGameUI/Prefabs/";
-    private const string SKILL_LEVEL_PREFAB_NAME = "Skill Level";
 
     protected Button button;
     protected SkillInfo skillInfo;
@@ -20,17 +22,9 @@ public class SkillUI : MonoBehaviour
 
     protected virtual void Awake()
     {
-        if (skillLevel == null)
-        {
-            skillLevel = Resources.Load($"{INGAME_PREFABS_PATH}{SKILL_LEVEL_PREFAB_NAME}") as GameObject;
-        }
-
         button = transform.GetChild(1).GetComponent<Button>();
         skillLevelBgRect = transform.GetChild(0).GetComponent<RectTransform>();
-    }
 
-    protected virtual void Start()
-    {
         if (playerSkillSystem == null)
         {
             playerSkillSystem = PlayerManager.Instance.Player.GetComponent<PlayerSkillSystem>();
@@ -40,13 +34,18 @@ public class SkillUI : MonoBehaviour
 
         for (int i = 0; i < skillInfo.MaxLevel; i++)
         {
-            GameObject skillLevelInst = Instantiate(skillLevel);
+            GameObject skillLevelInst = Instantiate(InGameUIResources.skillLevel);
             skillLevelInst.transform.SetParent(skillLevelBgRect, false);
 
             RectTransform instRect = skillLevelInst.GetComponent<RectTransform>();
             instRect.sizeDelta = new Vector2((skillLevelBgRect.rect.width - 2) / skillInfo.MaxLevel, skillLevelBgRect.rect.height / 2);
             instRect.anchoredPosition = new Vector2((-0.5f * (skillInfo.MaxLevel - 1) + i) * instRect.rect.width, 0);
         }
+    }
+
+    protected virtual void Start()
+    {
+
     }
 
     public virtual void UpdateInteractable(int playerLevel, int weaponMasteryLevel)
