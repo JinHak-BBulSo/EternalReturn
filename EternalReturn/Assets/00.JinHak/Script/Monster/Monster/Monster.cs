@@ -80,6 +80,12 @@ public class Monster : MonoBehaviourPun, IHitHandler
         }
     }
 
+    [PunRPC]
+    private void BoxSet(int index_)
+    {
+        monsterItemBox.AddItem(index_);
+    }
+
     private void Update()
     {
         monsterStatusUi.transform.position = transform.position + statusUiOffset;
@@ -124,11 +130,12 @@ public class Monster : MonoBehaviourPun, IHitHandler
 
         //몬스터 아이템 셋팅
         monsterItemBox.SetItems(0);
-        
-        if(monsterItemBox.itemPrefabs.Count > 1)
+
+        if (monsterItemBox.itemPrefabs.Count > 1)
         {
-            int itemIndex_ = Random.Range(1, monsterItemBox.itemPrefabs.Count);
-            monsterItemBox.SetItems(itemIndex_);
+            int r_ = Random.Range(1, monsterItemBox.itemPrefabs.Count);
+            int itemIndex_ = monsterItemBox.itemPrefabs[r_].GetComponent<ItemController>().item.id;
+            photonView.RPC("BoxSet", RpcTarget.All, itemIndex_);
         }
     }
     
@@ -451,68 +458,6 @@ public class Monster : MonoBehaviourPun, IHitHandler
         if (!outline.isClick)
         {
             outline.enabled = false;
-        }
-    }
-
-    public void Debuff(DamageMessage message, int debuffIndex_, float continousTime_)
-    {
-        StartCoroutine(DebuffStart(message, debuffIndex_, continousTime_));
-    }
-
-    public IEnumerator DebuffStart(DamageMessage message, int debuffIndex_, float continousTime_)
-    {
-        // 이미 상태이상이 걸린 경우
-        if (applyDebuffCheck[debuffIndex_])
-        {
-            if (continousTime_ > debuffRemainTime[debuffIndex_])
-                debuffRemainTime[debuffIndex_] = continousTime_;
-        }
-        // 상태이상이 걸려있지 않은 경우
-        else
-        {
-            // 상태이상 남은 시간 기록
-            debuffRemainTime[debuffIndex_] = continousTime_;
-
-            switch (debuffIndex_)
-            {
-                // 스턴
-                case 2:
-                    monsterController.MonsterStateMachine.SetState(new MonsterIdle());
-                    monsterController.enabled = false;
-                    break;
-                // 속박
-                case 3:
-                    monsterController.MonsterStateMachine.SetState(new MonsterIdle());
-                    monsterController.enabled = false;
-                    break;
-            }
-
-            while (debuffRemainTime[debuffIndex_] > 0)
-            {
-                // 프레임마다 지속시간 감소
-                debuffRemainTime[debuffIndex_] -= Time.deltaTime;
-
-                yield return null;
-            }
-
-            // 디버프 종류
-            switch (debuffIndex_)
-            {
-                // 스턴
-                case 2:
-                    monsterController.MonsterStateMachine.SetState(new MonsterIdle());
-                    monsterController.enabled = true;
-                    break;
-                // 속박
-                case 3:
-                    monsterController.MonsterStateMachine.SetState(new MonsterIdle());
-                    monsterController.enabled = true;
-                    break;
-            }
-
-            // 지속 종료시 리셋
-            debuffRemainTime[debuffIndex_] = 0;
-            applyDebuffCheck[debuffIndex_] = false;
         }
     }
     [PunRPC]
