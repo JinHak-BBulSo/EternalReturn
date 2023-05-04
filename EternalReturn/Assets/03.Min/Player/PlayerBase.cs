@@ -932,7 +932,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         playerStat.nowHp = hp_;
         playerStat.nowStamina = mp_;
         item = item_;
-        AddTotalStat();
+        ItemManager.Instance.isEquipmentChang = true;
         if (PhotonNetwork.IsMasterClient)
         {
             MasterSpread();
