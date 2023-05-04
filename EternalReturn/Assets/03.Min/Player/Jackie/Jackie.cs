@@ -17,11 +17,15 @@ public class Jackie : PlayerBase
     private Vector3 nowPos;
     private Vector3 dir;
     private float distance;
-    private bool isWeaponPassiveOn = true;
+    private bool isWeaponPassiveOn = false;
     private bool hasBuff = false;
     private bool watchDebuff = false;
     private float increaseMoveSpeedBuff = 0f;
     private int maxStack = 4;
+    private float increaseAttackPower = 0f;
+    private bool isPassiveOn = false;
+    private int prevPlayerKill = 0;
+    private int prevHuntKill = 0;
 
 
     protected override void Start()
@@ -58,6 +62,13 @@ public class Jackie : PlayerBase
     protected override void Update()
     {
         base.Update();
+        if (!isWeaponPassiveOn)
+        {
+            if (skillSystem.skillInfos[4].CurrentLevel >= 1)
+            {
+                isWeaponPassiveOn = true;
+            }
+        }
         if (isWBuffOn)
         {
             watchDebuff = false;
@@ -547,5 +558,51 @@ public class Jackie : PlayerBase
     public override void Skill_T()
     {
         base.Skill_T();
+        if (prevHuntKill != huntKill)
+        {
+            if (isPassiveOn)
+            {
+                // 코루틴 멈추기
+                StopCoroutine("PassiveBuff");
+                StartCoroutine(PassiveBuff(1));
+            }
+            else
+            {
+                StartCoroutine(PassiveBuff(1));
+            }
+            prevHuntKill = huntKill;
+        }
+        else if (prevPlayerKill != playerKill)
+        {
+            if (isPassiveOn)
+            {
+                StopCoroutine("PassiveBuff");
+                StartCoroutine(PassiveBuff(0));
+            }
+            else
+            {
+                StartCoroutine(PassiveBuff(0));
+            }
+            prevPlayerKill = playerKill;
+        }
+    }
+    IEnumerator PassiveBuff(int killType_)
+    {
+        switch (killType_)
+        {
+            case 0:
+                increaseAttackPower = playerTotalStat.attackPower * (0.14f + (0.09f * (skillSystem.skillInfos[0].CurrentLevel - 1)));
+                playerTotalStat.attackPower += increaseAttackPower;
+                isPassiveOn = true;
+                break;
+            case 1:
+                increaseAttackPower = playerTotalStat.attackPower * (0.04f + (0.04f * (skillSystem.skillInfos[0].CurrentLevel - 1)));
+                playerTotalStat.attackPower += increaseAttackPower;
+                isPassiveOn = true;
+                break;
+        }
+        yield return new WaitForSeconds(20f);
+        playerTotalStat.attackPower -= increaseAttackPower;
+        isPassiveOn = false;
     }
 }
