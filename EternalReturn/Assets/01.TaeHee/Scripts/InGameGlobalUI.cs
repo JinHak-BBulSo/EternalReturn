@@ -4,23 +4,34 @@ using UnityEngine.UI;
 
 public class InGameGlobalUI : MonoBehaviour
 {
-    private const string INGAME_SPRITES_PATH = "09.UI/InGame/Sprites/";
+    private const string INGAME_SPRITES_PATH = "09.InGameUI/Sprite/";
     private const string DAY_SUN_NAME = "Ico_DaySun";
     private const string NIGHT_MOON_NAME = "Ico_NightMoon";
 
-    [SerializeField] private Text timer;
-    [SerializeField] private Image dayNight;
+    [SerializeField] private Text timerText;
+    [SerializeField] private Image dayNightImage;
+    [SerializeField] private Text dayText;
+    [SerializeField] private Text userNumberText;
+
     private Sprite[] dayNightIcons = new Sprite[2];
 
     private int minutes = 2;
     private int seconds = 30;
+    private int dayCount = 1;
 
     private bool isNight = false;
 
+    public void UpdateUserNumber(int currentUserNumber)
+    {
+        userNumberText.text = $"{currentUserNumber}";
+    }
+
     private void Awake()
     {
-        dayNightIcons[0] = Resources.Load($"{INGAME_SPRITES_PATH}{DAY_SUN_NAME}") as Sprite;
-        dayNightIcons[1] = Resources.Load($"{INGAME_SPRITES_PATH}{NIGHT_MOON_NAME}") as Sprite;
+        dayNightIcons[0] = Resources.Load<Sprite>($"{INGAME_SPRITES_PATH}{DAY_SUN_NAME}");
+        dayNightIcons[1] = Resources.Load<Sprite>($"{INGAME_SPRITES_PATH}{NIGHT_MOON_NAME}");
+
+        UpdateUserNumber(2);
     }
 
     private void Start()
@@ -30,32 +41,36 @@ public class InGameGlobalUI : MonoBehaviour
 
     private void UpdateTimer()
     {
-        timer.text = $"{minutes.ToString().PadLeft(2, '0')} : {seconds.ToString().PadLeft(2, '0')}";
+        timerText.text = $"{minutes.ToString().PadLeft(2, '0')} : {seconds.ToString().PadLeft(2, '0')}";
     }
 
     private IEnumerator TimerLoop()
     {
-        WaitForSeconds waitForOneSecond = new WaitForSeconds(1f);
+        WaitForSeconds waitForOneSecond = new WaitForSeconds(0.01f);
 
         while (true)
         {
-            if (seconds == 0)
+            --seconds;
+            if (seconds == -1)
             {
                 if (minutes == 0)
                 {
                     minutes = 2;
                     seconds = 30;
                     isNight = !isNight;
+                    dayNightImage.sprite = isNight ? dayNightIcons[1] : dayNightIcons[0];
+                    dayText.text = isNight ? dayText.text : $"DAY {++dayCount}";
 
+                    UpdateTimer();
                     yield return waitForOneSecond;
                     continue;
                 }
 
+                seconds = 59;
                 --minutes;
             }
 
-            --seconds;
-
+            UpdateTimer();
             yield return waitForOneSecond;
         }
     }

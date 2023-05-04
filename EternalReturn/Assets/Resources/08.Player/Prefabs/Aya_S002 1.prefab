@@ -1763,9 +1763,9 @@ GameObject:
   - component: {fileID: 5763320573034773373}
   - component: {fileID: 6384498520233077684}
   - component: {fileID: 1483281211564587043}
-  - component: {fileID: -3319827881769182303}
   - component: {fileID: 8628475437877141397}
   - component: {fileID: 2339630805337848545}
+  - component: {fileID: -8791131600467151986}
   m_Layer: 0
   m_Name: Aya_S002 1
   m_TagString: Player
@@ -2218,14 +2218,6 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!81 &-3319827881769182303
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2465337935834244234}
-  m_Enabled: 1
 --- !u!82 &8628475437877141397
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2334,6 +2326,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93587f2b5874db44786a24c5f6e3152b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-8791131600467151986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2465337935834244234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78256e77029937c4fb980245ce93d4f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerModels: []
 --- !u!1 &2533143214111931852
 GameObject:
   m_ObjectHideFlags: 0

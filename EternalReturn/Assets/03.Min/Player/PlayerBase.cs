@@ -65,6 +65,9 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public GameObject worldCanvas = default;
     public PlayerSkillSystem skillSystem = default;
     public int weaponType = 0;
+    private float regenTime = 0f;
+    public int huntKill = 0;
+    public int playerKill = 0;
 
 
     protected virtual void Start()
@@ -76,7 +79,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         playerNav = GetComponent<NavMeshAgent>();
         attackRangeRender[0] = attackRange.GetComponent<SpriteRenderer>();
         attackRangeRender[1] = attackRange.transform.GetChild(0).GetComponent<SpriteRenderer>();
-        InitStat();
         //KJH Add. MinimapCamera Add
         miniMapCamera = Camera.main.transform.parent.GetChild(1).GetComponent<Camera>();
         //KJH Add. Each Player InventoryBoxUi Add
@@ -92,6 +94,8 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         worldCanvas = GameObject.Find("WorldCanvas");
         playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform).GetComponent<PlayerStatusUI>();
         playerStatusUi.player = this;
+        skillSystem = GetComponent<PlayerSkillSystem>();
+        InitStat();
     }
 
 
@@ -99,6 +103,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
         if (photonView.IsMine)
         {
+            TestLevelUp();
             if (playerStat.nowHp <= 0)
             {
                 playerStat.nowHp = 0;
@@ -107,6 +112,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             }
             ShowAttackRange();
             DisableAttackRange();
+            Regen();
             RaycastHit mousePoint;
             Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mousePoint);
             nowMousePoint = mousePoint.point;
@@ -201,6 +207,15 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         }
     }
 
+    private void TestLevelUp()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            GetExp(1000, PlayerStat.PlayerExpType.WEAPON);
+            Debug.Log(playerStat.playerExp.level);
+        }
+    }
+
     protected void PlayAudio(AudioClip audioClip_)
     {
         if (!playerAudio.isPlaying)
@@ -210,7 +225,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     }
 
     // 스탯 초기값 할당
-    private void InitStat()
+    protected virtual void InitStat()
     {
         playerStat.attackPower = charaterData.attackPower; // 공격력
         playerStat.defense = charaterData.defense; // 방어력
@@ -294,16 +309,17 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             else
             {
                 playerExp_.level++;
-
                 if (playerExp_ != playerStat.playerExp)
                 {
                     playerStat.playerExp.nowExp += playerExp_.maxExp;
                     LevelUp(playerStat.playerExp);
                     playerStatusUi.playerExpBar.fillAmount = playerExp_.nowExp / playerExp_.maxExp;
                 }
-
                 playerExp_.nowExp -= playerExp_.maxExp;
                 playerExp_.maxExp += playerExp_.expDelta;
+                PlayerUI.Instance.UpdatePlayerLevelUI(playerStat.playerExp.level);
+                PlayerUI.Instance.UpdateExpUI(playerStat.playerExp.nowExp, playerStat.playerExp.maxExp);
+                PlayerUI.Instance.UpdateSkillLevelUpUI(skillSystem.GetTotalSkillLevel(), skillSystem.GetWeaponSkillLevel(), playerStat.playerExp.level, playerStat.weaponExp.level);
             }
         }
     }
@@ -556,14 +572,37 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
     }
 
-    public void Rest()
+    public void Regen()
     {
-        if (!photonView.IsMine)
+        if (playerController.playerState == PlayerController.PlayerState.DIE)
         {
             return;
         }
-        playerStat.nowHp += playerStat.maxHp * 0.1f;
+        if (regenTime >= 0.5f)
+        {
+            regenTime = 0f;
+            if (playerStat.nowHp < playerTotalStat.maxHp)
+            {
+                playerStat.nowHp += playerTotalStat.hpRegen * 0.5f;
+                if (playerStat.nowHp >= playerTotalStat.maxHp)
+                {
+                    playerStat.nowHp = playerTotalStat.maxHp;
+                }
+            }
+            if (playerStat.nowStamina < playerTotalStat.maxStamina)
+            {
+                playerStat.nowStamina += playerTotalStat.staminaRegen * 0.5f;
+                if (playerStat.nowStamina >= playerTotalStat.maxStamina)
+                {
+                    playerStat.nowStamina = playerTotalStat.maxStamina;
+                }
+            }
+        }
+        regenTime += Time.deltaTime;
+
     }
+
+
 
     public virtual void Skill_Q()
     {

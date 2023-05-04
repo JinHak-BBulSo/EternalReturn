@@ -60,6 +60,8 @@ MonoBehaviour:
   - MasterCallShot
   - CallShot
   - ItemIndexSet
+  - ShowRangeAyaR
+  - ShowRangeJackieE
   - BoxSet
   - ShowRangeAyaR
   - ShowRangeJackieE
