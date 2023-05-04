@@ -525,5 +525,6 @@ public class Monster : MonoBehaviourPun, IHitHandler
     public void SetMonsterStat(float hp_)
     {
         monsterStatus.nowHp = hp_;
+        monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
     }
 }
