@@ -104,8 +104,6 @@ public class ItemManager : SingleTonBase<ItemManager>
         }
         else
         {
-            DeleteItemToList(item_1, itemInferiorList);
-            DeleteItemToList(item_2, itemInferiorList);
             DeleteItemToRare(item_1);
             DeleteItemToRare(item_2);
             DeleteInferiorList(id_2);
@@ -710,10 +708,7 @@ public class ItemManager : SingleTonBase<ItemManager>
     //! 아이템 생성 및 획득 시 자신의 inferiorList에 있는 아이템을 삭제하는 메서드
     public void DeleteInferiorList(ItemStat item)
     {
-        if (itemInferiorList.Count == 0)
-        {
-            return;
-        }
+        Debug.Log(itemInferiorList.Count);
         int count = 0;
 
 
@@ -973,13 +968,13 @@ public class ItemManager : SingleTonBase<ItemManager>
 
                     if (define.IsitemCombineValue(dic))
                     {
-                        if (define.GetitemCombineValue(dic, item.id) == null)
+                        if (define.GetitemCombineValue(dic) == null)
                         {
 
                         }
                         else
                         {
-                            cachingItem = itemList[dic[define.GetitemCombineValue(dic, item.id)] - 1];
+                            cachingItem = itemList[dic[define.GetitemCombineValue(dic)] - 1];
                             if (!combineAbleList.Contains(cachingItem))
                             {
                                 cachingItem.isItemWishList = isItemNeed(itemWishList, ItemInferiorRare, ItemInferiorUncommon, cachingItem);
@@ -998,13 +993,13 @@ public class ItemManager : SingleTonBase<ItemManager>
                     (define.itemId_1, define.itemId_2) = (define.itemId_2, define.itemId_1);
                     if (define.IsitemCombineValue(dic))
                     {
-                        if (define.GetitemCombineValue(dic, item.id) == null)
+                        if (define.GetitemCombineValue(dic) == null)
                         {
 
                         }
                         else
                         {
-                            cachingItem = itemList[dic[define.GetitemCombineValue(dic, item.id)] - 1];
+                            cachingItem = itemList[dic[define.GetitemCombineValue(dic)] - 1];
                             if (!combineAbleList.Contains(cachingItem))
                             {
                                 cachingItem.isItemWishList = isItemNeed(itemWishList, ItemInferiorRare, ItemInferiorUncommon, cachingItem);
@@ -1030,13 +1025,13 @@ public class ItemManager : SingleTonBase<ItemManager>
                 {
                     if (define.IsitemCombineValue(dic))
                     {
-                        if (define.GetitemCombineValue(dic, item.id) == null)
+                        if (define.GetitemCombineValue(dic) == null)
                         {
 
                         }
                         else
                         {
-                            cachingItem = itemList[dic[define.GetitemCombineValue(dic, item.id)] - 1];
+                            cachingItem = itemList[dic[define.GetitemCombineValue(dic)] - 1];
                             if (!combineAbleList.Contains(cachingItem))
                             {
                                 cachingItem.isItemWishList = isItemNeed(itemWishList, ItemInferiorRare, ItemInferiorUncommon, cachingItem);
@@ -1055,13 +1050,13 @@ public class ItemManager : SingleTonBase<ItemManager>
                     (define.itemId_1, define.itemId_2) = (define.itemId_2, define.itemId_1);
                     if (define.IsitemCombineValue(dic))
                     {
-                        if (define.GetitemCombineValue(dic, item.id) == null)
+                        if (define.GetitemCombineValue(dic) == null)
                         {
 
                         }
                         else
                         {
-                            cachingItem = itemList[dic[define.GetitemCombineValue(dic, item.id)] - 1];
+                            cachingItem = itemList[dic[define.GetitemCombineValue(dic)] - 1];
                             if (!combineAbleList.Contains(cachingItem))
                             {
                                 cachingItem.isItemWishList = isItemNeed(itemWishList, ItemInferiorRare, ItemInferiorUncommon, cachingItem);

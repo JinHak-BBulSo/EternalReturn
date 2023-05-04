@@ -83,6 +83,9 @@ public class SkillUI : MonoBehaviour
 
         skillLevelBgRect.GetChild(skillInfo.CurrentLevel - 1).GetComponent<Image>().color = Color.white;
         PlayerUI.Instance.UpdateSkillLevelUpUI(playerSkillSystem.GetTotalSkillLevel(), playerSkillSystem.GetWeaponSkillLevel(), playerBase.playerStat.playerExp.level, playerBase.playerStat.weaponExp.level);
+        playerBase.SkillPoint[index] = playerBase.skillSystem.skillInfos[index].CurrentLevel;
+        playerBase.ItemChang();
+
 
         Debug.Log($"SkillLv: {skillInfo.CurrentLevel}");
     }

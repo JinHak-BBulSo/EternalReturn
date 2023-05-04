@@ -38,28 +38,28 @@ public class ItemDefine
         }
         return false;
     }
-    public ItemDefine GetitemCombineValue(Dictionary<ItemDefine, int> dic, int index_)
+    public ItemDefine GetitemCombineValue(Dictionary<ItemDefine, int> dic)
     {
         ItemDefine define = new ItemDefine(itemId_1, itemId_2);
-
-        if (define.FineInferiorItemId(dic, ItemManager.Instance.itemList[index_].id) != null)
+        for (int i = 0; i < ItemManager.Instance.itemList.Count; i++)
         {
-            // Debug.Log("id1 Find" + define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].item.id).itemId_1);
-
-            // Debug.Log("id2 Find" + define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].item.id).itemId_2);
-            if (!ComparerItem(define, define.FineInferiorItemId(dic, ItemManager.Instance.itemList[index_].id)))
+            if (define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].id) != null)
             {
+                // Debug.Log("id1 Find" + define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].item.id).itemId_1);
 
-                return FineInferiorItemId(dic, ItemManager.Instance.itemList[index_].id);
+                // Debug.Log("id2 Find" + define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].item.id).itemId_2);
+                if (!ComparerItem(define, define.FineInferiorItemId(dic, ItemManager.Instance.itemList[i].id)))
+                {
 
+                    return FineInferiorItemId(dic, ItemManager.Instance.itemList[i].id);
+
+                }
             }
-        }
 
+
+        }
         return null;
     }
-
-
-
     public bool ComparerItem(ItemDefine a, ItemDefine b)
     {
         if (a.itemId_1 == b.itemId_1 && a.itemId_2 == b.itemId_2)
@@ -76,28 +76,6 @@ public class ItemDefine
     {
 
         return dic.FirstOrDefault(x => x.Value == i).Key;
-    }
-
-
-    public int FindIdBinary(List<ItemStat> list_, int low_, int higt_, int id_)
-    {
-        if (low_ > higt_)
-        {
-            return -1;
-        }
-        int mid = (low_ + higt_) / 2;
-        if (list_[mid].id == id_)
-        {
-            return list_[mid].id;
-        }
-        else if (list_[mid].id > id_)
-        {
-            return FindIdBinary(list_, low_, mid - 1, id_);
-        }
-        else
-        {
-            return FindIdBinary(list_, mid - 1, higt_, id_);
-        }
     }
 
 }
