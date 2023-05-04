@@ -117,6 +117,10 @@ public class Jackie : PlayerBase
     protected override void AttackEnd()
     {
         base.AttackEnd();
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         if (isWeaponPassiveOn)
         {
             weaponStack++;
