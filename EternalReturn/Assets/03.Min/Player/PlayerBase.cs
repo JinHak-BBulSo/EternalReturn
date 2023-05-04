@@ -105,18 +105,19 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     protected virtual void Update()
     {
-        if (ItemManager.Instance.isEquipmentChang)
+
+        if (photonView.IsMine)
         {
-            if (photonView.IsMine)
+            if (ItemManager.Instance.isEquipmentChang)
             {
                 ItemManager.Instance.isEquipmentChang = false;
+
+                AddTotalStat();
+                ItemChang();
             }
 
-
-            AddTotalStat();
-            ItemChang();
-
         }
+
         if (photonView.IsMine)
         {
 
