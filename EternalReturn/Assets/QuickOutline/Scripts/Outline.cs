@@ -18,6 +18,7 @@ public class Outline : MonoBehaviour
     private static HashSet<Mesh> registeredMeshes = new HashSet<Mesh>();
     public bool isClick = false;
     public Monster monster = default;
+    public PlayerBase player = default;
 
     public enum Mode
     {
@@ -85,7 +86,7 @@ public class Outline : MonoBehaviour
     [SerializeField, HideInInspector]
     private List<ListVector3> bakeValues = new List<ListVector3>();
 
-    private Renderer[] renderers;
+    protected Renderer[] renderers;
     private Material outlineMaskMaterial;
     private Material outlineFillMaterial;
 
@@ -95,7 +96,7 @@ public class Outline : MonoBehaviour
     {
 
         // Cache renderers
-        renderers = GetComponentsInChildren<Renderer>();
+        BringRender();
 
         // Instantiate outline materials
         outlineMaskMaterial = Instantiate(Resources.Load<Material>(@"Materials/OutlineMask"));
@@ -111,6 +112,10 @@ public class Outline : MonoBehaviour
         needsUpdate = true;
     }
 
+    protected virtual void BringRender()
+    {
+        renderers = GetComponentsInChildren<Renderer>();
+    }
     void OnEnable()
     {
         foreach (var renderer in renderers)

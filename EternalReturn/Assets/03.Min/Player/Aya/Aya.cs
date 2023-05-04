@@ -25,8 +25,12 @@ public class Aya : PlayerBase
         {
             ItemManager.Instance.SetDefault(weaponType);
             ItemManager.Instance.GetItem(ItemManager.Instance.itemList[14]);
-            AddTotalStat();
+
+
         }
+        item[0] = 15;
+        AddTotalStat();
+        ItemChang();
     }
 
     protected override void InitStat()
@@ -136,7 +140,7 @@ public class Aya : PlayerBase
                 transform.LookAt(enemy.transform);
                 playerAni.SetBool("isSkill", true);
                 playerAni.SetFloat("SkillType", 0);
-                StartCoroutine(SkillCooltime(0, skillSystem.skillInfos[0].cooltime * playerTotalStat.coolDown));
+                StartCoroutine(SkillCooltime(0, skillSystem.skillInfos[0].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
                 break;
             }
             SkillMove();
@@ -212,7 +216,7 @@ public class Aya : PlayerBase
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 1);
         isWon = true;
-        StartCoroutine(SkillCooltime(1, skillSystem.skillInfos[1].cooltime * playerTotalStat.coolDown));
+        StartCoroutine(SkillCooltime(1, skillSystem.skillInfos[1].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
         StartCoroutine(WSkill());
     }
 
@@ -316,7 +320,7 @@ public class Aya : PlayerBase
         corners.Clear();
         isMove = false;
         StartCoroutine(AyaDash());
-        StartCoroutine(SkillCooltime(2, skillSystem.skillInfos[2].cooltime * playerTotalStat.coolDown));
+        StartCoroutine(SkillCooltime(2, skillSystem.skillInfos[2].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
     }
 
     IEnumerator AyaDash()
@@ -405,7 +409,7 @@ public class Aya : PlayerBase
                 RRange.SetActive(false);
                 photonView.RPC("ShowRangeAyaR", RpcTarget.All, false);
                 playerAni.SetBool("isREnd", true);
-                StartCoroutine(SkillCooltime(3, skillSystem.skillInfos[3].cooltime * playerTotalStat.coolDown));
+                StartCoroutine(SkillCooltime(3, skillSystem.skillInfos[3].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
                 yield break;
             }
             if (time >= 1.5f)
@@ -446,7 +450,7 @@ public class Aya : PlayerBase
                 }
                 RRange.SetActive(false);
                 photonView.RPC("ShowRangeAyaR", RpcTarget.All, false);
-                StartCoroutine(SkillCooltime(3, skillSystem.skillInfos[3].cooltime * playerTotalStat.coolDown));
+                StartCoroutine(SkillCooltime(3, skillSystem.skillInfos[3].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
                 playerAni.SetBool("isREnd", true);
                 yield break;
             }
@@ -466,8 +470,17 @@ public class Aya : PlayerBase
     IEnumerator SkillCooltime(int skillType_, float cooltime_)
     {
         skillCooltimes[skillType_] = true;
-        yield return new WaitForSeconds(cooltime_);
-        skillCooltimes[skillType_] = false;
+        skillSystem.skillInfos[skillType_].currentCooltime = skillSystem.skillInfos[skillType_].cooltime * ((100 - playerTotalStat.coolDown) / 100);
+        while (true)
+        {
+            if (skillSystem.skillInfos[skillType_].currentCooltime <= 0f)
+            {
+                skillCooltimes[skillType_] = false;
+                yield break;
+            }
+            skillSystem.skillInfos[skillType_].currentCooltime -= Time.deltaTime;
+            yield return null;
+        }
     }
 
     public override void MotionEnd()
