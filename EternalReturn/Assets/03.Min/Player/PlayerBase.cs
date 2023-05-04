@@ -106,11 +106,9 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             if (ItemManager.Instance.isEquipmentChang)
             {
                 ItemManager.Instance.isEquipmentChang = false;
-                for (int i = 0; i < item.Length; i++)
-                {
-                    item[i] = ItemManager.Instance.equipmentInven[i].id;
-                }
+
                 AddTotalStat();
+                ItemChang();
 
             }
             if (playerStat.nowHp <= 0)
@@ -274,6 +272,10 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     public void AddTotalStat() // 플레이어 총 스탯
     {
+        for (int i = 0; i < item.Length; i++)
+        {
+            item[i] = ItemManager.Instance.equipmentInven[i].id;
+        }
         AddExtraStat();
         playerTotalStat.attackPower = playerStat.attackPower + extraStat.attackPower;
         playerTotalStat.defense = playerStat.defense + extraStat.defense;

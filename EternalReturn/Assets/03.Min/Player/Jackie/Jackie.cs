@@ -33,6 +33,7 @@ public class Jackie : PlayerBase
         {
             ItemManager.Instance.SetDefault(weaponType);
             ItemManager.Instance.GetItem(ItemManager.Instance.itemList[227]);
+            AddTotalStat();
         }
     }
 
