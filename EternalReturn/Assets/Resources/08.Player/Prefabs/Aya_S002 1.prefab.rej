@@ -1,0 +1,9 @@
+diff a/EternalReturn/Assets/Resources/08.Player/Prefabs/Aya_S002 1.prefab b/EternalReturn/Assets/Resources/08.Player/Prefabs/Aya_S002 1.prefab	(rejected hunks)
+@@ -2121,6 +2121,7 @@
+   playerAudioClip: []
+   item: 000000000000000000000000000000000000000000000000
+ =======
++  audioClips:
+   - {fileID: 8300000, guid: e0362129de39af44d830da8bf87f7285, type: 3}
+   - {fileID: 8300000, guid: 25db8bbe9fe3ddd42bd920f2ac1a4358, type: 3}
+   - {fileID: 8300000, guid: ff2bbdf5866c32744a7f93338bf44229, type: 3}

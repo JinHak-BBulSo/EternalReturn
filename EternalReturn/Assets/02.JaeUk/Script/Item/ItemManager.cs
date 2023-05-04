@@ -22,20 +22,20 @@ public class ItemManager : SingleTonBase<ItemManager>
     public ItemStat equipmentTotalState = default;
     public bool isItemDrop = true;
     public bool isItemPick = false;
+    public bool isEquipmentChang = false;
     public bool isInventoryFull = false;
-
+    public bool isItemChage = false;
+    public int playerWeaponType;
 
     protected override void Awake()
     {
         AddPrefabs();
         base.Awake();
-        Debug.Log(itemListObj[1]);
-        Debug.Log(itemListObj[2]);
 
     }
-    public void SetDefault()
+    public void SetDefault(int weapon)
     {
-        equipmentInven.Add(new ItemStat());
+        equipmentInven.Add(new ItemStat(weapon));
         equipmentInven.Add(new ItemStat(15));
         equipmentInven.Add(new ItemStat(14));
         equipmentInven.Add(new ItemStat(16));
@@ -109,8 +109,10 @@ public class ItemManager : SingleTonBase<ItemManager>
             if (item.type == equipmentInven[i].type && equipmentInven[i].id == 0)
             {
                 equipmentInven[i] = item;
+                isEquipmentChang = true;
                 isUsed = true;
                 isInventoryFull = false;
+                isEquipmentChang = true;
             }
         }
 
@@ -486,6 +488,7 @@ public class ItemManager : SingleTonBase<ItemManager>
                 switch (i)
                 {
                     case 0:
+                        item.Add(Player.weaponType);
                         break;
                     case 1:
                         item.Add(14);
@@ -510,49 +513,12 @@ public class ItemManager : SingleTonBase<ItemManager>
 
     public void EquipmentListSet(ItemStat item)
     {
-
-
+        if (item.id == Player.weaponType)
+        {
+            equipmentInven[0] = item;
+        }
         switch (item.type)
         {
-            case 1:
-                equipmentInven[0] = item;
-                break;
-            case 2:
-                equipmentInven[0] = item;
-                break;
-            case 3:
-                equipmentInven[0] = item;
-                break;
-            case 4:
-                equipmentInven[0] = item;
-                break;
-            case 5:
-                equipmentInven[0] = item;
-                break;
-            case 6:
-                equipmentInven[0] = item;
-                break;
-            case 7:
-                equipmentInven[0] = item;
-                break;
-            case 8:
-                equipmentInven[0] = item;
-                break;
-            case 9:
-                equipmentInven[0] = item;
-                break;
-            case 10:
-                equipmentInven[0] = item;
-                break;
-            case 11:
-                equipmentInven[0] = item;
-                break;
-            case 12:
-                equipmentInven[0] = item;
-                break;
-            case 13:
-                equipmentInven[0] = item;
-                break;
             case 14:
                 equipmentInven[2] = item;
                 break;
@@ -572,6 +538,7 @@ public class ItemManager : SingleTonBase<ItemManager>
                 break;
 
         }
+        isEquipmentChang = true;
         SetequipmentTotalState();
 
     }
@@ -624,7 +591,6 @@ public class ItemManager : SingleTonBase<ItemManager>
         }
         equipmentTotalState = new ItemStat(attackPower, skillPower, basicAttackPower, defense, attackSpeed, coolDown, criticalPercent, criticalDamage, moveSpeed, visionRange, attackRange, damageReduce, tenacity, armorReduce,
         lifeSteel, extraHp, extraStamina, hpRegen, staminaRegen, weaponAttackSpeedPercent, weaponAttackRangePercent);
-        Player.AddTotalStat();
     }
     public void InventoryChange()
     {
@@ -783,14 +749,14 @@ public class ItemManager : SingleTonBase<ItemManager>
         List<int> itemSlot2 = new List<int>();
         for (int i = 0; i < equipmentInven.Count; i++)
         {
-            if (equipmentInven[i].id == needItem[0])
+            if (equipmentInven[i].id == needItem[0] && !idchk1)
             {
-                itemSlot2.Add(i);
+                itemSlot1.Add(equipmentInven[i].id);
                 idchk1 = true;
             }
-            else if (equipmentInven[i].id == needItem[1])
+            else if (equipmentInven[i].id == needItem[1] && idchk2)
             {
-                itemSlot2.Add(i);
+                itemSlot2.Add(equipmentInven[i].id);
                 idchk2 = true;
             }
         }
@@ -801,14 +767,15 @@ public class ItemManager : SingleTonBase<ItemManager>
 
             for (int i = 0; i < inventory.Count; i++)
             {
-                if (inventory[i].id == needItem[0])
+                if (inventory[i].id == needItem[0] && !idchk1)
                 {
-                    itemSlot1.Add(i);
+                    itemSlot1.Add(inventory[i].id);
+
                     idchk1 = true;
                 }
-                else if (inventory[i].id == needItem[1])
+                if (inventory[i].id == needItem[1] && !idchk2)
                 {
-                    itemSlot1.Add(i);
+                    itemSlot2.Add(inventory[i].id);
                     idchk2 = true;
                 }
             }
@@ -816,60 +783,77 @@ public class ItemManager : SingleTonBase<ItemManager>
         }
         if (idchk1 && idchk2)
         {
-            for (int i = itemSlot1.Count - 1; i >= 0; i--)
+            for (int i = 0; i < inventory.Count; i++)
             {
-
-                if (inventory[itemSlot1[i]].count < 2)
+                if (inventory[i].id == itemSlot1[0])
                 {
-                    inventory[itemSlot1[i]] = new ItemStat();
-                }
-                else
-                {
-                    inventory[itemSlot1[i]].count--;
-                }
 
-            }
-            for (int i = itemSlot2.Count - 1; i >= 0; i--)
-            {
-
-                if (equipmentInven[itemSlot2[i]].count < 2)
-                {
-                    equipmentInven[itemSlot2[i]] = new ItemStat();
-                }
-
-            }
-            if (EquipmentListIsBlank() != null)
-            {
-                bool chk = false;
-                foreach (int i in EquipmentListIsBlank())
-                {
-                    if (i == item.type)
+                    if (inventory[i].count < 2)
                     {
-                        EquipmentListSet(item);
-                        chk = true;
+                        Debug.Log($"!!{i}");
+                        inventory[i] = new ItemStat();
                     }
-
-
-
-                }
-                if (inventory.Count < 10 && !chk)
-                {
-                    PickItem(item);
-                }
-                else if (!chk)
-                {
-                    DropItem(item, Player.gameObject, ItemCanvas);
+                    else
+                    {
+                        inventory[i].count--;
+                    }
+                    break;
                 }
 
             }
-            else if (EquipmentListIsBlank() == null && inventory.Count < 10)
+            for (int i = 0; i < inventory.Count; i++)
             {
-                PickItem(item);
+                if (inventory[i].id == itemSlot2[0])
+                {
+                    if (inventory[i].count < 2)
+                    {
+                        inventory[i] = new ItemStat();
+                    }
+                    else
+                    {
+                        inventory[i].count--;
+                    }
+                    break;
+                }
+
             }
-            else
+            for (int i = 0; i < equipmentInven.Count; i++)
             {
-                DropItem(item, Player.gameObject, ItemCanvas);
+                if (equipmentInven[i].id == itemSlot1[0])
+                {
+                    if (equipmentInven[i].count < 2)
+                    {
+                        equipmentInven[i] = new ItemStat();
+                    }
+                    else
+                    {
+                        equipmentInven[i].count--;
+                    }
+                    break;
+                }
+
             }
+            for (int i = 0; i < equipmentInven.Count; i++)
+            {
+                if (equipmentInven[i].id == itemSlot2[0])
+                {
+                    if (equipmentInven[i].count < 2)
+                    {
+                        equipmentInven[i] = new ItemStat();
+                    }
+                    else
+                    {
+                        equipmentInven[i].count--;
+                    }
+                    break;
+                }
+
+            }
+
+
+            GetItem(item);
+
+
 
 
 
