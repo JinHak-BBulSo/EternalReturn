@@ -1,3 +1,5 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Monster : MonoBehaviour, IHitHandler
+public class Monster : MonoBehaviourPun, IHitHandler
 {
     public MonsterStatus monsterStatus = default;
     protected MonsterController monsterController;
@@ -189,15 +191,21 @@ public class Monster : MonoBehaviour, IHitHandler
         }
     }
 
-    public void DieCheck(DamageMessage message)
+    public void DieCheck(PlayerBase attackPlayer_)
     {
         if (monsterStatus.nowHp < 0)
         {
             monsterStatus.nowHp = 0;
             isDie = true;
-            PlayerBase attackPlayer_ = message.causer.GetComponent<PlayerBase>();
+            attackPlayer_.GetExp(50, PlayerStat.PlayerExpType.WEAPON);
             attackPlayer_.enemy = default;
         }
+    }
+
+    [PunRPC]
+    public void Die()
+    {
+
     }
 
     /// <summary>
@@ -214,16 +222,21 @@ public class Monster : MonoBehaviour, IHitHandler
     {
         FirstAttackCheck(message);
         float damageAmount_ = (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
-        if (message.debuffIndex == -1)
-            monsterStatus.nowHp -= damageAmount_;
-        monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (message.debuffIndex == -1)
+                monsterStatus.nowHp -= damageAmount_;
+            monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
+            photonView.RPC("SetMonsterStat", RpcTarget.All, monsterStatus.nowHp);
+        }
 
         PlayerBase attackPlayer_ = message.causer.GetComponent<PlayerBase>();
-        attackPlayer_.GetExp(damageAmount_ / 20, PlayerStat.PlayerExpType.WEAPON);
+        attackPlayer_.GetExp(damageAmount_ / 5, PlayerStat.PlayerExpType.WEAPON);
         
         if (!isDie)
         {
-            DieCheck(message);
+            DieCheck(attackPlayer_);
         }
     }
 
@@ -239,8 +252,12 @@ public class Monster : MonoBehaviour, IHitHandler
     /// <returns></returns>
     public void TakeSolidDamage(DamageMessage message)
     {
-        monsterStatus.nowHp -= message.damageAmount;
-        monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            monsterStatus.nowHp -= message.damageAmount;
+            monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
+            photonView.RPC("SetMonsterStat", RpcTarget.All, monsterStatus.nowHp);
+        }
 
         PlayerBase attackPlayer_ = message.causer.GetComponent<PlayerBase>();
         attackPlayer_.GetExp(message.damageAmount / 20, PlayerStat.PlayerExpType.WEAPON);
@@ -252,8 +269,12 @@ public class Monster : MonoBehaviour, IHitHandler
     }
     public void TakeSolidDamage(DamageMessage message, float damageAmount)
     {
-        monsterStatus.nowHp -= damageAmount;
-        monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            monsterStatus.nowHp -= message.damageAmount;
+            monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
+            photonView.RPC("SetMonsterStat", RpcTarget.All, monsterStatus.nowHp);
+        }
 
         PlayerBase attackPlayer_ = message.causer.GetComponent<PlayerBase>();
         attackPlayer_.GetExp(damageAmount / 20, PlayerStat.PlayerExpType.WEAPON);
@@ -326,6 +347,88 @@ public class Monster : MonoBehaviour, IHitHandler
     {
         yield return new WaitForSeconds(debuffContinousTime_);
         debuffDamage[debuffIndex_] -= debuffDamage_;
+    }
+
+    [PunRPC]
+    public void Debuff(int debuffIndex_, float continousTime_)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("DebuffSet", RpcTarget.All, debuffIndex_, continousTime_);
+        }
+    }
+    public void DebuffSet(int debuffIndex_, float continousTime_)
+    {
+        StartCoroutine(DebuffStart(debuffIndex_, continousTime_));
+    }
+    public IEnumerator DebuffStart(int debuffIndex_, float continousTime_)
+    {
+        // 이미 상태이상이 걸린 경우
+        if (applyDebuffCheck[debuffIndex_])
+        {
+            if (continousTime_ > debuffRemainTime[debuffIndex_])
+                debuffRemainTime[debuffIndex_] = continousTime_;
+        }
+        // 상태이상이 걸려있지 않은 경우
+        else
+        {
+            // 상태이상 남은 시간 기록
+            debuffRemainTime[debuffIndex_] = continousTime_;
+
+            switch (debuffIndex_)
+            {
+                // 스턴
+                case 2:
+                    monsterController.isMoveAble = false;
+                    monsterController.enabled = false;
+                    break;
+                // 속박
+                case 3:
+                    monsterController.isMoveAble = false;
+                    break;
+                // 에어본
+                case 4:
+                    monsterController.isMoveAble = false;
+                    monsterController.navMeshAgent.enabled = false;
+                    monsterController.enabled = false;
+                    GetComponent<Rigidbody>().AddForce(new Vector3(0, 6, 0), ForceMode.Impulse);
+                    break;
+            }
+
+            while (debuffRemainTime[debuffIndex_] > 0)
+            {
+                // 프레임마다 지속시간 감소
+                debuffRemainTime[debuffIndex_] -= Time.deltaTime;
+
+                // 상태이상 종류 체크
+                if (debuffIndex_ == 2 || debuffIndex_ == 3) monsterController.isMoveAble = false;
+                yield return null;
+            }
+
+            // 디버프 종류
+            switch (debuffIndex_)
+            {
+                // 스턴
+                case 2:
+                    monsterController.isMoveAble = true;
+                    monsterController.enabled = true;
+                    break;
+                // 속박
+                case 3:
+                    monsterController.isMoveAble = true;
+                    break;
+                // 에어본
+                case 4:
+                    monsterController.isMoveAble = true;
+                    monsterController.navMeshAgent.enabled = true;
+                    monsterController.enabled = true;
+                    break;
+            }
+
+            // 지속 종료시 리셋
+            debuffRemainTime[debuffIndex_] = 0;
+            applyDebuffCheck[debuffIndex_] = false;
+        }
     }
 
     public void EnterPlayer()
@@ -409,5 +512,16 @@ public class Monster : MonoBehaviour, IHitHandler
             debuffRemainTime[debuffIndex_] = 0;
             applyDebuffCheck[debuffIndex_] = false;
         }
+    }
+    [PunRPC]
+    public void SetMonsterStat(int level_, float hp_)
+    {
+        monsterStatus.level = level_;
+        monsterStatus.nowHp = hp_;
+    }
+    [PunRPC]
+    public void SetMonsterStat(float hp_)
+    {
+        monsterStatus.nowHp = hp_;
     }
 }

@@ -18,17 +18,18 @@ public class PlayerStatusUI : MonoBehaviour
     {
         mainUi = GameObject.Find("TestUi");
         playerStatusUi = this.gameObject;
-        player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
+        //player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
 
-        playerHpBar = playerStatusUi.transform.GetChild(1).GetComponent<Image>();
-        playerMpBar = playerStatusUi.transform.GetChild(3).GetComponent<Image>();
+        playerHpBar = transform.GetChild(1).GetComponent<Image>();
+        playerMpBar = transform.GetChild(3).GetComponent<Image>();
         playerExpBar = mainUi.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>();
-        playerLevelTxt = playerStatusUi.transform.GetChild(4).GetChild(0).GetComponent<Text>();
+        playerLevelTxt = transform.GetChild(4).GetChild(0).GetComponent<Text>();
         playerHpBar.fillAmount = player.playerStat.nowHp / player.playerStat.maxHp;
     }
 
     private void Update()
     {
         transform.position = player.transform.position + offset;
+        playerHpBar.fillAmount = player.playerStat.nowHp / player.playerStat.maxHp;
     }
 }
