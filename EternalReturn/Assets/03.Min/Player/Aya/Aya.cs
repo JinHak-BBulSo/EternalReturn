@@ -19,11 +19,13 @@ public class Aya : PlayerBase
     private GameObject Bullet = default;
     protected override void Start()
     {
-        base.Start();
         weaponType = 10;
+        base.Start();
         if (photonView.IsMine)
         {
+            ItemManager.Instance.SetDefault(weaponType);
             ItemManager.Instance.GetItem(ItemManager.Instance.itemList[14]);
+            AddTotalStat();
         }
     }
 
@@ -211,33 +213,22 @@ public class Aya : PlayerBase
 
     private void Shot()
     {
-        if (!PhotonNetwork.IsMasterClient && photonView.IsMine)
-        {
-            photonView.RPC("Shotas", RpcTarget.MasterClient);
-        }
-        else if (PhotonNetwork.IsMasterClient && photonView.IsMine)
-        {
-
-        }
-    }
-
-    private void ShotOther()
-    {
         AyaBullet bullet = Instantiate(Bullet).GetComponent<AyaBullet>();
         bullet.transform.position = weapon.transform.position;
         bullet.damage = 30 + (25 * (skillSystem.skillInfos[1].CurrentLevel - 1))
         + (playerTotalStat.attackPower * (0.2f + (0.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))))
         + (playerTotalStat.skillPower * (0.25f + (0.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))));
         bullet.shootPlayer = this;
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            photonView.RPC("CallShot", RpcTarget.MasterClient);
-        }
-        else
-        {
-            photonView.RPC("CallShot", RpcTarget.Others);
-        }
+        // if (!PhotonNetwork.IsMasterClient && photonView.IsMine)
+        // {
+        //     photonView.RPC("CallShot", RpcTarget.MasterClient);
+        // }
+        // else if (PhotonNetwork.IsMasterClient && photonView.IsMine)
+        // {
+        //     photonView.RPC("CallShot", RpcTarget.Others);
+        // }
     }
+
     [PunRPC]
     private void CallShot()
     {

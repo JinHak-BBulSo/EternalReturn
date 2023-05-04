@@ -18,24 +18,24 @@ public class ItemCombine : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            ItemManager.Instance.PickItem(ItemManager.Instance.itemList[0]);
-            ItemManager.Instance.PickItem(ItemManager.Instance.itemList[39]);
+            ItemManager.Instance.PickItem(ItemManager.Instance.itemList[17]);
+            ItemManager.Instance.PickItem(ItemManager.Instance.itemList[226]);
             ItemManager.Instance.InventoryChange();
 
         }
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            if (ItemManager.Instance.combineAbleList.Count != 0)
-            {
+        // if (Input.GetKeyDown(KeyCode.Z))
+        // {
+        //     if (ItemManager.Instance.combineAbleList.Count != 0)
+        //     {
 
-                ItemManager.Instance.CombineItem(ItemManager.Instance.combineAbleList[0], ItemManager.Instance.itemCombineDictionary);
-                ItemManager.Instance.DeleteInferiorList(ItemManager.Instance.combineAbleList[0]);
-                ItemManager.Instance.combineAbleList.RemoveAt(0);
-                ItemManager.Instance.InventoryChange();
+        //         ItemManager.Instance.CombineItem(ItemManager.Instance.combineAbleList[0], ItemManager.Instance.itemCombineDictionary);
+        //         ItemManager.Instance.DeleteInferiorList(ItemManager.Instance.combineAbleList[0]);
+        //         ItemManager.Instance.combineAbleList.RemoveAt(0);
+        //         ItemManager.Instance.InventoryChange();
 
-            }
+        //     }
 
-        }
+        // }
     }
     // 인벤토리에 변동 사항이 있을 경우 호출 되는 메서드
 

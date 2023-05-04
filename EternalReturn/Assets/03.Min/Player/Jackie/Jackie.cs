@@ -30,12 +30,14 @@ public class Jackie : PlayerBase
 
     protected override void Start()
     {
+        weaponType = 19;
         base.Start();
         skillCooltimes[4] = true;
-        weaponType = 19;
         if (photonView.IsMine)
         {
+            ItemManager.Instance.SetDefault(weaponType);
             ItemManager.Instance.GetItem(ItemManager.Instance.itemList[227]);
+            AddTotalStat();
         }
     }
     public override void Attack()

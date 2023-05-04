@@ -10,13 +10,13 @@ public class PlayerCraft : IPlayerState
     {
         this.playerController = controller_;
         playerController.playerState = PlayerController.PlayerState.CRAFT;
-        time = 0f;
         playerController.ResetAni();
         playerController.ResetRange();
         playerController.player.weapon.SetActive(false);
         playerController.player.hammer.SetActive(true);
         playerController.player.craftTool.SetActive(true);
         playerController.player.playerAni.SetBool("isCraft", true);
+        time = ItemManager.Instance.combineAbleList[0].craftTime;
     }
     public void StateExit()
     {
@@ -31,12 +31,12 @@ public class PlayerCraft : IPlayerState
 
     public void StateUpdate()
     {
-        time = ItemManager.Instance.combineAbleList[0].craftTime - Time.deltaTime;
+        time -= Time.deltaTime;
+        Debug.Log(time);
         if (time <= 0f)
         {
             ItemManager.Instance.CombineItem(ItemManager.Instance.combineAbleList[0], ItemManager.Instance.itemCombineDictionary);
             ItemManager.Instance.DeleteInferiorList(ItemManager.Instance.combineAbleList[0]);
-            ItemManager.Instance.combineAbleList.RemoveAt(0);
             ItemManager.Instance.InventoryChange();
             playerController.ChangeState(new PlayerIdle());
         }
