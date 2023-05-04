@@ -31,13 +31,11 @@ public class ItemManager : SingleTonBase<ItemManager>
     {
         AddPrefabs();
         base.Awake();
-        Debug.Log(itemListObj[1]);
-        Debug.Log(itemListObj[2]);
 
     }
-    public void SetDefault()
+    public void SetDefault(int weapon)
     {
-        equipmentInven.Add(new ItemStat());
+        equipmentInven.Add(new ItemStat(weapon));
         equipmentInven.Add(new ItemStat(15));
         equipmentInven.Add(new ItemStat(14));
         equipmentInven.Add(new ItemStat(16));
@@ -488,6 +486,7 @@ public class ItemManager : SingleTonBase<ItemManager>
                 switch (i)
                 {
                     case 0:
+                        item.Add(Player.weaponType);
                         break;
                     case 1:
                         item.Add(14);
@@ -512,7 +511,7 @@ public class ItemManager : SingleTonBase<ItemManager>
 
     public void EquipmentListSet(ItemStat item)
     {
-        if (item.id == playerWeaponType)
+        if (item.id == Player.weaponType)
         {
             equipmentInven[0] = item;
         }
@@ -590,7 +589,6 @@ public class ItemManager : SingleTonBase<ItemManager>
         }
         equipmentTotalState = new ItemStat(attackPower, skillPower, basicAttackPower, defense, attackSpeed, coolDown, criticalPercent, criticalDamage, moveSpeed, visionRange, attackRange, damageReduce, tenacity, armorReduce,
         lifeSteel, extraHp, extraStamina, hpRegen, staminaRegen, weaponAttackSpeedPercent, weaponAttackRangePercent);
-        Player.AddTotalStat();
     }
     public void InventoryChange()
     {
@@ -782,60 +780,29 @@ public class ItemManager : SingleTonBase<ItemManager>
         }
         if (idchk1 && idchk2)
         {
-            for (int i = itemSlot1.Count - 1; i >= 0; i--)
+            if (itemSlot1.Count != 0)
             {
-
-                if (inventory[itemSlot1[i]].count < 2)
+                if (inventory[itemSlot1[0]].count < 2)
                 {
-                    inventory[itemSlot1[i]] = new ItemStat();
+                    inventory[itemSlot1[0]] = new ItemStat();
                 }
                 else
                 {
-                    inventory[itemSlot1[i]].count--;
+                    inventory[itemSlot1[0]].count--;
                 }
-
             }
-            for (int i = itemSlot2.Count - 1; i >= 0; i--)
+            if (itemSlot2.Count != 0)
             {
-
-                if (equipmentInven[itemSlot2[i]].count < 2)
+                if (equipmentInven[itemSlot2[0]].count < 2)
                 {
-                    equipmentInven[itemSlot2[i]] = new ItemStat();
+                    equipmentInven[itemSlot2[0]] = new ItemStat();
                 }
 
             }
-            if (EquipmentListIsBlank() != null)
-            {
-                bool chk = false;
-                foreach (int i in EquipmentListIsBlank())
-                {
-                    if (i == item.type)
-                    {
-                        EquipmentListSet(item);
-                        chk = true;
-                    }
+
+            GetItem(item);
 
 
-
-                }
-                if (inventory.Count < 10 && !chk)
-                {
-                    PickItem(item);
-                }
-                else if (!chk)
-                {
-                    DropItem(item, Player.gameObject, ItemCanvas);
-                }
-
-            }
-            else if (EquipmentListIsBlank() == null && inventory.Count < 10)
-            {
-                PickItem(item);
-            }
-            else
-            {
-                DropItem(item, Player.gameObject, ItemCanvas);
-            }
 
 
 

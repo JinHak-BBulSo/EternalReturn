@@ -92,6 +92,10 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         worldCanvas = GameObject.Find("WorldCanvas");
         playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform).GetComponent<PlayerStatusUI>();
         playerStatusUi.player = this;
+        if (photonView.IsMine)
+        {
+            ItemManager.Instance.Player = this;
+        }
     }
 
 
@@ -99,6 +103,16 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
         if (photonView.IsMine)
         {
+            if (ItemManager.Instance.isEquipmentChang)
+            {
+                ItemManager.Instance.isEquipmentChang = false;
+                for (int i = 0; i < item.Length; i++)
+                {
+                    item[i] = ItemManager.Instance.equipmentInven[i].id;
+                }
+                AddTotalStat();
+
+            }
             if (playerStat.nowHp <= 0)
             {
                 playerStat.nowHp = 0;
@@ -228,27 +242,32 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     public void AddExtraStat() // 아이템 추가스텟
     {
-        for (int i = 0; i < 6; i++)
+        extraStat = new PlayerStat();
+        for (int i = 0; i < item.Length; i++)
         {
-            extraStat.attackPower += ItemManager.Instance.itemList[item[i] - 1].attackPower;
-            extraStat.defense += ItemManager.Instance.itemList[item[i] - 1].defense;
-            extraStat.armorReduce += ItemManager.Instance.itemList[item[i] - 1].armorReduce;
-            extraStat.attackRange += ItemManager.Instance.itemList[item[i] - 1].attackRange;
-            extraStat.attackSpeed += ItemManager.Instance.itemList[item[i] - 1].attackSpeed;
-            extraStat.basicAttackPower += ItemManager.Instance.itemList[item[i] - 1].basicAttackPower;
-            extraStat.coolDown += ItemManager.Instance.itemList[item[i] - 1].coolDown;
-            extraStat.criticalDamage += ItemManager.Instance.itemList[item[i] - 1].criticalDamage;
-            extraStat.criticalPercent += ItemManager.Instance.itemList[item[i] - 1].criticalPercent;
-            extraStat.damageReduce += ItemManager.Instance.itemList[item[i] - 1].damageReduce;
-            extraStat.extraHp += ItemManager.Instance.itemList[item[i] - 1].extraHp;
-            extraStat.extraStamina += ItemManager.Instance.itemList[item[i] - 1].extraStamina;
-            extraStat.hpRegen += ItemManager.Instance.itemList[item[i] - 1].hpRegen;
-            extraStat.lifeSteel += ItemManager.Instance.itemList[item[i] - 1].lifeSteel;
-            extraStat.staminaRegen += ItemManager.Instance.itemList[item[i] - 1].staminaRegen;
-            extraStat.moveSpeed += ItemManager.Instance.itemList[item[i] - 1].moveSpeed;
-            extraStat.skillPower += ItemManager.Instance.itemList[item[i] - 1].skillPower;
-            extraStat.tenacity += ItemManager.Instance.itemList[item[i] - 1].tenacity;
-            extraStat.visionRange += ItemManager.Instance.itemList[item[i] - 1].visionRange;
+            if (item[i] != 0)
+            {
+                extraStat.attackPower += ItemManager.Instance.itemList[item[i] - 1].attackPower;
+                extraStat.defense += ItemManager.Instance.itemList[item[i] - 1].defense;
+                extraStat.armorReduce += ItemManager.Instance.itemList[item[i] - 1].armorReduce;
+                extraStat.attackRange += ItemManager.Instance.itemList[item[i] - 1].attackRange;
+                extraStat.attackSpeed += ItemManager.Instance.itemList[item[i] - 1].attackSpeed;
+                extraStat.basicAttackPower += ItemManager.Instance.itemList[item[i] - 1].basicAttackPower;
+                extraStat.coolDown += ItemManager.Instance.itemList[item[i] - 1].coolDown;
+                extraStat.criticalDamage += ItemManager.Instance.itemList[item[i] - 1].criticalDamage;
+                extraStat.criticalPercent += ItemManager.Instance.itemList[item[i] - 1].criticalPercent;
+                extraStat.damageReduce += ItemManager.Instance.itemList[item[i] - 1].damageReduce;
+                extraStat.extraHp += ItemManager.Instance.itemList[item[i] - 1].extraHp;
+                extraStat.extraStamina += ItemManager.Instance.itemList[item[i] - 1].extraStamina;
+                extraStat.hpRegen += ItemManager.Instance.itemList[item[i] - 1].hpRegen;
+                extraStat.lifeSteel += ItemManager.Instance.itemList[item[i] - 1].lifeSteel;
+                extraStat.staminaRegen += ItemManager.Instance.itemList[item[i] - 1].staminaRegen;
+                extraStat.moveSpeed += ItemManager.Instance.itemList[item[i] - 1].moveSpeed;
+                extraStat.skillPower += ItemManager.Instance.itemList[item[i] - 1].skillPower;
+                extraStat.tenacity += ItemManager.Instance.itemList[item[i] - 1].tenacity;
+                extraStat.visionRange += ItemManager.Instance.itemList[item[i] - 1].visionRange;
+            }
+
         }
 
     }
@@ -817,6 +836,24 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             applyDebuffCheck[debuffIndex_] = false;
         }
     }
+    void ItemChang()
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("SetPlayerStat", RpcTarget.MasterClient,
+            playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item);
+        }
+        else
+        {
+            photonView.RPC("SetPlayerStat", RpcTarget.Others,
+             playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item);
+        }
+    }
+    void MasterSpread()
+    {
+        photonView.RPC("SetPlayerStat", RpcTarget.Others,
+                     playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item);
+    }
 
     IEnumerator ContinousDamageEnd(float debuffContinousTime_, int debuffIndex_, float debuffDamage_)
     {
@@ -834,6 +871,12 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         playerStat.playerExp.level = level_;
         playerStat.nowHp = hp_;
         playerStat.nowStamina = mp_;
+        item = item_;
+        AddExtraStat();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            MasterSpread();
+        }
 
     }
     [PunRPC]

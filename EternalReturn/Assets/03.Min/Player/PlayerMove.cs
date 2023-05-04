@@ -56,7 +56,7 @@ public class PlayerMove : IPlayerState
         {
             playerController.ChangeState(new PlayerIdle());
         }
-
+        playerController.Craft();
         playerController.ShowAllRange();
         playerController.SkillUse();
 

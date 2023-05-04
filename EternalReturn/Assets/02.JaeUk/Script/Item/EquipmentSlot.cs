@@ -22,7 +22,6 @@ public class EquipmentSlot : Slot, IDragHandler, IEndDragHandler, IBeginDragHand
             ItemStat itemDefault = new ItemStat();
             ItemManager.Instance.PickItem(ItemManager.Instance.equipmentInven[i]);
             ItemManager.Instance.equipmentInven[i] = itemDefault;
-            ItemManager.Instance.SetequipmentTotalState();
             ItemManager.Instance.isItemPick = true;
 
 

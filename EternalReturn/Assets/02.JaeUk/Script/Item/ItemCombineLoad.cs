@@ -82,47 +82,7 @@ public class ItemCombineLoad : MonoBehaviour
         // func(ItemWishList, true);
         ItemManager.Instance.itemWishList = default;
         ItemManager.Instance.itemWishList = ItemWishList;
-        ItemManager.Instance.SetDefault();
-        // ItemManager.Instance.EquipmentListSet(AddItem(0));
-        // ItemManager.Instance.EquipmentListSet(AddItem(20));
-        // ItemManager.Instance.EquipmentListSet(AddItem(27));
-        // ItemManager.Instance.EquipmentListSet(AddItem(28));
-        // ItemManager.Instance.EquipmentListSet(AddItem(34));
 
-
-        // ItemManager.Instance.GetItem(AddItem(30));
-        // ItemManager.Instance.GetItem(AddItem(23));
-        // ItemManager.Instance.GetItem(AddItem(2));
-        // ItemManager.Instance.GetItem(AddItem(40));
-
-
-
-        // // ItemManager.Instance.inventory.Add(AddItem(54));
-        // // ItemManager.Instance.inventory.Add(AddItem(226));
-        // // ItemManager.Instance.inventory.Add(AddItem(26));
-        // // ItemManager.Instance.inventory.Add(AddItem(42));
-        // // ItemManager.Instance.inventory.Add(AddItem(43));
-        // // ItemManager.Instance.inventory.Add(AddItem(47));
-        // // ItemManager.Instance.inventory.Add(AddItem(56));
-        // // ItemManager.Instance.inventory.Add(AddItem(52));
-        // // ItemManager.Instance.inventory.Add(AddItem(31));
-        // // ItemManager.Instance.inventory[0].count += 2;
-        // // ItemManager.Instance.inventory[1].count += 1;
-
-
-
-
-        // for (int i = 0; i < ItemWishList.Count; i++)
-        // {
-        //     ItemManager.Instance.AddInferiorList(ItemWishList[i].id);
-        // }
-
-        // itemInferiorList = ItemManager.Instance.itemInferiorList;
-        // itemInferiorRare = ItemManager.Instance.ItemInferiorRare;
-        // itemInferiorUncommon = ItemManager.Instance.ItemInferiorUncommon;
-
-        //SceneManager.LoadScene("Lobby");
-        // func(ItemManager.Instance.itemList, false);
     }
     public void func(List<ItemStat> list, bool flag)
     {

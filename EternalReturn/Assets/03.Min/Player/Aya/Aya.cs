@@ -19,10 +19,11 @@ public class Aya : PlayerBase
     private GameObject Bullet = default;
     protected override void Start()
     {
-        base.Start();
         weaponType = 10;
+        base.Start();
         if (photonView.IsMine)
         {
+            ItemManager.Instance.SetDefault(weaponType);
             ItemManager.Instance.GetItem(ItemManager.Instance.itemList[14]);
         }
     }
