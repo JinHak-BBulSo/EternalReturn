@@ -104,12 +104,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (photonView.IsMine)
         {
             TestLevelUp();
-            if (playerStat.nowHp <= 0)
-            {
-                playerStat.nowHp = 0;
-                playerController.ChangeState(new PlayerDie());
-                return;
-            }
             ShowAttackRange();
             DisableAttackRange();
             Regen();
@@ -652,6 +646,16 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             return;
         }
     }
+
+    public void DieCheck()
+    {
+        if (playerStat.nowHp <= 0)
+        {
+            playerStat.nowHp = 0;
+            playerController.ChangeState(new PlayerDie());
+            return;
+        }
+    }
     /// <summary>
     /// 기본 공격 공식
     /// 공격력 * 기본공격증폭 = message.damageAmount
@@ -670,6 +674,9 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
 
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
+            DieCheck();
+
             photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
         }
     }
@@ -694,6 +701,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         {
             playerStat.nowHp -= message.damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+            DieCheck();
             photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
         }
     }
@@ -705,6 +713,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         {
             playerStat.nowHp -= damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+            DieCheck();
             photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
         }
     }

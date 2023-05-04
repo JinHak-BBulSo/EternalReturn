@@ -196,8 +196,9 @@ public class Monster : MonoBehaviourPun, IHitHandler
         if (monsterStatus.nowHp < 0)
         {
             monsterStatus.nowHp = 0;
-            isDie = true;
+            photonView.RPC("Die", RpcTarget.All);
             attackPlayer_.GetExp(50, PlayerStat.PlayerExpType.WEAPON);
+            attackPlayer_.huntKill++;
             attackPlayer_.enemy = default;
         }
     }
@@ -205,7 +206,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
     [PunRPC]
     public void Die()
     {
-
+        isDie = true;
     }
 
     /// <summary>
@@ -264,7 +265,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
 
         if (!isDie)
         {
-            DieCheck(message);
+            DieCheck(attackPlayer_);
         }
     }
     public void TakeSolidDamage(DamageMessage message, float damageAmount)
@@ -281,7 +282,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
 
         if (!isDie)
         {
-            DieCheck(message);
+            DieCheck(attackPlayer_);
         }
     }
 
