@@ -144,7 +144,14 @@ public class PlayerController : MonoBehaviourPun
             }
         }
     }
-
+    public void Craft()
+    {
+        if (!photonView.IsMine) { return; }
+        if (Input.GetKeyDown(KeyCode.Z) && ItemManager.Instance.combineAbleList.Count > 0)
+        {
+            ChangeState(new PlayerCraft());
+        }
+    }
     public void SkillUse()
     {
         if (!photonView.IsMine) { return; }
@@ -193,5 +200,6 @@ public class PlayerController : MonoBehaviourPun
         }
 
     }
+
 }
 

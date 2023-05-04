@@ -107,6 +107,7 @@ public class PlayerAttackMove : IPlayerState
                 playerController.ChangeState(new PlayerSkill_D());
             }
         }
+        playerController.Craft();
         // if (!playerController.player.isAttackMove)
         // {
         //     Debug.Log("이거 실행됨?");
