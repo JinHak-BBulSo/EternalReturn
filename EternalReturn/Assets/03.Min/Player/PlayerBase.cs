@@ -90,6 +90,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         worldCanvas = GameObject.Find("WorldCanvas");
         playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform).GetComponent<PlayerStatusUI>();
         playerStatusUi.player = this;
+        skillSystem = GetComponent<PlayerSkillSystem>();
         InitStat();
     }
 
