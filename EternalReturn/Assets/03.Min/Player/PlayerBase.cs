@@ -75,7 +75,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         playerNav = GetComponent<NavMeshAgent>();
         attackRangeRender[0] = attackRange.GetComponent<SpriteRenderer>();
         attackRangeRender[1] = attackRange.transform.GetChild(0).GetComponent<SpriteRenderer>();
-        InitStat();
         //KJH Add. MinimapCamera Add
         miniMapCamera = Camera.main.transform.parent.GetChild(1).GetComponent<Camera>();
         //KJH Add. Each Player InventoryBoxUi Add
@@ -91,6 +90,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         worldCanvas = GameObject.Find("WorldCanvas");
         playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform).GetComponent<PlayerStatusUI>();
         playerStatusUi.player = this;
+        InitStat();
     }
 
 
@@ -98,6 +98,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
         if (photonView.IsMine)
         {
+            TestLevelUp();
             if (playerStat.nowHp <= 0)
             {
                 playerStat.nowHp = 0;
@@ -197,6 +198,14 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 }
 
             }
+        }
+    }
+
+    private void TestLevelUp()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            GetExp(1000, PlayerStat.PlayerExpType.WEAPON);
         }
     }
 
@@ -624,7 +633,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (PhotonNetwork.IsMasterClient)
         {
 
-        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+            playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
 
 
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
