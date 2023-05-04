@@ -2029,6 +2029,7 @@ MonoBehaviour:
   itemBoxUi: {fileID: 7458879648041901250, guid: 935c3719471578743bca9af8a24ceb1b,
     type: 3}
   itemBoxSlotList: {fileID: 0}
+  item: 000000000000000000000000000000000000000000000000
   audioClips:
   - {fileID: 8300000, guid: e0362129de39af44d830da8bf87f7285, type: 3}
   - {fileID: 8300000, guid: 25db8bbe9fe3ddd42bd920f2ac1a4358, type: 3}
@@ -2121,6 +2122,8 @@ MonoBehaviour:
   worldCanvas: {fileID: 0}
   skillSystem: {fileID: 0}
   weaponType: 0
+  huntKill: 0
+  playerKill: 0
   isWon: 0
   RRange: {fileID: 3384395866084856133}
   Bullet: {fileID: 2593041214829080384, guid: 399eb737b5937ee498277e6cea842a06, type: 3}
@@ -2338,7 +2341,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78256e77029937c4fb980245ce93d4f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerModels: []
 --- !u!1 &2533143214111931852
 GameObject:
   m_ObjectHideFlags: 0
