@@ -294,6 +294,13 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     public void AddTotalStat() // 플레이어 총 스탯
     {
+        if (photonView.IsMine)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                item[i] = ItemManager.Instance.equipmentInven[i].id;
+            }
+        }
 
 
         if (item[0] != 0)
