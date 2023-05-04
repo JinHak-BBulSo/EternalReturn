@@ -64,6 +64,9 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public GameObject worldCanvas = default;
     public PlayerSkillSystem skillSystem = default;
     public int weaponType = 0;
+    private float regenTime = 0f;
+    public int huntKill = 0;
+    public int playerKill = 0;
 
 
     protected virtual void Start()
@@ -108,6 +111,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             }
             ShowAttackRange();
             DisableAttackRange();
+            Regen();
             RaycastHit mousePoint;
             Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mousePoint);
             nowMousePoint = mousePoint.point;
@@ -563,14 +567,37 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
     }
 
-    public void Rest()
+    public void Regen()
     {
-        if (!photonView.IsMine)
+        if (playerController.playerState == PlayerController.PlayerState.DIE)
         {
             return;
         }
-        playerStat.nowHp += playerStat.maxHp * 0.1f;
+        if (regenTime >= 0.5f)
+        {
+            regenTime = 0f;
+            if (playerStat.nowHp < playerTotalStat.maxHp)
+            {
+                playerStat.nowHp += playerTotalStat.hpRegen * 0.5f;
+                if (playerStat.nowHp >= playerTotalStat.maxHp)
+                {
+                    playerStat.nowHp = playerTotalStat.maxHp;
+                }
+            }
+            if (playerStat.nowStamina < playerTotalStat.maxStamina)
+            {
+                playerStat.nowStamina += playerTotalStat.staminaRegen * 0.5f;
+                if (playerStat.nowStamina >= playerTotalStat.maxStamina)
+                {
+                    playerStat.nowStamina = playerTotalStat.maxStamina;
+                }
+            }
+        }
+        regenTime += Time.deltaTime;
+
     }
+
+
 
     public virtual void Skill_Q()
     {
