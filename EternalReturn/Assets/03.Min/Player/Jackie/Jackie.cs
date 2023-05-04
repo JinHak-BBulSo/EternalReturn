@@ -543,4 +543,9 @@ public class Jackie : PlayerBase
             enemyHunt[i].TakeDamage(dm);
         }
     }
+
+    public override void Skill_T()
+    {
+        base.Skill_T();
+    }
 }
