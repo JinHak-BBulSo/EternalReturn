@@ -106,18 +106,17 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     protected virtual void Update()
     {
 
-
-        if (ItemManager.Instance.isEquipmentChang)
+        if (photonView.IsMine)
         {
-            if (photonView.IsMine)
+            if (ItemManager.Instance.isEquipmentChang)
             {
                 ItemManager.Instance.isEquipmentChang = false;
+
+                AddTotalStat();
+                ItemChang();
             }
 
-            AddTotalStat();
-            ItemChang();
         }
-
 
         if (photonView.IsMine)
         {
@@ -295,13 +294,12 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     public void AddTotalStat() // 플레이어 총 스탯
     {
-        if (ItemManager.Instance.equipmentInven.Count == item.Length)
+
+        for (int i = 0; i < item.Length; i++)
         {
-            for (int i = 0; i < item.Length; i++)
-            {
-                item[i] = ItemManager.Instance.equipmentInven[i].id;
-            }
+            item[i] = ItemManager.Instance.equipmentInven[i].id;
         }
+
 
         AddExtraStat();
         playerTotalStat.attackPower = playerStat.attackPower + extraStat.attackPower;

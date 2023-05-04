@@ -30,7 +30,23 @@ public class ItemManager : SingleTonBase<ItemManager>
     protected override void Awake()
     {
         AddPrefabs();
+        SetDefault();
         base.Awake();
+
+    }
+    public void SetDefault()
+    {
+        equipmentInven.Add(new ItemStat());
+        equipmentInven.Add(new ItemStat(15));
+        equipmentInven.Add(new ItemStat(14));
+        equipmentInven.Add(new ItemStat(16));
+        equipmentInven.Add(new ItemStat(17));
+        equipmentInven.Add(new ItemStat(18));
+        for (int i = 0; i < 10; i++)
+        {
+            inventory.Add(new ItemStat());
+        }
+
 
     }
     public void SetDefault(int weapon)

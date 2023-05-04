@@ -39,6 +39,7 @@ public class Jackie : PlayerBase
             ItemManager.Instance.GetItem(ItemManager.Instance.itemList[227]);
 
         }
+        item[0] = 228;
         AddTotalStat();
     }
     public override void Attack()

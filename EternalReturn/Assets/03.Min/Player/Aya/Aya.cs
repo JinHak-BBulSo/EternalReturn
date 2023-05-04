@@ -25,9 +25,10 @@ public class Aya : PlayerBase
         {
             ItemManager.Instance.SetDefault(weaponType);
             ItemManager.Instance.GetItem(ItemManager.Instance.itemList[14]);
-            item[0] = 14;
+
 
         }
+        item[0] = 15;
         AddTotalStat();
     }
 
