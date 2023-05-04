@@ -358,6 +358,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
             photonView.RPC("DebuffSet", RpcTarget.All, debuffIndex_, continousTime_);
         }
     }
+    [PunRPC]
     public void DebuffSet(int debuffIndex_, float continousTime_)
     {
         StartCoroutine(DebuffStart(debuffIndex_, continousTime_));
