@@ -39,6 +39,7 @@ public class ObjsManager : MonoBehaviour
             ItemManager.Instance.Player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
             ItemManager.Instance.ItemCanvas = itemCanvas;
             PlayerUI.Instance.InitializeCharacterUI();
+            PlayerManager.Instance.Player.GetComponent<PlayerMaterialSelector>().InitializeMaterial();
             Destroy(this.gameObject);
         }
     }
