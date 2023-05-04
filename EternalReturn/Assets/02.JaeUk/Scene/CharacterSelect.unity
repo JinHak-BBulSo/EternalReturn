@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731713, g: 0.13414738, b: 0.12107852, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -849,7 +849,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC7AC\uD0A4"
+  m_Text: "\uC544\uC57C"
 --- !u!222 &655362048
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1972,7 +1972,7 @@ MonoBehaviour:
   - {fileID: 693391342}
   - {fileID: 545828976}
   ImageSprite:
-  - {fileID: 21300000, guid: 38e9be2b429b75541bba1973e8bfcc30, type: 3}
+  - {fileID: 21300000, guid: 7af56fa7246d08b47ad5a35a02ec226a, type: 3}
   - {fileID: 21300000, guid: 959a82e36aa74bd408e6cbeaacf83a02, type: 3}
   BgSprite:
   - {fileID: 21300000, guid: dbc8a0c4d2e3e5b4ebff99d6ebf5a801, type: 3}
@@ -2832,7 +2832,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 38e9be2b429b75541bba1973e8bfcc30, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7af56fa7246d08b47ad5a35a02ec226a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -18,13 +18,6 @@ public class PlayerUI : SingleTonBase<PlayerUI>
     private Text spText;
     [SerializeField] private Image expGauge;
 
-    float chp = 10000;
-    float mhp = 10000;
-    float csp = 3000;
-    float msp = 3000;
-    float cexp = 0;
-    float mexp = 1000;
-
     protected override void Awake()
     {
         base.Awake();
@@ -40,19 +33,14 @@ public class PlayerUI : SingleTonBase<PlayerUI>
         }
     }
 
-    // Update is called once per frame
+    protected override void Start()
+    {
+        base.Start();
+    }
+
     protected override void Update()
     {
         base.Update();
-
-        //chp -= Time.deltaTime * 1000;
-        //csp -= Time.deltaTime * 500;
-        //cexp += Time.deltaTime * 200;
-
-        //UpdateHpUI(chp, mhp);
-        //UpdateSpUI(csp, msp);
-        //UpdateExpUI(cexp % mexp, mexp);
-        //UpdatePlayerLevelUI((int)cexp);
     }
 
     public void InitializeCharacterUI()
