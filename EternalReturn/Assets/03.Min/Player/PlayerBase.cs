@@ -108,7 +108,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     protected virtual void Update()
     {
-
         if (photonView.IsMine)
         {
             if (ItemManager.Instance.isEquipmentChang)
@@ -116,8 +115,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 ItemManager.Instance.isEquipmentChang = false;
                 AddTotalStat();
                 ItemChang();
-
-
             }
 
         }
@@ -136,6 +133,8 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             DisableAttackRange();
             Regen();
             Skill_T();
+            PlayerUI.Instance.UpdateHpUI(playerStat.nowHp, playerTotalStat.maxHp);
+            PlayerUI.Instance.UpdateSpUI(playerStat.nowStamina, playerTotalStat.maxStamina);
             RaycastHit mousePoint;
             Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mousePoint);
             nowMousePoint = mousePoint.point;
@@ -366,6 +365,18 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                     playerStat.playerExp.nowExp += playerExp_.maxExp;
                     LevelUp(playerStat.playerExp);
                     playerStatusUi.playerExpBar.fillAmount = playerExp_.nowExp / playerExp_.maxExp;
+                }
+                else
+                {
+                    playerStat.attackPower += charaterData.increaseAttack;
+                    playerStat.defense += charaterData.increaseDef;
+                    playerStat.maxHp += charaterData.increaseHp;
+                    playerStat.nowHp += charaterData.increaseHp;
+                    playerStat.hpRegen += charaterData.increaseHpRegen;
+                    playerStat.maxStamina += charaterData.increaseStamina;
+                    playerStat.nowStamina += charaterData.increaseStamina;
+                    playerStat.hpRegen += charaterData.increaseStaminaRegen;
+                    AddTotalStat();
                 }
                 playerExp_.nowExp -= playerExp_.maxExp;
                 playerExp_.maxExp += playerExp_.expDelta;

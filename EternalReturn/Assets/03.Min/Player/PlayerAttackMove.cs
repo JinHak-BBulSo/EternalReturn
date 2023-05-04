@@ -41,36 +41,33 @@ public class PlayerAttackMove : IPlayerState
 
     public void StateUpdate()
     {
-        if (playerController.player.photonView.IsMine)
-        {
-            Collider[] enemys = Physics.OverlapSphere(playerController.transform.position, playerController.player.playerTotalStat.attackRange);
+        Collider[] enemys = Physics.OverlapSphere(playerController.transform.position, playerController.player.playerTotalStat.attackRange);
 
-            for (int i = 0; i < enemys.Length; i++)
+        for (int i = 0; i < enemys.Length; i++)
+        {
+            if (enemys[i].CompareTag("Enemy"))
             {
-                if (enemys[i].CompareTag("Enemy"))
-                {
-                    playerController.player.enemy = enemys[i].gameObject;
-                    break;
-                }
-                if (enemys[i].gameObject != playerController.gameObject && enemys[i].CompareTag("Player"))
-                {
-                    playerController.player.enemy = enemys[i].gameObject;
-                    break;
-                }
+                playerController.player.enemy = enemys[i].gameObject;
+                break;
             }
-            if (playerController.player.enemy != null)
+            if (enemys[i].gameObject != playerController.gameObject && enemys[i].CompareTag("Player"))
             {
-                if (ExceptY.ExceptYDistance(ExceptY.ExceptYPos(playerController.player.transform.position), ExceptY.ExceptYPos(playerController.player.enemy.transform.position))
-                <= playerController.player.playerTotalStat.attackRange)
-                {
-                    if (playerController.player.isAttackAble)
-                    {
-                        playerController.ChangeState(new PlayerAttack());
-                    }
-                }
+                playerController.player.enemy = enemys[i].gameObject;
+                break;
             }
-            playerController.player.Move();
         }
+        if (playerController.player.enemy != null)
+        {
+            if (ExceptY.ExceptYDistance(ExceptY.ExceptYPos(playerController.player.transform.position), ExceptY.ExceptYPos(playerController.player.enemy.transform.position))
+            <= playerController.player.playerTotalStat.attackRange)
+            {
+                if (playerController.player.isAttackAble)
+                {
+                    playerController.ChangeState(new PlayerAttack());
+                }
+            }
+        }
+        playerController.player.Move();
         playerController.Craft();
         playerController.ShowAllRange();
         playerController.SkillUse();
