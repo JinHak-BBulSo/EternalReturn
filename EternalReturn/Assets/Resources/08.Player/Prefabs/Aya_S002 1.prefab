@@ -1765,6 +1765,7 @@ GameObject:
   - component: {fileID: 1483281211564587043}
   - component: {fileID: 8628475437877141397}
   - component: {fileID: 2339630805337848545}
+  - component: {fileID: -3386790957777990035}
   m_Layer: 0
   m_Name: Aya_S002 1
   m_TagString: Player
@@ -2328,6 +2329,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93587f2b5874db44786a24c5f6e3152b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-3386790957777990035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2465337935834244234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 044fb908f6d319c4e9f65d068237f329, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isClick: 0
+  monster: {fileID: 0}
+  player: {fileID: 0}
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0, b: 0, a: 0.69803923}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &2533143214111931852
 GameObject:
   m_ObjectHideFlags: 0

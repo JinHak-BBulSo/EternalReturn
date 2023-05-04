@@ -64,7 +64,6 @@ public class ItemBox : MonoBehaviour
 
         foreach (var item in boxItems)
         {
-            Debug.Log(slotIndex_);
             slotItemImage = slotList.boxSlotList[slotIndex_].slotItemImage;
             slotItemCountTxt = slotList.boxSlotList[slotIndex_].slotItemCount;
 

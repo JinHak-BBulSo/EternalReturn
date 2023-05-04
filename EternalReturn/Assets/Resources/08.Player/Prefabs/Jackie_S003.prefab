@@ -1382,6 +1382,7 @@ GameObject:
   - component: {fileID: 6477311113540160925}
   - component: {fileID: -6734051769537532298}
   - component: {fileID: -8804324994532699519}
+  - component: {fileID: 3834497002332918121}
   m_Layer: 0
   m_Name: Jackie_S003
   m_TagString: Player
@@ -1938,6 +1939,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93587f2b5874db44786a24c5f6e3152b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3834497002332918121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358739485631446351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 044fb908f6d319c4e9f65d068237f329, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isClick: 0
+  monster: {fileID: 0}
+  player: {fileID: 0}
+  outlineMode: 0
+  outlineColor: {r: 1, g: 0, b: 0, a: 0.69803923}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1431738604640560163
 GameObject:
   m_ObjectHideFlags: 0

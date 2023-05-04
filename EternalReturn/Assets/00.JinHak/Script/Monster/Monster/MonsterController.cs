@@ -34,7 +34,7 @@ public class MonsterController : MonoBehaviour
     public NavMeshAgent navMeshAgent = default;
     public PlayerBase targetPlayer = default;
 
-    public bool isMoveAble = false;
+    public bool isMoveAble = true;
     public bool isSkillAble = false;
     public bool isInSkillUse = false;
     public int encountPlayerCount = 0;

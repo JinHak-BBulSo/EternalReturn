@@ -30,17 +30,33 @@ public class ItemManager : SingleTonBase<ItemManager>
     protected override void Awake()
     {
         AddPrefabs();
+        SetDefault();
         base.Awake();
 
     }
-    public void SetDefault(int weapon)
+    public void SetDefault()
     {
-        equipmentInven.Add(new ItemStat(weapon));
+        equipmentInven.Add(new ItemStat());
         equipmentInven.Add(new ItemStat(15));
         equipmentInven.Add(new ItemStat(14));
         equipmentInven.Add(new ItemStat(16));
         equipmentInven.Add(new ItemStat(17));
         equipmentInven.Add(new ItemStat(18));
+        for (int i = 0; i < 10; i++)
+        {
+            inventory.Add(new ItemStat());
+        }
+
+
+    }
+    public void SetDefault(int weapon)
+    {
+        equipmentInven[0] = new ItemStat(weapon);
+        equipmentInven[1] = new ItemStat(15);
+        equipmentInven[2] = new ItemStat(14);
+        equipmentInven[3] = new ItemStat(16);
+        equipmentInven[4] = new ItemStat(17);
+        equipmentInven[5] = new ItemStat(18);
         for (int i = 0; i < 10; i++)
         {
             inventory.Add(new ItemStat());
@@ -112,7 +128,6 @@ public class ItemManager : SingleTonBase<ItemManager>
                 isEquipmentChang = true;
                 isUsed = true;
                 isInventoryFull = false;
-                isEquipmentChang = true;
             }
         }
 
