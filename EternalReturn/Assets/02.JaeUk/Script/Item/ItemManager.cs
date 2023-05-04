@@ -112,6 +112,7 @@ public class ItemManager : SingleTonBase<ItemManager>
                 isEquipmentChang = true;
                 isUsed = true;
                 isInventoryFull = false;
+                isEquipmentChang = true;
             }
         }
 
@@ -748,14 +749,14 @@ public class ItemManager : SingleTonBase<ItemManager>
         List<int> itemSlot2 = new List<int>();
         for (int i = 0; i < equipmentInven.Count; i++)
         {
-            if (equipmentInven[i].id == needItem[0])
+            if (equipmentInven[i].id == needItem[0] && !idchk1)
             {
-                itemSlot2.Add(i);
+                itemSlot1.Add(equipmentInven[i].id);
                 idchk1 = true;
             }
-            else if (equipmentInven[i].id == needItem[1])
+            else if (equipmentInven[i].id == needItem[1] && idchk2)
             {
-                itemSlot2.Add(i);
+                itemSlot2.Add(equipmentInven[i].id);
                 idchk2 = true;
             }
         }
@@ -766,14 +767,15 @@ public class ItemManager : SingleTonBase<ItemManager>
 
             for (int i = 0; i < inventory.Count; i++)
             {
-                if (inventory[i].id == needItem[0])
+                if (inventory[i].id == needItem[0] && !idchk1)
                 {
-                    itemSlot1.Add(i);
+                    itemSlot1.Add(inventory[i].id);
+
                     idchk1 = true;
                 }
-                else if (inventory[i].id == needItem[1])
+                if (inventory[i].id == needItem[1] && !idchk2)
                 {
-                    itemSlot1.Add(i);
+                    itemSlot2.Add(inventory[i].id);
                     idchk2 = true;
                 }
             }
@@ -781,25 +783,73 @@ public class ItemManager : SingleTonBase<ItemManager>
         }
         if (idchk1 && idchk2)
         {
-            if (itemSlot1.Count != 0)
+            for (int i = 0; i < inventory.Count; i++)
             {
-                if (inventory[itemSlot1[0]].count < 2)
+                if (inventory[i].id == itemSlot1[0])
                 {
-                    inventory[itemSlot1[0]] = new ItemStat();
-                }
-                else
-                {
-                    inventory[itemSlot1[0]].count--;
-                }
-            }
-            if (itemSlot2.Count != 0)
-            {
-                if (equipmentInven[itemSlot2[0]].count < 2)
-                {
-                    equipmentInven[itemSlot2[0]] = new ItemStat();
+
+                    if (inventory[i].count < 2)
+                    {
+                        Debug.Log($"!!{i}");
+                        inventory[i] = new ItemStat();
+                    }
+                    else
+                    {
+                        inventory[i].count--;
+                    }
+                    break;
                 }
 
             }
+            for (int i = 0; i < inventory.Count; i++)
+            {
+                if (inventory[i].id == itemSlot2[0])
+                {
+                    if (inventory[i].count < 2)
+                    {
+                        inventory[i] = new ItemStat();
+                    }
+                    else
+                    {
+                        inventory[i].count--;
+                    }
+                    break;
+                }
+
+            }
+            for (int i = 0; i < equipmentInven.Count; i++)
+            {
+                if (equipmentInven[i].id == itemSlot1[0])
+                {
+                    if (equipmentInven[i].count < 2)
+                    {
+                        equipmentInven[i] = new ItemStat();
+                    }
+                    else
+                    {
+                        equipmentInven[i].count--;
+                    }
+                    break;
+                }
+
+            }
+            for (int i = 0; i < equipmentInven.Count; i++)
+            {
+                if (equipmentInven[i].id == itemSlot2[0])
+                {
+                    if (equipmentInven[i].count < 2)
+                    {
+                        equipmentInven[i] = new ItemStat();
+                    }
+                    else
+                    {
+                        equipmentInven[i].count--;
+                    }
+                    break;
+                }
+
+            }
+
 
             GetItem(item);
 
