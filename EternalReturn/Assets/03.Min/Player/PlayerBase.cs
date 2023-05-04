@@ -300,29 +300,33 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             item[i] = ItemManager.Instance.equipmentInven[i].id;
         }
 
+        if (item[0] != 0)
+        {
+            AddExtraStat();
+            playerTotalStat.attackPower = playerStat.attackPower + extraStat.attackPower;
+            playerTotalStat.defense = playerStat.defense + extraStat.defense;
+            playerTotalStat.armorReduce = playerStat.armorReduce + extraStat.armorReduce;
+            playerTotalStat.attackRange = playerStat.attackRange + extraStat.attackRange + ItemManager.Instance.itemList[item[0] - 1].weaponAttackRangePercent;
+            playerTotalStat.attackSpeed = (playerStat.attackSpeed + extraStat.attackSpeed) + ItemManager.Instance.itemList[item[0] - 1].weaponAttackRangePercent;
+            playerTotalStat.basicAttackPower = playerStat.basicAttackPower + extraStat.basicAttackPower;
+            playerTotalStat.coolDown = playerStat.coolDown + extraStat.coolDown;
+            playerTotalStat.criticalDamage = playerStat.criticalDamage + extraStat.criticalDamage;
+            playerTotalStat.criticalPercent = playerStat.criticalPercent + extraStat.criticalPercent;
+            playerTotalStat.damageReduce = playerStat.damageReduce + extraStat.damageReduce;
+            playerTotalStat.extraHp = playerStat.extraHp + extraStat.extraHp;
+            playerTotalStat.extraStamina = playerStat.extraStamina + extraStat.extraStamina;
+            playerTotalStat.hpRegen = playerStat.hpRegen + extraStat.hpRegen;
+            playerTotalStat.lifeSteel = playerStat.lifeSteel + extraStat.lifeSteel;
+            playerTotalStat.staminaRegen = playerStat.staminaRegen + extraStat.staminaRegen;
+            playerTotalStat.moveSpeed = playerStat.moveSpeed + extraStat.moveSpeed;
+            playerTotalStat.skillPower = playerStat.skillPower + extraStat.skillPower;
+            playerTotalStat.tenacity = playerStat.tenacity + extraStat.tenacity;
+            playerTotalStat.visionRange = playerStat.visionRange + extraStat.visionRange;
+            playerTotalStat.maxHp = playerStat.maxHp + playerTotalStat.extraHp;
+            playerTotalStat.maxStamina = playerStat.maxStamina + playerTotalStat.extraStamina;
 
-        AddExtraStat();
-        playerTotalStat.attackPower = playerStat.attackPower + extraStat.attackPower;
-        playerTotalStat.defense = playerStat.defense + extraStat.defense;
-        playerTotalStat.armorReduce = playerStat.armorReduce + extraStat.armorReduce;
-        playerTotalStat.attackRange = playerStat.attackRange + extraStat.attackRange + ItemManager.Instance.itemList[item[0] - 1].weaponAttackRangePercent;
-        playerTotalStat.attackSpeed = (playerStat.attackSpeed + extraStat.attackSpeed) + ItemManager.Instance.itemList[item[0] - 1].weaponAttackRangePercent;
-        playerTotalStat.basicAttackPower = playerStat.basicAttackPower + extraStat.basicAttackPower;
-        playerTotalStat.coolDown = playerStat.coolDown + extraStat.coolDown;
-        playerTotalStat.criticalDamage = playerStat.criticalDamage + extraStat.criticalDamage;
-        playerTotalStat.criticalPercent = playerStat.criticalPercent + extraStat.criticalPercent;
-        playerTotalStat.damageReduce = playerStat.damageReduce + extraStat.damageReduce;
-        playerTotalStat.extraHp = playerStat.extraHp + extraStat.extraHp;
-        playerTotalStat.extraStamina = playerStat.extraStamina + extraStat.extraStamina;
-        playerTotalStat.hpRegen = playerStat.hpRegen + extraStat.hpRegen;
-        playerTotalStat.lifeSteel = playerStat.lifeSteel + extraStat.lifeSteel;
-        playerTotalStat.staminaRegen = playerStat.staminaRegen + extraStat.staminaRegen;
-        playerTotalStat.moveSpeed = playerStat.moveSpeed + extraStat.moveSpeed;
-        playerTotalStat.skillPower = playerStat.skillPower + extraStat.skillPower;
-        playerTotalStat.tenacity = playerStat.tenacity + extraStat.tenacity;
-        playerTotalStat.visionRange = playerStat.visionRange + extraStat.visionRange;
-        playerTotalStat.maxHp = playerStat.maxHp + playerTotalStat.extraHp;
-        playerTotalStat.maxStamina = playerStat.maxStamina + playerTotalStat.extraStamina;
+        }
+
     }
 
     private void LevelUp(PlayerExp playerExp_)
