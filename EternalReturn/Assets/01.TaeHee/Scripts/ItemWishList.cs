@@ -14,23 +14,26 @@ public class ItemWishList : MonoBehaviour
         currentFocusedItem = focusedItem.CurrentFocusedItem;
 
         if (currentFocusedItem == null || currentFocusedItem.rare < 1 || 
-            currentFocusedItem.type > 18 || currentFocusedItem.type < 1)
+            currentFocusedItem.type > 19 || currentFocusedItem.type < 1)
             return;
 
         for (int i = 0; i < ItemManager.Instance.itemWishList.Count; i++)
         {
-            if (ItemManager.Instance.itemWishList[i].type == currentFocusedItem.type)
+            int currentItemType = ItemManager.Instance.itemWishList[i].type;
+
+            Debug.Log(IsWeapon(currentItemType) + " & " + IsWeapon(currentFocusedItem.type));
+
+            if (currentItemType == currentFocusedItem.type || 
+                (IsWeapon(currentItemType) && IsWeapon(currentFocusedItem.type)))
             {
-                ItemManager.Instance.DeleteInferiorList(ItemManager.Instance.itemWishList[i].id);
-                ItemManager.Instance.itemWishList.Add(currentFocusedItem);
-                ItemManager.Instance.AddInferiorList(currentFocusedItem.id);
+
+                ItemManager.Instance.itemWishList[i] = currentFocusedItem;
                 UpdateItemWishListUI(currentFocusedItem);
                 return;
             }
         }
 
         ItemManager.Instance.itemWishList.Add(currentFocusedItem);
-        ItemManager.Instance.AddInferiorList(currentFocusedItem.id);
         UpdateItemWishListUI(currentFocusedItem);
     }
 
@@ -57,5 +60,10 @@ public class ItemWishList : MonoBehaviour
                 itemWishListSlots[0].UpdateNewItem(item);
                 break;
         }
+    }
+
+    private bool IsWeapon(int type)
+    {
+        return (type < (int)ItemType.Head && type > (int)ItemType.Material) || type == (int)ItemType.Axe;
     }
 }

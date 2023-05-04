@@ -14,6 +14,7 @@ public class PassiveSkillUI : SkillUI
     {
         base.Start();
         skillInfo.AddLevel();
+        image.color = Color.white;
         skillLevelBgRect.GetChild(skillInfo.CurrentLevel - 1).GetComponent<Image>().color = Color.white;
     }
 
