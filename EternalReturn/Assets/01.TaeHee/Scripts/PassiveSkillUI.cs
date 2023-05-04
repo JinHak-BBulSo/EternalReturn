@@ -17,6 +17,11 @@ public class PassiveSkillUI : SkillUI
         skillLevelBgRect.GetChild(skillInfo.CurrentLevel - 1).GetComponent<Image>().color = Color.white;
     }
 
+    protected override void Update()
+    {
+        /* Do nothing */
+    }
+
     public override void UpdateInteractable(int playerLevel, int weaponMasteryLevel)
     {
         base.UpdateInteractable(playerLevel, weaponMasteryLevel);

@@ -399,7 +399,7 @@ public class Aya : PlayerBase
                 for (int i = 0; i < enemyHunt.Count; i++)
                 {
                     enemyHunt[i].TakeDamage(dm);
-                    enemyHunt[i].Debuff(dm, 3, time);
+                    enemyHunt[i].Debuff(3, time);
                 }
                 for (int i = 0; i < enemyPlayer.Count; i++)
                 {
