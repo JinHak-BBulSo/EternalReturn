@@ -81,7 +81,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
     }
 
     [PunRPC]
-    private void BoxSet(int index_)
+    public void MonsterBoxSet(int index_)
     {
         monsterItemBox.AddItem(index_);
     }
@@ -135,7 +135,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
         {
             int r_ = Random.Range(1, monsterItemBox.itemPrefabs.Count);
             int itemIndex_ = monsterItemBox.itemPrefabs[r_].GetComponent<ItemController>().item.id;
-            photonView.RPC("BoxSet", RpcTarget.All, itemIndex_);
+            photonView.RPC("MonsterBoxSet", RpcTarget.All, itemIndex_);
         }
     }
     
