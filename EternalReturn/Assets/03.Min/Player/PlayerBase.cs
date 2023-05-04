@@ -125,6 +125,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             ShowAttackRange();
             DisableAttackRange();
             Regen();
+            Skill_T();
             RaycastHit mousePoint;
             Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mousePoint);
             nowMousePoint = mousePoint.point;
@@ -674,11 +675,15 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         }
     }
 
-    public void DieCheck()
+    public void DieCheck(DamageMessage message)
     {
         if (playerStat.nowHp <= 0)
         {
             playerStat.nowHp = 0;
+            if (message.causer.GetComponent<PlayerBase>() != null)
+            {
+                message.causer.GetComponent<PlayerBase>().playerKill++;
+            }
             playerController.ChangeState(new PlayerDie());
             return;
         }
@@ -702,7 +707,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
 
-            DieCheck();
+            DieCheck(message);
 
             photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
         }
@@ -728,7 +733,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         {
             playerStat.nowHp -= message.damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-            DieCheck();
+            DieCheck(message);
             photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
         }
     }
@@ -740,7 +745,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         {
             playerStat.nowHp -= damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-            DieCheck();
+            DieCheck(message);
             photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
         }
     }
@@ -932,7 +937,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         playerStat.nowHp = hp_;
         playerStat.nowStamina = mp_;
         item = item_;
-        AddTotalStat();
+        ItemManager.Instance.isEquipmentChang = true;
         if (PhotonNetwork.IsMasterClient)
         {
             MasterSpread();
