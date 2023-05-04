@@ -82,5 +82,9 @@ public class PlayerCollect : IPlayerState
             playerController.player.isMove = false;
             playerController.ChangeState(new PlayerIdle());
         }
+        if (Input.GetMouseButton(1))
+        {
+            playerController.ChangeState(new PlayerIdle());
+        }
     }
 }
