@@ -111,9 +111,9 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             if (ItemManager.Instance.isEquipmentChang)
             {
                 ItemManager.Instance.isEquipmentChang = false;
-
-                AddTotalStat();
                 ItemChang();
+                AddTotalStat();
+
             }
 
         }
