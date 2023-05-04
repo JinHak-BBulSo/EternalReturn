@@ -6,31 +6,33 @@ using UnityEngine.UI;
 
 public class SkillUI : MonoBehaviour
 {
-    private const string INGAME_PREFABS_PATH = "09.InGameUI/Prefabs/";
-    private const string INGAME_CHARACTER_PROFILES_PATH = "09.InGameUI/Sprite/CharacterProfiles/";
-    private const string INGAME_SKILL_ICONS_PATH = "09.InGameUI/Sprite/SKillIcons/";
-    private const string SKILL_LEVEL_PREFAB_NAME = "Skill Level";
-
     private static PlayerSkillSystem playerSkillSystem;
     private static PlayerBase playerBase;
-
 
     protected Button button;
     protected SkillInfo skillInfo;
     protected RectTransform skillLevelBgRect;
 
+    private int index;
+    private Image coolDownImage;
+    private Text coolDownText;
 
     protected virtual void Awake()
     {
         button = transform.GetChild(1).GetComponent<Button>();
         skillLevelBgRect = transform.GetChild(0).GetComponent<RectTransform>();
 
+        index = transform.GetSiblingIndex();
+        coolDownImage = transform.GetChild(2).GetComponent<Image>();
+        coolDownText = coolDownImage.transform.GetChild(0).GetComponent<Text>();
+
         if (playerSkillSystem == null)
         {
             playerSkillSystem = PlayerManager.Instance.Player.GetComponent<PlayerSkillSystem>();
             playerBase = playerSkillSystem.GetComponent<PlayerBase>();
         }
-        skillInfo = playerSkillSystem.skillInfos[transform.GetSiblingIndex()];
+
+        skillInfo = playerSkillSystem.skillInfos[index];
 
         for (int i = 0; i < skillInfo.MaxLevel; i++)
         {
@@ -46,6 +48,19 @@ public class SkillUI : MonoBehaviour
     protected virtual void Start()
     {
 
+    }
+
+    protected virtual void Update()
+    {
+        if (playerBase.skillCooltimes[index])
+        {
+            coolDownImage.gameObject.SetActive(true);
+            coolDownText.text = $"{(int)playerBase.skillSystem.skillInfos[index].currentCooltime}";
+        }
+        else
+        {
+            coolDownImage.gameObject.SetActive(false);
+        }
     }
 
     public virtual void UpdateInteractable(int playerLevel, int weaponMasteryLevel)

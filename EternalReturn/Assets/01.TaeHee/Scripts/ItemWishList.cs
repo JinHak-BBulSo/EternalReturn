@@ -21,13 +21,16 @@ public class ItemWishList : MonoBehaviour
         {
             if (ItemManager.Instance.itemWishList[i].type == currentFocusedItem.type)
             {
-                ItemManager.Instance.itemWishList[i] = currentFocusedItem;
+                ItemManager.Instance.DeleteInferiorList(ItemManager.Instance.itemWishList[i].id);
+                ItemManager.Instance.itemWishList.Add(currentFocusedItem);
+                ItemManager.Instance.AddInferiorList(currentFocusedItem.id);
                 UpdateItemWishListUI(currentFocusedItem);
                 return;
             }
         }
 
         ItemManager.Instance.itemWishList.Add(currentFocusedItem);
+        ItemManager.Instance.AddInferiorList(currentFocusedItem.id);
         UpdateItemWishListUI(currentFocusedItem);
     }
 
