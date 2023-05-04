@@ -295,10 +295,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public void AddTotalStat() // 플레이어 총 스탯
     {
 
-        for (int i = 0; i < item.Length; i++)
-        {
-            item[i] = ItemManager.Instance.equipmentInven[i].id;
-        }
 
         if (item[0] != 0)
         {
