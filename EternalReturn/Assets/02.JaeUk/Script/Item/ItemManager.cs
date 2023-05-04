@@ -109,6 +109,7 @@ public class ItemManager : SingleTonBase<ItemManager>
             if (item.type == equipmentInven[i].type && equipmentInven[i].id == 0)
             {
                 equipmentInven[i] = item;
+                isEquipmentChang = true;
                 isUsed = true;
                 isInventoryFull = false;
             }

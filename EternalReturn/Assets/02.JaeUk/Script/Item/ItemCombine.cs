@@ -18,13 +18,8 @@ public class ItemCombine : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-<<<<<<< HEAD
-            ItemManager.Instance.PickItem(ItemManager.Instance.itemList[2]);
-            ItemManager.Instance.PickItem(ItemManager.Instance.itemList[39]);
-=======
             ItemManager.Instance.PickItem(ItemManager.Instance.itemList[17]);
             ItemManager.Instance.PickItem(ItemManager.Instance.itemList[226]);
->>>>>>> 968d5852bccac0a68dadaf8b9a93515a48a922ad
             ItemManager.Instance.InventoryChange();
 
         }
