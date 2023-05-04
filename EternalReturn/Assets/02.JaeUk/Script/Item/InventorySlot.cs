@@ -18,7 +18,6 @@ public class InventorySlot : Slot, IDragHandler, IEndDragHandler, IBeginDragHand
     {
         if (!chk)
         {
-            Debug.Log("UnActive");
             if (ItemManager.Instance.inventory.Count < i + 1)
             {
 
@@ -58,6 +57,7 @@ public class InventorySlot : Slot, IDragHandler, IEndDragHandler, IBeginDragHand
                     }
                 }
                 chk = false;
+                ItemManager.Instance.isEquipmentChang = true;
             }
 
         }

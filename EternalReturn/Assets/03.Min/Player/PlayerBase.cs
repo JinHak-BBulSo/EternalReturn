@@ -843,18 +843,18 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (!PhotonNetwork.IsMasterClient)
         {
             photonView.RPC("SetPlayerStat", RpcTarget.MasterClient,
-            playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item);
+            playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, new int[5]);
         }
         else
         {
             photonView.RPC("SetPlayerStat", RpcTarget.Others,
-             playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item);
+             playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, new int[5]);
         }
     }
     void MasterSpread()
     {
         photonView.RPC("SetPlayerStat", RpcTarget.Others,
-                     playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item);
+                     playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, new int[5]);
     }
 
     IEnumerator ContinousDamageEnd(float debuffContinousTime_, int debuffIndex_, float debuffDamage_)
