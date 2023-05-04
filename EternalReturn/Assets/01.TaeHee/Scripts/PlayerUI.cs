@@ -4,10 +4,18 @@ using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum CharacterType
+{
+    Aya = 0,
+    Jackie = 1
+}
+
 public class PlayerUI : SingleTonBase<PlayerUI>
 {
+    [SerializeField] private Image profileImage;
+
     [SerializeField] private GameObject skillBg;
-    [SerializeField] private List<SkillUI> skillUIs = new List<SkillUI>();
+    private List<SkillUI> skillUIs = new List<SkillUI>();
 
     [SerializeField] private Text levelUI;
     [SerializeField] private Image hpGauge;
@@ -33,21 +41,13 @@ public class PlayerUI : SingleTonBase<PlayerUI>
         }
     }
 
-    protected override void Start()
-    {
-        base.Start();
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-    }
-
     public void InitializeCharacterUI()
     {
-        foreach (var skillUI in skillUIs)
+        profileImage.sprite = InGameUIResources.GetProfileSprite((CharacterType)PlayerManager.Instance.characterNum);
+        for (int i = 0; i < skillUIs.Count; i++)
         {
-            skillUI.gameObject.SetActive(true);
+            skillUIs[i].gameObject.SetActive(true);
+            skillUIs[i].GetComponent<Image>().sprite = InGameUIResources.GetSkillIconSprite((CharacterType)PlayerManager.Instance.characterNum, (SkillInfoType)i);
         }
 
         GameObject player = PlayerManager.Instance.Player;

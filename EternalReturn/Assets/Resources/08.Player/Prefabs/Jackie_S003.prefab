@@ -1664,6 +1664,8 @@ MonoBehaviour:
   worldCanvas: {fileID: 0}
   skillSystem: {fileID: 0}
   weaponType: 0
+  huntKill: 0
+  playerKill: 0
   weaponStack: 0
   skillQ: {fileID: 634131373}
   skillE: {fileID: 8981070518534526685}

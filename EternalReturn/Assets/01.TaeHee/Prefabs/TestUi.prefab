@@ -5832,8 +5832,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad3399a7cd326d14287e8692d889b914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  profileImage: {fileID: 427855650508339423}
   skillBg: {fileID: 427855648465833016}
-  skillUIs: []
   levelUI: {fileID: 427855649267842920}
   hpGauge: {fileID: 427855650404637030}
   spGauge: {fileID: 427855648801949635}
