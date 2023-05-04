@@ -914,7 +914,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             applyDebuffCheck[debuffIndex_] = false;
         }
     }
-    void ItemChang()
+    public void ItemChang()
     {
         if (!PhotonNetwork.IsMasterClient)
         {

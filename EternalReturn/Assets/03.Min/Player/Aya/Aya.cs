@@ -30,6 +30,7 @@ public class Aya : PlayerBase
         }
         item[0] = 15;
         AddTotalStat();
+        ItemChang();
     }
 
     protected override void InitStat()

@@ -41,6 +41,7 @@ public class Jackie : PlayerBase
         }
         item[0] = 228;
         AddTotalStat();
+        ItemChang();
     }
     public override void Attack()
     {
