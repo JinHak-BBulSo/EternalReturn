@@ -69,16 +69,6 @@ public class ItemCombineLoad : MonoBehaviour
 
         }
         ItemManager.Instance.itemList = itemList;
-
-        // func(ItemManager.Instance.itemList, false);
-
-        // ItemWishList.Add(AddItem(132));
-        ItemWishList.Add(AddItem(102));
-        ItemWishList.Add(AddItem(171));
-        ItemWishList.Add(AddItem(148));
-        ItemWishList.Add(AddItem(187));
-        ItemWishList.Add(AddItem(81));
-
         // func(ItemWishList, true);
         ItemManager.Instance.itemWishList = default;
         ItemManager.Instance.itemWishList = ItemWishList;
