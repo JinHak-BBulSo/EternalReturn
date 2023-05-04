@@ -105,16 +105,17 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     protected virtual void Update()
     {
+        if (ItemManager.Instance.isEquipmentChang)
+        {
+            ItemManager.Instance.isEquipmentChang = false;
+
+            AddTotalStat();
+            ItemChang();
+
+        }
         if (photonView.IsMine)
         {
-            if (ItemManager.Instance.isEquipmentChang)
-            {
-                ItemManager.Instance.isEquipmentChang = false;
 
-                AddTotalStat();
-                ItemChang();
-
-            }
             if (playerStat.nowHp <= 0)
             {
                 playerStat.nowHp = 0;
@@ -937,7 +938,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         playerStat.nowHp = hp_;
         playerStat.nowStamina = mp_;
         item = item_;
-        ItemManager.Instance.isEquipmentChang = true;
+        AddExtraStat();
         if (PhotonNetwork.IsMasterClient)
         {
             MasterSpread();
