@@ -112,7 +112,6 @@ public class ItemManager : SingleTonBase<ItemManager>
                 isEquipmentChang = true;
                 isUsed = true;
                 isInventoryFull = false;
-                isEquipmentChang = true;
             }
         }
 

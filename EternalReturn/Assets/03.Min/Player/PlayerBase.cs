@@ -301,8 +301,8 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         playerTotalStat.attackPower = playerStat.attackPower + extraStat.attackPower;
         playerTotalStat.defense = playerStat.defense + extraStat.defense;
         playerTotalStat.armorReduce = playerStat.armorReduce + extraStat.armorReduce;
-        playerTotalStat.attackRange = playerStat.attackRange + extraStat.attackRange + ItemManager.Instance.equipmentTotalState.weaponAttackRangePercent;
-        playerTotalStat.attackSpeed = (playerStat.attackSpeed + extraStat.attackSpeed) + ItemManager.Instance.equipmentTotalState.weaponAttackSpeedPercent;
+        playerTotalStat.attackRange = playerStat.attackRange + extraStat.attackRange + ItemManager.Instance.itemList[item[0] - 1].weaponAttackRangePercent;
+        playerTotalStat.attackSpeed = (playerStat.attackSpeed + extraStat.attackSpeed) + ItemManager.Instance.itemList[item[0] - 1].weaponAttackRangePercent;
         playerTotalStat.basicAttackPower = playerStat.basicAttackPower + extraStat.basicAttackPower;
         playerTotalStat.coolDown = playerStat.coolDown + extraStat.coolDown;
         playerTotalStat.criticalDamage = playerStat.criticalDamage + extraStat.criticalDamage;
@@ -942,7 +942,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         playerStat.nowHp = hp_;
         playerStat.nowStamina = mp_;
         item = item_;
-        AddExtraStat();
+        AddTotalStat();
         if (PhotonNetwork.IsMasterClient)
         {
             MasterSpread();
