@@ -38,7 +38,7 @@ public class MonsterMove : IMonsterState
             }
             if (monsterController.monster.monsterStatus.attackRange >
                 Vector3.Distance(monsterController.transform.position, monsterController.targetPlayer.transform.position)
-                || isMoveEnd)
+                || isMoveEnd || !monsterController.isMoveAble)
             {
                 monsterController.monsterAni.SetBool("isMove", false);
                 yield break;

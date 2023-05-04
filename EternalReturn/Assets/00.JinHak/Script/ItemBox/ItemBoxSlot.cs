@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemBoxSlot : MonoBehaviourPun
 {   
@@ -11,6 +12,8 @@ public class ItemBoxSlot : MonoBehaviourPun
     public ItemStat cloneItem = new ItemStat();
     public GameObject fullInvenTxt = default;
     public AllItemBox allItemBox = default;
+    public Image slotItemImage = default;
+    public Text slotItemCount = default;
 
     public void OnClick()
     {
@@ -45,8 +48,26 @@ public class ItemBoxSlot : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void ItemRemove(int itemBoxIndex_, int index_)
+    public void ItemRemove(int itemBoxIndex_, int itemIndex_)
     {
-        allItemBox.allItemBoxes[itemBoxIndex_].boxItems.Remove(slotItem);
+        int index = 0;
+        PlayerBase player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
+        foreach (var item in allItemBox.allItemBoxes[itemBoxIndex_].boxItems)
+        {
+            if (item.id == itemIndex_)
+            {
+                allItemBox.allItemBoxes[itemBoxIndex_].boxItems.RemoveAt(index);
+                if(slotList.nowOpenItemBox.itemBoxIndex == itemBoxIndex_ && player.itemBoxUi.activeSelf)
+                {
+                    slotList.nowOpenItemBox.ResetSlot();
+                    slotList.nowOpenItemBox.SetSlot();
+                }
+                return;
+            }
+            else
+            {
+                index++;
+            }
+        }
     }
 }

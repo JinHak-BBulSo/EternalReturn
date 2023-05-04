@@ -51,7 +51,6 @@ public class ItemBox : MonoBehaviour
 
     public void AddItem(int itemIndex_)
     {
-        Debug.Log(itemIndex_);
         ItemStat item_ = new ItemStat(ItemManager.Instance.itemList[itemIndex_ - 1]);
         boxItems.Add(item_);
     }
@@ -66,8 +65,8 @@ public class ItemBox : MonoBehaviour
         foreach (var item in boxItems)
         {
             Debug.Log(slotIndex_);
-            slotItemImage = slotList.boxSlotList[slotIndex_].transform.GetChild(0).GetComponent<Image>();
-            slotItemCountTxt = slotList.boxSlotList[slotIndex_].transform.GetChild(1).GetComponent<Text>();
+            slotItemImage = slotList.boxSlotList[slotIndex_].slotItemImage;
+            slotItemCountTxt = slotList.boxSlotList[slotIndex_].slotItemCount;
 
             slotItemImage.sprite = ItemManager.Instance.itemListObj[item.id].GetComponent<SpriteRenderer>().sprite;
             slotItemImage.gameObject.SetActive(true);
@@ -101,7 +100,7 @@ public class ItemBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && PlayerManager.Instance.Player == other.gameObject)
+        if (other.tag == "Player" && PlayerManager.Instance.Player == other.gameObject && this.enabled)
         {
             PlayerBase nowContactPlayer = other.GetComponent<PlayerBase>();
 
@@ -122,7 +121,7 @@ public class ItemBox : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player" && PlayerManager.Instance.Player == other.gameObject)
+        if (other.tag == "Player" && PlayerManager.Instance.Player == other.gameObject && this.enabled)
         {
             PlayerBase nowContactPlayer = other.GetComponent<PlayerBase>();
 

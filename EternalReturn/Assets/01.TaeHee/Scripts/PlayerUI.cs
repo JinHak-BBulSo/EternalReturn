@@ -38,8 +38,6 @@ public class PlayerUI : SingleTonBase<PlayerUI>
         {
             skillUIs.Add(skillBg.transform.GetChild(i).GetComponent<SkillUI>());
         }
-
-        InitializeCharacterUI();
     }
 
     // Update is called once per frame
@@ -47,19 +45,28 @@ public class PlayerUI : SingleTonBase<PlayerUI>
     {
         base.Update();
 
-        chp -= Time.deltaTime * 1000;
-        csp -= Time.deltaTime * 500;
-        cexp += Time.deltaTime * 200;
+        //chp -= Time.deltaTime * 1000;
+        //csp -= Time.deltaTime * 500;
+        //cexp += Time.deltaTime * 200;
 
-        UpdateHpUI(chp, mhp);
-        UpdateSpUI(csp, msp);
-        UpdateExpUI(cexp % mexp, mexp);
-        UpdatePlayerLevelUI((int)cexp);
+        //UpdateHpUI(chp, mhp);
+        //UpdateSpUI(csp, msp);
+        //UpdateExpUI(cexp % mexp, mexp);
+        //UpdatePlayerLevelUI((int)cexp);
     }
 
     public void InitializeCharacterUI()
     {
+        foreach (var skillUI in skillUIs)
+        {
+            skillUI.gameObject.SetActive(true);
+        }
 
+        GameObject player = PlayerManager.Instance.Player;
+        PlayerSkillSystem playerSkillSystem = player.GetComponent<PlayerSkillSystem>();
+        PlayerBase playerBase = player.GetComponent<PlayerBase>();
+        UpdateSkillLevelUpUI(playerSkillSystem.GetTotalSkillLevel(), playerSkillSystem.GetWeaponSkillLevel(),
+        playerBase.playerStat.playerExp.level, playerBase.playerStat.weaponExp.level);
     }
 
     public void UpdatePlayerLevelUI(int playerLevel)
@@ -95,7 +102,6 @@ public class PlayerUI : SingleTonBase<PlayerUI>
 
     public void UpdateSkillLevelUpUI(int totalSkillLevel, int weaponSkillLevel, int playerLevel, int weaponMasteryLevel)
     {
-        Debug.Log($"total {totalSkillLevel}");
         if (totalSkillLevel >= playerLevel && weaponSkillLevel >= (weaponMasteryLevel - 1) / 7)
         {
             foreach (var skillUI in skillUIs)

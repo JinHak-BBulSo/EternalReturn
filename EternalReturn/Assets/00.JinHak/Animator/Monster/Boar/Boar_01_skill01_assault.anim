@@ -70067,8 +70067,8 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
-  - time: 0.4
-    functionName: Delay
+  - time: 0.033333335
+    functionName: SoundPlay
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -70076,6 +70076,13 @@ AnimationClip:
     messageOptions: 0
   - time: 0.4
     functionName: SkillEnd
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.4
+    functionName: Delay
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

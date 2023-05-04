@@ -65,6 +65,9 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public GameObject worldCanvas = default;
     public PlayerSkillSystem skillSystem = default;
     public int weaponType = 0;
+    private float regenTime = 0f;
+    public int huntKill = 0;
+    public int playerKill = 0;
 
 
     protected virtual void Start()
@@ -76,7 +79,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         playerNav = GetComponent<NavMeshAgent>();
         attackRangeRender[0] = attackRange.GetComponent<SpriteRenderer>();
         attackRangeRender[1] = attackRange.transform.GetChild(0).GetComponent<SpriteRenderer>();
-        InitStat();
         //KJH Add. MinimapCamera Add
         miniMapCamera = Camera.main.transform.parent.GetChild(1).GetComponent<Camera>();
         //KJH Add. Each Player InventoryBoxUi Add
@@ -96,6 +98,8 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         {
             ItemManager.Instance.Player = this;
         }
+        skillSystem = GetComponent<PlayerSkillSystem>();
+        InitStat();
     }
 
 
@@ -117,8 +121,10 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 playerController.ChangeState(new PlayerDie());
                 return;
             }
+            TestLevelUp();
             ShowAttackRange();
             DisableAttackRange();
+            Regen();
             RaycastHit mousePoint;
             Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out mousePoint);
             nowMousePoint = mousePoint.point;
@@ -213,6 +219,15 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         }
     }
 
+    private void TestLevelUp()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            GetExp(1000, PlayerStat.PlayerExpType.WEAPON);
+            Debug.Log(playerStat.playerExp.level);
+        }
+    }
+
     protected void PlayAudio(AudioClip audioClip_)
     {
         if (!playerAudio.isPlaying)
@@ -222,7 +237,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     }
 
     // 스탯 초기값 할당
-    private void InitStat()
+    protected virtual void InitStat()
     {
         playerStat.attackPower = charaterData.attackPower; // 공격력
         playerStat.defense = charaterData.defense; // 방어력
@@ -315,16 +330,17 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             else
             {
                 playerExp_.level++;
-
                 if (playerExp_ != playerStat.playerExp)
                 {
                     playerStat.playerExp.nowExp += playerExp_.maxExp;
                     LevelUp(playerStat.playerExp);
                     playerStatusUi.playerExpBar.fillAmount = playerExp_.nowExp / playerExp_.maxExp;
                 }
-
                 playerExp_.nowExp -= playerExp_.maxExp;
                 playerExp_.maxExp += playerExp_.expDelta;
+                PlayerUI.Instance.UpdatePlayerLevelUI(playerStat.playerExp.level);
+                PlayerUI.Instance.UpdateExpUI(playerStat.playerExp.nowExp, playerStat.playerExp.maxExp);
+                PlayerUI.Instance.UpdateSkillLevelUpUI(skillSystem.GetTotalSkillLevel(), skillSystem.GetWeaponSkillLevel(), playerStat.playerExp.level, playerStat.weaponExp.level);
             }
         }
     }
@@ -577,14 +593,37 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
     }
 
-    public void Rest()
+    public void Regen()
     {
-        if (!photonView.IsMine)
+        if (playerController.playerState == PlayerController.PlayerState.DIE)
         {
             return;
         }
-        playerStat.nowHp += playerStat.maxHp * 0.1f;
+        if (regenTime >= 0.5f)
+        {
+            regenTime = 0f;
+            if (playerStat.nowHp < playerTotalStat.maxHp)
+            {
+                playerStat.nowHp += playerTotalStat.hpRegen * 0.5f;
+                if (playerStat.nowHp >= playerTotalStat.maxHp)
+                {
+                    playerStat.nowHp = playerTotalStat.maxHp;
+                }
+            }
+            if (playerStat.nowStamina < playerTotalStat.maxStamina)
+            {
+                playerStat.nowStamina += playerTotalStat.staminaRegen * 0.5f;
+                if (playerStat.nowStamina >= playerTotalStat.maxStamina)
+                {
+                    playerStat.nowStamina = playerTotalStat.maxStamina;
+                }
+            }
+        }
+        regenTime += Time.deltaTime;
+
     }
+
+
 
     public virtual void Skill_Q()
     {
@@ -634,6 +673,16 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             return;
         }
     }
+
+    public void DieCheck()
+    {
+        if (playerStat.nowHp <= 0)
+        {
+            playerStat.nowHp = 0;
+            playerController.ChangeState(new PlayerDie());
+            return;
+        }
+    }
     /// <summary>
     /// 기본 공격 공식
     /// 공격력 * 기본공격증폭 = message.damageAmount
@@ -648,14 +697,13 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
         if (PhotonNetwork.IsMasterClient)
         {
-
-            playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-
-
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
             playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
 
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
+            DieCheck();
+
             photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
         }
     }
@@ -680,6 +728,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         {
             playerStat.nowHp -= message.damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+            DieCheck();
             photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
         }
     }
@@ -691,6 +740,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         {
             playerStat.nowHp -= damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+            DieCheck();
             photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
         }
     }
@@ -761,7 +811,15 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     /// <param name="debuffIndex_"></param>
     /// <returns></returns>
     /// 
+    [PunRPC]
     public void Debuff(int debuffIndex_, float continousTime_)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("DebuffSet", RpcTarget.All, debuffIndex_, continousTime_);
+        }
+    }
+    public void DebuffSet(int debuffIndex_, float continousTime_)
     {
         StartCoroutine(DebuffStart(debuffIndex_, continousTime_));
     }
