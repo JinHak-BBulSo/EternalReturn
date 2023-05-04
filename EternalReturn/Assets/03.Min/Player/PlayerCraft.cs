@@ -32,7 +32,6 @@ public class PlayerCraft : IPlayerState
     public void StateUpdate()
     {
         time -= Time.deltaTime;
-        Debug.Log(time);
         if (time <= 0f)
         {
             ItemManager.Instance.CombineItem(ItemManager.Instance.combineAbleList[0], ItemManager.Instance.itemCombineDictionary);
