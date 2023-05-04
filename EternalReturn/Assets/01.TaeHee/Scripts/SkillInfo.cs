@@ -2,7 +2,9 @@ using UnityEngine;
 
 public enum SkillInfoType
 {
-    Normal = 0,
+    Normal1 = 0,
+    Normal2 = 1,
+    Normal3 = 2,
     Ultimate = 3,
     Weapon = 4,
     Passive = 5

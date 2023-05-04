@@ -2,18 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMaterialSelector : MonoBehaviour
+public class PlayerMaterialSelector
 {
     private const string CHARACTER_SILHOUETTE_PATH = "00.Characters/SilhouetteMaterials/";
 
+    private GameObject player;
     private List<Renderer> playerModels = new List<Renderer>();
 
     public void InitializeMaterial()
     {
-        if (PlayerManager.Instance.Player != gameObject)
+        player = PlayerManager.Instance.Player;
+        if (player == null)
             return;
 
-        Renderer[] playerRenderers = GetComponentsInChildren<Renderer>();
+        Renderer[] playerRenderers = player.GetComponentsInChildren<Renderer>();
         foreach (Renderer renderer in playerRenderers)
         {
             if (renderer.GetType() == typeof(MeshRenderer) || renderer.GetType() == typeof(SkinnedMeshRenderer))

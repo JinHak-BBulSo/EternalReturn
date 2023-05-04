@@ -21,7 +21,7 @@ public class PlayerSkillSystem : MonoBehaviour
         {
             totalLevel += skillInfo.CurrentLevel;
         }
-        totalLevel -= skillInfos[(int)SkillInfoType.Weapon].CurrentLevel;
+        totalLevel -= skillInfos[(int)SkillInfoType.Weapon].CurrentLevel + 1;// 무기 스킬 레벨, 패시브 기본 1레벨 제외
 
         return totalLevel;
     }
