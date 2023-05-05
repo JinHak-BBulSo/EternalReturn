@@ -110,7 +110,7 @@ public class ItemBox : MonoBehaviour
                 nowContactPlayer.itemBoxUi.SetActive(true);
                 SetSlot();
 
-                if (!contactedPlayer.Contains(nowContactPlayer))
+                if (!contactedPlayer.Contains(nowContactPlayer) && notOpenItemBoxImg != default)
                 {
                     contactedPlayer.Add(nowContactPlayer);
                     if (notOpenItemBoxImg != default)

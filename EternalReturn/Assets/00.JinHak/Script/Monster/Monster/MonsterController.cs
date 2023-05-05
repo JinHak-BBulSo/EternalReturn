@@ -137,7 +137,7 @@ public class MonsterController : MonoBehaviourPun
         }
         else 
         {
-            if(encountPlayerCount != 0 && targetPlayer == null || !monster.isBattle)
+            if(encountPlayerCount != 0 && targetPlayer == null)
             {
                 monsterStateMachine.SetState(monsterStateDic[MonsterState.BEWARE]);
             }

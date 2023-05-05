@@ -9,7 +9,8 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 {
     protected PlayerController playerController = default;
     protected Vector3 destination = default;
-    protected int currentCorner = 0;
+    public Vector3 Destination { get { return destination; } }
+    public int currentCorner = 0;
     public List<PlayerBase> enemyPlayer = new List<PlayerBase>();
     public List<Monster> enemyHunt = new List<Monster>();
     public Vector3 nowMousePoint = default;
@@ -71,6 +72,9 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public int[] SkillPoint = new int[6];
     private Outline playerOutLine = default;
 
+    //[KJH] Add. Each Player Index
+    public int playerIndex = -1;
+
     protected virtual void Start()
     {
 
@@ -99,6 +103,11 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         worldCanvas = GameObject.Find("WorldCanvas");
         playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform).GetComponent<PlayerStatusUI>();
         playerStatusUi.player = this;
+
+        //[KJH] ADD. PlayerIndex 구분
+        playerIndex = photonView.ViewID;
+        PlayerList.Instance.playerDictionary.Add(playerIndex, this);
+        
         if (photonView.IsMine)
         {
             ItemManager.Instance.Player = this;
@@ -614,7 +623,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         }
     }
 
-    protected void SetDestination(Vector3 dest_)
+    public void SetDestination(Vector3 dest_)
     {
         if (!photonView.IsMine)
         {
