@@ -9,6 +9,7 @@ public class SkillUI : MonoBehaviour
     private static PlayerSkillSystem playerSkillSystem;
     private static PlayerBase playerBase;
 
+    protected Image image;
     protected Button button;
     protected SkillInfo skillInfo;
     protected RectTransform skillLevelBgRect;
@@ -23,6 +24,7 @@ public class SkillUI : MonoBehaviour
         skillLevelBgRect = transform.GetChild(0).GetComponent<RectTransform>();
 
         index = transform.GetSiblingIndex();
+        image = GetComponent<Image>();
         coolDownImage = transform.GetChild(2).GetComponent<Image>();
         coolDownText = coolDownImage.transform.GetChild(0).GetComponent<Text>();
 
@@ -33,6 +35,7 @@ public class SkillUI : MonoBehaviour
         }
 
         skillInfo = playerSkillSystem.skillInfos[index];
+        image.color = Color.gray;
 
         for (int i = 0; i < skillInfo.MaxLevel; i++)
         {
@@ -55,6 +58,8 @@ public class SkillUI : MonoBehaviour
         if (playerBase.skillCooltimes[index])
         {
             coolDownImage.gameObject.SetActive(true);
+            coolDownImage.fillAmount = playerBase.skillSystem.skillInfos[index].currentCooltime /
+                (playerBase.skillSystem.skillInfos[index].cooltime * ((100 - playerBase.playerTotalStat.coolDown) / 100));
             coolDownText.text = $"{(int)playerBase.skillSystem.skillInfos[index].currentCooltime}";
         }
         else
@@ -81,8 +86,12 @@ public class SkillUI : MonoBehaviour
 
         skillInfo.AddLevel();
 
+        image.color = Color.white;
         skillLevelBgRect.GetChild(skillInfo.CurrentLevel - 1).GetComponent<Image>().color = Color.white;
         PlayerUI.Instance.UpdateSkillLevelUpUI(playerSkillSystem.GetTotalSkillLevel(), playerSkillSystem.GetWeaponSkillLevel(), playerBase.playerStat.playerExp.level, playerBase.playerStat.weaponExp.level);
+        playerBase.SkillPoint[index] = playerBase.skillSystem.skillInfos[index].CurrentLevel;
+        playerBase.ItemChang();
+
 
         Debug.Log($"SkillLv: {skillInfo.CurrentLevel}");
     }

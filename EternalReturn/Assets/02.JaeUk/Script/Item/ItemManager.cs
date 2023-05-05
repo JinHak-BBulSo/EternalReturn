@@ -57,10 +57,6 @@ public class ItemManager : SingleTonBase<ItemManager>
         equipmentInven[3] = new ItemStat(16);
         equipmentInven[4] = new ItemStat(17);
         equipmentInven[5] = new ItemStat(18);
-        for (int i = 0; i < 10; i++)
-        {
-            inventory.Add(new ItemStat());
-        }
 
 
     }
@@ -108,10 +104,10 @@ public class ItemManager : SingleTonBase<ItemManager>
         }
         else
         {
-            DeleteItemToList(item_1, itemInferiorList);
-            DeleteItemToList(item_2, itemInferiorList);
             DeleteItemToRare(item_1);
             DeleteItemToRare(item_2);
+            DeleteInferiorList(id_2);
+            DeleteInferiorList(id_1);
             return forReturn;
         }
     }
@@ -135,7 +131,7 @@ public class ItemManager : SingleTonBase<ItemManager>
         {
             PickItem(item);
         }
-
+        InventoryChange();
         isItemPick = true;
     }
     public int[] AddInferiorList(int ItemId)
@@ -712,7 +708,9 @@ public class ItemManager : SingleTonBase<ItemManager>
     //! 아이템 생성 및 획득 시 자신의 inferiorList에 있는 아이템을 삭제하는 메서드
     public void DeleteInferiorList(ItemStat item)
     {
+        Debug.Log(itemInferiorList.Count);
         int count = 0;
+
 
         switch (item.rare)
         {
@@ -764,15 +762,20 @@ public class ItemManager : SingleTonBase<ItemManager>
         List<int> itemSlot2 = new List<int>();
         for (int i = 0; i < equipmentInven.Count; i++)
         {
+            Debug.Log(equipmentInven[i].id);
+            Debug.Log(needItem[1]);
             if (equipmentInven[i].id == needItem[0] && !idchk1)
             {
                 itemSlot1.Add(equipmentInven[i].id);
                 idchk1 = true;
+                Debug.Log("!!");
             }
-            else if (equipmentInven[i].id == needItem[1] && idchk2)
+            if (equipmentInven[i].id == needItem[1] && !idchk2)
             {
+
                 itemSlot2.Add(equipmentInven[i].id);
                 idchk2 = true;
+                Debug.Log("!!!");
             }
         }
 
@@ -785,12 +788,13 @@ public class ItemManager : SingleTonBase<ItemManager>
                 if (inventory[i].id == needItem[0] && !idchk1)
                 {
                     itemSlot1.Add(inventory[i].id);
-
+                    Debug.Log("!!!!");
                     idchk1 = true;
                 }
                 if (inventory[i].id == needItem[1] && !idchk2)
                 {
                     itemSlot2.Add(inventory[i].id);
+                    Debug.Log("!!!!!");
                     idchk2 = true;
                 }
             }
@@ -836,6 +840,7 @@ public class ItemManager : SingleTonBase<ItemManager>
             {
                 if (equipmentInven[i].id == itemSlot1[0])
                 {
+                    Debug.Log("!!!!!");
                     if (equipmentInven[i].count < 2)
                     {
                         equipmentInven[i] = new ItemStat();
@@ -852,6 +857,7 @@ public class ItemManager : SingleTonBase<ItemManager>
             {
                 if (equipmentInven[i].id == itemSlot2[0])
                 {
+                    Debug.Log("!!!!!");
                     if (equipmentInven[i].count < 2)
                     {
                         equipmentInven[i] = new ItemStat();
@@ -955,7 +961,6 @@ public class ItemManager : SingleTonBase<ItemManager>
 
             if (equipmentInven[i] != null && equipmentInven[i].id != 0)
             {
-                Debug.Log(item.id);
                 ItemDefine define = new ItemDefine(item.id, equipmentInven[i].id);
 
                 if (define.itemId_2 >= define.itemId_1)

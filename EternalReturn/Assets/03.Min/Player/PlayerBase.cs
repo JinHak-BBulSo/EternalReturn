@@ -68,10 +68,12 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     private float regenTime = 0f;
     public int huntKill = 0;
     public int playerKill = 0;
+    public int[] SkillPoint = new int[6];
     private Outline playerOutLine = default;
 
     protected virtual void Start()
     {
+
         playerOutLine = GetComponent<Outline>();
         playerOutLine.player = this;
         playerOutLine.enabled = false;
@@ -103,6 +105,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         }
         skillSystem = GetComponent<PlayerSkillSystem>();
         InitStat();
+        SkillPoint[5] = 1;
     }
 
 
@@ -937,18 +940,18 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (!PhotonNetwork.IsMasterClient)
         {
             photonView.RPC("SetPlayerStat", RpcTarget.MasterClient,
-            playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, new int[5]);
+            playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, SkillPoint);
         }
         else
         {
             photonView.RPC("SetPlayerStat", RpcTarget.Others,
-             playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, new int[5]);
+             playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, SkillPoint);
         }
     }
     void MasterSpread()
     {
         photonView.RPC("SetPlayerStat", RpcTarget.Others,
-                     playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, new int[5]);
+                     playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, SkillPoint);
     }
 
     IEnumerator ContinousDamageEnd(float debuffContinousTime_, int debuffIndex_, float debuffDamage_)

@@ -37,10 +37,9 @@ public class FocusedItem : MonoBehaviour
         prevIdx = disabledSlotStartIdx;
         disabledSlotStartIdx = 0;
         int itemTreeHeight = UpdateFocusedItemSlots(item, 1, 0);
-        Debug.Log(itemTreeHeight);
+        //Debug.Log(itemTreeHeight);
 
         rectTransform.anchoredPosition = new Vector2(defaultPosX, defaultPosY + (itemTreeHeight - 1) * 40);
-        Debug.Log($"D! {disabledSlotStartIdx}, {prevIdx}");
         for (int i = disabledSlotStartIdx; i < prevIdx; i++)
         {
             itemSlotList[i].gameObject.SetActive(false);
@@ -80,9 +79,7 @@ public class FocusedItem : MonoBehaviour
         int inferiorItemId1 = itemDefine.FineInferiorItemId(ItemManager.Instance.itemCombineDictionary, item.id).itemId_1;
         int inferiorItemId2 = itemDefine.FineInferiorItemId(ItemManager.Instance.itemCombineDictionary, item.id).itemId_2;
 
-        Debug.Log(inferiorItemId1);
-        Debug.Log(inferiorItemId2);
-        Debug.Log($"1){inferiorItemId1 - 1} {ItemManager.Instance.itemList[inferiorItemId1 - 1].name}, 2){inferiorItemId2 - 1} {ItemManager.Instance.itemList[inferiorItemId2 - 1].name}");
+        //Debug.Log($"1){inferiorItemId1 - 1} {ItemManager.Instance.itemList[inferiorItemId1 - 1].name}, 2){inferiorItemId2 - 1} {ItemManager.Instance.itemList[inferiorItemId2 - 1].name}");
 
         ItemStat inferiorItemL = ItemManager.Instance.itemList[inferiorItemId1 - 1];
         ItemStat inferiorItemR = ItemManager.Instance.itemList[inferiorItemId2 - 1];
