@@ -253,7 +253,7 @@ public class Jackie : PlayerBase
                 }
             }
         }
-        enemy = null;
+        //enemy = null;
     }
 
     public override void Skill_Q()

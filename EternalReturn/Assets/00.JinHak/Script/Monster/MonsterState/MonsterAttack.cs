@@ -31,6 +31,7 @@ public class MonsterAttack : IMonsterState
     public void Attack()
     {
         monsterController.navMeshAgent.enabled = false;
+        monsterController.transform.LookAt(monsterController.monster.firstAttackPlayer.transform);
         monsterController.monsterAni.SetBool("isAttack", true);
     }
     public void ExitAttack()

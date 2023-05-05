@@ -45,7 +45,7 @@ public class PlayerAttackMove : IPlayerState
 
         for (int i = 0; i < enemys.Length; i++)
         {
-            if (enemys[i].CompareTag("Enemy"))
+            if (enemys[i].CompareTag("Enemy") && !enemys[i].gameObject.GetComponent<Monster>().isDie)
             {
                 playerController.player.enemy = enemys[i].gameObject;
                 break;

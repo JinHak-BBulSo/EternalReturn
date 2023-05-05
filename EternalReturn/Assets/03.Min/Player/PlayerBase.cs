@@ -182,7 +182,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                         outline.isClick = false;
                         outline = default;
                     }
-                    if (clickTarget.GetComponent<Outline>() != null)
+                    if (clickTarget.GetComponent<Outline>() != null && clickTarget.gameObject != this.gameObject)
                     {
                         outline = clickTarget.GetComponent<Outline>();
                         outline.isClick = true;
