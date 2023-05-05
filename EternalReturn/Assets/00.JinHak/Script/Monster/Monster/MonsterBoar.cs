@@ -26,6 +26,7 @@ public class MonsterBoar : Monster
     IEnumerator SkillReady()
     {
         audioSource.clip = sounds[4];
+        transform.LookAt(monsterController.monster.firstAttackPlayer.transform);
         StartCoroutine(SkillCoolTime(skillCoolTime));
         skillRange.SetActive(true);
         monsterController.monsterAni.SetBool("isSkillReady", true);
@@ -82,6 +83,6 @@ public class MonsterBoar : Monster
     {
         yield return new WaitForSeconds(0.1f);
         targetRigid_.velocity = Vector3.zero;
-        targetRigid_.GetComponent<PlayerBase>().Debuff(4, 1.4f);
+        targetRigid_.GetComponent<PlayerBase>().Debuff(4, 1.2f);
     }
 }

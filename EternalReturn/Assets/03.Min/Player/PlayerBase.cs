@@ -926,7 +926,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                     isMove = false;
                     isMoveAble = false;
                     playerController.player.playerNav.enabled = false;
-                    playerController.GetComponent<Rigidbody>().AddForce(new Vector3(0, 4, 0), ForceMode.Impulse);
+                    playerController.GetComponent<Rigidbody>().AddForce(new Vector3(0, 6, 0), ForceMode.Impulse);
                     break;
             }
 
