@@ -113,7 +113,10 @@ public class ItemBox : MonoBehaviour
                 if (!contactedPlayer.Contains(nowContactPlayer))
                 {
                     contactedPlayer.Add(nowContactPlayer);
-                    notOpenItemBoxImg.SetActive(false);
+                    if (notOpenItemBoxImg != default)
+                    {
+                        notOpenItemBoxImg.SetActive(false);
+                    }
                     nowContactPlayer.GetExp(20, PlayerStat.PlayerExpType.SEARCH);
                 }
             }

@@ -78,10 +78,6 @@ public class MonsterController : MonoBehaviourPun
 
     void Update()
     {
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            return;
-        }
         UpdateState();
         monsterStateMachine.DoUpdate();
     }
@@ -141,11 +137,11 @@ public class MonsterController : MonoBehaviourPun
         }
         else 
         {
-            if(encountPlayerCount != 0 && targetPlayer == null)
+            if(encountPlayerCount != 0 && targetPlayer == null || !monster.isBattle)
             {
                 monsterStateMachine.SetState(monsterStateDic[MonsterState.BEWARE]);
             }
-            else if(targetPlayer != null)
+            else if(targetPlayer != null || !monster.isBattle)
             {
                 if (Vector3.Distance(targetPlayer.transform.position, this.transform.position) > monster.monsterStatus.attackRange)
                 {
