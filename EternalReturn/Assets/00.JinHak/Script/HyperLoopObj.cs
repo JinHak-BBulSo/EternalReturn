@@ -7,9 +7,10 @@ public class HyperLoopObj : MonoBehaviour
 {
     private GameObject hyperLoopUi = default;
     Outline outline = default;
+
     void Start()
     {
-        hyperLoopUi = GameObject.Find("TestUi").transform.GetChild(2).gameObject;
+        hyperLoopUi = GameObject.Find("HyperLoopUi");
         outline = GetComponent<Outline>();
     }
 

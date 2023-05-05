@@ -1926,6 +1926,7 @@ MonoBehaviour:
   - 0
   - 0
   firstAttackPlayer: {fileID: 0}
+  isBattle: 0
   isDie: 0
   worldCanvas: {fileID: 0}
   monsterItemBox: {fileID: 0}
@@ -1998,6 +1999,7 @@ MonoBehaviour:
   contactedPlayer: []
   slotList: {fileID: 0}
   itemBoxAudio: {fileID: 0}
+  notOpenItemBoxImg: {fileID: 0}
 --- !u!114 &1602216692038297994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2053,15 +2055,6 @@ MonoBehaviour:
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
   m_SynchronizeParameters:
-  - Type: 9
-    SynchronizeType: 2
-    Name: Appear
-  - Type: 9
-    SynchronizeType: 2
-    Name: EndAppear
-  - Type: 9
-    SynchronizeType: 2
-    Name: Die
   - Type: 4
     SynchronizeType: 2
     Name: isAttack
@@ -2077,6 +2070,12 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: isBeware
+  - Type: 4
+    SynchronizeType: 2
+    Name: isAppear
+  - Type: 4
+    SynchronizeType: 2
+    Name: isDie
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

@@ -24,7 +24,7 @@ public class BearSkill : MonoBehaviour
             PlayerBase nowTargetPlayer_ = other.GetComponent<PlayerBase>();
             if (!targetPlayers.Contains(other.GetComponent<PlayerBase>()))
             {
-                targetPlayers.Add(other.GetComponent<PlayerBase>());
+                targetPlayers.Add(nowTargetPlayer_);
             }
         }
     }
@@ -36,7 +36,7 @@ public class BearSkill : MonoBehaviour
             PlayerBase nowTargetPlayer_ = other.GetComponent<PlayerBase>();
             if (targetPlayers.Contains(other.GetComponent<PlayerBase>()))
             {
-                targetPlayers.Remove(other.GetComponent<PlayerBase>());
+                targetPlayers.Remove(nowTargetPlayer_);
             }
         }
     }
