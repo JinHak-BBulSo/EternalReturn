@@ -76,6 +76,7 @@ public class ItemDistributer : MonoBehaviourPun
                     if (index >= r) break;
                     int itemIndex = itemList[i].GetComponent<ItemController>().item.id;
                     photonView.RPC("BoxSet", RpcTarget.All, itemBox.itemBoxIndex, itemIndex);
+                    index++;
                 }
                 photonView.RPC("SetNotOpenImg", RpcTarget.All, itemBox.itemBoxIndex);
             }
