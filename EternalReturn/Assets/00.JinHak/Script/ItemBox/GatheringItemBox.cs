@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Photon.Realtime;
+using Photon.Pun;
 
-public class GatheringItemBox : MonoBehaviour
+public class GatheringItemBox : MonoBehaviourPun
 {
     public enum GatherItemType
     {
@@ -17,7 +19,12 @@ public class GatheringItemBox : MonoBehaviour
     }
 
     private Outline outline = default;
+    private GameObject worldCanvas = default;
 
+    public GameObject gatherItemImgPrfab = default;
+    public GameObject dontGatherItemImgPrefab = default;
+    private GameObject gatherItemImg = default;
+    private GameObject dontGatherItemImg = default;
     public GameObject itemPrefab = default;
     public ItemStat gatheringItem = new ItemStat();
     public GatherItemType itemType = GatherItemType.NONE;
@@ -31,12 +38,17 @@ public class GatheringItemBox : MonoBehaviour
 
     void Start()
     {
+        worldCanvas = GameObject.Find("WorldCanvas");
         outline = GetComponent<Outline>();
         gatheringItem = itemPrefab.GetComponent<ItemController>().item;
         gatherAble = true;
+        gatherItemImg = Instantiate(gatherItemImgPrfab, worldCanvas.transform);
+        gatherItemImg.transform.position = transform.position + new Vector3(0, 2.5f, 0);
 
         if(itemType == GatherItemType.FISHING)
         {
+            dontGatherItemImg = Instantiate(dontGatherItemImgPrefab, worldCanvas.transform);
+            dontGatherItemImg.transform.position = transform.position + new Vector3(0, 2.5f, 0);
             respawnItemTime = 180;
         }
         else if(itemType == GatherItemType.WATERPOINT)
@@ -45,6 +57,7 @@ public class GatheringItemBox : MonoBehaviour
         }
     }
 
+    [PunRPC]
     public void Respawn()
     {
         StartCoroutine(RespawnItem(respawnItemTime));
@@ -53,14 +66,19 @@ public class GatheringItemBox : MonoBehaviour
     {
         if (itemType == GatherItemType.FISHING)
         {
-            /* Do nothing */
+            dontGatherItemImg.SetActive(true);
         }
         else
         {
             transform.localScale = new Vector3(0.001f, 0.001f, 0.001f);
         }
         yield return new WaitForSeconds(respawnTime_);
+        if (itemType == GatherItemType.FISHING)
+        {
+            dontGatherItemImg.SetActive(false);
+        }
         transform.localScale = new Vector3(1, 1, 1);
+        gatherItemImg.SetActive(true);
         gatherAble = true;
     }
 
@@ -74,7 +92,8 @@ public class GatheringItemBox : MonoBehaviour
         if (!ItemManager.Instance.isInventoryFull)
         {
             gatherAble = false;
-            StartCoroutine(RespawnItem(respawnItemTime));
+            photonView.RPC("Respawn", RpcTarget.All);
+            gatherItemImg.SetActive(false);
         }
     }
 

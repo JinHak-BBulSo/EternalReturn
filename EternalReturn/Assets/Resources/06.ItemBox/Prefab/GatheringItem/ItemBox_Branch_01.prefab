@@ -98,26 +98,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.4425608, y: 1.6133504, z: 0.18785374}
   m_Center: {x: 0.035221517, y: 0.0022128522, z: 0.06801585}
---- !u!114 &5111735578189315789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4507962855275555770}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isClick: 0
-  monster: {fileID: 0}
-  outlineMode: 0
-  outlineColor: {r: 0, g: 0.99010324, b: 1, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
 --- !u!114 &3571922666630081964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,6 +110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2581c880a350249b396c363043081b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gatherItemImgPrfab: {fileID: 280253575793058060, guid: b907dcfa2b1695e479e655fe6fd27b8e,
+    type: 3}
+  dontGatherItemImgPrefab: {fileID: 0}
   itemPrefab: {fileID: 5843033311494870089, guid: 43625fb0443bc5347bd44a887e89c9f7,
     type: 3}
   gatheringItem:
@@ -166,3 +149,47 @@ MonoBehaviour:
     isEquipment: 0
     isItemWishList: 0
   itemType: 0
+  gatherAble: 0
+--- !u!114 &5111735578189315789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4507962855275555770}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isClick: 0
+  monster: {fileID: 0}
+  player: {fileID: 0}
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0.99010324, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &5496221090821014314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4507962855275555770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

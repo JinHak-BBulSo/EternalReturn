@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
-public class MonsterController : MonoBehaviour
+using Photon.Pun;
+using Photon.Realtime;
+public class MonsterController : MonoBehaviourPun
 {
     public enum MonsterState
     {
@@ -77,6 +78,10 @@ public class MonsterController : MonoBehaviour
 
     void Update()
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
         UpdateState();
         monsterStateMachine.DoUpdate();
     }

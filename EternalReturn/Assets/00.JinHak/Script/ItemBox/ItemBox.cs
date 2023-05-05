@@ -16,6 +16,7 @@ public class ItemBox : MonoBehaviour
     public ItemBoxSlotList slotList = default;
 
     public AudioSource itemBoxAudio = default;
+    public GameObject notOpenItemBoxImg = default;
 
     protected virtual void Awake()
     {
@@ -112,6 +113,7 @@ public class ItemBox : MonoBehaviour
                 if (!contactedPlayer.Contains(nowContactPlayer))
                 {
                     contactedPlayer.Add(nowContactPlayer);
+                    notOpenItemBoxImg.SetActive(false);
                     nowContactPlayer.GetExp(20, PlayerStat.PlayerExpType.SEARCH);
                 }
             }

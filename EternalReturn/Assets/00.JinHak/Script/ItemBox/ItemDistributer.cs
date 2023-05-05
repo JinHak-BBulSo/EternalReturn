@@ -76,8 +76,8 @@ public class ItemDistributer : MonoBehaviourPun
                     if (index >= r) break;
                     int itemIndex = itemList[i].GetComponent<ItemController>().item.id;
                     photonView.RPC("BoxSet", RpcTarget.All, itemBox.itemBoxIndex, itemIndex);
-                    index++;
                 }
+                photonView.RPC("SetNotOpenImg", RpcTarget.All, itemBox.itemBoxIndex);
             }
         }
     }
@@ -90,5 +90,12 @@ public class ItemDistributer : MonoBehaviourPun
             allItemBox = transform.parent.GetComponent<AllItemBox>();
         }
         allItemBox.allItemBoxes[itemBoxIndex_].AddItem(index_);
+    }
+
+    [PunRPC]
+    private void SetNotOpenImg(int itemBoxIndex_)
+    {
+        allItemBox.allItemBoxes[itemBoxIndex_].notOpenItemBoxImg = Instantiate(allItemBox.itemBoxImgPrefab, allItemBox.worldCanvas.transform);
+        allItemBox.allItemBoxes[itemBoxIndex_].notOpenItemBoxImg.transform.position = allItemBox.allItemBoxes[itemBoxIndex_].transform.position + new Vector3(0, 2.5f, 0);
     }
 }

@@ -795,6 +795,18 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     /// <param name="message"></param>
     /// <param name="debuffIndex_"></param>
     /// <returns></returns>
+    [PunRPC]
+    public void ContinousDamageStarteSet(int debuffIndex_, float time_)
+    {
+        applyDebuffCheck[debuffIndex_] = true;
+        debuffRemainTime[debuffIndex_] = time_;
+    }
+    [PunRPC]
+    public void ContinousDamageEndSet(int debuffIndex_)
+    {
+        applyDebuffCheck[debuffIndex_] = false;
+        debuffRemainTime[debuffIndex_] = 0;
+    }
     public IEnumerator ContinousDamage(DamageMessage message, int debuffIndex_, float continousTime_, float tickTime_)
     {
         // 이미 상태이상이 걸린 경우
@@ -804,11 +816,15 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             debuffDamage[debuffIndex_] += message.damageAmount;
 
             if (continousTime_ > debuffRemainTime[debuffIndex_])
+            {
                 debuffRemainTime[debuffIndex_] = continousTime_;
+                photonView.RPC("ContinousDamageStarteSet", RpcTarget.All, debuffIndex_, continousTime_);
+            }
         }
         // 상태이상이 걸려있지 않은 경우
         else
         {
+            photonView.RPC("ContinousDamageStarteSet", RpcTarget.All, debuffIndex_, continousTime_);
             applyDebuffCheck[debuffIndex_] = true;
             // 상태이상 남은 시간 기록
             debuffRemainTime[debuffIndex_] = continousTime_;
@@ -843,6 +859,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             debuffRemainTime[debuffIndex_] = 0;
             debuffDamage[debuffIndex_] = 0;
             applyDebuffCheck[debuffIndex_] = false;
+            photonView.RPC("ContinousDamageEndSet", RpcTarget.All, debuffIndex_);
         }
     }
 
