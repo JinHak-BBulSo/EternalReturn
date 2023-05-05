@@ -6845,6 +6845,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fx_Fbx_Stun
       objectReference: {fileID: 0}
+    - target: {fileID: 6331724985824876869, guid: 8c63e434d9a03a842b73b9a2fe1cd3a0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6671272505618908159, guid: 8c63e434d9a03a842b73b9a2fe1cd3a0,
         type: 3}
       propertyPath: m_RootOrder
@@ -6858,7 +6863,7 @@ PrefabInstance:
     - target: {fileID: 6671272505618908159, guid: 8c63e434d9a03a842b73b9a2fe1cd3a0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.025
+      value: 0.022
       objectReference: {fileID: 0}
     - target: {fileID: 6671272505618908159, guid: 8c63e434d9a03a842b73b9a2fe1cd3a0,
         type: 3}

@@ -858,7 +858,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 if (delayTime_ > tickTime_)
                 {
                     TakeSolidDamage(message, debuffDamage[debuffIndex_]);
-                    Debug.Log("출혈 틱댐");
                     delayTime_ = 0;
                 }
 
@@ -916,7 +915,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                     isMoveAble = false;
                     playerController.enabled = false;
                     stunFBX.SetActive(true);
-                    Debug.Log("스턴");
                     break;
                 // 속박
                 case 3:

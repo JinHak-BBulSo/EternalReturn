@@ -15683,6 +15683,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6611871123887310559, guid: cda53d3c242752140873c74a26e84383,
+        type: 3}
+      propertyPath: hyperLoopUi
+      value: 
+      objectReference: {fileID: 5028797487674790547}
+    - target: {fileID: 6611871124097707932, guid: cda53d3c242752140873c74a26e84383,
+        type: 3}
+      propertyPath: hyperLoopUi
+      value: 
+      objectReference: {fileID: 5028797487674790547}
+    - target: {fileID: 6611871124604172416, guid: cda53d3c242752140873c74a26e84383,
+        type: 3}
+      propertyPath: hyperLoopUi
+      value: 
+      objectReference: {fileID: 5028797487674790547}
+    - target: {fileID: 6611871125164485502, guid: cda53d3c242752140873c74a26e84383,
+        type: 3}
+      propertyPath: hyperLoopUi
+      value: 
+      objectReference: {fileID: 5028797487674790547}
+    - target: {fileID: 6611871125260757234, guid: cda53d3c242752140873c74a26e84383,
+        type: 3}
+      propertyPath: hyperLoopUi
+      value: 
+      objectReference: {fileID: 5028797487674790547}
     - target: {fileID: 6611871125356320946, guid: cda53d3c242752140873c74a26e84383,
         type: 3}
       propertyPath: m_RootOrder
@@ -15743,6 +15768,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AllHyperLoops
       objectReference: {fileID: 0}
+    - target: {fileID: 8817122547915057182, guid: cda53d3c242752140873c74a26e84383,
+        type: 3}
+      propertyPath: hyperLoopUi
+      value: 
+      objectReference: {fileID: 5028797487674790547}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cda53d3c242752140873c74a26e84383, type: 3}
 --- !u!1001 &1369685374
@@ -26988,6 +27018,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1314157232174049748, guid: 1d0c293878504574f9f5037d7dd1c967,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314157232174049751, guid: 1d0c293878504574f9f5037d7dd1c967,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1314157232174049751, guid: 1d0c293878504574f9f5037d7dd1c967,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2317196952670102581, guid: 1d0c293878504574f9f5037d7dd1c967,
         type: 3}
       propertyPath: hyperLoopPointList
@@ -27309,6 +27354,12 @@ PrefabInstance:
 --- !u!224 &5028797487674790546 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7353853871600879947, guid: 1d0c293878504574f9f5037d7dd1c967,
+    type: 3}
+  m_PrefabInstance: {fileID: 5028797487674790545}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5028797487674790547 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1314157232174049748, guid: 1d0c293878504574f9f5037d7dd1c967,
     type: 3}
   m_PrefabInstance: {fileID: 5028797487674790545}
   m_PrefabAsset: {fileID: 0}
