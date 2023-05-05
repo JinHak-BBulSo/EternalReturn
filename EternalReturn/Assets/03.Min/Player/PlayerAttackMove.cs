@@ -63,23 +63,24 @@ public class PlayerAttackMove : IPlayerState
                 {
                     playerController.ChangeState(new PlayerAttack());
                 }
-                else
+                
+            }
+            else
+            {
+                NavMeshHit navHit;
+                PlayerBase player_ = playerController.player;
+                if (NavMesh.SamplePosition(player_.enemy.transform.position, out navHit, 5.0f, NavMesh.AllAreas))
                 {
-                    NavMeshHit navHit;
-                    PlayerBase player_ = playerController.player;
-                    if (NavMesh.SamplePosition(player_.enemy.transform.position, out navHit, 5.0f, NavMesh.AllAreas))
-                    {
-                        player_.SetDestination(new Vector3(navHit.position.x, navHit.position.y, navHit.position.z));
+                    player_.SetDestination(new Vector3(navHit.position.x, navHit.position.y, navHit.position.z));
 
-                        player_.path = new NavMeshPath();
-                        player_.playerNav.CalculatePath(player_.Destination, player_.path);
-                        playerController.player.corners.Clear();
-                        for (int i = 0; i < player_.path.corners.Length; i++)
-                        {
-                            player_.corners.Add(player_.path.corners[i]);
-                        }
-                        player_.currentCorner = 0;
+                    player_.path = new NavMeshPath();
+                    player_.playerNav.CalculatePath(player_.Destination, player_.path);
+                    playerController.player.corners.Clear();
+                    for (int i = 0; i < player_.path.corners.Length; i++)
+                    {
+                        player_.corners.Add(player_.path.corners[i]);
                     }
+                    player_.currentCorner = 0;
                 }
             }
         }

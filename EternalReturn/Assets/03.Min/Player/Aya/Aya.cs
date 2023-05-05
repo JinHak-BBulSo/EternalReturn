@@ -65,7 +65,7 @@ public class Aya : PlayerBase
     protected override void AttackEnd()
     {
         base.AttackEnd();
-        if (!photonView.IsMine)
+        if (!photonView.IsMine || enemy == default)
         {
             return;
         }

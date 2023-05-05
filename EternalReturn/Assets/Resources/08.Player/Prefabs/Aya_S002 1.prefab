@@ -1891,6 +1891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1240e1179fb86d54c8fb034efc751e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentCorner: 0
   enemyPlayer: []
   enemyHunt: []
   nowMousePoint: {x: 0, y: 0, z: 0}
@@ -2125,6 +2126,7 @@ MonoBehaviour:
   huntKill: 0
   playerKill: 0
   SkillPoint: 000000000000000000000000000000000000000000000000
+  playerIndex: -1
   isWon: 0
   RRange: {fileID: 3384395866084856133}
   Bullet: {fileID: 2593041214829080384, guid: 399eb737b5937ee498277e6cea842a06, type: 3}
