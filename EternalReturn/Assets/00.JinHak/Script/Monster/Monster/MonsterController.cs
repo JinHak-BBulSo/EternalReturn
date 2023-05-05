@@ -78,7 +78,7 @@ public class MonsterController : MonoBehaviourPun
 
     void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (!PhotonNetwork.IsMasterClient)
         {
             return;
         }
