@@ -179,12 +179,12 @@ public class Monster : MonoBehaviourPun, IHitHandler
     }
     public virtual void Appear()
     {
-        monsterController.monsterAni.SetTrigger("Appear");
+        monsterController.monsterAni.SetBool("isAppear", true);
         audioSource.clip = sounds[3];
     }
     public virtual void ExitAppear()
     {
-        monsterController.monsterAni.SetTrigger("EndAppear");
+        monsterController.monsterAni.SetBool("isAppear", false);
     }
     public void FirstAttackCheck(DamageMessage message)
     {
