@@ -186,7 +186,6 @@ public class Monster : MonoBehaviourPun, IHitHandler
     {
         monsterController.monsterAni.SetTrigger("EndAppear");
     }
-
     public void FirstAttackCheck(DamageMessage message)
     {
         if (firstAttackPlayer == default && !isBattle)
