@@ -41,7 +41,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             if (PhotonNetwork.IsConnected)
             {
                 Debug.Log("Try to Enter the room");
-                PhotonNetwork.JoinRandomRoom();
+                PhotonNetwork.JoinRoom("Test");
                 isChk = true;
                 audio.Play();
                 startButton.transform.GetChild(2).GetComponent<Text>().text = "매칭 중";
@@ -57,8 +57,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             if (PhotonNetwork.InRoom)
             {
+                photonView.RPC("IncreasePlayer", RpcTarget.All);
                 PhotonNetwork.LeaveRoom();
-                RoomCheckManager.Instance.TotalPlayerNumber--;
                 startButton.transform.GetChild(2).GetComponent<Text>().text = "게임 시작";
                 audio.Play();
                 isChk = false;
@@ -70,7 +70,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinRandomFailed(returnCode, message);
         Debug.Log("Empty room doesn't exist, make a Empty Room");
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 2 });
+        PhotonNetwork.CreateRoom("Test", new RoomOptions { MaxPlayers = 2 });
     }
     public override void OnJoinedRoom()
     {
@@ -88,6 +88,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             photonView.RPC("SceneChanger", RpcTarget.All);
         }
+    }
+    [PunRPC]
+    void DicreasePlayer()
+    {
+        int number = RoomCheckManager.Instance.TotalPlayerNumber;
+        number--;
+        RoomCheckManager.Instance.TotalPlayerNumber = number;
+
     }
     [PunRPC]
     void SceneChanger()
