@@ -1667,6 +1667,7 @@ MonoBehaviour:
   weaponType: 0
   huntKill: 0
   playerKill: 0
+  SkillPoint: 000000000000000000000000000000000000000000000000
   weaponStack: 0
   skillQ: {fileID: 634131373}
   skillE: {fileID: 8981070518534526685}

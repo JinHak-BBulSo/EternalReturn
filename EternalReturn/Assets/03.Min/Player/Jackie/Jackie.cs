@@ -97,6 +97,19 @@ public class Jackie : PlayerBase
                             break;
                         }
                     }
+                    else if (hit.CompareTag("Player"))
+                    {
+                        if (hit.GetComponent<PlayerBase>().applyDebuffCheck[0])
+                        {
+                            if (!hasBuff)
+                            {
+                                playerTotalStat.moveSpeed += increaseMoveSpeedBuff;
+                                hasBuff = true;
+                            }
+                            watchDebuff = true;
+                            break;
+                        }
+                    }
 
                 }
             }

@@ -480,6 +480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isClick: 0
   monster: {fileID: 3690632477479032827}
+  player: {fileID: 0}
   outlineMode: 0
   outlineColor: {r: 1, g: 0, b: 0, a: 1}
   outlineWidth: 2
@@ -580,28 +581,28 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Appear
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: EndAppear
   - Type: 9
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Die
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isAttack
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isAttack2
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isMove
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isBeware
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isSkill
   m_SynchronizeLayers:
   - SynchronizeType: 0

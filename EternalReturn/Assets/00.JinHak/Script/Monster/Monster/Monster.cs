@@ -31,6 +31,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
     public float[] debuffDamage = new float[2];        // 디버프 데미지
     
     public PlayerBase firstAttackPlayer = default;
+    public bool isBattle = default;
     public bool isDie = false;
 
     public GameObject worldCanvas = default;
@@ -107,6 +108,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
         spawnPoint.monster = this;
         monsterBattleArea.monster = this;
         monsterController.monster.isDie = false;
+        isBattle = false;
 
         Appear();
         SetStatus();
@@ -187,16 +189,33 @@ public class Monster : MonoBehaviourPun, IHitHandler
 
     public void FirstAttackCheck(DamageMessage message)
     {
-        if (firstAttackPlayer == default)
+        if (firstAttackPlayer == default && !isBattle)
         {
             firstAttackPlayer = message.causer.GetComponent<PlayerBase>();
             monsterController.targetPlayer = firstAttackPlayer;
+            photonView.RPC("BattleStart", RpcTarget.All);
         }
         else
         {
             return;
         }
     }
+    [PunRPC]
+    public void BattleStart()
+    {
+        isBattle = true;
+    }
+    [PunRPC]
+    public void BattleEnd()
+    {
+        isBattle = false;
+    }
+    // StateMachine에서 전투 종료를 호출하기 위한 메소드
+    public void CallBattleEnd()
+    {
+        photonView.RPC("BattleEnd", RpcTarget.All);
+    }
+
 
     public void DieCheck(PlayerBase attackPlayer_)
     {
@@ -228,11 +247,12 @@ public class Monster : MonoBehaviourPun, IHitHandler
     /// <param name="message"></param>
     public void TakeDamage(DamageMessage message)
     {
-        FirstAttackCheck(message);
+        
         float damageAmount_ = (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
 
         if (PhotonNetwork.IsMasterClient)
         {
+            FirstAttackCheck(message);
             if (message.debuffIndex == -1)
                 monsterStatus.nowHp -= damageAmount_;
             monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
@@ -262,6 +282,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            FirstAttackCheck(message);
             monsterStatus.nowHp -= message.damageAmount;
             monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
             photonView.RPC("SetMonsterStat", RpcTarget.All, monsterStatus.nowHp);
@@ -279,6 +300,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            FirstAttackCheck(message);
             monsterStatus.nowHp -= message.damageAmount;
             monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
             photonView.RPC("SetMonsterStat", RpcTarget.All, monsterStatus.nowHp);
@@ -301,6 +323,19 @@ public class Monster : MonoBehaviourPun, IHitHandler
     /// <param name="debuffIndex_"></param>
     /// <returns></returns>
     /// 서로 다른 플레이어라면 각자 출혈을 걸도록 고쳐야할 필요가 있음
+
+    [PunRPC]
+    public void ContinousDamageStarteSet(int debuffIndex_, float time_)
+    {
+        applyDebuffCheck[debuffIndex_] = true;
+        debuffRemainTime[debuffIndex_] = time_;
+    }
+    [PunRPC]
+    public void ContinousDamageEndSet(int debuffIndex_)
+    {
+        applyDebuffCheck[debuffIndex_] = false;
+        debuffRemainTime[debuffIndex_] = 0;
+    }
     public IEnumerator ContinousDamage(DamageMessage message, int debuffIndex_, float continousTime_, float tickTime_)
     {
         // 이미 상태이상이 걸린 경우
@@ -310,11 +345,15 @@ public class Monster : MonoBehaviourPun, IHitHandler
             debuffDamage[debuffIndex_] += message.damageAmount;
 
             if (continousTime_ > debuffRemainTime[debuffIndex_])
+            {
                 debuffRemainTime[debuffIndex_] = continousTime_;
+                photonView.RPC("ContinousDamageStarteSet", RpcTarget.All, debuffIndex_, continousTime_);
+            }
         }
         // 상태이상이 걸려있지 않은 경우
         else
         {
+            photonView.RPC("ContinousDamageStarteSet", RpcTarget.All, debuffIndex_, continousTime_);
             // 상태이상 남은 시간 기록
             debuffRemainTime[debuffIndex_] = continousTime_;
             // 상태이상 데미지를 저장
@@ -348,6 +387,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
             debuffRemainTime[debuffIndex_] = 0;
             debuffDamage[debuffIndex_] = 0;
             applyDebuffCheck[debuffIndex_] = false;
+            photonView.RPC("ContinousDamageEndSet", RpcTarget.All, debuffIndex_);
         }
     }
 
@@ -471,5 +511,10 @@ public class Monster : MonoBehaviourPun, IHitHandler
     {
         monsterStatus.nowHp = hp_;
         monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
+    }
+    // StateMachine에서 콜하기 위한 메소드
+    public void CallSetMonsterStat() 
+    {
+        photonView.RPC("SetMonsterStat", RpcTarget.All, monsterStatus.nowHp);
     }
 }

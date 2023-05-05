@@ -652,6 +652,11 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                     playerStat.nowStamina = playerTotalStat.maxStamina;
                 }
             }
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
+            }
         }
         regenTime += Time.deltaTime;
 
