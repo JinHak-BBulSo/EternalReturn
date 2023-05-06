@@ -43,11 +43,11 @@ public class PlayerUI : SingleTonBase<PlayerUI>
 
     public void InitializeCharacterUI()
     {
-        profileImage.sprite = InGameUIResources.GetProfileSprite((CharacterType)PlayerManager.Instance.characterNum);
+        profileImage.sprite = UIResources.GetProfileSprite((CharacterType)PlayerManager.Instance.characterNum);
         for (int i = 0; i < skillUIs.Count; i++)
         {
             skillUIs[i].gameObject.SetActive(true);
-            skillUIs[i].GetComponent<Image>().sprite = InGameUIResources.GetSkillIconSprite((CharacterType)PlayerManager.Instance.characterNum, (SkillInfoType)i);
+            skillUIs[i].GetComponent<Image>().sprite = UIResources.GetSkillIconSprite((CharacterType)PlayerManager.Instance.characterNum, (SkillInfoType)i);
         }
 
         GameObject player = PlayerManager.Instance.Player;

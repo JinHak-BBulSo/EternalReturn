@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Events;
 
 public class ItemManager : SingleTonBase<ItemManager>
 {
@@ -26,6 +27,8 @@ public class ItemManager : SingleTonBase<ItemManager>
     public bool isInventoryFull = false;
     public bool isItemChage = false;
     public int playerWeaponType;
+
+    public UnityEvent getItemEvent = new UnityEvent();
 
     protected override void Awake()
     {
@@ -137,6 +140,11 @@ public class ItemManager : SingleTonBase<ItemManager>
         }
 
         isItemPick = true;
+
+        if (getItemEvent != null)
+        {
+            getItemEvent.Invoke();
+        }
     }
     public int[] AddInferiorList(int ItemId)
     {

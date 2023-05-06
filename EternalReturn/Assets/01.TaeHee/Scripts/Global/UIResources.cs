@@ -6,8 +6,11 @@ using System.Data;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public static class InGameUIResources
+public static class UIResources
 {
+    private const int ITEM_BG_IMAGE_COUNT = 4;
+    private const string PATH_ITEM_BG_IMAGE = "03.Item/Ico_ItemGradebg_";//+ [01, 04]
+
     private const string INGAME_PREFABS_PATH = "09.InGameUI/Prefabs/";
     private const string INGAME_CHARACTER_PROFILES_PATH = "09.InGameUI/Sprite/CharacterProfiles/";
     private const string INGAME_SKILL_ICONS_PATH = "09.InGameUI/Sprite/SkillIcons/";
@@ -21,7 +24,10 @@ public static class InGameUIResources
     public static Dictionary<CharacterType, Sprite> characterProfiles;
     public static Dictionary<CharacterType, Sprite[]> characterSkillIcons;
 
-    static InGameUIResources()
+    public static ReadOnlyCollection<Sprite> ItemBgSpritesRO { get; private set; }
+    private static List<Sprite> itemBgSprites = new List<Sprite>();
+
+    static UIResources()
     {
         skillLevel = Resources.Load<GameObject>($"{INGAME_PREFABS_PATH}{SKILL_LEVEL_PREFAB_NAME}");
 
@@ -43,6 +49,16 @@ public static class InGameUIResources
 
             characterSkillIcons.Add((CharacterType)i, skillIcons);
         }
+
+
+        string itemBgPath;
+        for (int i = 1; i <= ITEM_BG_IMAGE_COUNT; i++)
+        {
+            itemBgPath = $"{PATH_ITEM_BG_IMAGE}{(i).ToString().PadLeft(2, '0')}";
+            itemBgSprites.Add(Resources.Load<Sprite>(itemBgPath));
+        }
+
+        ItemBgSpritesRO = new ReadOnlyCollection<Sprite>(itemBgSprites);
     }
 
     public static Sprite GetProfileSprite(CharacterType characterType)
