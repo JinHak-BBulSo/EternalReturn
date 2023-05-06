@@ -389,7 +389,14 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                     playerStat.nowStamina += charaterData.increaseStamina;
                     playerStat.hpRegen += charaterData.increaseStaminaRegen;
                     AddTotalStat();
-                    photonView.RPC("SendLevelUp", RpcTarget.All, playerIndex);
+                    int[] SkillPoints = new int[6];
+                    SkillPoints[0] = skillSystem.skillInfos[0].CurrentLevel;
+                    SkillPoints[1] = skillSystem.skillInfos[1].CurrentLevel;
+                    SkillPoints[2] = skillSystem.skillInfos[2].CurrentLevel;
+                    SkillPoints[3] = skillSystem.skillInfos[3].CurrentLevel;
+                    SkillPoints[4] = skillSystem.skillInfos[4].CurrentLevel;
+                    SkillPoints[5] = skillSystem.skillInfos[5].CurrentLevel;
+                    photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, ItemManager.Instance.equipmentInven, SkillPoints);
                 }
                 playerExp_.nowExp -= playerExp_.maxExp;
                 playerExp_.maxExp += playerExp_.expDelta;
@@ -677,11 +684,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                     playerStat.nowStamina = playerTotalStat.maxStamina;
                 }
             }
-
-            if (PhotonNetwork.IsMasterClient)
-            {
-                photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
-            }
+            photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
         }
         regenTime += Time.deltaTime;
 
