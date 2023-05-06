@@ -107,7 +107,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         //[KJH] ADD. PlayerIndex 구분
         playerIndex = photonView.ViewID;
         PlayerList.Instance.playerDictionary.Add(playerIndex, this);
-        
+
         if (photonView.IsMine)
         {
             ItemManager.Instance.Player = this;
@@ -733,18 +733,23 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         }
     }
 
-    public void DieCheck(DamageMessage message)
+    [PunRPC]
+    public void DieCheck(float damage_, int playerIndex_)
     {
+        PlayerBase player_ = PlayerList.Instance.playerDictionary[playerIndex_];
         if (playerStat.nowHp <= 0)
         {
             playerStat.nowHp = 0;
-            if (message.causer.GetComponent<PlayerBase>() != null)
-            {
-                message.causer.GetComponent<PlayerBase>().playerKill++;
-            }
+            player_.playerKill++;
             playerController.ChangeState(new PlayerDie());
             return;
         }
+    }
+    [PunRPC]
+    public void GetDefExp(int playerIndex_, float exp_)
+    {
+        PlayerBase player_ = PlayerList.Instance.playerDictionary[playerIndex_];
+        player_.GetExp(exp_, PlayerStat.PlayerExpType.DEF);
     }
     /// <summary>
     /// 기본 공격 공식
@@ -758,23 +763,22 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     /// <param name="message"></param>
     public void TakeDamage(DamageMessage message)
     {
-        if (PhotonNetwork.IsMasterClient)
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        float totalDamageAmount = (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
+        playerStat.nowHp -= totalDamageAmount;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
+        photonView.RPC("DieCheck", RpcTarget.All, totalDamageAmount, message.causer.GetComponent<PlayerBase>().playerIndex);
+        if (message.causer.CompareTag("Enemy"))
         {
-            playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-            playerStat.nowHp -= (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
-
-            playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-
-            DieCheck(message);
-
-            photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
+            photonView.RPC("GetDefExp", RpcTarget.All, playerIndex, totalDamageAmount * 0.1f);
+            Debug.Log(playerStat.defExp.nowExp);
+        }
+        else if (message.causer.CompareTag("Player"))
+        {
+            photonView.RPC("GetDefExp", RpcTarget.All, playerIndex, totalDamageAmount * 0.6f);
         }
     }
-    public void TakeDamage(DamageMessage message, float damageAmount)
-    {
-        throw new System.NotImplementedException();
-    }
-
     /// <summary>
     /// 출혈 데미지를 입히는 함수
     /// 5초간 1초간격으로 총 5회의 피해
@@ -787,13 +791,10 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     /// <returns></returns>
     public void TakeSolidDamage(DamageMessage message)
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            playerStat.nowHp -= message.damageAmount;
-            playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-            DieCheck(message);
-            photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
-        }
+        playerStat.nowHp -= message.damageAmount;
+        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+        photonView.RPC("DieCheck", RpcTarget.All, message);
+        photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
     }
 
 
@@ -803,7 +804,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         {
             playerStat.nowHp -= damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-            DieCheck(message);
+            photonView.RPC("DieCheck", RpcTarget.All, message);
             photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
         }
     }
