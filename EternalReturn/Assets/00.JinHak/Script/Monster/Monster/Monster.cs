@@ -31,6 +31,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
     public float[] debuffDamage = new float[2];        // 디버프 데미지
     
     public PlayerBase firstAttackPlayer = default;
+    public bool isBattle = default;
     public bool isDie = false;
 
     public GameObject worldCanvas = default;
@@ -107,6 +108,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
         spawnPoint.monster = this;
         monsterBattleArea.monster = this;
         monsterController.monster.isDie = false;
+        isBattle = false;
 
         Appear();
         SetStatus();
@@ -177,19 +179,19 @@ public class Monster : MonoBehaviourPun, IHitHandler
     }
     public virtual void Appear()
     {
-        monsterController.monsterAni.SetTrigger("Appear");
+        monsterController.monsterAni.SetBool("isAppear", true);
         audioSource.clip = sounds[3];
     }
     public virtual void ExitAppear()
     {
-        monsterController.monsterAni.SetTrigger("EndAppear");
+        monsterController.monsterAni.SetBool("isAppear", false);
     }
-
-    public void FirstAttackCheck(DamageMessage message)
+    [PunRPC]
+    public void FirstAttackCheck(int playerIndex_)
     {
-        if (firstAttackPlayer == default)
+        if (firstAttackPlayer == default && !isBattle)
         {
-            firstAttackPlayer = message.causer.GetComponent<PlayerBase>();
+            firstAttackPlayer = PlayerList.Instance.playerDictionary[playerIndex_];
             monsterController.targetPlayer = firstAttackPlayer;
         }
         else
@@ -215,7 +217,24 @@ public class Monster : MonoBehaviourPun, IHitHandler
     {
         isDie = true;
     }
+    [PunRPC]
+    public void SendWeaponExp(int playerIndex_, int expAmount_)
+    {
+        PlayerBase player_ = PlayerList.Instance.playerDictionary[playerIndex_];
+        player_.GetExp(expAmount_, PlayerStat.PlayerExpType.WEAPON);
+    }
+    [PunRPC]
+    public void DamageApply(float damageAmount_, int playerIndex_)
+    {
+        monsterStatus.nowHp -= damageAmount_;
+        monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
+        photonView.RPC("SetMonsterStat", RpcTarget.All, monsterStatus.nowHp);
 
+        if (!isDie)
+        {
+            DieCheck(PlayerList.Instance.playerDictionary[playerIndex_]);
+        }
+    }
     /// <summary>
     /// 기본 공격 공식
     /// 공격력 * 기본공격증폭 = message.damageAmount
@@ -228,24 +247,44 @@ public class Monster : MonoBehaviourPun, IHitHandler
     /// <param name="message"></param>
     public void TakeDamage(DamageMessage message)
     {
-        FirstAttackCheck(message);
-        float damageAmount_ = (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            if (message.debuffIndex == -1)
-                monsterStatus.nowHp -= damageAmount_;
-            monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
-            photonView.RPC("SetMonsterStat", RpcTarget.All, monsterStatus.nowHp);
-        }
+        //float damageAmount_ = (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
+        audioSource.clip = sounds[1];
+        audioSource.Play();
+
+        float damageAmount_ = (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
+        int playerIndex_ = message.causer.GetComponent<PlayerBase>().playerIndex;
+        photonView.RPC("FirstAttackCheck", RpcTarget.All, playerIndex_);
 
         PlayerBase attackPlayer_ = message.causer.GetComponent<PlayerBase>();
-        attackPlayer_.GetExp(damageAmount_ / 5, PlayerStat.PlayerExpType.WEAPON);
-        
-        if (!isDie)
+        attackPlayer_.GetExp((int)damageAmount_ / 5, PlayerStat.PlayerExpType.WEAPON);
+
+        photonView.RPC("DamageApply", RpcTarget.All, damageAmount_, playerIndex_);
+
+        /*if (PhotonNetwork.IsMasterClient)
         {
-            DieCheck(attackPlayer_);
+
+            float damageAmount_ = (int)(message.damageAmount * (100 / (100 + monsterStatus.defense)));
+            int playerIndex_ = message.causer.GetComponent<PlayerBase>().playerIndex;
+            photonView.RPC("FirstAttackCheck", RpcTarget.All, playerIndex_);
+
+            monsterStatus.nowHp -= damageAmount_;
+            monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
+            photonView.RPC("SetMonsterStat", RpcTarget.All, monsterStatus.nowHp);
+
+            photonView.RPC("SendWeaponExp", RpcTarget.All, (int)damageAmount_ / 5);
+            PlayerBase attackPlayer_ = message.causer.GetComponent<PlayerBase>();
+            attackPlayer_.GetExp((int)damageAmount_ / 5, PlayerStat.PlayerExpType.WEAPON);
+
+            if (!isDie)
+            {
+                DieCheck(attackPlayer_);
+            }
         }
+        else
+        {
+
+        }*/
     }
 
     /// <summary>
@@ -260,37 +299,62 @@ public class Monster : MonoBehaviourPun, IHitHandler
     /// <returns></returns>
     public void TakeSolidDamage(DamageMessage message)
     {
-        if (PhotonNetwork.IsMasterClient)
+        audioSource.clip = sounds[1];
+        audioSource.Play();
+
+        int playerIndex_ = message.causer.GetComponent<PlayerBase>().playerIndex;
+        photonView.RPC("FirstAttackCheck", RpcTarget.All, playerIndex_);
+
+        PlayerBase attackPlayer_ = message.causer.GetComponent<PlayerBase>();
+        attackPlayer_.GetExp((int)message.damageAmount / 5, PlayerStat.PlayerExpType.WEAPON);
+
+        photonView.RPC("DamageApply", RpcTarget.All, message.damageAmount, playerIndex_);
+
+        /*if (PhotonNetwork.IsMasterClient)
         {
+            int playerIndex_ = message.causer.GetComponent<PlayerBase>().playerIndex;
+            photonView.RPC("FirstAttackCheck", RpcTarget.All, playerIndex_);
             monsterStatus.nowHp -= message.damageAmount;
             monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
             photonView.RPC("SetMonsterStat", RpcTarget.All, monsterStatus.nowHp);
-        }
 
-        PlayerBase attackPlayer_ = message.causer.GetComponent<PlayerBase>();
-        attackPlayer_.GetExp(message.damageAmount / 20, PlayerStat.PlayerExpType.WEAPON);
+            PlayerBase attackPlayer_ = message.causer.GetComponent<PlayerBase>();
+            attackPlayer_.GetExp((int)message.damageAmount / 5, PlayerStat.PlayerExpType.WEAPON);
+            photonView.RPC("SendWeaponExp", RpcTarget.All, (int)message.damageAmount / 5);
 
-        if (!isDie)
-        {
-            DieCheck(attackPlayer_);
-        }
+            if (!isDie)
+            {
+                DieCheck(attackPlayer_);
+            }
+        }        */
     }
     public void TakeSolidDamage(DamageMessage message, float damageAmount)
     {
-        if (PhotonNetwork.IsMasterClient)
+        int playerIndex_ = message.causer.GetComponent<PlayerBase>().playerIndex;
+        photonView.RPC("FirstAttackCheck", RpcTarget.All, playerIndex_);
+
+        PlayerBase attackPlayer_ = message.causer.GetComponent<PlayerBase>();
+        attackPlayer_.GetExp((int)message.damageAmount / 5, PlayerStat.PlayerExpType.WEAPON);
+
+        photonView.RPC("DamageApply", RpcTarget.All, damageAmount, playerIndex_);
+
+        /*if (PhotonNetwork.IsMasterClient)
         {
+            int playerIndex_ = message.causer.GetComponent<PlayerBase>().playerIndex;
+            photonView.RPC("FirstAttackCheck", RpcTarget.All, playerIndex_);
             monsterStatus.nowHp -= message.damageAmount;
             monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
             photonView.RPC("SetMonsterStat", RpcTarget.All, monsterStatus.nowHp);
-        }
 
-        PlayerBase attackPlayer_ = message.causer.GetComponent<PlayerBase>();
-        attackPlayer_.GetExp(damageAmount / 20, PlayerStat.PlayerExpType.WEAPON);
+            PlayerBase attackPlayer_ = message.causer.GetComponent<PlayerBase>();
+            attackPlayer_.GetExp((int)message.damageAmount / 5, PlayerStat.PlayerExpType.WEAPON);
+            photonView.RPC("SendWeaponExp", RpcTarget.All, (int)damageAmount / 5);
 
-        if (!isDie)
-        {
-            DieCheck(attackPlayer_);
-        }
+            if (!isDie)
+            {
+                DieCheck(attackPlayer_);
+            }
+        }  */
     }
 
     /// <summary>
@@ -301,6 +365,19 @@ public class Monster : MonoBehaviourPun, IHitHandler
     /// <param name="debuffIndex_"></param>
     /// <returns></returns>
     /// 서로 다른 플레이어라면 각자 출혈을 걸도록 고쳐야할 필요가 있음
+
+    [PunRPC]
+    public void ContinousDamageStarteSet(int debuffIndex_, float time_)
+    {
+        applyDebuffCheck[debuffIndex_] = true;
+        debuffRemainTime[debuffIndex_] = time_;
+    }
+    [PunRPC]
+    public void ContinousDamageEndSet(int debuffIndex_)
+    {
+        applyDebuffCheck[debuffIndex_] = false;
+        debuffRemainTime[debuffIndex_] = 0;
+    }
     public IEnumerator ContinousDamage(DamageMessage message, int debuffIndex_, float continousTime_, float tickTime_)
     {
         // 이미 상태이상이 걸린 경우
@@ -310,11 +387,15 @@ public class Monster : MonoBehaviourPun, IHitHandler
             debuffDamage[debuffIndex_] += message.damageAmount;
 
             if (continousTime_ > debuffRemainTime[debuffIndex_])
+            {
                 debuffRemainTime[debuffIndex_] = continousTime_;
+                photonView.RPC("ContinousDamageStarteSet", RpcTarget.All, debuffIndex_, continousTime_);
+            }
         }
         // 상태이상이 걸려있지 않은 경우
         else
         {
+            photonView.RPC("ContinousDamageStarteSet", RpcTarget.All, debuffIndex_, continousTime_);
             // 상태이상 남은 시간 기록
             debuffRemainTime[debuffIndex_] = continousTime_;
             // 상태이상 데미지를 저장
@@ -348,6 +429,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
             debuffRemainTime[debuffIndex_] = 0;
             debuffDamage[debuffIndex_] = 0;
             applyDebuffCheck[debuffIndex_] = false;
+            photonView.RPC("ContinousDamageEndSet", RpcTarget.All, debuffIndex_);
         }
     }
 
@@ -471,5 +553,10 @@ public class Monster : MonoBehaviourPun, IHitHandler
     {
         monsterStatus.nowHp = hp_;
         monsterHpBar.fillAmount = monsterStatus.nowHp / monsterStatus.maxHp;
+    }
+    // StateMachine에서 콜하기 위한 메소드
+    public void CallSetMonsterStat() 
+    {
+        photonView.RPC("SetMonsterStat", RpcTarget.All, monsterStatus.nowHp);
     }
 }

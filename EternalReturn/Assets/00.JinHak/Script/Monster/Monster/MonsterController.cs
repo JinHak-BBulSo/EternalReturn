@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
-public class MonsterController : MonoBehaviour
+using Photon.Pun;
+using Photon.Realtime;
+public class MonsterController : MonoBehaviourPun
 {
     public enum MonsterState
     {
@@ -140,7 +141,7 @@ public class MonsterController : MonoBehaviour
             {
                 monsterStateMachine.SetState(monsterStateDic[MonsterState.BEWARE]);
             }
-            else if(targetPlayer != null)
+            else if(targetPlayer != null || !monster.isBattle)
             {
                 if (Vector3.Distance(targetPlayer.transform.position, this.transform.position) > monster.monsterStatus.attackRange)
                 {

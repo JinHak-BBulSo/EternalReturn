@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 public class HyperLoopObj : MonoBehaviour
 {
+    [SerializeField]
     private GameObject hyperLoopUi = default;
     Outline outline = default;
+
     void Start()
     {
-        hyperLoopUi = GameObject.Find("TestUi").transform.GetChild(2).gameObject;
         outline = GetComponent<Outline>();
     }
 

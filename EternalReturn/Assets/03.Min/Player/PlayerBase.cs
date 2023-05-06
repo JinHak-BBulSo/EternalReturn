@@ -9,7 +9,8 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 {
     protected PlayerController playerController = default;
     protected Vector3 destination = default;
-    protected int currentCorner = 0;
+    public Vector3 Destination { get { return destination; } }
+    public int currentCorner = 0;
     public List<PlayerBase> enemyPlayer = new List<PlayerBase>();
     public List<Monster> enemyHunt = new List<Monster>();
     public Vector3 nowMousePoint = default;
@@ -68,10 +69,15 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     private float regenTime = 0f;
     public int huntKill = 0;
     public int playerKill = 0;
+    public int[] SkillPoint = new int[6];
     private Outline playerOutLine = default;
+
+    //[KJH] Add. Each Player Index
+    public int playerIndex = -1;
 
     protected virtual void Start()
     {
+
         playerOutLine = GetComponent<Outline>();
         playerOutLine.player = this;
         playerOutLine.enabled = false;
@@ -97,12 +103,18 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         worldCanvas = GameObject.Find("WorldCanvas");
         playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform).GetComponent<PlayerStatusUI>();
         playerStatusUi.player = this;
+
+        //[KJH] ADD. PlayerIndex 구분
+        playerIndex = photonView.ViewID;
+        PlayerList.Instance.playerDictionary.Add(playerIndex, this);
+        
         if (photonView.IsMine)
         {
             ItemManager.Instance.Player = this;
         }
         skillSystem = GetComponent<PlayerSkillSystem>();
         InitStat();
+        SkillPoint[5] = 1;
     }
 
 
@@ -178,7 +190,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                         outline.isClick = false;
                         outline = default;
                     }
-                    if (clickTarget.GetComponent<Outline>() != null)
+                    if (clickTarget.GetComponent<Outline>() != null && clickTarget.gameObject != this.gameObject)
                     {
                         outline = clickTarget.GetComponent<Outline>();
                         outline.isClick = true;
@@ -622,7 +634,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         }
     }
 
-    protected void SetDestination(Vector3 dest_)
+    public void SetDestination(Vector3 dest_)
     {
         if (!photonView.IsMine)
         {
@@ -659,6 +671,11 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 {
                     playerStat.nowStamina = playerTotalStat.maxStamina;
                 }
+            }
+
+            if (PhotonNetwork.IsMasterClient)
+            {
+                photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
             }
         }
         regenTime += Time.deltaTime;
@@ -798,6 +815,18 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     /// <param name="message"></param>
     /// <param name="debuffIndex_"></param>
     /// <returns></returns>
+    [PunRPC]
+    public void ContinousDamageStarteSet(int debuffIndex_, float time_)
+    {
+        applyDebuffCheck[debuffIndex_] = true;
+        debuffRemainTime[debuffIndex_] = time_;
+    }
+    [PunRPC]
+    public void ContinousDamageEndSet(int debuffIndex_)
+    {
+        applyDebuffCheck[debuffIndex_] = false;
+        debuffRemainTime[debuffIndex_] = 0;
+    }
     public IEnumerator ContinousDamage(DamageMessage message, int debuffIndex_, float continousTime_, float tickTime_)
     {
         // 이미 상태이상이 걸린 경우
@@ -807,11 +836,15 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             debuffDamage[debuffIndex_] += message.damageAmount;
 
             if (continousTime_ > debuffRemainTime[debuffIndex_])
+            {
                 debuffRemainTime[debuffIndex_] = continousTime_;
+                photonView.RPC("ContinousDamageStarteSet", RpcTarget.All, debuffIndex_, continousTime_);
+            }
         }
         // 상태이상이 걸려있지 않은 경우
         else
         {
+            photonView.RPC("ContinousDamageStarteSet", RpcTarget.All, debuffIndex_, continousTime_);
             applyDebuffCheck[debuffIndex_] = true;
             // 상태이상 남은 시간 기록
             debuffRemainTime[debuffIndex_] = continousTime_;
@@ -846,6 +879,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             debuffRemainTime[debuffIndex_] = 0;
             debuffDamage[debuffIndex_] = 0;
             applyDebuffCheck[debuffIndex_] = false;
+            photonView.RPC("ContinousDamageEndSet", RpcTarget.All, debuffIndex_);
         }
     }
 
@@ -948,18 +982,18 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (!PhotonNetwork.IsMasterClient)
         {
             photonView.RPC("SetPlayerStat", RpcTarget.MasterClient,
-            playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, new int[5]);
+            playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, SkillPoint);
         }
         else
         {
             photonView.RPC("SetPlayerStat", RpcTarget.Others,
-             playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, new int[5]);
+             playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, SkillPoint);
         }
     }
     void MasterSpread()
     {
         photonView.RPC("SetPlayerStat", RpcTarget.Others,
-                     playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, new int[5]);
+                     playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, SkillPoint);
     }
 
     IEnumerator ContinousDamageEnd(float debuffContinousTime_, int debuffIndex_, float debuffDamage_)

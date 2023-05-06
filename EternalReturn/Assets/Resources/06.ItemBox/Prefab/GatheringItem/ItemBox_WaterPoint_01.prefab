@@ -66,7 +66,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 5a8055e58d031564282087795602bb55, type: 2}
+      objectReference: {fileID: 2100000, guid: f1303a0b039812c4c9096009125cbf7e, type: 2}
     - target: {fileID: 919132149155446097, guid: 11d5ea533bf460a488d3e468c96dc95d,
         type: 3}
       propertyPath: m_Name
@@ -93,6 +93,28 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6763581, y: 0.7111651, z: 1.8912838}
   m_Center: {x: -0.000000014901161, y: 0, z: 0.46533883}
+--- !u!114 &1568624963137017365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4295307834278496297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!114 &5650048861930846343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,6 +127,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be2581c880a350249b396c363043081b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gatherItemImgPrfab: {fileID: 7608392819770303651, guid: 997c8f9b3373e2e428649a8e32f05a6e,
+    type: 3}
+  dontGatherItemImgPrefab: {fileID: 0}
   itemPrefab: {fileID: 5359322603946105740, guid: be0c891640bd38b41b761acda0887236,
     type: 3}
   gatheringItem:
@@ -156,6 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isClick: 0
   monster: {fileID: 0}
+  player: {fileID: 0}
   outlineMode: 0
   outlineColor: {r: 0, g: 0.99010324, b: 1, a: 1}
   outlineWidth: 2

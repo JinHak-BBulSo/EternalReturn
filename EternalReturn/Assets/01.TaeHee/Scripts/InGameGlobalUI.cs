@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.UI;
 
 public class InGameGlobalUI : MonoBehaviour
@@ -13,6 +14,8 @@ public class InGameGlobalUI : MonoBehaviour
     [SerializeField] private Text dayText;
     [SerializeField] private Text userNumberText;
 
+    private Light directionalLight;
+    private Color defaultLightColor;
     private Sprite[] dayNightIcons = new Sprite[2];
 
     private int minutes = 2;
@@ -30,6 +33,9 @@ public class InGameGlobalUI : MonoBehaviour
     {
         dayNightIcons[0] = Resources.Load<Sprite>($"{INGAME_SPRITES_PATH}{DAY_SUN_NAME}");
         dayNightIcons[1] = Resources.Load<Sprite>($"{INGAME_SPRITES_PATH}{NIGHT_MOON_NAME}");
+
+        directionalLight = GameObject.Find("Directional Light").GetComponent<Light>();
+        defaultLightColor = directionalLight.color;
 
         UpdateUserNumber(2);
     }
@@ -60,6 +66,7 @@ public class InGameGlobalUI : MonoBehaviour
                     isNight = !isNight;
                     dayNightImage.sprite = isNight ? dayNightIcons[1] : dayNightIcons[0];
                     dayText.text = isNight ? dayText.text : $"DAY {++dayCount}";
+                    directionalLight.color = isNight ? Color.grey : defaultLightColor;
 
                     UpdateTimer();
                     yield return waitForOneSecond;

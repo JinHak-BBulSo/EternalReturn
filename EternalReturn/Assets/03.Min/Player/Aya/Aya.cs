@@ -65,6 +65,10 @@ public class Aya : PlayerBase
     protected override void AttackEnd()
     {
         base.AttackEnd();
+        if (!photonView.IsMine || enemy == default)
+        {
+            return;
+        }
         if (enemy.GetComponent<Monster>() != null)
         {
             DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower);

@@ -9,9 +9,12 @@ public class AllItemBox : MonoBehaviour
     public List<ItemBox> allItemBoxes = new List<ItemBox>();
     public List<ItemDistributer> allDistributers = new List<ItemDistributer>();
     private bool isGameStart = false;
+    public GameObject itemBoxImgPrefab = default;
+    public GameObject worldCanvas = default;
 
     private void Start()
     {
+        worldCanvas = GameObject.Find("WorldCanvas");
         int index = 0;
         foreach (var itemBox in allItemBoxes)
         {
@@ -29,17 +32,17 @@ public class AllItemBox : MonoBehaviour
             isGameStart = true;
             if (PhotonNetwork.IsMasterClient)
             {
-                Delay();
+                SetAllItem();
             }
             else
             {
-                this.enabled = false;
+                /* Do nothing */
             }
         }
         
     }
 
-    private void Delay()
+    private void SetAllItem()
     {
         foreach (var distributer in allDistributers)
         {

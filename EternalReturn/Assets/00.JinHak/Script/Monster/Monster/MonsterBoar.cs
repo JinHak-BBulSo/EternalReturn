@@ -26,6 +26,7 @@ public class MonsterBoar : Monster
     IEnumerator SkillReady()
     {
         audioSource.clip = sounds[4];
+        transform.LookAt(monsterController.monster.firstAttackPlayer.transform);
         StartCoroutine(SkillCoolTime(skillCoolTime));
         skillRange.SetActive(true);
         monsterController.monsterAni.SetBool("isSkillReady", true);
