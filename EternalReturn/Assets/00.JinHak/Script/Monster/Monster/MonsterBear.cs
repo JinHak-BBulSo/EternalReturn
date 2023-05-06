@@ -22,6 +22,7 @@ public class MonsterBear : Monster
         base.Skill();
         audioSource.clip = sounds[5];
         monsterController.monsterAni.SetBool("isSkill", true);
+        monsterController.navMeshAgent.enabled = false;
         skillRange.SetActive(true);
     }
 
@@ -37,6 +38,7 @@ public class MonsterBear : Monster
         skillRange.SetActive(false);
         StartCoroutine(SkillCoolTime(skillCoolTime));
         monsterController.isInSkillUse = false;
+        monsterController.navMeshAgent.enabled = true;
         monsterController.monsterAni.SetBool("isSkill", false);
     }
 

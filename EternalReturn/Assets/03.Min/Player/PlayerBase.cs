@@ -8,6 +8,7 @@ using Photon.Pun;
 public class PlayerBase : MonoBehaviourPun, IHitHandler
 {
     protected PlayerController playerController = default;
+    public PlayerController PlayerController { get { return playerController; } }
     protected Vector3 destination = default;
     public Rigidbody playerRigid = default;
     public Vector3 Destination { get { return destination; } }
@@ -931,8 +932,8 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 case 4:
                     isMove = false;
                     isMoveAble = false;
-                    playerRigid.useGravity = true;
                     playerController.player.playerNav.enabled = false;
+                    playerRigid.useGravity = true;
                     playerController.GetComponent<Rigidbody>().AddForce(new Vector3(0, 6, 0), ForceMode.Impulse);
                     break;
             }

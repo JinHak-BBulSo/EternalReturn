@@ -22,7 +22,12 @@ public class MonsterAttack : IMonsterState
 
     public void StateUpdate()
     {
-        
+        if(monsterController.targetPlayer.PlayerController.playerState == PlayerController.PlayerState.DIE)
+        {
+            monsterController.monster.isBattleAreaOut = true;
+            monsterController.targetPlayer = default;
+            monsterController.monster.firstAttackPlayer = default;
+        }
     }
     public void StateExit()
     {
@@ -30,9 +35,12 @@ public class MonsterAttack : IMonsterState
     }
     public void Attack()
     {
-        monsterController.navMeshAgent.enabled = false;
-        monsterController.transform.LookAt(monsterController.monster.firstAttackPlayer.transform);
-        monsterController.monsterAni.SetBool("isAttack", true);
+        if (monsterController.targetPlayer != default)
+        {
+            monsterController.navMeshAgent.enabled = false;
+            monsterController.transform.LookAt(monsterController.targetPlayer.transform);
+            monsterController.monsterAni.SetBool("isAttack", true);
+        }
     }
     public void ExitAttack()
     {
@@ -41,7 +49,9 @@ public class MonsterAttack : IMonsterState
         DamageMessage dm = new DamageMessage(target_, damageAmount_);
 
         monsterController.navMeshAgent.enabled = true;
-        monsterController.targetPlayer.TakeDamage(dm);
-        monsterController.navMeshAgent.enabled = true;
+        if (monsterController.targetPlayer != default)
+        {
+            monsterController.targetPlayer.TakeDamage(dm);
+        }
     }
 }
