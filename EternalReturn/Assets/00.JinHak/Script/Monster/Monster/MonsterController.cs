@@ -38,6 +38,7 @@ public class MonsterController : MonoBehaviourPun
     public bool isMoveAble = true;
     public bool isSkillAble = false;
     public bool isInSkillUse = false;
+    public bool isAttack = false;
     public int encountPlayerCount = 0;
 
     public bool actionDelay = false;
@@ -149,7 +150,7 @@ public class MonsterController : MonoBehaviourPun
                 }
                 else
                 {
-                    if (isSkillAble && !isInSkillUse)
+                    if (isSkillAble && !isInSkillUse && !isAttack)
                     {
                         monsterStateMachine.SetState(monsterStateDic[MonsterState.SKILL]);
                         isInSkillUse = true;

@@ -10,6 +10,7 @@ public class MonsterAttack : IMonsterState
     {
         this.monsterController = monsterCtrl_;
         monsterController.monsterState = MonsterController.MonsterState.ATTACk;
+        monsterController.isAttack = true;
         Attack();
         monsterController.monster.audioSource.clip = monsterController.monster.sounds[0];
         monsterController.navMeshAgent.enabled = false;
@@ -47,6 +48,7 @@ public class MonsterAttack : IMonsterState
         GameObject target_ = monsterController.gameObject;
         float damageAmount_ = monsterController.monster.monsterStatus.attackPower;
         DamageMessage dm = new DamageMessage(target_, damageAmount_);
+        monsterController.isAttack = false;
 
         monsterController.navMeshAgent.enabled = true;
         if (monsterController.targetPlayer != default)
