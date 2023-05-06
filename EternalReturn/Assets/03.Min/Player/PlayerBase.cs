@@ -772,11 +772,14 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (message.causer.CompareTag("Enemy"))
         {
             photonView.RPC("GetDefExp", RpcTarget.All, playerIndex, totalDamageAmount * 0.1f);
+            Debug.Log("???");
             Debug.Log(playerStat.defExp.nowExp);
         }
         else if (message.causer.CompareTag("Player"))
         {
+            Debug.Log("???");
             photonView.RPC("GetDefExp", RpcTarget.All, playerIndex, totalDamageAmount * 0.6f);
+            Debug.Log(playerStat.defExp.nowExp);
         }
     }
     /// <summary>

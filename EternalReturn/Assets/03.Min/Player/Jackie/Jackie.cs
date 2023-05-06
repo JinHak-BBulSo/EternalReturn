@@ -265,7 +265,6 @@ public class Jackie : PlayerBase
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 0);
         StartCoroutine(SkillCooltime(0, skillSystem.skillInfos[0].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
-        Debug.Log(skillSystem.skillInfos[0].cooltime * ((100 - playerTotalStat.coolDown) / 100));
     }
     [PunRPC]
     public void ShowRangeJackieQ(bool flag)
