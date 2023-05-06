@@ -830,8 +830,15 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
         playerStat.nowHp -= message.damageAmount;
         playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-        photonView.RPC("DieCheck", RpcTarget.All, message);
         photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
+        if (message.causer.GetComponent<PlayerBase>() != default)
+        {
+            photonView.RPC("DieCheck", RpcTarget.All, message.causer.GetComponent<PlayerBase>().playerIndex);
+        }
+        else
+        {
+            photonView.RPC("DieCheckMonster", RpcTarget.All);
+        }
     }
 
 
@@ -841,8 +848,15 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         {
             playerStat.nowHp -= damageAmount;
             playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
-            photonView.RPC("DieCheck", RpcTarget.All, message);
             photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
+            if (message.causer.GetComponent<PlayerBase>() != default)
+            {
+                photonView.RPC("DieCheck", RpcTarget.All, message.causer.GetComponent<PlayerBase>().playerIndex);
+            }
+            else
+            {
+                photonView.RPC("DieCheckMonster", RpcTarget.All);
+            }
         }
     }
 
@@ -906,6 +920,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 // 딜레이 시간이 다 되었을시 대미지를 입힘
                 if (delayTime_ > tickTime_)
                 {
+                    Debug.Log("출혈틱댐");
                     TakeSolidDamage(message, debuffDamage[debuffIndex_]);
                     delayTime_ = 0;
                 }

@@ -10,12 +10,22 @@ public class MonsterSpawnPoint : MonoBehaviour
     public Action exitPlayer;
     public float firstSpawnDelay = default;
     public float respawnDelay = default;
+    public bool firstSpawn = false;
 
     void Start()
     {
         monster = transform.GetChild(1).GetComponent<Monster>();
         monster.gameObject.SetActive(false);
         StartCoroutine(MonsterSpawnDelay(firstSpawnDelay));
+    }
+
+    private void Update()
+    {
+        if (PlayerManager.Instance.IsGameStart && !firstSpawn)
+        {
+            firstSpawn = true;
+            StartCoroutine(MonsterSpawnDelay(firstSpawnDelay));
+        }
     }
 
     private void OnTriggerEnter(Collider other)
