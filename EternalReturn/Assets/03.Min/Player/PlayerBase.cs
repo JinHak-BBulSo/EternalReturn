@@ -389,8 +389,8 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                     playerStat.nowStamina += charaterData.increaseStamina;
                     playerStat.hpRegen += charaterData.increaseStaminaRegen;
                     AddTotalStat();
-                    photonView.RPC("SendLevelUp", RpcTarget.All);
                     photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.playerExp.level, playerStat.nowHp, playerStat.nowStamina, item, SkillPoint);
+                    photonView.RPC("SendLevelUp", RpcTarget.All);
                 }
                 playerExp_.nowExp -= playerExp_.maxExp;
                 playerExp_.maxExp += playerExp_.expDelta;
