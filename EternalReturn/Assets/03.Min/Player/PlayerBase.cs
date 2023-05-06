@@ -404,9 +404,12 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 }
                 playerExp_.nowExp -= playerExp_.maxExp;
                 playerExp_.maxExp += playerExp_.expDelta;
-                PlayerUI.Instance.UpdatePlayerLevelUI(playerStat.playerExp.level);
-                PlayerUI.Instance.UpdateExpUI(playerStat.playerExp.nowExp, playerStat.playerExp.maxExp);
-                PlayerUI.Instance.UpdateSkillLevelUpUI(skillSystem.GetTotalSkillLevel(), skillSystem.GetWeaponSkillLevel(), playerStat.playerExp.level, playerStat.weaponExp.level);
+                if (photonView.IsMine)
+                {
+                    PlayerUI.Instance.UpdatePlayerLevelUI(playerStat.playerExp.level);
+                    PlayerUI.Instance.UpdateExpUI(playerStat.playerExp.nowExp, playerStat.playerExp.maxExp);
+                    PlayerUI.Instance.UpdateSkillLevelUpUI(skillSystem.GetTotalSkillLevel(), skillSystem.GetWeaponSkillLevel(), playerStat.playerExp.level, playerStat.weaponExp.level);
+                }
             }
         }
     }
