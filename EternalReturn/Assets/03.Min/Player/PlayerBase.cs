@@ -345,7 +345,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             playerTotalStat.defense = playerStat.defense + extraStat.defense;
             playerTotalStat.armorReduce = playerStat.armorReduce + extraStat.armorReduce;
             playerTotalStat.attackRange = playerStat.attackRange + extraStat.attackRange + ItemManager.Instance.itemList[item[0] - 1].weaponAttackRangePercent;
-            playerTotalStat.attackSpeed = (playerStat.attackSpeed + extraStat.attackSpeed) + ItemManager.Instance.itemList[item[0] - 1].weaponAttackRangePercent;
+            playerTotalStat.attackSpeed = (playerStat.attackSpeed + extraStat.attackSpeed) + ItemManager.Instance.itemList[item[0] - 1].weaponAttackSpeedPercent;
             playerTotalStat.basicAttackPower = playerStat.basicAttackPower + extraStat.basicAttackPower;
             playerTotalStat.coolDown = playerStat.coolDown + extraStat.coolDown;
             playerTotalStat.criticalDamage = playerStat.criticalDamage + extraStat.criticalDamage;
@@ -784,14 +784,10 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (message.causer.CompareTag("Enemy"))
         {
             photonView.RPC("GetDefExp", RpcTarget.All, playerIndex, totalDamageAmount * 0.1f);
-            Debug.Log("???");
-            Debug.Log(playerStat.defExp.nowExp);
         }
         else if (message.causer.CompareTag("Player"))
         {
-            Debug.Log("???");
-            photonView.RPC("GetDefExp", RpcTarget.All, playerIndex, totalDamageAmount * 0.6f);
-            Debug.Log(playerStat.defExp.nowExp);
+            photonView.RPC("GetDefExp", RpcTarget.All, playerIndex, 2000);
         }
     }
     /// <summary>
