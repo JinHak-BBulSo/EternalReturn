@@ -1383,6 +1383,7 @@ GameObject:
   - component: {fileID: -6734051769537532298}
   - component: {fileID: -8804324994532699519}
   - component: {fileID: 3834497002332918121}
+  - component: {fileID: 8387274406613562136}
   m_Layer: 0
   m_Name: Jackie_S003
   m_TagString: Player
@@ -1441,6 +1442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb4600c565993e41a5e7255d9fcc8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRigid: {fileID: 0}
   currentCorner: 0
   enemyPlayer: []
   enemyHunt: []
@@ -1669,6 +1671,7 @@ MonoBehaviour:
   huntKill: 0
   playerKill: 0
   SkillPoint: 000000000000000000000000000000000000000000000000
+  castingBar: {fileID: 0}
   playerIndex: -1
   weaponStack: 0
   skillQ: {fileID: 634131373}
@@ -1963,6 +1966,14 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!81 &8387274406613562136
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358739485631446351}
+  m_Enabled: 0
 --- !u!1 &1431738604640560163
 GameObject:
   m_ObjectHideFlags: 0

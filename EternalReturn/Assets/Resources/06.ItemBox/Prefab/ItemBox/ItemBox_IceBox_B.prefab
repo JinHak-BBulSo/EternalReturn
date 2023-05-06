@@ -79,23 +79,76 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93de230eda86cd7478ea4720ea5ab2c3, type: 3}
---- !u!1 &1033549111269761040 stripped
+--- !u!1 &6590059097892763064 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 93de230eda86cd7478ea4720ea5ab2c3,
+  m_CorrespondingSourceObject: {fileID: 6476767201420388601, guid: 93de230eda86cd7478ea4720ea5ab2c3,
     type: 3}
   m_PrefabInstance: {fileID: 186493257648872769}
   m_PrefabAsset: {fileID: 0}
---- !u!82 &7589612268132181428
+--- !u!65 &483800065
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6590059097892763064}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2786288, y: 0.523512, z: 0.79062915}
+  m_Center: {x: 0, y: 0.2617579, z: -0.041585624}
+--- !u!114 &483800066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6590059097892763064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemBoxIndex: -1
+  itemPrefabs: []
+  boxItems: []
+  contactedPlayer: []
+  slotList: {fileID: 0}
+  itemBoxAudio: {fileID: 0}
+  notOpenItemBoxImg: {fileID: 0}
+--- !u!114 &1829784046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6590059097892763064}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isClick: 0
+  monster: {fileID: 0}
+  player: {fileID: 0}
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0.99010324, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!82 &3069240282836729424
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1033549111269761040}
+  m_GameObject: {fileID: 6590059097892763064}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: ee4cd63ce16b8604ab9dc0da9d9d8c80, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -181,59 +234,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &6590059097892763064 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6476767201420388601, guid: 93de230eda86cd7478ea4720ea5ab2c3,
-    type: 3}
-  m_PrefabInstance: {fileID: 186493257648872769}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &483800065
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6590059097892763064}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.2786288, y: 0.523512, z: 0.79062915}
-  m_Center: {x: 0, y: 0.2617579, z: -0.041585624}
---- !u!114 &483800066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6590059097892763064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemPrefabs: []
-  boxItems: []
-  playerItemBoxSlotList: []
-  contactPlayer: []
-  itemBoxAudio: {fileID: 0}
---- !u!114 &1829784046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6590059097892763064}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isClick: 0
-  monster: {fileID: 0}
-  outlineMode: 0
-  outlineColor: {r: 0, g: 0.99010324, b: 1, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []

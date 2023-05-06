@@ -68,13 +68,12 @@ public class MonsterBoar : Monster
             PlayerBase nowTargetPlayer_ = other.GetComponent<PlayerBase>();
             if (!collisionTarget.Contains(other.GetComponent<PlayerBase>()))
             {
-                DamageMessage dm = new DamageMessage(this.gameObject, 100);
+                DamageMessage dm = new DamageMessage(this.gameObject, monsterStatus.attackPower * 1.25f);
                 nowTargetPlayer_.TakeDamage(dm);
 
                 collisionTarget.Add(other.GetComponent<PlayerBase>());
-                Rigidbody rigid_ = other.GetComponent<Rigidbody>();
-                rigid_.AddForce(transform.forward * 45, ForceMode.Impulse);
-                StartCoroutine(NuckBackEnd(rigid_));
+                nowTargetPlayer_.playerRigid.AddForce(transform.forward * 45, ForceMode.Impulse);
+                StartCoroutine(NuckBackEnd(nowTargetPlayer_.playerRigid));
             }
         }
     }

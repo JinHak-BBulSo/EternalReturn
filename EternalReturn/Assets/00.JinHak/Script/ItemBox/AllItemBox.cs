@@ -20,9 +20,7 @@ public class AllItemBox : MonoBehaviour
         {
             itemBox.itemBoxIndex = index;
             index++;
-        }
-
-        
+        }  
     }
 
     private void Update()

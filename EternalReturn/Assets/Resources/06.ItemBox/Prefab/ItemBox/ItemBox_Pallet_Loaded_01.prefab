@@ -79,23 +79,76 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 5224f964bfefcb643afaa3084541b390, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 141645557994ff140b43261ecdd3f44c, type: 3}
---- !u!1 &6251867809093537813 stripped
+--- !u!1 &9106945354959218589 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 141645557994ff140b43261ecdd3f44c,
+  m_CorrespondingSourceObject: {fileID: 2621147739631225561, guid: 141645557994ff140b43261ecdd3f44c,
     type: 3}
   m_PrefabInstance: {fileID: 6485871173102300484}
   m_PrefabAsset: {fileID: 0}
---- !u!82 &-899378093884958020
+--- !u!65 &662353773
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9106945354959218589}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.729182, y: 1.705146, z: 1.1361865}
+  m_Center: {x: 0, y: 0.00000008940697, z: 0.5689176}
+--- !u!114 &410401970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9106945354959218589}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isClick: 0
+  monster: {fileID: 0}
+  player: {fileID: 0}
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0.99010324, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &662353774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9106945354959218589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemBoxIndex: -1
+  itemPrefabs: []
+  boxItems: []
+  contactedPlayer: []
+  slotList: {fileID: 0}
+  itemBoxAudio: {fileID: 0}
+  notOpenItemBoxImg: {fileID: 0}
+--- !u!82 &6609552048271092764
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6251867809093537813}
+  m_GameObject: {fileID: 9106945354959218589}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 74d027f1c5f9999418c98b06a974c0e6, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -181,59 +234,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &9106945354959218589 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2621147739631225561, guid: 141645557994ff140b43261ecdd3f44c,
-    type: 3}
-  m_PrefabInstance: {fileID: 6485871173102300484}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &662353773
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9106945354959218589}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.729182, y: 1.705146, z: 1.1361865}
-  m_Center: {x: 0, y: 0.00000008940697, z: 0.5689176}
---- !u!114 &410401970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9106945354959218589}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isClick: 0
-  monster: {fileID: 0}
-  outlineMode: 0
-  outlineColor: {r: 0, g: 0.99010324, b: 1, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
---- !u!114 &662353774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9106945354959218589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemPrefabs: []
-  boxItems: []
-  playerItemBoxSlotList: []
-  contactPlayer: []
-  itemBoxAudio: {fileID: 0}

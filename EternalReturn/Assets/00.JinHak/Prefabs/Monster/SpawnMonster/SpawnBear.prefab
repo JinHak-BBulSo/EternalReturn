@@ -1741,8 +1741,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 3
+  MinDistance: 3
+  MaxDistance: 8
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1842,6 +1842,7 @@ MonoBehaviour:
   outline: {fileID: 0}
   monsterName: 
   monsterData: {fileID: 11400000, guid: 52cc32265c69f15429aacb6c86cf4b74, type: 2}
+  monsterLevelUpStat: {fileID: 11400000, guid: 684065b305046d048b45f176216504cd, type: 2}
   isBattleAreaOut: 0
   applyDebuffCheck: 00000000000000000000
   debuffDelayTime:

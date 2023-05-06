@@ -8,7 +8,9 @@ using Photon.Pun;
 public class PlayerBase : MonoBehaviourPun, IHitHandler
 {
     protected PlayerController playerController = default;
+    public PlayerController PlayerController { get { return playerController; } }
     protected Vector3 destination = default;
+    public Rigidbody playerRigid = default;
     public Vector3 Destination { get { return destination; } }
     public int currentCorner = 0;
     public List<PlayerBase> enemyPlayer = new List<PlayerBase>();
@@ -71,12 +73,17 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public int playerKill = 0;
     public int[] SkillPoint = new int[6];
     private Outline playerOutLine = default;
+    public Image castingBar = default;
 
     //[KJH] Add. Each Player Index
     public int playerIndex = -1;
 
     protected virtual void Start()
     {
+        // 플레이어 물리 상태 초기화
+        playerRigid = GetComponent<Rigidbody>();
+        playerRigid.useGravity = false;
+        playerRigid.velocity = Vector3.zero;
 
         playerOutLine = GetComponent<Outline>();
         playerOutLine.player = this;
@@ -99,6 +106,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         itemBoxSlotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
         craftTool.transform.GetChild(0).GetComponent<CraftTool>().craftPlayer = this;
         stunFBX = transform.GetChild(2).gameObject;
+        castingBar = mainUi.transform.GetChild(4).GetChild(1).GetComponent<Image>();
 
         worldCanvas = GameObject.Find("WorldCanvas");
         playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform).GetComponent<PlayerStatusUI>();
@@ -111,6 +119,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (photonView.IsMine)
         {
             ItemManager.Instance.Player = this;
+            GetComponent<AudioListener>().enabled = true;
         }
         skillSystem = GetComponent<PlayerSkillSystem>();
         InitStat();
@@ -162,6 +171,21 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                     clickTarget = hit.collider.gameObject;
                     enemy = default;
 
+                    //[KJH] Add. 클릭 타겟 Outline 표시
+                    //외곽선 초기화
+                    if (outline != default)
+                    {
+                        outline.enabled = false;
+                        outline.isClick = false;
+                        outline = default;
+                    }
+                    if (clickTarget.GetComponent<Outline>() != null && clickTarget.gameObject != this.gameObject)
+                    {
+                        outline = clickTarget.GetComponent<Outline>();
+                        outline.isClick = true;
+                        outline.enabled = true;
+                    }
+
                     if (clickTarget.GetComponent<Outline>() != null && clickTarget.GetComponent<Outline>().monster != null)
                     {
                         Monster monster = clickTarget.GetComponent<Outline>().monster;
@@ -181,20 +205,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                             isAttackMove = true;
                             playerController.ChangeState(new PlayerAttackMove());
                         }
-                    }
-                    //[KJH] Add. 클릭 타겟 Outline 표시
-                    //외곽선 초기화
-                    if (outline != default)
-                    {
-                        outline.enabled = false;
-                        outline.isClick = false;
-                        outline = default;
-                    }
-                    if (clickTarget.GetComponent<Outline>() != null && clickTarget.gameObject != this.gameObject)
-                    {
-                        outline = clickTarget.GetComponent<Outline>();
-                        outline.isClick = true;
-                        outline.enabled = true;
                     }
 
                     if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
@@ -900,10 +910,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     [PunRPC]
     public void Debuff(int debuffIndex_, float continousTime_)
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            photonView.RPC("DebuffSet", RpcTarget.All, debuffIndex_, continousTime_);
-        }
+        photonView.RPC("DebuffSet", RpcTarget.All, debuffIndex_, continousTime_);
     }
     [PunRPC]
     public void DebuffSet(int debuffIndex_, float continousTime_)
@@ -943,6 +950,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                     isMove = false;
                     isMoveAble = false;
                     playerController.player.playerNav.enabled = false;
+                    playerRigid.useGravity = true;
                     playerController.GetComponent<Rigidbody>().AddForce(new Vector3(0, 6, 0), ForceMode.Impulse);
                     break;
             }
@@ -973,6 +981,8 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 // 에어본
                 case 4:
                     isMoveAble = true;
+                    playerRigid.useGravity = false;
+                    playerRigid.velocity = Vector3.zero;
                     playerController.player.playerNav.enabled = true;
                     playerController.enabled = true;
                     break;
@@ -1036,16 +1046,22 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     private void OnMouseEnter()
     {
-        if (this.gameObject != PlayerManager.Instance.Player)
+        if (!photonView.IsMine)
         {
             playerOutLine.enabled = true;
         }
+        /*if (this.gameObject != PlayerManager.Instance.Player)
+        {
+        }*/
     }
     private void OnMouseExit()
     {
-        if (this.gameObject != PlayerManager.Instance.Player)
+        if (!photonView.IsMine)
         {
             playerOutLine.enabled = false;
         }
+        /*if (this.gameObject != PlayerManager.Instance.Player)
+        {
+        }*/
     }
 }

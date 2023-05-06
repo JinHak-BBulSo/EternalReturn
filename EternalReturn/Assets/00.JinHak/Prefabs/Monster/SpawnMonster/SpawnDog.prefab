@@ -181,6 +181,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9162418185085827468, guid: 95597e75c58c2d145a2a4d4f9b1380da,
         type: 3}
+      propertyPath: monsterLevelUpStat
+      value: 
+      objectReference: {fileID: 11400000, guid: a9bc2fc3d4b9e3a4f9f54dea930ddbed,
+        type: 2}
+    - target: {fileID: 9162418185085827468, guid: 95597e75c58c2d145a2a4d4f9b1380da,
+        type: 3}
       propertyPath: monsterStatus.level
       value: 3
       objectReference: {fileID: 0}
@@ -390,8 +396,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 3
+  MinDistance: 3
+  MaxDistance: 8
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

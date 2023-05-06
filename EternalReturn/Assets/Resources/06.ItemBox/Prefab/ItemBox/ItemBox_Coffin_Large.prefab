@@ -98,60 +98,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.6730472, y: 2.501364, z: 1.0652336}
   m_Center: {x: 0.005125165, y: -0.009443581, z: 0.5326167}
---- !u!114 &1070568569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113509541931744058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemPrefabs: []
-  boxItems: []
-  playerItemBoxSlotList: []
-  contactPlayer: []
-  itemBoxAudio: {fileID: 0}
---- !u!114 &1176784522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2113509541931744058}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isClick: 0
-  monster: {fileID: 0}
-  outlineMode: 0
-  outlineColor: {r: 0, g: 0.99010324, b: 1, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
---- !u!1 &5310909654287115936 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: afa082c5a411c124aa02c154449da338,
-    type: 3}
-  m_PrefabInstance: {fileID: 5004992188949781489}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &-892987357288153942
+--- !u!82 &5267268480953990721
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5310909654287115936}
+  m_GameObject: {fileID: 2113509541931744058}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 2f30c4c8c29b26c499d1cdde17aafb70, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -237,3 +194,43 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1070568569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113509541931744058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemBoxIndex: -1
+  itemPrefabs: []
+  boxItems: []
+  contactedPlayer: []
+  slotList: {fileID: 0}
+  itemBoxAudio: {fileID: 0}
+  notOpenItemBoxImg: {fileID: 0}
+--- !u!114 &1176784522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113509541931744058}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isClick: 0
+  monster: {fileID: 0}
+  player: {fileID: 0}
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0.99010324, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

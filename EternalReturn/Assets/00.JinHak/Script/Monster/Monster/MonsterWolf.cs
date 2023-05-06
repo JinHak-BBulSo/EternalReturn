@@ -24,6 +24,7 @@ public class MonsterWolf : Monster
         audioSource.clip = sounds[r_];
         monsterController.monsterAni.SetBool("isSkill", true);
         skillRange.SetActive(true);
+        monsterController.navMeshAgent.enabled = false;
     }
 
     private void SkillAassult()
@@ -36,6 +37,7 @@ public class MonsterWolf : Monster
         skillRange.SetActive(false);
         StartCoroutine(SkillCoolTime(skillCoolTime));
         monsterController.isInSkillUse = false;
+        monsterController.navMeshAgent.enabled = true;;
         monsterController.monsterAni.SetBool("isSkill", false);
     }
 
