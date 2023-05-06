@@ -84,6 +84,9 @@ MonoBehaviour:
   - DamageApply
   - UpdateStatus
   - LevelUp
+  - DieCheck
+  - GetDefExp
+  - SendLevelUp
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

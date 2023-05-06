@@ -5,6 +5,9 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using Photon.Realtime;
 using Photon.Pun;
+using static MonsterController;
+using System.ComponentModel;
+
 public class PlayerBase : MonoBehaviourPun, IHitHandler
 {
     protected PlayerController playerController = default;
@@ -746,13 +749,23 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     }
 
     [PunRPC]
-    public void DieCheck(float damage_, int playerIndex_)
+    public void DieCheck(int playerIndex_)
     {
         PlayerBase player_ = PlayerList.Instance.playerDictionary[playerIndex_];
         if (playerStat.nowHp <= 0)
         {
             playerStat.nowHp = 0;
             player_.playerKill++;
+            playerController.ChangeState(new PlayerDie());
+            return;
+        }
+    }
+    [PunRPC]
+    public void DieCheckMonster()
+    {
+        if (playerStat.nowHp <= 0)
+        {
+            playerStat.nowHp = 0;
             playerController.ChangeState(new PlayerDie());
             return;
         }
@@ -773,14 +786,23 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     /// (넘겨준 데미지 * ((100 - 피해감소)/100) 
     /// </summary>
     /// <param name="message"></param>
+
     public void TakeDamage(DamageMessage message)
     {
-        playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
         float totalDamageAmount = (int)(message.damageAmount * (100 / (100 + playerTotalStat.defense)));
+
         playerStat.nowHp -= totalDamageAmount;
         playerStatusUi.playerHpBar.fillAmount = playerStat.nowHp / playerStat.maxHp;
+
         photonView.RPC("SetPlayerStat", RpcTarget.All, playerStat.nowHp, playerStat.nowStamina);
-        photonView.RPC("DieCheck", RpcTarget.All, totalDamageAmount, message.causer.GetComponent<PlayerBase>().playerIndex);
+        if (message.causer.GetComponent<PlayerBase>() != default)
+        {
+            photonView.RPC("DieCheck", RpcTarget.All, message.causer.GetComponent<PlayerBase>().playerIndex);
+        }
+        else
+        {
+            photonView.RPC("DieCheckMonster", RpcTarget.All);
+        }
         if (message.causer.CompareTag("Enemy"))
         {
             photonView.RPC("GetDefExp", RpcTarget.All, playerIndex, totalDamageAmount * 0.1f);

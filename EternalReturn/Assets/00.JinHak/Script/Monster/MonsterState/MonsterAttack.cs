@@ -23,7 +23,7 @@ public class MonsterAttack : IMonsterState
 
     public void StateUpdate()
     {
-        if(monsterController.targetPlayer.PlayerController.playerState == PlayerController.PlayerState.DIE)
+        if (monsterController.targetPlayer.PlayerController.playerState == PlayerController.PlayerState.DIE)
         {
             monsterController.monster.isBattleAreaOut = true;
             monsterController.targetPlayer = default;
@@ -45,10 +45,10 @@ public class MonsterAttack : IMonsterState
     }
     public void ExitAttack()
     {
+        monsterController.isAttack = false;
         GameObject target_ = monsterController.gameObject;
         float damageAmount_ = monsterController.monster.monsterStatus.attackPower;
         DamageMessage dm = new DamageMessage(target_, damageAmount_);
-        monsterController.isAttack = false;
 
         monsterController.navMeshAgent.enabled = true;
         if (monsterController.targetPlayer != default)

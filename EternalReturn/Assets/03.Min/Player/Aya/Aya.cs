@@ -198,15 +198,18 @@ public class Aya : PlayerBase
     {
         if (photonView.IsMine)
         {
-            if (enemy.GetComponent<Monster>() != null)
+            if (enemy != default)
             {
-                DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower + 60 + (55 * (skillSystem.skillInfos[0].CurrentLevel - 1)) + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.7f));
-                enemy.GetComponent<Monster>().TakeDamage(dm);
-            }
-            else if (enemy.GetComponent<PlayerBase>() != null)
-            {
-                DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower + 60 + (55 * (skillSystem.skillInfos[0].CurrentLevel - 1)) + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.7f));
-                enemy.GetComponent<PlayerBase>().TakeDamage(dm);
+                if (enemy.GetComponent<Monster>() != null)
+                {
+                    DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower + 60 + (55 * (skillSystem.skillInfos[0].CurrentLevel - 1)) + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.7f));
+                    enemy.GetComponent<Monster>().TakeDamage(dm);
+                }
+                else if (enemy.GetComponent<PlayerBase>() != null)
+                {
+                    DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower + 60 + (55 * (skillSystem.skillInfos[0].CurrentLevel - 1)) + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.7f));
+                    enemy.GetComponent<PlayerBase>().TakeDamage(dm);
+                }
             }
         }
     }

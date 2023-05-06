@@ -153,6 +153,14 @@ public class Monster : MonoBehaviourPun, IHitHandler
             photonView.RPC("MonsterBoxSet", RpcTarget.All, itemIndex_);
         }
     }
+
+    public void AnimationReset()
+    {
+        monsterController.monsterAni.SetBool("isAttack", false);
+        monsterController.monsterAni.SetBool("isSkill", false);
+        monsterController.monsterAni.SetBool("isAttack", false);
+        monsterController.monsterAni.SetBool("isAttack", false);
+    }
     
     protected virtual void SetStatus()
     {

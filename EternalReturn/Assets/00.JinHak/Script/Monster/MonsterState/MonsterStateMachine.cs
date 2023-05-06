@@ -30,7 +30,6 @@ public class MonsterStateMachine
         {
             return;
         }
-
         nowState.StateExit();
         nowState = state_;
         nowState.StateEnter(monsterController);
