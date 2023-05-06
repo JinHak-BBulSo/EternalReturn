@@ -389,6 +389,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                     playerStat.nowStamina += charaterData.increaseStamina;
                     playerStat.hpRegen += charaterData.increaseStaminaRegen;
                     AddTotalStat();
+                    photonView.RPC("SendLevelUp", RpcTarget.All, playerIndex);
                 }
                 playerExp_.nowExp -= playerExp_.maxExp;
                 playerExp_.maxExp += playerExp_.expDelta;
@@ -398,7 +399,11 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             }
         }
     }
-
+    [PunRPC]
+    public void SendLevelUp(int playerIndex_)
+    {
+        PlayerList.Instance.playerDictionary[playerIndex_].playerStat.playerExp.level++;
+    }
     public void GetExp(float exp_, PlayerStat.PlayerExpType exptype_)
     {
         switch (exptype_)
