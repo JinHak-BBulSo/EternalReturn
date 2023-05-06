@@ -1766,6 +1766,7 @@ GameObject:
   - component: {fileID: 8628475437877141397}
   - component: {fileID: 2339630805337848545}
   - component: {fileID: -3386790957777990035}
+  - component: {fileID: 4766607331326404494}
   m_Layer: 0
   m_Name: Aya_S002 1
   m_TagString: Player
@@ -2353,6 +2354,14 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!81 &4766607331326404494
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2465337935834244234}
+  m_Enabled: 0
 --- !u!1 &2533143214111931852
 GameObject:
   m_ObjectHideFlags: 0

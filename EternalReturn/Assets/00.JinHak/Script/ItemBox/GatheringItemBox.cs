@@ -34,11 +34,13 @@ public class GatheringItemBox : MonoBehaviourPun
     {
         get { return gatherTime; }
     }
+    public AudioSource gatherAudio = default;
     private float respawnItemTime = 15;
 
     void Start()
     {
         worldCanvas = GameObject.Find("WorldCanvas");
+        gatherAudio = GetComponent<AudioSource>();
         outline = GetComponent<Outline>();
         gatheringItem = itemPrefab.GetComponent<ItemController>().item;
         gatherAble = true;

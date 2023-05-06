@@ -9992,7 +9992,6 @@ GameObject:
   m_Component:
   - component: {fileID: 890323841}
   - component: {fileID: 890323840}
-  - component: {fileID: 890323839}
   - component: {fileID: 890323842}
   - component: {fileID: 890323843}
   m_Layer: 0
@@ -10002,14 +10001,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &890323839
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 890323838}
-  m_Enabled: 1
 --- !u!20 &890323840
 Camera:
   m_ObjectHideFlags: 0

@@ -22,6 +22,8 @@ public class Monster : MonoBehaviourPun, IHitHandler
     public string monsterName = default;
     [SerializeField]
     private MonsterData monsterData;
+    [SerializeField]
+    private MonsterLevelUpStat monsterLevelUpStat;
 
     public bool isBattleAreaOut = false;
 
@@ -41,6 +43,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
     public Image monsterHpBar = default;
     private Text monsterLeveltxt = default;
     private Vector3 statusUiOffset = new Vector3(-0.3f, 2.7f, 0);
+    private float levelUpCount = 0;
 
     private bool isFirstSpawn = false;
 
@@ -90,6 +93,16 @@ public class Monster : MonoBehaviourPun, IHitHandler
     private void Update()
     {
         monsterStatusUi.transform.position = transform.position + statusUiOffset;
+
+        if (PlayerManager.Instance.IsGameStart && PhotonNetwork.IsMasterClient)
+        {
+            levelUpCount += Time.deltaTime;
+            if(levelUpCount >= monsterLevelUpStat.LevelUpCount)
+            {
+                levelUpCount = 0;
+                photonView.RPC("LevelUp", RpcTarget.All, monsterLevelUpStat.LevelUpAmount);
+            }
+        }
     }
 
     void OnEnable()
@@ -154,15 +167,31 @@ public class Monster : MonoBehaviourPun, IHitHandler
         monsterStatus.maxLevel = monsterData.MonsterMaxLevel;
     }
 
-    protected virtual void SetDebuffData()
+    [PunRPC]
+    public virtual void LevelUp(int levelUpAmount_)
     {
-        
-    }
-    public virtual void LevelUp()
-    {
-        /* each monster override using */
+        if (monsterStatus.level == monsterStatus.maxLevel) return;
+
+        for (int i = 0; i < levelUpAmount_; i++)
+        {
+            if (monsterStatus.level == monsterStatus.maxLevel) return;
+
+            monsterStatus.maxHp += monsterLevelUpStat.Hp;
+            monsterStatus.nowHp += monsterLevelUpStat.Hp;
+            monsterStatus.defense += monsterLevelUpStat.Defense;
+            monsterStatus.attackPower += monsterLevelUpStat.AttackPower;
+            monsterStatus.moveSpeed += monsterLevelUpStat.MoveSpeed;
+            monsterStatus.level += 1;
+            monsterLeveltxt.text = monsterStatus.level.ToString();
+            photonView.RPC("SetMonsterStat", RpcTarget.All, monsterStatus.nowHp);
+        }
     }
 
+    [PunRPC]
+    public void UpdateStatus()
+    {
+        LevelUp();
+    }
     public virtual void Skill()
     {
         /* each monster override using */

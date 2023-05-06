@@ -12,6 +12,8 @@ public class PlayerCollect : IPlayerState
         this.playerController = controller_;
         playerController.playerState = PlayerController.PlayerState.COLLECT;
         gatheringItem = playerController.player.clickTarget.GetComponent<GatheringItemBox>();
+        gatheringItem.gatherAudio.Play();
+        playerController.player.castingBar.gameObject.SetActive(true);
         playerController.ResetAni();
         playerController.ResetRange();
         if (gatheringItem.gatherAble)
@@ -49,6 +51,9 @@ public class PlayerCollect : IPlayerState
         playerController.player.playerAni.SetBool("isCollect", false);
         gatheringItem = default;
         playerController.toolReset();
+        gatheringItem.gatherAudio.Stop();
+        playerController.player.castingBar.fillAmount = 0;
+        playerController.player.castingBar.gameObject.SetActive(false);
     }
 
     public void StateFixedUpdate()
@@ -63,6 +68,7 @@ public class PlayerCollect : IPlayerState
             if (gatheringItem.gatherAble)
             {
                 gatheringTime += Time.deltaTime;
+                playerController.player.castingBar.fillAmount = gatheringTime / gatheringItem.GatherTime;
                 if (gatheringTime >= gatheringItem.GatherTime)
                 {
                     gatheringItem.GetItem();

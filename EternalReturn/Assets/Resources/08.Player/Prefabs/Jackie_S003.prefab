@@ -1383,6 +1383,7 @@ GameObject:
   - component: {fileID: -6734051769537532298}
   - component: {fileID: -8804324994532699519}
   - component: {fileID: 3834497002332918121}
+  - component: {fileID: 8387274406613562136}
   m_Layer: 0
   m_Name: Jackie_S003
   m_TagString: Player
@@ -1963,6 +1964,14 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
+--- !u!81 &8387274406613562136
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358739485631446351}
+  m_Enabled: 0
 --- !u!1 &1431738604640560163
 GameObject:
   m_ObjectHideFlags: 0

@@ -71,6 +71,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public int playerKill = 0;
     public int[] SkillPoint = new int[6];
     private Outline playerOutLine = default;
+    public Image castingBar = default;
 
     //[KJH] Add. Each Player Index
     public int playerIndex = -1;
@@ -99,6 +100,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         itemBoxSlotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
         craftTool.transform.GetChild(0).GetComponent<CraftTool>().craftPlayer = this;
         stunFBX = transform.GetChild(2).gameObject;
+        castingBar = mainUi.transform.GetChild(4).GetChild(1).GetComponent<Image>();
 
         worldCanvas = GameObject.Find("WorldCanvas");
         playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform).GetComponent<PlayerStatusUI>();
@@ -111,6 +113,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (photonView.IsMine)
         {
             ItemManager.Instance.Player = this;
+            GetComponent<AudioListener>().enabled = true;
         }
         skillSystem = GetComponent<PlayerSkillSystem>();
         InitStat();
