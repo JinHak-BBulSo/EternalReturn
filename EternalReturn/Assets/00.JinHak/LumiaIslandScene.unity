@@ -17277,6 +17277,8 @@ MonoBehaviour:
   itemBoxImgPrefab: {fileID: 8146810266383318596, guid: d5dc68a4d341f004890ec5c862bc0bf7,
     type: 3}
   worldCanvas: {fileID: 0}
+  allMonster: {fileID: 1610835748}
+  allMonsterBoxes: []
 --- !u!114 &1424428286
 MonoBehaviour:
   m_ObjectHideFlags: 0
