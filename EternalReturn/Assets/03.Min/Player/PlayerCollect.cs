@@ -49,9 +49,9 @@ public class PlayerCollect : IPlayerState
     public void StateExit()
     {
         playerController.player.playerAni.SetBool("isCollect", false);
+        gatheringItem.gatherAudio.Stop();
         gatheringItem = default;
         playerController.toolReset();
-        gatheringItem.gatherAudio.Stop();
         playerController.player.castingBar.fillAmount = 0;
         playerController.player.castingBar.gameObject.SetActive(false);
     }
