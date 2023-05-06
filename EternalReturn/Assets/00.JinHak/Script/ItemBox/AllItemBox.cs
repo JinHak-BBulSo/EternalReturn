@@ -11,16 +11,9 @@ public class AllItemBox : MonoBehaviour
     private bool isGameStart = false;
     public GameObject itemBoxImgPrefab = default;
     public GameObject worldCanvas = default;
-    public GameObject allMonster = default;
-    public ItemBox[] allMonsterBoxes;
 
     private void Start()
     {
-        allMonsterBoxes = allMonster.GetComponentsInChildren<ItemBox>();
-        foreach (ItemBox box in allMonsterBoxes)
-        {
-            allItemBoxes.Add(box);
-        }
         worldCanvas = GameObject.Find("WorldCanvas");
         int index = 0;
         foreach (var itemBox in allItemBoxes)

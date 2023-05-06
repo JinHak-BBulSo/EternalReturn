@@ -1442,6 +1442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eb4600c565993e41a5e7255d9fcc8bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRigid: {fileID: 0}
   currentCorner: 0
   enemyPlayer: []
   enemyHunt: []
