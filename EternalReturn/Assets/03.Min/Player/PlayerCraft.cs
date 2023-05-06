@@ -43,6 +43,11 @@ public class PlayerCraft : IPlayerState
             ItemManager.Instance.InventoryChange();
             playerController.ChangeState(new PlayerIdle());
         }
+
+        if (Input.GetMouseButton(1))
+        {
+            playerController.ChangeState(new PlayerIdle());
+        }
         playerController.ShowAllRange();
         playerController.SkillUse();
     }
