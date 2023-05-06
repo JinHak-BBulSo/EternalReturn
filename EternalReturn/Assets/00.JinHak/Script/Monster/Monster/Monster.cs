@@ -212,7 +212,10 @@ public class Monster : MonoBehaviourPun, IHitHandler
     }
     public void SoundPlay()
     {
-        audioSource.Play();
+        if (PlayerManager.Instance.IsGameStart && Vector3.Distance(transform.position, PlayerManager.Instance.Player.transform.position) < audioSource.maxDistance)
+        {
+            audioSource.Play();
+        }
     }
     public virtual void Appear()
     {
