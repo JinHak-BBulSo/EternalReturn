@@ -2485,6 +2485,7 @@ MonoBehaviour:
   outline: {fileID: 0}
   monsterName: 
   monsterData: {fileID: 11400000, guid: dc06750e54dafb24f96a98ce20d922b9, type: 2}
+  monsterLevelUpStat: {fileID: 11400000, guid: 5c511bb72241bbf499b2665158ddd724, type: 2}
   isBattleAreaOut: 0
   applyDebuffCheck: 00000000000000000000
   debuffDelayTime:

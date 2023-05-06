@@ -190,7 +190,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
     [PunRPC]
     public void UpdateStatus()
     {
-        LevelUp();
+        LevelUp(monsterLevelUpStat.LevelUpAmount);
     }
     public virtual void Skill()
     {

@@ -896,6 +896,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8464378212902257322, guid: fa4592f8085ffac4a9e3207c54bdef56,
         type: 3}
+      propertyPath: monsterLevelUpStat
+      value: 
+      objectReference: {fileID: 11400000, guid: fd2df1c623db1384abb57dc0bb8e825a,
+        type: 2}
+    - target: {fileID: 8464378212902257322, guid: fa4592f8085ffac4a9e3207c54bdef56,
+        type: 3}
       propertyPath: sounds.Array.data[0]
       value: 
       objectReference: {fileID: 8300000, guid: ad1902d0f2f8e784dba3e3938f213a2d, type: 3}

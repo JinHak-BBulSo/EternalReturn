@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d2d713191526b04a8aac02695d4f4a7, type: 3}
   m_Name: Bat
   m_EditorClassIdentifier: 
-  levelUpAmount: 0
-  hp: 0
-  attackPower: 0
-  moveSpeed: 0
-  defense: 0
-  monsterMaxLevel: 0
+  levelUpAmount: 1
+  hp: 114
+  attackPower: 27
+  moveSpeed: 0.04
+  defense: 4.8
+  levelUpCount: 90
