@@ -31,7 +31,7 @@ public class MonsterBear : Monster
         audioSource.clip = sounds[6];
         foreach (var player in bearSkillMesh.targetPlayers)
         {
-            DamageMessage dm = new DamageMessage(this.gameObject, 100, 3, 1.5f);
+            DamageMessage dm = new DamageMessage(this.gameObject, monsterStatus.attackPower * 1.2f);
             player.TakeDamage(dm);
             player.Debuff(2, 1.5f);
         }

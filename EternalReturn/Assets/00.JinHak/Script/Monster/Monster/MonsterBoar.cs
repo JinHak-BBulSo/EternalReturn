@@ -68,7 +68,7 @@ public class MonsterBoar : Monster
             PlayerBase nowTargetPlayer_ = other.GetComponent<PlayerBase>();
             if (!collisionTarget.Contains(other.GetComponent<PlayerBase>()))
             {
-                DamageMessage dm = new DamageMessage(this.gameObject, 100);
+                DamageMessage dm = new DamageMessage(this.gameObject, monsterStatus.attackPower * 1.25f);
                 nowTargetPlayer_.TakeDamage(dm);
 
                 collisionTarget.Add(other.GetComponent<PlayerBase>());
