@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: 9039394542087057760}
   - component: {fileID: 9039394542087057775}
   - component: {fileID: 9039394542087057774}
+  - component: {fileID: 9087046769800670369}
   m_Layer: 2
   m_Name: SpawnPoint
   m_TagString: Untagged
@@ -225,3 +226,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monster: {fileID: 0}
+  firstSpawnDelay: 0
+  respawnDelay: 0
+  firstSpawn: 0
+--- !u!114 &9087046769800670369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9039394542087057766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

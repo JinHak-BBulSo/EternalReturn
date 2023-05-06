@@ -2,8 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class MonsterSpawnPoint : MonoBehaviour
+public class MonsterSpawnPoint : MonoBehaviourPun
 {
     public Monster monster = default;
     public Action enterPlayer;
@@ -11,6 +13,7 @@ public class MonsterSpawnPoint : MonoBehaviour
     public float firstSpawnDelay = default;
     public float respawnDelay = default;
     public bool firstSpawn = false;
+    public bool firstSpawnEnd = false;
 
     void Start()
     {
@@ -21,10 +24,14 @@ public class MonsterSpawnPoint : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerManager.Instance.IsGameStart && !firstSpawn)
+        if (PhotonNetwork.IsMasterClient && !firstSpawn && !firstSpawnEnd)
+        {
+            StartCoroutine(MonsterSpawnDelay(firstSpawnDelay));
+        }
+        if (firstSpawnEnd && !firstSpawn)
         {
             firstSpawn = true;
-            StartCoroutine(MonsterSpawnDelay(firstSpawnDelay));
+            monster.gameObject.SetActive(true);
         }
     }
 
@@ -52,5 +59,11 @@ public class MonsterSpawnPoint : MonoBehaviour
     {
         yield return new WaitForSeconds(spawnDelay_);
         monster.gameObject.SetActive(true);
+        photonView.RPC("FirstSpawn", RpcTarget.All);
+    }
+    [PunRPC]
+    public void FirstSpawn()
+    {
+        firstSpawnEnd = true;
     }
 }
