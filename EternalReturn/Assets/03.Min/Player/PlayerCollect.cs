@@ -72,6 +72,7 @@ public class PlayerCollect : IPlayerState
                 if (gatheringTime >= gatheringItem.GatherTime)
                 {
                     gatheringItem.GetItem();
+                    playerController.player.GetExp(80, PlayerStat.PlayerExpType.SEARCH);
                     playerController.player.clickTarget = default;
                     playerController.player.isMove = false;
                     playerController.ChangeState(new PlayerIdle());

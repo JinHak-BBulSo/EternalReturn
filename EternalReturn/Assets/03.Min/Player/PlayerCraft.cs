@@ -39,6 +39,20 @@ public class PlayerCraft : IPlayerState
         if (time <= 0f)
         {
             ItemManager.Instance.CombineItem(ItemManager.Instance.combineAbleList[0], ItemManager.Instance.itemCombineDictionary);
+            switch (ItemManager.Instance.combineAbleList[0].rare)
+            {
+                case 1:
+                    playerController.player.GetExp(100, PlayerStat.PlayerExpType.CRAFT);
+                    break;
+                case 2:
+                    playerController.player.GetExp(200, PlayerStat.PlayerExpType.CRAFT);
+                    break;
+                case 3:
+                    playerController.player.GetExp(350, PlayerStat.PlayerExpType.CRAFT);
+                    break;
+                default:
+                    break;
+            }
             if (!(ItemManager.Instance.itemInferiorList.Count < 1))
             {
                 ItemManager.Instance.DeleteInferiorList(ItemManager.Instance.combineAbleList[0]);
