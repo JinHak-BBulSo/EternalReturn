@@ -931,6 +931,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 case 4:
                     isMove = false;
                     isMoveAble = false;
+                    playerRigid.useGravity = true;
                     playerController.player.playerNav.enabled = false;
                     playerController.GetComponent<Rigidbody>().AddForce(new Vector3(0, 6, 0), ForceMode.Impulse);
                     break;
@@ -962,6 +963,8 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 // 에어본
                 case 4:
                     isMoveAble = true;
+                    playerRigid.useGravity = false;
+                    playerRigid.velocity = Vector3.zero;
                     playerController.player.playerNav.enabled = true;
                     playerController.enabled = true;
                     break;
@@ -1025,16 +1028,20 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     private void OnMouseEnter()
     {
+        if (!photonView.IsMine)
+        {
             playerOutLine.enabled = true;
-            Debug.Log("마우스 엔터");
+        }
         /*if (this.gameObject != PlayerManager.Instance.Player)
         {
         }*/
     }
     private void OnMouseExit()
     {
+        if (!photonView.IsMine)
+        {
             playerOutLine.enabled = false;
-            Debug.Log("마우스 아웃");
+        }
         /*if (this.gameObject != PlayerManager.Instance.Player)
         {
         }*/

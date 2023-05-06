@@ -73,7 +73,6 @@ public class MonsterBoar : Monster
 
                 collisionTarget.Add(other.GetComponent<PlayerBase>());
                 nowTargetPlayer_.playerRigid.AddForce(transform.forward * 45, ForceMode.Impulse);
-                nowTargetPlayer_.playerRigid.useGravity = true;
                 StartCoroutine(NuckBackEnd(nowTargetPlayer_.playerRigid));
             }
         }
@@ -82,7 +81,6 @@ public class MonsterBoar : Monster
     IEnumerator NuckBackEnd(Rigidbody targetRigid_)
     {
         yield return new WaitForSeconds(0.1f);
-        targetRigid_.useGravity = false;
         targetRigid_.velocity = Vector3.zero;
         targetRigid_.GetComponent<PlayerBase>().Debuff(4, 1.2f);
     }
