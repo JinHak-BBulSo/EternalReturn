@@ -9,6 +9,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 {
     protected PlayerController playerController = default;
     protected Vector3 destination = default;
+    public Rigidbody playerRigid = default;
     public Vector3 Destination { get { return destination; } }
     public int currentCorner = 0;
     public List<PlayerBase> enemyPlayer = new List<PlayerBase>();
@@ -78,6 +79,10 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     protected virtual void Start()
     {
+        // 플레이어 물리 상태 초기화
+        playerRigid = GetComponent<Rigidbody>();
+        playerRigid.useGravity = false;
+        playerRigid.velocity = Vector3.zero;
 
         playerOutLine = GetComponent<Outline>();
         playerOutLine.player = this;
@@ -166,6 +171,21 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                     clickTarget = hit.collider.gameObject;
                     enemy = default;
 
+                    //[KJH] Add. 클릭 타겟 Outline 표시
+                    //외곽선 초기화
+                    if (outline != default)
+                    {
+                        outline.enabled = false;
+                        outline.isClick = false;
+                        outline = default;
+                    }
+                    if (clickTarget.GetComponent<Outline>() != null && clickTarget.gameObject != this.gameObject)
+                    {
+                        outline = clickTarget.GetComponent<Outline>();
+                        outline.isClick = true;
+                        outline.enabled = true;
+                    }
+
                     if (clickTarget.GetComponent<Outline>() != null && clickTarget.GetComponent<Outline>().monster != null)
                     {
                         Monster monster = clickTarget.GetComponent<Outline>().monster;
@@ -185,20 +205,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                             isAttackMove = true;
                             playerController.ChangeState(new PlayerAttackMove());
                         }
-                    }
-                    //[KJH] Add. 클릭 타겟 Outline 표시
-                    //외곽선 초기화
-                    if (outline != default)
-                    {
-                        outline.enabled = false;
-                        outline.isClick = false;
-                        outline = default;
-                    }
-                    if (clickTarget.GetComponent<Outline>() != null && clickTarget.gameObject != this.gameObject)
-                    {
-                        outline = clickTarget.GetComponent<Outline>();
-                        outline.isClick = true;
-                        outline.enabled = true;
                     }
 
                     if (NavMesh.SamplePosition(hit.point, out navHit, 5.0f, NavMesh.AllAreas))
@@ -886,10 +892,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     [PunRPC]
     public void Debuff(int debuffIndex_, float continousTime_)
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            photonView.RPC("DebuffSet", RpcTarget.All, debuffIndex_, continousTime_);
-        }
+        photonView.RPC("DebuffSet", RpcTarget.All, debuffIndex_, continousTime_);
     }
     [PunRPC]
     public void DebuffSet(int debuffIndex_, float continousTime_)
@@ -1022,16 +1025,18 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     private void OnMouseEnter()
     {
-        if (this.gameObject != PlayerManager.Instance.Player)
-        {
             playerOutLine.enabled = true;
-        }
+            Debug.Log("마우스 엔터");
+        /*if (this.gameObject != PlayerManager.Instance.Player)
+        {
+        }*/
     }
     private void OnMouseExit()
     {
-        if (this.gameObject != PlayerManager.Instance.Player)
-        {
             playerOutLine.enabled = false;
-        }
+            Debug.Log("마우스 아웃");
+        /*if (this.gameObject != PlayerManager.Instance.Player)
+        {
+        }*/
     }
 }

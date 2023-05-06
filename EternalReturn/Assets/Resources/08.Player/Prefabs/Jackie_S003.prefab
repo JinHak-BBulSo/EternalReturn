@@ -1670,6 +1670,7 @@ MonoBehaviour:
   huntKill: 0
   playerKill: 0
   SkillPoint: 000000000000000000000000000000000000000000000000
+  castingBar: {fileID: 0}
   playerIndex: -1
   weaponStack: 0
   skillQ: {fileID: 634131373}
