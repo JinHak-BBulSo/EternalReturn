@@ -33491,7 +33491,7 @@ GameObject:
   - component: {fileID: 400014}
   - component: {fileID: 114000011266224640}
   m_Layer: 0
-  m_Name: Explode5
+  m_Name: AyaR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

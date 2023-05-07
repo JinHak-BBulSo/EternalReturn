@@ -38,7 +38,6 @@ public class PlayerCraft : IPlayerState
         playerController.player.castingBar.fillAmount = ItemManager.Instance.combineAbleList[0].craftTime - time / ItemManager.Instance.combineAbleList[0].craftTime;
         if (time <= 0f)
         {
-            ItemManager.Instance.CombineItem(ItemManager.Instance.combineAbleList[0], ItemManager.Instance.itemCombineDictionary);
             switch (ItemManager.Instance.combineAbleList[0].rare)
             {
                 case 1:
@@ -53,6 +52,7 @@ public class PlayerCraft : IPlayerState
                 default:
                     break;
             }
+            ItemManager.Instance.CombineItem(ItemManager.Instance.combineAbleList[0], ItemManager.Instance.itemCombineDictionary);
             if (!(ItemManager.Instance.itemInferiorList.Count < 1))
             {
                 ItemManager.Instance.DeleteInferiorList(ItemManager.Instance.combineAbleList[0]);
