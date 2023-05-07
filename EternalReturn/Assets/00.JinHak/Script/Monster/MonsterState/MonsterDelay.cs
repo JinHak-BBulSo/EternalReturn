@@ -28,10 +28,12 @@ public class MonsterDelay : IMonsterState
     }
     IEnumerator Delay()
     {
-        monsterController.monsterRigid.velocity = Vector3.zero;
         yield return new WaitForSeconds(1.1f);
+        monsterController.monsterRigid.velocity = Vector3.zero;
+        monsterController.navMeshAgent.enabled = true;
         monsterController.monsterAni.SetBool("isAttack", false);
         monsterController.monsterAni.SetBool("isSkill", false);
+        monsterController.isInSkillUse = false;
         monsterController.actionDelay = false;
     }
 }

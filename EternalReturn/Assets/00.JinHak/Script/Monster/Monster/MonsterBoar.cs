@@ -49,7 +49,6 @@ public class MonsterBoar : Monster
     {
         isAssult = false;
         monsterController.monsterRigid.velocity = Vector3.zero;
-        monsterController.navMeshAgent.enabled = true;
         monsterController.isInSkillUse = false;
         monsterController.monsterAni.SetBool("isSkill", false);
         collisionTarget.Clear();
