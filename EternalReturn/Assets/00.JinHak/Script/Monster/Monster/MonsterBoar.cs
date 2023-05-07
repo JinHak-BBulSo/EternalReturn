@@ -47,6 +47,7 @@ public class MonsterBoar : Monster
 
     public void SkillEnd()
     {
+        Debug.Log("아마 호출 안됨");
         isAssult = false;
         monsterController.monsterRigid.velocity = Vector3.zero;
         monsterController.isInSkillUse = false;
@@ -71,7 +72,7 @@ public class MonsterBoar : Monster
                 nowTargetPlayer_.TakeDamage(dm);
 
                 collisionTarget.Add(other.GetComponent<PlayerBase>());
-                nowTargetPlayer_.playerRigid.AddForce(transform.forward * 45, ForceMode.Impulse);
+                nowTargetPlayer_.playerRigid.AddForce(transform.forward * 37, ForceMode.Impulse);
                 StartCoroutine(NuckBackEnd(nowTargetPlayer_.playerRigid));
             }
         }
