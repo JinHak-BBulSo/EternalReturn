@@ -10,6 +10,7 @@ public class MonsterAttack : IMonsterState
     {
         this.monsterController = monsterCtrl_;
         monsterController.monsterState = MonsterController.MonsterState.ATTACk;
+        monsterController.isAttack = true;
         Attack();
         monsterController.monster.audioSource.clip = monsterController.monster.sounds[0];
         monsterController.navMeshAgent.enabled = false;
@@ -22,7 +23,7 @@ public class MonsterAttack : IMonsterState
 
     public void StateUpdate()
     {
-        if(monsterController.targetPlayer.PlayerController.playerState == PlayerController.PlayerState.DIE)
+        if (monsterController.targetPlayer.PlayerController.playerState == PlayerController.PlayerState.DIE)
         {
             monsterController.monster.isBattleAreaOut = true;
             monsterController.targetPlayer = default;
@@ -44,6 +45,7 @@ public class MonsterAttack : IMonsterState
     }
     public void ExitAttack()
     {
+        monsterController.isAttack = false;
         GameObject target_ = monsterController.gameObject;
         float damageAmount_ = monsterController.monster.monsterStatus.attackPower;
         DamageMessage dm = new DamageMessage(target_, damageAmount_);

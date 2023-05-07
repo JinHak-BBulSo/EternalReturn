@@ -39,6 +39,7 @@ public class MonsterController : MonoBehaviourPun
     public bool isSkillAble = false;
     public bool isInSkillUse = false;
     public int encountPlayerCount = 0;
+    public bool isAttack = false;
 
     public bool actionDelay = false;
     public void AwakeOrder()
@@ -84,7 +85,7 @@ public class MonsterController : MonoBehaviourPun
 
     private void FixedUpdate()
     {
-        if(monsterStateMachine != default)
+        if (monsterStateMachine != default)
             monsterStateMachine.DoFixedUpdate();
     }
 
@@ -105,7 +106,7 @@ public class MonsterController : MonoBehaviourPun
 
     private void UpdateState()
     {
-        if(monster.isDie)
+        if (monster.isDie)
         {
             monsterStateMachine.SetState(monsterStateDic[MonsterState.DIE]);
             return;
@@ -129,19 +130,19 @@ public class MonsterController : MonoBehaviourPun
             return;
         }
 
-        
+
 
         if (targetPlayer == null && encountPlayerCount == 0)
         {
             monsterStateMachine.SetState(monsterStateDic[MonsterState.IDLE]);
         }
-        else 
+        else
         {
-            if(encountPlayerCount != 0 && targetPlayer == null)
+            if (encountPlayerCount != 0 && targetPlayer == null)
             {
                 monsterStateMachine.SetState(monsterStateDic[MonsterState.BEWARE]);
             }
-            else if(targetPlayer != null || !monster.isBattle)
+            else if (targetPlayer != null || !monster.isBattle)
             {
                 if (Vector3.Distance(targetPlayer.transform.position, this.transform.position) > monster.monsterStatus.attackRange)
                 {
@@ -149,7 +150,7 @@ public class MonsterController : MonoBehaviourPun
                 }
                 else
                 {
-                    if (isSkillAble && !isInSkillUse)
+                    if (isSkillAble && !isInSkillUse && !isAttack)
                     {
                         monsterStateMachine.SetState(monsterStateDic[MonsterState.SKILL]);
                         isInSkillUse = true;

@@ -13,7 +13,7 @@ public class PlayerCollect : IPlayerState
         playerController.playerState = PlayerController.PlayerState.COLLECT;
         gatheringItem = playerController.player.clickTarget.GetComponent<GatheringItemBox>();
         gatheringItem.gatherAudio.Play();
-        playerController.player.castingBar.gameObject.SetActive(true);
+        playerController.player.castingBar.transform.parent.gameObject.SetActive(true);
         playerController.ResetAni();
         playerController.ResetRange();
         if (gatheringItem.gatherAble)
@@ -53,7 +53,7 @@ public class PlayerCollect : IPlayerState
         gatheringItem = default;
         playerController.toolReset();
         playerController.player.castingBar.fillAmount = 0;
-        playerController.player.castingBar.gameObject.SetActive(false);
+        playerController.player.castingBar.transform.parent.gameObject.SetActive(false);
     }
 
     public void StateFixedUpdate()

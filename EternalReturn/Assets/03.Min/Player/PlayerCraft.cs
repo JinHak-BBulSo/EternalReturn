@@ -12,6 +12,7 @@ public class PlayerCraft : IPlayerState
         playerController.playerState = PlayerController.PlayerState.CRAFT;
         playerController.ResetAni();
         playerController.ResetRange();
+        playerController.player.castingBar.transform.parent.gameObject.SetActive(true);
         playerController.player.weapon.SetActive(false);
         playerController.player.hammer.SetActive(true);
         playerController.player.craftTool.SetActive(true);
@@ -21,6 +22,8 @@ public class PlayerCraft : IPlayerState
     public void StateExit()
     {
         playerController.toolReset();
+        playerController.player.castingBar.fillAmount = 0;
+        playerController.player.castingBar.transform.parent.gameObject.SetActive(false);
         playerController.player.playerAni.SetBool("isCraft", false);
     }
 
@@ -32,6 +35,7 @@ public class PlayerCraft : IPlayerState
     public void StateUpdate()
     {
         time -= Time.deltaTime;
+        playerController.player.castingBar.fillAmount = ItemManager.Instance.combineAbleList[0].craftTime - time / ItemManager.Instance.combineAbleList[0].craftTime;
         if (time <= 0f)
         {
             ItemManager.Instance.CombineItem(ItemManager.Instance.combineAbleList[0], ItemManager.Instance.itemCombineDictionary);

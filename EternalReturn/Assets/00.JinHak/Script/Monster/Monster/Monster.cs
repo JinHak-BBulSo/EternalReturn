@@ -153,6 +153,14 @@ public class Monster : MonoBehaviourPun, IHitHandler
             photonView.RPC("MonsterBoxSet", RpcTarget.All, itemIndex_);
         }
     }
+
+    public void AnimationReset()
+    {
+        monsterController.monsterAni.SetBool("isAttack", false);
+        monsterController.monsterAni.SetBool("isSkill", false);
+        monsterController.monsterAni.SetBool("isAttack", false);
+        monsterController.monsterAni.SetBool("isAttack", false);
+    }
     
     protected virtual void SetStatus()
     {
@@ -204,7 +212,10 @@ public class Monster : MonoBehaviourPun, IHitHandler
     }
     public void SoundPlay()
     {
-        audioSource.Play();
+        if (PlayerManager.Instance.IsGameStart && Vector3.Distance(transform.position, PlayerManager.Instance.Player.transform.position) < audioSource.maxDistance)
+        {
+            audioSource.Play();
+        }
     }
     public virtual void Appear()
     {
