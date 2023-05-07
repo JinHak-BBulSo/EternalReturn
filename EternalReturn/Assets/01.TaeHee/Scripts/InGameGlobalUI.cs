@@ -24,6 +24,8 @@ public class InGameGlobalUI : MonoBehaviour
 
     private bool isNight = false;
 
+    private bool isGameStart = false;
+
     public void UpdateUserNumber(int currentUserNumber)
     {
         userNumberText.text = $"{currentUserNumber}";
@@ -45,6 +47,15 @@ public class InGameGlobalUI : MonoBehaviour
         StartCoroutine(TimerLoop());
     }
 
+    private void Update()
+    {
+        if(PlayerManager.Instance.IsGameStart && !isGameStart)
+        {
+            isGameStart = true;
+            StartCoroutine(TimerLoop());
+        }
+    }
+
     private void UpdateTimer()
     {
         timerText.text = $"{minutes.ToString().PadLeft(2, '0')} : {seconds.ToString().PadLeft(2, '0')}";
@@ -52,7 +63,7 @@ public class InGameGlobalUI : MonoBehaviour
 
     private IEnumerator TimerLoop()
     {
-        WaitForSeconds waitForOneSecond = new WaitForSeconds(0.01f);
+        WaitForSeconds waitForOneSecond = new WaitForSeconds(1f);
 
         while (true)
         {
