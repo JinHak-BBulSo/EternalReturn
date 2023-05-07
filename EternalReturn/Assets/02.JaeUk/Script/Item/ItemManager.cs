@@ -28,7 +28,7 @@ public class ItemManager : SingleTonBase<ItemManager>
     public bool isItemChage = false;
     public int playerWeaponType;
 
-    public UnityEvent getItemEvent = new UnityEvent();
+    public UnityEvent updateCombinableItemEvent = new UnityEvent();
 
     protected override void Awake()
     {
@@ -136,11 +136,6 @@ public class ItemManager : SingleTonBase<ItemManager>
         }
         InventoryChange();
         isItemPick = true;
-
-        if (getItemEvent != null)
-        {
-            getItemEvent.Invoke();
-        }
     }
     public int[] AddInferiorList(int ItemId)
     {
@@ -629,6 +624,12 @@ public class ItemManager : SingleTonBase<ItemManager>
             DeleteImpossibleCombine(combineAbleList[i], itemCombineDictionary);
         }
         ListSortRareAndUseable(combineAbleList);
+
+        if (updateCombinableItemEvent != null)
+        {
+            updateCombinableItemEvent.Invoke();
+        }
+
         isItemPick = true;
 
     }
