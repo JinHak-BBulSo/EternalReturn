@@ -134,6 +134,7 @@ public class Jackie : PlayerBase
         {
             return;
         }
+        PlayAudio(PlayerSound.ATTACK);
         if (isWeaponPassiveOn)
         {
             weaponStack++;
@@ -340,7 +341,8 @@ public class Jackie : PlayerBase
         {
             if (time >= 0.15f)
             {
-                transform.position += (dir * distance) * Time.deltaTime;
+                transform.position = Vector3.Lerp(nowPos, targetPos, time * 1.5f);
+                // transform.position += (dir * distance) * Time.deltaTime;
             }
             if (time >= 0.7f)
             {

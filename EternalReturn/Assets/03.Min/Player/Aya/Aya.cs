@@ -472,6 +472,18 @@ public class Aya : PlayerBase
         base.Skill_D();
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 4);
+        StartCoroutine(SkillCooltime(4, skillSystem.skillInfos[4].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
+    }
+
+    private void AyaWeaponSKill()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            if (i != 4)
+            {
+                skillSystem.skillInfos[i].currentCooltime *= 0.5f;
+            }
+        }
     }
 
     IEnumerator SkillCooltime(int skillType_, float cooltime_)
