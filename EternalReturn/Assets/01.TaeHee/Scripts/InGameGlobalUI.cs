@@ -44,7 +44,7 @@ public class InGameGlobalUI : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(TimerLoop());
+        //StartCoroutine(TimerLoop());
     }
 
     private void Update()
