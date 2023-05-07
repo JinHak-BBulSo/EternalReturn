@@ -13,7 +13,11 @@ public class PlayerMove : IPlayerState
         playerController.player.playerAni.SetBool("isAttack", false);
         playerController.player.playerAni.SetBool("isSkill", false);
         playerController.player.playerAni.SetBool("skillStart", false);
-        if (playerController.player.playerAni.GetBool("isMove"))
+        if (Random.Range(0, 11) == 1)
+        {
+            playerController.player.PlayAudio(PlayerBase.PlayerSound.MOVE);
+        }
+        if (!playerController.player.playerAni.GetBool("isMove"))
         {
             playerController.player.playerAni.SetBool("isMove", true);
         }

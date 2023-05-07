@@ -22,19 +22,23 @@ public class PlayerCollect : IPlayerState
             switch (gatheringItem.itemType)
             {
                 case GatheringItemBox.GatherItemType.PEBBLE:
+                    playerController.player.PlayAudio(PlayerBase.PlayerSound.COLLECTSTONE);
                     playerController.player.playerAni.SetBool("isCollect", true);
                     playerController.player.playerAni.SetFloat("CollectType", 0f);
                     break;
                 case GatheringItemBox.GatherItemType.WATERPOINT:
+                    playerController.player.PlayAudio(PlayerBase.PlayerSound.COLLECTWATER);
                     playerController.player.playerAni.SetBool("isCollect", true);
                     playerController.player.playerAni.SetFloat("CollectType", 1f);
                     break;
                 case GatheringItemBox.GatherItemType.FISHING:
+                    playerController.player.PlayAudio(PlayerBase.PlayerSound.COLLECTFISH);
                     playerController.player.playerAni.SetBool("isCollect", true);
                     playerController.player.playerAni.SetFloat("CollectType", 2f);
                     playerController.player.fishingRod.SetActive(true);
                     break;
                 default:
+                    playerController.player.PlayAudio(PlayerBase.PlayerSound.COLLECTBRUCNH);
                     playerController.player.playerAni.SetBool("isCollect", true);
                     playerController.player.playerAni.SetFloat("CollectType", 3f);
                     break;

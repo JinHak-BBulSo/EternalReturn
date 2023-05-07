@@ -8,25 +8,18 @@ public class CombinableItemUI : MonoBehaviour
 
     private void Awake()
     {
-        ItemManager.Instance.getItemEvent.AddListener(UpdateCombinableItemUI);
+        ItemManager.Instance.updateCombinableItemEvent.AddListener(UpdateCombinableItemUI);
         for (int i = 0; i < transform.childCount; i++)
         {
             combinableItems.Add(transform.GetChild(i).GetComponent<CombinableItem>());
         }
     }
 
-    void Update()
-    {
-        //foreach (var item in ItemManager.Instance.combineAbleList)
-        //{
-            //UpdateCombinableItemUI()
-        //}
-    }
-
     private void UpdateCombinableItemUI()
     {
         int combinableItemCount = Mathf.Min(ItemManager.Instance.combineAbleList.Count, transform.childCount);
 
+        Debug.Log("Count" +  combinableItemCount);
         for (int i = 0; i < combinableItemCount; i++)
         {
             Debug.Log("comb" + combinableItems[i]);
@@ -43,6 +36,6 @@ public class CombinableItemUI : MonoBehaviour
 
     private void OnDisable()
     {
-        ItemManager.Instance.getItemEvent.RemoveListener(UpdateCombinableItemUI);
+        ItemManager.Instance.updateCombinableItemEvent.RemoveListener(UpdateCombinableItemUI);
     }
 }

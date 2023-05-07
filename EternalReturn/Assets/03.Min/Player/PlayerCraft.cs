@@ -41,12 +41,15 @@ public class PlayerCraft : IPlayerState
             switch (ItemManager.Instance.combineAbleList[0].rare)
             {
                 case 1:
+                    playerController.player.PlayAudio(PlayerBase.PlayerSound.CRAFTUNCOMMON);
                     playerController.player.GetExp(100, PlayerStat.PlayerExpType.CRAFT);
                     break;
                 case 2:
+                    playerController.player.PlayAudio(PlayerBase.PlayerSound.CRAFTRARE);
                     playerController.player.GetExp(200, PlayerStat.PlayerExpType.CRAFT);
                     break;
                 case 3:
+                    playerController.player.PlayAudio(PlayerBase.PlayerSound.CRAFTEPIC);
                     playerController.player.GetExp(350, PlayerStat.PlayerExpType.CRAFT);
                     break;
                 default:

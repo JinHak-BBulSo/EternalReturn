@@ -10,6 +10,33 @@ using System.ComponentModel;
 
 public class PlayerBase : MonoBehaviourPun, IHitHandler
 {
+    public enum PlayerSound
+    {
+        NONE = -1,
+        ATTACK,
+        BOXOPEN,
+        COLLECTBRUCNH,
+        COLLECTFISH,
+        COLLECTFLOWER,
+        COLLECTSTONE,
+        COLLECTWATER,
+        CRAFTEPIC,
+        CRAFTRARE,
+        CRAFTUNCOMMON,
+        DIE,
+        HYPERLOOP,
+        KILLMONSTER,
+        FIRSTWEAPONLEARN,
+        SECONDWEAPONLEARN,
+        MOVE,
+        SKILLQ,
+        SKILLW,
+        SKILLE,
+        SKILLR,
+        SKILLD,
+        REST,
+        VICTORY
+    }
     protected PlayerController playerController = default;
     public PlayerController PlayerController { get { return playerController; } }
     protected Vector3 destination = default;
@@ -272,12 +299,15 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         }
     }
 
-    protected void PlayAudio(AudioClip audioClip_)
+    public void PlayAudio(PlayerSound playerSound_)
     {
         if (!playerAudio.isPlaying)
         {
-            playerAudio.clip = audioClip_;
+            Debug.Log("!?");
+            playerAudio.clip = audioClips[(int)playerSound_];
+            playerAudio.Play();
         }
+        Debug.Log("??");
     }
 
     // 스탯 초기값 할당
@@ -703,6 +733,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     public virtual void Skill_Q()
     {
+        PlayAudio(PlayerSound.SKILLQ);
         if (!photonView.IsMine)
         {
             return;
@@ -712,6 +743,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     public virtual void Skill_W()
     {
+        PlayAudio(PlayerSound.SKILLW);
         if (!photonView.IsMine)
         {
             return;
@@ -720,6 +752,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     public virtual void Skill_E()
     {
+        PlayAudio(PlayerSound.SKILLE);
         if (!photonView.IsMine)
         {
             return;
@@ -728,6 +761,8 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     public virtual void Skill_R()
     {
+        PlayAudio(PlayerSound.SKILLR);
+
         if (!photonView.IsMine)
         {
             return;
@@ -736,6 +771,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
     public virtual void Skill_D()
     {
+        PlayAudio(PlayerSound.SKILLD);
         if (!photonView.IsMine)
         {
             return;

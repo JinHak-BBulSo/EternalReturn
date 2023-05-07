@@ -13,6 +13,7 @@ public class PlayerDie : IPlayerState
         playerController.ResetRange();
         playerController.player.weapon.SetActive(false);
         playerController.player.playerAni.SetBool("isDie", true);
+        playerController.player.PlayAudio(PlayerBase.PlayerSound.DIE);
         // playerController.player.enabled = false;
         // playerController.enabled = false;
     }
