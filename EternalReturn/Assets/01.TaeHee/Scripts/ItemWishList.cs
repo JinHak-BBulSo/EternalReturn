@@ -9,6 +9,13 @@ public class ItemWishList : MonoBehaviour
     [SerializeField] private ItemSlot[] itemWishListSlots = new ItemSlot[6];
     private ItemStat currentFocusedItem;
 
+    public void SetWishList()
+    {
+        foreach(var item in ItemManager.Instance.itemWishList)
+        {
+            UpdateItemWishListUI(item);
+        }
+    }
     public void AddItemWishList()
     {
         currentFocusedItem = focusedItem.CurrentFocusedItem;
@@ -20,8 +27,6 @@ public class ItemWishList : MonoBehaviour
         for (int i = 0; i < ItemManager.Instance.itemWishList.Count; i++)
         {
             int currentItemType = ItemManager.Instance.itemWishList[i].type;
-
-            Debug.Log(IsWeapon(currentItemType) + " & " + IsWeapon(currentFocusedItem.type));
 
             if (currentItemType == currentFocusedItem.type || 
                 (IsWeapon(currentItemType) && IsWeapon(currentFocusedItem.type)))

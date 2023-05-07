@@ -65,14 +65,12 @@ public class WishListSetting : MonoBehaviour
 
         if (!cachedItemPool.TryGetValue(focusedItemType, out focusedItemPool))
         {
-            Debug.Log($"No key");
             UpdateItemSlotUI(null);
             return;
         }
 
         if (inputStr.IsNullOrEmpty())
         {
-            Debug.Log($"default");
             UpdateItemSlotUI(focusedItemPool);
             return;
         }
@@ -98,7 +96,6 @@ public class WishListSetting : MonoBehaviour
                     if (j == inputStr.Length - 1)
                     {
                         j = failFunc[j];
-                        Debug.Log($"[find] input: {inputField.text}, target: {item}");
                         searchedItemList.Add(item);
                     }
                     else

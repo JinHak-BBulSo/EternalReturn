@@ -269,7 +269,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (Input.GetKeyDown(KeyCode.K))
         {
             GetExp(1000, PlayerStat.PlayerExpType.WEAPON);
-            Debug.Log(playerStat.playerExp.level);
         }
     }
 

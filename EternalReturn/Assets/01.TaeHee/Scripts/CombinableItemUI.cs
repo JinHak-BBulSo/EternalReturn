@@ -27,8 +27,6 @@ public class CombinableItemUI : MonoBehaviour
     {
         int combinableItemCount = Mathf.Min(ItemManager.Instance.combineAbleList.Count, transform.childCount);
 
-
-        Debug.Log("Count" +  combinableItemCount);
         for (int i = 0; i < combinableItemCount; i++)
         {
             Debug.Log("comb" + combinableItems[i]);
