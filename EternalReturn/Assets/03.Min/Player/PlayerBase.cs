@@ -790,7 +790,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         }
         else if (message.causer.CompareTag("Player"))
         {
-            photonView.RPC("GetDefExp", RpcTarget.All, playerIndex, 2000f);
+            photonView.RPC("GetDefExp", RpcTarget.All, playerIndex, totalDamageAmount * 0.6f);
         }
     }
     /// <summary>
