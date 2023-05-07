@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviourPun
     private void ShowRange(int index_, KeyCode inputKey_)
     {
         if (!photonView.IsMine) { return; }
-        if (!player.skillCooltimes[index_])
+        if (!player.skillCooltimes[index_] && player.skillSystem.skillInfos[index_].CurrentLevel != 0)
         {
             if (Input.GetKeyDown(inputKey_))
             {

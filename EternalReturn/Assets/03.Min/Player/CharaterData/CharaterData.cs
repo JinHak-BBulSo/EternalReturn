@@ -17,4 +17,12 @@ public class CharaterData : ScriptableObject
     public float hpRegen;
     public float staminaRegen;
 
+    public float increaseAttack;
+    public float increaseDef;
+    public float increaseHp;
+    public float increaseHpRegen;
+    public float increaseStamina;
+    public float increaseStaminaRegen;
+
+
 }

@@ -64,7 +64,6 @@ public class CharacterSelect : MonoBehaviourPun
     }
     public void OnClick()
     {
-        Debug.Log("!!");
         PlayerManager.Instance.IsSelect = true;
 
     }

@@ -15,19 +15,20 @@ public class MonsterDelay : IMonsterState
 
     public void StateFixedUpdate()
     {
-        
+
     }
 
     public void StateUpdate()
     {
-        
+
     }
     public void StateExit()
     {
-        
+
     }
     IEnumerator Delay()
     {
+        monsterController.monsterRigid.velocity = Vector3.zero;
         yield return new WaitForSeconds(1.1f);
         monsterController.monsterAni.SetBool("isAttack", false);
         monsterController.monsterAni.SetBool("isSkill", false);

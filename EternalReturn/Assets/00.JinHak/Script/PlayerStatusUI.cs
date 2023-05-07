@@ -12,7 +12,7 @@ public class PlayerStatusUI : MonoBehaviour
     public Image playerExpBar = default;
     public Text playerLevelTxt = default;
     public PlayerBase player = default;
-    private Vector3 offset = new Vector3(0, 2.5f, 0);
+    private Vector3 offset = new Vector3(0, 3f, 0);
 
     private void Start()
     {

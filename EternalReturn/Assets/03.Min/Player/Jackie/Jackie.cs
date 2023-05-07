@@ -97,6 +97,19 @@ public class Jackie : PlayerBase
                             break;
                         }
                     }
+                    else if (hit.CompareTag("Player"))
+                    {
+                        if (hit.GetComponent<PlayerBase>().applyDebuffCheck[0])
+                        {
+                            if (!hasBuff)
+                            {
+                                playerTotalStat.moveSpeed += increaseMoveSpeedBuff;
+                                hasBuff = true;
+                            }
+                            watchDebuff = true;
+                            break;
+                        }
+                    }
 
                 }
             }
@@ -117,6 +130,10 @@ public class Jackie : PlayerBase
     protected override void AttackEnd()
     {
         base.AttackEnd();
+        if (!photonView.IsMine || enemy == default)
+        {
+            return;
+        }
         if (isWeaponPassiveOn)
         {
             weaponStack++;
@@ -236,7 +253,7 @@ public class Jackie : PlayerBase
                 }
             }
         }
-        enemy = null;
+        //enemy = null;
     }
 
     public override void Skill_Q()
@@ -356,7 +373,7 @@ public class Jackie : PlayerBase
     IEnumerator SkillCooltime(int skillType_, float cooltime_)
     {
         skillCooltimes[skillType_] = true;
-        skillSystem.skillInfos[skillType_].currentCooltime = skillSystem.skillInfos[skillType_].cooltime * playerTotalStat.coolDown;
+        skillSystem.skillInfos[skillType_].currentCooltime = skillSystem.skillInfos[skillType_].cooltime * ((100 - playerTotalStat.coolDown) / 100);
         while (true)
         {
             if (skillSystem.skillInfos[skillType_].currentCooltime <= 0f)
@@ -364,7 +381,6 @@ public class Jackie : PlayerBase
                 skillCooltimes[skillType_] = false;
                 yield break;
             }
-            Debug.Log(skillSystem.skillInfos[skillType_].currentCooltime);
             skillSystem.skillInfos[skillType_].currentCooltime -= Time.deltaTime;
             yield return null;
         }

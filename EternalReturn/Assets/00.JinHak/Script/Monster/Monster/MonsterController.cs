@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
-public class MonsterController : MonoBehaviour
+using Photon.Pun;
+using Photon.Realtime;
+public class MonsterController : MonoBehaviourPun
 {
     public enum MonsterState
     {
@@ -38,6 +39,7 @@ public class MonsterController : MonoBehaviour
     public bool isSkillAble = false;
     public bool isInSkillUse = false;
     public int encountPlayerCount = 0;
+    public bool isAttack = false;
 
     public bool actionDelay = false;
     public void AwakeOrder()
@@ -83,7 +85,7 @@ public class MonsterController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(monsterStateMachine != default)
+        if (monsterStateMachine != default)
             monsterStateMachine.DoFixedUpdate();
     }
 
@@ -104,7 +106,7 @@ public class MonsterController : MonoBehaviour
 
     private void UpdateState()
     {
-        if(monster.isDie)
+        if (monster.isDie)
         {
             monsterStateMachine.SetState(monsterStateDic[MonsterState.DIE]);
             return;
@@ -128,19 +130,19 @@ public class MonsterController : MonoBehaviour
             return;
         }
 
-        
+
 
         if (targetPlayer == null && encountPlayerCount == 0)
         {
             monsterStateMachine.SetState(monsterStateDic[MonsterState.IDLE]);
         }
-        else 
+        else
         {
-            if(encountPlayerCount != 0 && targetPlayer == null)
+            if (encountPlayerCount != 0 && targetPlayer == null)
             {
                 monsterStateMachine.SetState(monsterStateDic[MonsterState.BEWARE]);
             }
-            else if(targetPlayer != null)
+            else if (targetPlayer != null || !monster.isBattle)
             {
                 if (Vector3.Distance(targetPlayer.transform.position, this.transform.position) > monster.monsterStatus.attackRange)
                 {
@@ -148,7 +150,7 @@ public class MonsterController : MonoBehaviour
                 }
                 else
                 {
-                    if (isSkillAble && !isInSkillUse)
+                    if (isSkillAble && !isInSkillUse && !isAttack)
                     {
                         monsterStateMachine.SetState(monsterStateDic[MonsterState.SKILL]);
                         isInSkillUse = true;

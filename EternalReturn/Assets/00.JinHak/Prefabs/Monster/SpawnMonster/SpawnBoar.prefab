@@ -2384,8 +2384,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 3
+  MinDistance: 3
+  MaxDistance: 8
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -2485,6 +2485,7 @@ MonoBehaviour:
   outline: {fileID: 0}
   monsterName: 
   monsterData: {fileID: 11400000, guid: dc06750e54dafb24f96a98ce20d922b9, type: 2}
+  monsterLevelUpStat: {fileID: 11400000, guid: 5c511bb72241bbf499b2665158ddd724, type: 2}
   isBattleAreaOut: 0
   applyDebuffCheck: 00000000000000000000
   debuffDelayTime:
@@ -2521,6 +2522,7 @@ MonoBehaviour:
   - 0
   - 0
   firstAttackPlayer: {fileID: 0}
+  isBattle: 0
   isDie: 0
   worldCanvas: {fileID: 0}
   monsterItemBox: {fileID: 0}
@@ -2552,6 +2554,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isClick: 0
   monster: {fileID: 0}
+  player: {fileID: 0}
   outlineMode: 0
   outlineColor: {r: 1, g: 0, b: 0, a: 1}
   outlineWidth: 2
@@ -2599,6 +2602,7 @@ MonoBehaviour:
   contactedPlayer: []
   slotList: {fileID: 0}
   itemBoxAudio: {fileID: 0}
+  notOpenItemBoxImg: {fileID: 0}
 --- !u!114 &4755270520132945878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2614,33 +2618,30 @@ MonoBehaviour:
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
   m_SynchronizeParameters:
-  - Type: 9
-    SynchronizeType: 0
-    Name: Appear
-  - Type: 9
-    SynchronizeType: 0
-    Name: EndAppear
-  - Type: 9
-    SynchronizeType: 0
-    Name: Die
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isAttack
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isAttack2
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isBeware
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isMove
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isSkill
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isSkillReady
+  - Type: 4
+    SynchronizeType: 2
+    Name: isAppear
+  - Type: 4
+    SynchronizeType: 2
+    Name: isDie
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
