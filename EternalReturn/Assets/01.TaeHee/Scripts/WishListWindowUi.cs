@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WishListWindowUi : MonoBehaviour
 {
+    [SerializeField]
     private GameObject wishListWindow = default;
     [SerializeField]
     private ItemWishList itemWishList = default;
@@ -17,7 +18,7 @@ public class WishListWindowUi : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-            if (wishListWindow.activeSelf)
+            if (!wishListWindow.activeSelf)
             {
                 wishListWindow.SetActive(true);
             }
