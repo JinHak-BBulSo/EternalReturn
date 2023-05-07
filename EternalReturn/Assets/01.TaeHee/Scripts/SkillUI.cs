@@ -39,7 +39,7 @@ public class SkillUI : MonoBehaviour
 
         for (int i = 0; i < skillInfo.MaxLevel; i++)
         {
-            GameObject skillLevelInst = Instantiate(InGameUIResources.skillLevel);
+            GameObject skillLevelInst = Instantiate(UIResources.skillLevel);
             skillLevelInst.transform.SetParent(skillLevelBgRect, false);
 
             RectTransform instRect = skillLevelInst.GetComponent<RectTransform>();

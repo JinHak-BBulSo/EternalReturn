@@ -8,11 +8,6 @@ public class FocusedItem : MonoBehaviour
     private const int MAX_SLOT_COUNT = 127; //2^7 - 1 (최대 6줄까지)
     private const int MAX_NAME_FONT_SIZE = 18;
     private List<ItemSlotWithName> itemSlotList = new List<ItemSlotWithName>();
-    //private ItemStat focused;
-    //private GameObject itemSlotWithName;
-    //private Image itemSlotImage;
-    //private Image itemImage;
-    //private Text itemName;
 
     public ItemStat CurrentFocusedItem { get; private set; }
 

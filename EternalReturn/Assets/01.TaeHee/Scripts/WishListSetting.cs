@@ -32,13 +32,8 @@ public enum ItemType
 
 public class WishListSetting : MonoBehaviour
 {
-    public static ReadOnlyCollection<Sprite> ItemBgSpritesRO { get; private set; }
-
-    private const int ITEM_SLOT_IMAGE_COUNT = 4;
-    private const string PATH_ITEM_SLOT_IMAGE = "03.Item/Ico_ItemGradebg_";//+ [01, 04]
     private const string PATH_ITEM_SLOT_PREFAB = "03.Item/Prefabs/ItemSlot";
 
-    private List<Sprite> itemBgSprites = new List<Sprite>();
 
     private Dictionary<ItemType, List<ItemStat>> cachedItemPool = new Dictionary<ItemType, List<ItemStat>>();
     private List<ItemStat> focusedItemPool = new List<ItemStat>();
@@ -119,13 +114,6 @@ public class WishListSetting : MonoBehaviour
     private void Awake()
     {
         //itemSlotPrefab = Resources.Load(ITEM_SLOT_PREFAB_PATH) as GameObject;
-        for (int i = 1; i <= ITEM_SLOT_IMAGE_COUNT; i++)
-        {
-            string path = $"{PATH_ITEM_SLOT_IMAGE}{(i).ToString().PadLeft(2, '0')}";
-            itemBgSprites.Add(Resources.Load<Sprite>(path));
-        }
-
-        ItemBgSpritesRO = new ReadOnlyCollection<Sprite>(itemBgSprites);
 
         inputField = transform.GetChild(1).GetComponent<InputField>();
 
