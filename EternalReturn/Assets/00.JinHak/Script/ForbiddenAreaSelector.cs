@@ -67,14 +67,12 @@ public class ForbiddenAreaSelector : MonoBehaviourPun
     [PunRPC]
     public void EmergencyAreaSet(int firstArea_, int secondArea_)
     {
-        Debug.Log("일단 호출은 되긴 함??");
         areaSprite[firstArea_].color = new Color(1, 197.0f / 255.0f, 37.0f / 255.0f, 180.0f / 255.0f);
         areaSprite[secondArea_].color = new Color(1, 197.0f / 255.0f, 37.0f / 255.0f, 180.0f / 255.0f);
     }
     IEnumerator ForbiddenAreaSetStart(int areaIndex_)
     {
         yield return new WaitForSeconds(selectDelay);
-        Debug.Log("설마 바로 여기오냐?");
         areaSprite[areaIndex_].color = new Color(1, 0, 0, 180.0f / 255.0f);
 
         for (int i = 0; i < allArea[areaIndex_].transform.childCount; i++)

@@ -159,6 +159,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             ItemManager.Instance.Player = this;
             GetComponent<AudioListener>().enabled = true;
             gameObject.AddComponent<AllyFowUnit>();
+            FowManager.Instance.InitMap();
         }
         else
         {
