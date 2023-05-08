@@ -81,11 +81,11 @@ public class ForbiddenAreaSelector : MonoBehaviourPun
         {
             if (i < allArea[areaIndex_].transform.childCount / 2)
             {
-                allArea[areaIndex_].gameObject.SetActive(true);
+                allArea[areaIndex_].transform.GetChild(i).gameObject.SetActive(true);
             }
             else
             {
-                allArea[areaIndex_].gameObject.SetActive(false);
+                allArea[areaIndex_].transform.GetChild(i).gameObject.SetActive(false);
             }
         }
         announce.announceAudio.clip = announce.allAnnounce[2];
