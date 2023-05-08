@@ -29,11 +29,11 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-       if(PlayerList.Instance.playerCount == 1)
+       if(PlayerList.Instance.playerCount == 1 && PlayerList.Instance.playerDictionary.Count == 2)
         {
-            gameEndTimer += Time.deltaTime;
-            if(gameEndTimer > 0.5f && !isGameEnd)
+            if(!isGameEnd)
             {
+                isGameEnd = true;
                 if(PlayerManager.Instance.Player.GetComponent<PlayerBase>().PlayerController.playerState != PlayerController.PlayerState.DIE)
                 {
                     gameEndUi[0].SetActive(true);
@@ -43,10 +43,6 @@ public class GameManager : MonoBehaviour
                     gameEndUi[1].SetActive(true);
                 }
             }
-        }
-        else
-        {
-            gameEndTimer = 0;
         }
     }
 }

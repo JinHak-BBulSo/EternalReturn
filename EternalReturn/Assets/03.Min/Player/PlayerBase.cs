@@ -153,6 +153,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         PlayerList.Instance.playerDictionary.Add(playerIndex, this);
         forbiddenCountTxt = mainUi.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>();
         forbiddenEnterImage = mainUi.transform.GetChild(0).GetChild(3).gameObject;
+        PlayerList.Instance.playerCount++;
 
         if (photonView.IsMine)
         {
