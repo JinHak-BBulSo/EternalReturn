@@ -41,6 +41,7 @@ public class MonsterDie : IMonsterState
         monsterController.monsterAni.SetBool("isDie", true);
         monsterController.navMeshAgent.enabled = false;
         monsterController.targetPlayer = default;
+        monsterController.monsterRigid.velocity = Vector3.zero;
         monsterController.monster.monsterStatusUi.SetActive(false);
     }
 }

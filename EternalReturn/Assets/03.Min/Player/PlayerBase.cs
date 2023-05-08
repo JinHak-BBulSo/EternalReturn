@@ -5,7 +5,6 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using Photon.Realtime;
 using Photon.Pun;
-using static MonsterController;
 using System.ComponentModel;
 
 public class PlayerBase : MonoBehaviourPun, IHitHandler
@@ -104,6 +103,11 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public int[] SkillPoint = new int[6];
     private Outline playerOutLine = default;
     public Image castingBar = default;
+    public bool isInForbiddenArea = false;
+    public int forbiddenCount = 45;
+    public float forbiddenDelay = 0;
+    public Text forbiddenCountTxt;
+    public GameObject forbiddenEnterImage;
 
     //[KJH] Add. Each Player Index
     public int playerIndex = -1;
@@ -145,6 +149,8 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         //[KJH] ADD. PlayerIndex 구분
         playerIndex = photonView.ViewID;
         PlayerList.Instance.playerDictionary.Add(playerIndex, this);
+        forbiddenCountTxt = mainUi.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>();
+        forbiddenEnterImage = mainUi.transform.GetChild(0).GetChild(2).gameObject;
 
         if (photonView.IsMine)
         {
@@ -174,6 +180,27 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 ItemChang();
             }
 
+        }
+
+        if (photonView.IsMine && isInForbiddenArea)
+        {
+            forbiddenEnterImage.SetActive(true);
+            forbiddenDelay += Time.deltaTime;
+            if(forbiddenDelay >= 1)
+            {
+                forbiddenCount--;
+                forbiddenDelay = 0;
+
+                if(forbiddenCount == 0)
+                {
+                    playerStat.nowHp = 0;
+                    forbiddenCountTxt.text = forbiddenCount.ToString();
+                }
+            }
+        }
+        else if(photonView.IsMine && !isInForbiddenArea)
+        {
+            forbiddenEnterImage.SetActive(false);
         }
 
         if (photonView.IsMine)
@@ -309,11 +336,9 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
         if (!playerAudio.isPlaying)
         {
-            Debug.Log("!?");
             playerAudio.clip = audioClips[(int)playerSound_];
             playerAudio.Play();
         }
-        Debug.Log("??");
     }
 
     // 스탯 초기값 할당
@@ -485,10 +510,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 LevelUp(playerStat.defExp);
                 break;
         }
-    }
-    public void Craft()
-    {
-
     }
 
 

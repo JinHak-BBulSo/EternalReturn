@@ -1618,6 +1618,11 @@ MonoBehaviour:
   playerKill: 0
   SkillPoint: 000000000000000000000000000000000000000000000000
   castingBar: {fileID: 0}
+  isInForbiddenArea: 0
+  forbiddenCount: 45
+  forbiddenDelay: 0
+  forbiddenCountTxt: {fileID: 0}
+  forbiddenEnterImage: {fileID: 0}
   playerIndex: -1
   weaponStack: 0
   skillQ: {fileID: 634131373}
