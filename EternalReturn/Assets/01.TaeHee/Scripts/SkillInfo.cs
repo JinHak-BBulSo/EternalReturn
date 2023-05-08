@@ -28,6 +28,6 @@ public class SkillInfo
             return;
 
         ++CurrentLevel;
-        cooltime = cooltime - (reduceCooltime * (CurrentLevel - 1));
+        cooltime -= reduceCooltime;
     }
 }
