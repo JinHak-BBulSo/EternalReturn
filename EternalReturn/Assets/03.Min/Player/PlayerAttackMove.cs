@@ -68,7 +68,7 @@ public class PlayerAttackMove : IPlayerState
                 {
                     playerController.ChangeState(new PlayerAttack());
                 }
-                
+
             }
             else
             {
@@ -93,6 +93,7 @@ public class PlayerAttackMove : IPlayerState
         playerController.Craft();
         playerController.ShowAllRange();
         playerController.SkillUse();
+        playerController.Rest();
 
     }
 }

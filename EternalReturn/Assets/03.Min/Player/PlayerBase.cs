@@ -330,11 +330,9 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     {
         if (!playerAudio.isPlaying)
         {
-            Debug.Log("!?");
             playerAudio.clip = audioClips[(int)playerSound_];
             playerAudio.Play();
         }
-        Debug.Log("??");
     }
 
     // 스탯 초기값 할당
@@ -506,10 +504,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 LevelUp(playerStat.defExp);
                 break;
         }
-    }
-    public void Craft()
-    {
-
     }
 
 

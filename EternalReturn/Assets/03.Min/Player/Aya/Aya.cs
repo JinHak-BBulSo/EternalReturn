@@ -227,7 +227,7 @@ public class Aya : PlayerBase
         StartCoroutine(WSkill());
     }
 
-
+    public int shotRate = 0;
     private void Shot()
     {
         AyaBullet bullet = Instantiate(Bullet).GetComponent<AyaBullet>();
@@ -236,6 +236,7 @@ public class Aya : PlayerBase
         + (playerTotalStat.attackPower * (0.2f + (0.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))))
         + (playerTotalStat.skillPower * (0.25f + (0.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))));
         bullet.shootPlayer = this;
+        shotRate++;
         // if (!PhotonNetwork.IsMasterClient && photonView.IsMine)
         // {
         //     photonView.RPC("CallShot", RpcTarget.MasterClient);
@@ -251,7 +252,9 @@ public class Aya : PlayerBase
     {
         AyaBullet bullet = Instantiate(Bullet).GetComponent<AyaBullet>();
         bullet.transform.position = weapon.transform.position;
-        bullet.damage = 30 + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.25f);
+        bullet.damage = 30 + (25 * (skillSystem.skillInfos[1].CurrentLevel - 1))
+        + (playerTotalStat.attackPower * (0.2f + (0.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))))
+        + (playerTotalStat.skillPower * (0.25f + (0.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))));
         bullet.shootPlayer = this;
     }
 
@@ -260,18 +263,22 @@ public class Aya : PlayerBase
         float time = 0f;
         while (true)
         {
-            if (time >= 3.3f)
+            if (shotRate >= 10)
             {
+                shotRate = 0;
                 isWon = false;
                 playerAni.SetBool("isSkill", false);
                 playerController.ChangeState(new PlayerIdle());
+                playerAni.SetLayerWeight(1, 0f);
                 yield break;
             }
             if (Input.GetKeyDown(KeyCode.W))
             {
+                shotRate = 0;
                 isWon = false;
                 playerAni.SetBool("isSkill", false);
                 playerController.ChangeState(new PlayerIdle());
+                playerAni.SetLayerWeight(1, 0f);
                 yield break;
             }
             if (Input.GetMouseButtonDown(1))
@@ -312,7 +319,43 @@ public class Aya : PlayerBase
             if (currentCorner < corners.Count)
             {
                 var dir = corners[currentCorner] - transform.position;
+                Vector3 movePos = Vector3.Scale(dir.normalized, transform.forward);
+                Debug.Log(movePos.magnitude);
+                // if (movePos.magnitude < 0.1f)
+                // {
+                //     float moveDir = GetMoveDirection(movePos.x, movePos.z);
+                //     playerAni.SetFloat("MoveDir", moveDir);
+                // }
+                playerAni.SetFloat("MoveDirX", movePos.x);
+                playerAni.SetFloat("MoveDirZ", movePos.z);
+                // if (movePos.x >= 0)
+                // {
+                //     if (movePos.z <= 0)
+                //     {
+                //         playerAni.SetFloat("MoveDir", 0f);
+                //     }
+                //     else
+                //     {
+                //         playerAni.SetFloat("MoveDir", 2f);
+                //     }
+                // }
+                // else
+                // {
+                //     if (movePos.z <= 0)
+                //     {
+                //         playerAni.SetFloat("MoveDir", 3f);
+                //     }
+                //     else
+                //     {
+                //         playerAni.SetFloat("MoveDir", 1f);
+                //     }
+                // }
+                playerAni.SetLayerWeight(1, 1f);
                 transform.position += dir.normalized * Time.deltaTime * playerTotalStat.moveSpeed;
+            }
+            else
+            {
+                playerAni.SetLayerWeight(1, 0f);
             }
         }
     }
