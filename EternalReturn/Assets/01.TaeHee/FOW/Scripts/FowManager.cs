@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//https://rito15.github.io/posts/fog-of-war/
 //[DefaultExecutionOrder(-100)]
 public class FowManager : SingleTonBase<FowManager>
 {
@@ -34,14 +35,15 @@ public class FowManager : SingleTonBase<FowManager>
     [System.Serializable]
     public class FogAlpha
     {
-        [Range(0, 1)] public float light = 0.0f;
-        [Range(0, 1)] public float dark = 0.8f;
+        [Range(0, 1)] public float sight = 0.0f;
+        [Range(0, 1)] public float fog = 0.96f;
     }
     [Space]
     public FogAlpha _fogAlpha = new FogAlpha();
 
     [Space]
-    public bool _showGizmos = true;
+    public bool _showSightGizmos = true;
+    public bool _showMapGizmos = true;
 
     public FowMap Map { get; private set; }
 
@@ -194,16 +196,21 @@ public class FowManager : SingleTonBase<FowManager>
 
     private void OnDrawGizmos()
     {
-        if (Application.isPlaying == false) return;
+        if (!Application.isPlaying)
+            return;
 
-        foreach (var tile in visibleTiles)
+        if (_showSightGizmos)
         {
-            Vector2 pos = GetTileCenterPoint(tile.X, tile.Y);
-            Gizmos.color = Color.green;
-            Gizmos.DrawCube(new Vector3(pos.x, 0f, pos.y), new Vector3(_tileSize, 1f, _tileSize));
+            foreach (var tile in visibleTiles)
+            {
+                Vector2 pos = GetTileCenterPoint(tile.X, tile.Y);
+                Gizmos.color = Color.green;
+                Gizmos.DrawCube(new Vector3(pos.x, 0f, pos.y), new Vector3(_tileSize, 1f, _tileSize));
+            }
         }
 
-        if (_showGizmos == false) return;
+        if (!_showMapGizmos)
+            return;
 
         if (heightMap != null)
         {

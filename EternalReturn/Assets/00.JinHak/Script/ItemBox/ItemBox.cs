@@ -20,7 +20,7 @@ public class ItemBox : MonoBehaviour
 
     protected virtual void Awake()
     {
-        /*itemBoxUi = GameObject.Find("TestUi").transform.GetChild(1).gameObject;
+        /*itemBoxUi = GameObject.Find("Main UI Canvas").transform.GetChild(1).gameObject;
         slotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();*/
         outline = GetComponent<Outline>();
         itemBoxAudio = GetComponent<AudioSource>();

@@ -8,15 +8,13 @@ public class MoveCamera : MonoBehaviour
     private const float MAP_BOUNDARY_POS = 250f;
 
     public PlayerBase player = default;
-    [SerializeField] private bool isRooted;
+    private bool isRooted;
     [SerializeField] private float cameraSpeed;
     private Vector3 cameraMoveVec;
     private float screenWidth;
     private float screenHeight;
 
-    //UI
     [SerializeField] private UnityEngine.UI.Image cameraRootedUI;
-    [SerializeField] private Sprite[] cameraRootedSprites = new Sprite[2];
 
     private void Awake()
     {
@@ -24,10 +22,6 @@ public class MoveCamera : MonoBehaviour
         UpdateCameraRootedUI(isRooted);
         SetCameraSpeed(50f);
         SetScreenResolution(Screen.width, Screen.height);
-    }
-    void Start()
-    {
-        // player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
     }
 
     void Update()
@@ -47,6 +41,7 @@ public class MoveCamera : MonoBehaviour
         }
         else
         {
+            SetScreenResolution(Screen.width, Screen.height);
 
             if (Input.GetKey(KeyCode.Space) && player != default)
             {
@@ -79,15 +74,15 @@ public class MoveCamera : MonoBehaviour
         }
     }
 
-    public void SetScreenResolution(float width, float height)
-    {
-        screenWidth = width;
-        screenHeight = height;
-    }
-
     public void SetCameraSpeed(float speed)
     {
         cameraSpeed = speed;
+    }
+
+    private void SetScreenResolution(float width, float height)
+    {
+        screenWidth = width;
+        screenHeight = height;
     }
 
     private void UpdateCameraRootedUI(bool isRooted)
@@ -95,6 +90,6 @@ public class MoveCamera : MonoBehaviour
         if (cameraRootedUI == null)
             return;
 
-        cameraRootedUI.sprite = isRooted ? cameraRootedSprites[0] : cameraRootedSprites[1];
+        cameraRootedUI.sprite = isRooted ? UIResources.CameraRootingOffSprite : UIResources.CameraRootingOnSprite;
     }
 }

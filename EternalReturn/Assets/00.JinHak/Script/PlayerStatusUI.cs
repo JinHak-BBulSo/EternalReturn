@@ -16,7 +16,7 @@ public class PlayerStatusUI : MonoBehaviour
 
     private void Start()
     {
-        mainUi = GameObject.Find("TestUi");
+        mainUi = GameObject.Find("Main UI Canvas");
         playerStatusUi = this.gameObject;
         //player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
 

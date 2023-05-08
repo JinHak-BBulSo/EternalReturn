@@ -8,11 +8,7 @@ public class FowMap
     private List<FowTile> map = new List<FowTile>();
     private int mapWidth;
     private int mapHeight;
-
     private int mapLength;
-
-    private float[] visit;
-
     private Color[] colorBuffer;
     private Material blurMat;
 
@@ -33,14 +29,11 @@ public class FowMap
         map.Clear();
         mapWidth = heightMap.GetLength(0);
         mapHeight = heightMap.GetLength(1);
-
         mapLength = mapWidth * mapHeight;
-
-        visit = new float[mapLength];
         colorBuffer = new Color[mapLength];
 
         for (int i = 0; i < mapLength; i++)
-            visit[i] = AlphaData.dark;
+            colorBuffer[i].a = AlphaData.fog;
 
         blurMat = new Material(Shader.Find("FogOfWar/AverageBlur"));
         texBuffer = new Texture2D(mapWidth, mapHeight, TextureFormat.ARGB32, false);
@@ -114,13 +107,12 @@ public class FowMap
         Graphics.Blit(nextTexture, curTexture, blurMat, 1);
     }
 
-    /// <summary> 지난 번 시행에 유닛이 존재해서 밝게 나타냈던 부분을 다시 안개로 가려줌 </summary>
+    /// <summary> 다시 안개로 가려줌 </summary>
     public void RefreshFog()
     {
         for (int i = 0; i < mapLength; i++)
         {
-            if (visit[i] == AlphaData.light)
-                visit[i] = AlphaData.dark;
+            colorBuffer[i].a = AlphaData.fog;
         }
     }
 
@@ -155,10 +147,10 @@ public class FowMap
 
         visibles = visibleTileList;
 
-        // 현재 방문, 과거 방문 여부 true
+        // 현재 방문 여부 true
         foreach (FowTile visibleTile in visibleTileList)
         {
-            visit[visibleTile.index] = AlphaData.light;
+            colorBuffer[visibleTile.index].a = AlphaData.sight;
         }
 
         ApplyFogAlpha();
@@ -373,13 +365,6 @@ public class FowMap
     /// <summary> 방문 정보를 텍스처의 알파 정보로 변환하고 가우시안 블러 적용 </summary>
     private void ApplyFogAlpha()
     {
-        foreach (var tile in map)
-        {
-            int index = tile.index;
-
-            colorBuffer[index].a = visit[index];
-        }
-
         // ColorBuffer -> TexBuffer
         texBuffer.SetPixels(colorBuffer);
         texBuffer.Apply();
