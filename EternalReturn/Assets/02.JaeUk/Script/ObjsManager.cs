@@ -25,7 +25,6 @@ public class ObjsManager : MonoBehaviour
         }
     }
     public GameObject itemCanvas;
-    public GameObject fog;
     public GameObject CameraPivot;
 
     private void Update()
@@ -33,7 +32,6 @@ public class ObjsManager : MonoBehaviour
         if (PlayerManager.Instance.IsGameStart)
         {
             itemCanvas.gameObject.SetActive(true);
-            fog.gameObject.SetActive(true);
             CameraPivot.GetComponent<MoveCamera>().enabled = true;
             CameraPivot.GetComponent<MoveCamera>().player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
             ItemManager.Instance.ItemCanvas = itemCanvas;

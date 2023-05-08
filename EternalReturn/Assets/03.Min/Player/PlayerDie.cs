@@ -14,6 +14,7 @@ public class PlayerDie : IPlayerState
         playerController.player.weapon.SetActive(false);
         playerController.player.playerAni.SetBool("isDie", true);
         playerController.player.PlayAudio(PlayerBase.PlayerSound.DIE);
+        PlayerList.Instance.playerCount--;
         // playerController.player.enabled = false;
         // playerController.enabled = false;
     }

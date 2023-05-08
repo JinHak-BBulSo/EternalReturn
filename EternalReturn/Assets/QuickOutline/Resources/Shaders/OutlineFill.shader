@@ -1,4 +1,4 @@
-﻿//
+//
 //  OutlineFill.shader
 //  QuickOutline
 //
@@ -16,7 +16,7 @@ Shader "Custom/Outline Fill" {
 
   SubShader {
     Tags {
-      "Queue" = "Transparent+110"
+      "Queue" = "Overlay+110"
       "RenderType" = "Transparent"
       "DisableBatching" = "True"
     }
@@ -30,7 +30,7 @@ Shader "Custom/Outline Fill" {
       ColorMask RGB
 
       Stencil {
-        Ref 1
+        Ref 4
         Comp NotEqual
       }
 

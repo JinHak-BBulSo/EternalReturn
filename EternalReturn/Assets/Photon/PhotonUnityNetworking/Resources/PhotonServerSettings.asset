@@ -90,6 +90,10 @@ MonoBehaviour:
   - DieCheckMonster
   - FirstSpawn
   - ForbiddenAreaSelect
+  - ForbiddenAreaSet
+  - EmergencyAreaSet
+  - IndexSet
+  - DicreasePlayer
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

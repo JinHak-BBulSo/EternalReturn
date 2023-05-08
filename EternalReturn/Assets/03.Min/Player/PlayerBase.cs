@@ -108,6 +108,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public float forbiddenDelay = 0;
     public Text forbiddenCountTxt;
     public GameObject forbiddenEnterImage;
+    public AudioSource restrictSound = default;
 
     //[KJH] Add. Each Player Index
     public int playerIndex = -1;
@@ -135,13 +136,14 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
         //GameObject itemBoxUi_ = Resources.Load<GameObject>("06.ItemBox/Prefab/ItemBoxUI/ItemBoxUi");
 
-        mainUi = GameObject.Find("TestUi");
+        mainUi = GameObject.Find("Main UI Canvas");
         itemBoxUi = mainUi.transform.GetChild(3).gameObject;
         itemBoxSlotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
         craftTool.transform.GetChild(0).GetComponent<CraftTool>().craftPlayer = this;
         stunFBX = transform.GetChild(2).gameObject;
         castingBar = mainUi.transform.GetChild(4).GetChild(1).GetComponent<Image>();
 
+        restrictSound = GameObject.Find("RestrictSound").GetComponent<AudioSource>();
         worldCanvas = GameObject.Find("WorldCanvas");
         playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform).GetComponent<PlayerStatusUI>();
         playerStatusUi.player = this;
@@ -150,13 +152,21 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         playerIndex = photonView.ViewID;
         PlayerList.Instance.playerDictionary.Add(playerIndex, this);
         forbiddenCountTxt = mainUi.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>();
-        forbiddenEnterImage = mainUi.transform.GetChild(0).GetChild(2).gameObject;
+        forbiddenEnterImage = mainUi.transform.GetChild(0).GetChild(3).gameObject;
+        PlayerList.Instance.playerCount++;
 
         if (photonView.IsMine)
         {
             ItemManager.Instance.Player = this;
             GetComponent<AudioListener>().enabled = true;
+            gameObject.AddComponent<AllyFowUnit>();
+            FowManager.Instance.InitMap();
         }
+        else
+        {
+            gameObject.AddComponent<FoeFowUnit>();
+        }
+
         skillSystem = GetComponent<PlayerSkillSystem>();
         InitStat();
         SkillPoint[5] = 1;
@@ -176,19 +186,20 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
         }
 
-        if (photonView.IsMine && isInForbiddenArea)
+        if (photonView.IsMine && isInForbiddenArea && forbiddenCount != 0)
         {
             forbiddenEnterImage.SetActive(true);
             forbiddenDelay += Time.deltaTime;
             if(forbiddenDelay >= 1)
             {
+                restrictSound.Play();
                 forbiddenCount--;
                 forbiddenDelay = 0;
+                forbiddenCountTxt.text = forbiddenCount.ToString();
 
-                if(forbiddenCount == 0)
+                if (forbiddenCount == 0)
                 {
                     playerStat.nowHp = 0;
-                    forbiddenCountTxt.text = forbiddenCount.ToString();
                 }
             }
         }
@@ -200,7 +211,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (photonView.IsMine)
         {
 
-            if (playerStat.nowHp <= 0)
+            if (playerStat.nowHp <= 0 && PlayerController.playerState != PlayerController.PlayerState.DIE)
             {
                 playerStat.nowHp = 0;
                 playerController.ChangeState(new PlayerDie());
@@ -287,6 +298,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 if (Physics.Raycast(miniMapCamera.ScreenPointToRay(Input.mousePosition), out hit))
                 {
                     Vector3 clickPos = Input.mousePosition;
+                    Debug.Log(clickPos);
                     if (clickPos.x < 625 || clickPos.x > 735 ||
                         clickPos.y < 10 || clickPos.y > 110)
                     {

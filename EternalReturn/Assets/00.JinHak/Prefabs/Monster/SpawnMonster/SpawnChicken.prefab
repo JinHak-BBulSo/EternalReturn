@@ -642,6 +642,19 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &8561082434789317063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058657450673659516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 709db2aa48e226445920e092d43f6cb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHidden: 1
 --- !u!4 &2444252841589362531 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4847740541236257470, guid: ae8884a678f7d0b48acf68c59db3586b,

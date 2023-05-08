@@ -6,6 +6,7 @@ public class PlayerList : MonoBehaviour
 {
     private static PlayerList instance;
     public Dictionary<int, PlayerBase> playerDictionary = new Dictionary<int, PlayerBase>();
+    public int playerCount = 0;
 
     public static PlayerList Instance
     {

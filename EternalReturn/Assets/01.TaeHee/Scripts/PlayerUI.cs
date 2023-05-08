@@ -101,7 +101,7 @@ public class PlayerUI : SingleTonBase<PlayerUI>
 
         foreach (var skillUI in skillUIs)
         {
-            skillUI.UpdateInteractable(playerLevel, weaponMasteryLevel);
+            skillUI.UpdateInteractable(totalSkillLevel, playerLevel, weaponMasteryLevel);
         }
     }
 }

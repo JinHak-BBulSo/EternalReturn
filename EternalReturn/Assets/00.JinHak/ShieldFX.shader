@@ -14,7 +14,7 @@ Shader "Unlit/ShieldFX"
 	}
 	SubShader
 	{ 
-		Tags{ "Queue" = "Overlay" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
+		Tags{ "Queue" = "Transparent+500" "IgnoreProjector" = "True" "RenderType" = "Transparent" }
 
 		GrabPass{ "_GrabTexture" }
 		Pass

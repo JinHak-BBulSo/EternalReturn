@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2659176452566141613}
   - component: {fileID: 2659176452566141612}
   - component: {fileID: -3745326362634000651}
+  - component: {fileID: -2347799609307797160}
   m_Layer: 0
   m_Name: 41.Item_rock
   m_TagString: Untagged
@@ -133,6 +134,19 @@ MonoBehaviour:
     isItemWishList: 0
   nameBg: {fileID: 0}
   wishListImg: {fileID: 0}
+--- !u!65 &-2347799609307797160
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2659176452566141610}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 0.8, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2659176453147222300
 GameObject:
   m_ObjectHideFlags: 0
