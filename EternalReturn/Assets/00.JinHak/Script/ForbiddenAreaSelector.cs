@@ -41,12 +41,14 @@ public class ForbiddenAreaSelector : MonoBehaviourPun
     public void ForbiddenAreaSelect()
     {
         int r_ = Random.Range(0, areaIndex.Count);
+        int first_ = areaIndex[r_];
         areaIndex.Remove(first);
 
         int r2_ = Random.Range(0, areaIndex.Count);
+        int second_ = areaIndex[r2_];
         areaIndex.Remove(second);
 
-        photonView.RPC("IndexSet", RpcTarget.All, r_, r2_);
+        photonView.RPC("IndexSet", RpcTarget.All, first_, second_);
     }
 
     [PunRPC]
