@@ -41,12 +41,19 @@ public class ForbiddenAreaSelector : MonoBehaviourPun
     public void ForbiddenAreaSelect()
     {
         int r_ = Random.Range(0, areaIndex.Count);
-        first = areaIndex[r_];
         areaIndex.Remove(first);
 
         int r2_ = Random.Range(0, areaIndex.Count);
-        second = areaIndex[r2_];
         areaIndex.Remove(second);
+
+        photonView.RPC("IndexSet", RpcTarget.All, r_, r2_);
+    }
+
+    [PunRPC]
+    public void IndexSet(int first_, int second_)
+    {
+        first = first_;
+        second = second_;
     }
 
     [PunRPC]
@@ -68,13 +75,13 @@ public class ForbiddenAreaSelector : MonoBehaviourPun
     [PunRPC]
     public void EmergencyAreaSet(int firstArea_, int secondArea_)
     {
-        areaSprite[firstArea_].color = new Color(1, 0, 0, 180 / 255);
+        areaSprite[firstArea_].color = new Color(1, 197 / 255, 37 / 255, 180 / 255);
         areaSprite[secondArea_].color = new Color(1, 197 / 255, 37 / 255, 180 / 255);
     }
     IEnumerator ForbiddenAreaSetStart(int areaIndex_)
     {
         yield return new WaitForSeconds(selectDelay);
-        areaSprite[areaIndex_].color = new Color(1, 0, 0, 180);
+        areaSprite[areaIndex_].color = new Color(1, 0, 0, 180 / 255);
 
         for (int i = 0; i < allArea[areaIndex_].transform.childCount; i++)
         {
