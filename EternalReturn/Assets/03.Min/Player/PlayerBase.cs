@@ -108,6 +108,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
     public float forbiddenDelay = 0;
     public Text forbiddenCountTxt;
     public GameObject forbiddenEnterImage;
+    public AudioSource restrictSound = default;
 
     //[KJH] Add. Each Player Index
     public int playerIndex = -1;
@@ -142,6 +143,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         stunFBX = transform.GetChild(2).gameObject;
         castingBar = mainUi.transform.GetChild(4).GetChild(1).GetComponent<Image>();
 
+        restrictSound = GameObject.Find("RestrictSound").GetComponent<AudioSource>();
         worldCanvas = GameObject.Find("WorldCanvas");
         playerStatusUi = Instantiate(playerStatusUiPrefab, worldCanvas.transform).GetComponent<PlayerStatusUI>();
         playerStatusUi.player = this;
@@ -150,7 +152,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         playerIndex = photonView.ViewID;
         PlayerList.Instance.playerDictionary.Add(playerIndex, this);
         forbiddenCountTxt = mainUi.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>();
-        forbiddenEnterImage = mainUi.transform.GetChild(0).GetChild(2).gameObject;
+        forbiddenEnterImage = mainUi.transform.GetChild(0).GetChild(3).gameObject;
 
         if (photonView.IsMine)
         {
@@ -182,6 +184,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             forbiddenDelay += Time.deltaTime;
             if(forbiddenDelay >= 1)
             {
+                restrictSound.Play();
                 forbiddenCount--;
                 forbiddenDelay = 0;
 
