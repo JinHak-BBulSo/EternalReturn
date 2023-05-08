@@ -76,7 +76,7 @@ public class ItemManager : SingleTonBase<ItemManager>
     public int[] DeleteInferiorList(int ItemId)
     {
         int[] forReturn = new int[2];
-        ItemStat item_base = ItemManager.Instance.itemList[ItemId - 1];
+        ItemStat item_base = new ItemStat(ItemManager.Instance.itemList[ItemId - 1]);
         int id_1 = itemDefine.FineInferiorItemId(itemCombineDictionary, ItemId).itemId_1;
         int id_2 = itemDefine.FineInferiorItemId(itemCombineDictionary, ItemId).itemId_2;
         ItemStat item_1 = new ItemStat(itemList[id_1 - 1]);
@@ -258,7 +258,7 @@ public class ItemManager : SingleTonBase<ItemManager>
             }
         }
 
-        ItemStat targetItem_ = default;
+        ItemStat targetItem_ = new ItemStat();
         if (isChk)
         {
 
@@ -363,7 +363,7 @@ public class ItemManager : SingleTonBase<ItemManager>
 
         if (isChk)
         {
-            ItemStat targetItem_ = FindItemFromList(item_, itemlist_);
+            ItemStat targetItem_ = new ItemStat(FindItemFromList(item_, itemlist_));
             if (targetItem_ != default)
             {
                 if (targetItem_.count <= 1)
@@ -671,7 +671,7 @@ public class ItemManager : SingleTonBase<ItemManager>
         List<ItemStat> toSortWishList = new List<ItemStat>(); // 위시리스트가 아닌 템들을 저장하기 위한 리스트
         List<ItemStat> toSortRareList = new List<ItemStat>();
         List<ItemStat> toSortUncommonList = new List<ItemStat>();
-        ItemStat item1 = default;
+        ItemStat item1 = new ItemStat();
         // 위시리스트 아이템 리스트랑, 위시리스트가 아닌 아이템 리스트 구별
 
 
@@ -729,7 +729,7 @@ public class ItemManager : SingleTonBase<ItemManager>
             case 1:
                 for (int i = 0; i < ItemInferiorUncommon.Count; i++)
                 {
-                    ItemStat tier1 = ItemInferiorUncommon[i];
+                    ItemStat tier1 = new ItemStat(ItemInferiorUncommon[i]);
                     if (tier1.id == item.id)
                     {
                         DeleteInferiorList(item.id);
@@ -740,7 +740,7 @@ public class ItemManager : SingleTonBase<ItemManager>
                 Debug.Log(item.name);
                 for (int i = 0; i < ItemInferiorRare.Count; i++)
                 {
-                    ItemStat tier2 = ItemInferiorRare[i];
+                    ItemStat tier2 = new ItemStat(ItemInferiorRare[i]);
                     if (tier2.id == item.id)
                     {
                         Debug.Log("!!");
@@ -751,7 +751,7 @@ public class ItemManager : SingleTonBase<ItemManager>
             case 3:
                 for (int i = 0; i < itemWishList.Count; i++)
                 {
-                    ItemStat tier1 = itemWishList[i];
+                    ItemStat tier1 = new ItemStat(itemWishList[i]);
                     if (tier1.id == item.id)
                     {
                         Debug.Log("!!");
