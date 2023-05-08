@@ -187,11 +187,11 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 restrictSound.Play();
                 forbiddenCount--;
                 forbiddenDelay = 0;
+                forbiddenCountTxt.text = forbiddenCount.ToString();
 
-                if(forbiddenCount == 0)
+                if (forbiddenCount == 0)
                 {
                     playerStat.nowHp = 0;
-                    forbiddenCountTxt.text = forbiddenCount.ToString();
                 }
             }
         }
@@ -203,7 +203,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         if (photonView.IsMine)
         {
 
-            if (playerStat.nowHp <= 0)
+            if (playerStat.nowHp <= 0 && PlayerController.playerState != PlayerController.PlayerState.DIE)
             {
                 playerStat.nowHp = 0;
                 playerController.ChangeState(new PlayerDie());

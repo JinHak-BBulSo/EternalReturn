@@ -52,6 +52,8 @@ public class ForbiddenAreaSelector : MonoBehaviourPun
     [PunRPC]
     public void ForbiddenAreaSet(int firstArea_, int secondArea_)
     {
+        Debug.Log(first);
+        Debug.Log(second);
         photonView.RPC("EmergencyAreaSet", RpcTarget.All, firstArea_, secondArea_);
 
         StartCoroutine(ForbiddenAreaSetStart(firstArea_));
