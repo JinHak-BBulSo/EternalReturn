@@ -214,7 +214,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             if (playerStat.nowHp <= 0 && PlayerController.playerState != PlayerController.PlayerState.DIE)
             {
                 playerStat.nowHp = 0;
-                PlayerList.Instance.playerCount--;
                 playerController.ChangeState(new PlayerDie());
                 return;
             }
