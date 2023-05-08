@@ -24,8 +24,8 @@ public class AllyFowUnit : FowUnit
 
         if (gameObject == PlayerManager.Instance.Player)
         {
-            InGameGlobalUI.AddDayStartAction(StartDay);
-            InGameGlobalUI.AddNightStartAction(StartNight);
+            DayNightSystem.AddDayStartAction(StartDay);
+            DayNightSystem.AddNightStartAction(StartNight);
         }
     }
 
@@ -52,8 +52,8 @@ public class AllyFowUnit : FowUnit
         FowManager.RemoveAllyUnit(this);
         if (gameObject == PlayerManager.Instance.Player)
         {
-            InGameGlobalUI.RemoveDayStartAction(StartDay);
-            InGameGlobalUI.RemoveNightStartAction(StartNight);
+            DayNightSystem.RemoveDayStartAction(StartDay);
+            DayNightSystem.RemoveNightStartAction(StartNight);
         }
     }
     private void OnDestroy()
@@ -61,8 +61,8 @@ public class AllyFowUnit : FowUnit
         FowManager.RemoveAllyUnit(this);
         if (gameObject == PlayerManager.Instance.Player)
         {
-            InGameGlobalUI.RemoveDayStartAction(StartDay);
-            InGameGlobalUI.RemoveNightStartAction(StartNight);
+            DayNightSystem.RemoveDayStartAction(StartDay);
+            DayNightSystem.RemoveNightStartAction(StartNight);
         }
     }
 }

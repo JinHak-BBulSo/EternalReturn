@@ -136,7 +136,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
         //GameObject itemBoxUi_ = Resources.Load<GameObject>("06.ItemBox/Prefab/ItemBoxUI/ItemBoxUi");
 
-        mainUi = GameObject.Find("TestUi");
+        mainUi = GameObject.Find("Main UI Canvas");
         itemBoxUi = mainUi.transform.GetChild(3).gameObject;
         itemBoxSlotList = itemBoxUi.transform.GetChild(0).GetChild(4).GetComponent<ItemBoxSlotList>();
         craftTool.transform.GetChild(0).GetComponent<CraftTool>().craftPlayer = this;
@@ -153,6 +153,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         PlayerList.Instance.playerDictionary.Add(playerIndex, this);
         forbiddenCountTxt = mainUi.transform.GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>();
         forbiddenEnterImage = mainUi.transform.GetChild(0).GetChild(3).gameObject;
+        PlayerList.Instance.playerCount++;
 
         if (photonView.IsMine)
         {
@@ -185,7 +186,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
 
         }
 
-        if (photonView.IsMine && isInForbiddenArea)
+        if (photonView.IsMine && isInForbiddenArea && forbiddenCount != 0)
         {
             forbiddenEnterImage.SetActive(true);
             forbiddenDelay += Time.deltaTime;

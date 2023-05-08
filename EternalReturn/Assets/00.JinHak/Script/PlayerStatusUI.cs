@@ -16,7 +16,7 @@ public class PlayerStatusUI : MonoBehaviour
 
     private void Start()
     {
-        mainUi = GameObject.Find("TestUi");
+        mainUi = GameObject.Find("Main UI Canvas");
         playerStatusUi = this.gameObject;
         //player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
 
@@ -29,6 +29,14 @@ public class PlayerStatusUI : MonoBehaviour
         if(player != PlayerManager.Instance.Player.GetComponent<PlayerBase>())
         {
             playerHpBar.color = new Color(1, 0, 0, 1);
+
+            Material foeMaterial = new Material(Shader.Find("UI/Default"));
+            foeMaterial.renderQueue = transform.GetChild(0).GetComponent<Image>().material.renderQueue - 50;
+            foreach (var img in GetComponentsInChildren<Image>())
+            {
+                img.material = foeMaterial;
+            }
+            playerLevelTxt.material = foeMaterial;
         }
     }
 

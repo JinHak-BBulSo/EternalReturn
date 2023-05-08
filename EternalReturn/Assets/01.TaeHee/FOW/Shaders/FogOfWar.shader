@@ -41,7 +41,7 @@ Shader "FogOfWar/FogOfWar"
 
 	SubShader
 	{
-		Tags { "Queue" = "Overlay+20" "RenderType" = "Transparent" }
+		Tags { "Queue" = "Transparent+600" "RenderType" = "Transparent" }
 		ZTest Off
 		Blend SrcAlpha OneMinusSrcAlpha
 		Pass
