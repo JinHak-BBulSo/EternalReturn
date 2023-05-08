@@ -8,6 +8,12 @@ using UnityEngine.AI;
 public class MiniMapCamera : MonoBehaviour
 {
     private Camera miniMapCamera = default;
+    private float viewfortRectX = 0.84375f;
+    private float viewfortRectY = 0.01f;
+    private float viewfortRectW = 0.155f;
+    private float viewfortRectH = 0.2759f;
+
+    private bool isExtended = false;
 
     private void Start()
     {
@@ -16,14 +22,13 @@ public class MiniMapCamera : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetKeyDown(KeyCode.Tab) && !isExtended)
         {
-            RaycastHit hit;
-
-            if (Physics.Raycast(miniMapCamera.ScreenPointToRay(Input.mousePosition), out hit))
-            {
-                Camera.main.transform.position = hit.point;
-            }
+            
+        }
+        else if(Input.GetKeyDown(KeyCode.Tab) && isExtended) 
+        {
+            
         }
     }
 }

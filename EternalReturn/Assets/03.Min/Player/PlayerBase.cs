@@ -175,6 +175,10 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             }
 
         }
+        else
+        {
+            playerStatusUi.playerHpBar.color = new Color(1, 0, 0, 1);
+        }
 
         if (photonView.IsMine && isInForbiddenArea)
         {
@@ -287,6 +291,7 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 if (Physics.Raycast(miniMapCamera.ScreenPointToRay(Input.mousePosition), out hit))
                 {
                     Vector3 clickPos = Input.mousePosition;
+                    Debug.Log(clickPos);
                     if (clickPos.x < 625 || clickPos.x > 735 ||
                         clickPos.y < 10 || clickPos.y > 110)
                     {

@@ -20,7 +20,7 @@ public class MonsterDie : IMonsterState
     }
     public void StateUpdate()
     {
-
+        monsterController.monsterRigid.velocity = Vector3.zero;
     }
     public void StateExit()
     {
