@@ -271,7 +271,6 @@ public class Aya : PlayerBase
                 playerController.ChangeState(new PlayerIdle());
                 playerAni.SetLayerWeight(1, 0f);
                 StartCoroutine(SkillCooltime(1, skillSystem.skillInfos[1].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
-                Debug.Log(skillSystem.skillInfos[1].cooltime);
                 yield break;
             }
             if (Input.GetKeyDown(KeyCode.W))
@@ -282,7 +281,6 @@ public class Aya : PlayerBase
                 playerController.ChangeState(new PlayerIdle());
                 playerAni.SetLayerWeight(1, 0f);
                 StartCoroutine(SkillCooltime(1, skillSystem.skillInfos[1].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
-                Debug.Log(skillSystem.skillInfos[1].cooltime);
                 yield break;
             }
             if (Input.GetMouseButtonDown(1))
@@ -324,12 +322,6 @@ public class Aya : PlayerBase
             {
                 var dir = corners[currentCorner] - transform.position;
                 Vector3 movePos = Vector3.Scale(dir.normalized, transform.forward);
-                Debug.Log(movePos.magnitude);
-                // if (movePos.magnitude < 0.1f)
-                // {
-                //     float moveDir = GetMoveDirection(movePos.x, movePos.z);
-                //     playerAni.SetFloat("MoveDir", moveDir);
-                // }
                 playerAni.SetFloat("MoveDirX", movePos.x);
                 playerAni.SetFloat("MoveDirZ", movePos.z);
                 // if (movePos.x >= 0)
