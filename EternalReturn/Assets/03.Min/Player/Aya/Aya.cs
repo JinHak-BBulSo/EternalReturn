@@ -319,7 +319,7 @@ public class Aya : PlayerBase
             if (currentCorner < corners.Count)
             {
                 var dir = corners[currentCorner] - transform.position;
-                Vector3 movePos = dir.normalized;
+                Vector3 movePos = Vector3.Scale(dir.normalized, transform.forward);
                 if (movePos.x >= 0)
                 {
                     if (movePos.z <= 0)
