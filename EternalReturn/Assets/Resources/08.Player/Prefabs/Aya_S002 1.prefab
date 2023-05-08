@@ -2084,6 +2084,7 @@ MonoBehaviour:
   forbiddenDelay: 0
   forbiddenCountTxt: {fileID: 0}
   forbiddenEnterImage: {fileID: 0}
+  restrictSound: {fileID: 0}
   playerIndex: -1
   isWon: 0
   RRange: {fileID: 3384395866084856133}

@@ -10875,7 +10875,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 86231673200e85e489e1e46b3a4ab5c5, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -20823,6 +20823,86 @@ PrefabInstance:
       propertyPath: announce
       value: 
       objectReference: {fileID: 1372159543}
+    - target: {fileID: 9156882081744837070, guid: 24f407d76ee4e0c4a944b14182310663,
+        type: 3}
+      propertyPath: areaSprite.Array.size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 9156882081744837070, guid: 24f407d76ee4e0c4a944b14182310663,
+        type: 3}
+      propertyPath: areaSprite.Array.data[0]
+      value: 
+      objectReference: {fileID: 2035870458}
+    - target: {fileID: 9156882081744837070, guid: 24f407d76ee4e0c4a944b14182310663,
+        type: 3}
+      propertyPath: areaSprite.Array.data[1]
+      value: 
+      objectReference: {fileID: 1107851492}
+    - target: {fileID: 9156882081744837070, guid: 24f407d76ee4e0c4a944b14182310663,
+        type: 3}
+      propertyPath: areaSprite.Array.data[2]
+      value: 
+      objectReference: {fileID: 1033486523}
+    - target: {fileID: 9156882081744837070, guid: 24f407d76ee4e0c4a944b14182310663,
+        type: 3}
+      propertyPath: areaSprite.Array.data[3]
+      value: 
+      objectReference: {fileID: 1319217752}
+    - target: {fileID: 9156882081744837070, guid: 24f407d76ee4e0c4a944b14182310663,
+        type: 3}
+      propertyPath: areaSprite.Array.data[4]
+      value: 
+      objectReference: {fileID: 241607084}
+    - target: {fileID: 9156882081744837070, guid: 24f407d76ee4e0c4a944b14182310663,
+        type: 3}
+      propertyPath: areaSprite.Array.data[5]
+      value: 
+      objectReference: {fileID: 1126664491}
+    - target: {fileID: 9156882081744837070, guid: 24f407d76ee4e0c4a944b14182310663,
+        type: 3}
+      propertyPath: areaSprite.Array.data[6]
+      value: 
+      objectReference: {fileID: 172961941}
+    - target: {fileID: 9156882081744837070, guid: 24f407d76ee4e0c4a944b14182310663,
+        type: 3}
+      propertyPath: areaSprite.Array.data[7]
+      value: 
+      objectReference: {fileID: 329934271}
+    - target: {fileID: 9156882081744837070, guid: 24f407d76ee4e0c4a944b14182310663,
+        type: 3}
+      propertyPath: areaSprite.Array.data[8]
+      value: 
+      objectReference: {fileID: 1051616349}
+    - target: {fileID: 9156882081744837070, guid: 24f407d76ee4e0c4a944b14182310663,
+        type: 3}
+      propertyPath: areaSprite.Array.data[9]
+      value: 
+      objectReference: {fileID: 468343164}
+    - target: {fileID: 9156882081744837070, guid: 24f407d76ee4e0c4a944b14182310663,
+        type: 3}
+      propertyPath: areaSprite.Array.data[10]
+      value: 
+      objectReference: {fileID: 55959438}
+    - target: {fileID: 9156882081744837070, guid: 24f407d76ee4e0c4a944b14182310663,
+        type: 3}
+      propertyPath: areaSprite.Array.data[11]
+      value: 
+      objectReference: {fileID: 1272825733}
+    - target: {fileID: 9156882081744837070, guid: 24f407d76ee4e0c4a944b14182310663,
+        type: 3}
+      propertyPath: areaSprite.Array.data[12]
+      value: 
+      objectReference: {fileID: 760366108}
+    - target: {fileID: 9156882081744837070, guid: 24f407d76ee4e0c4a944b14182310663,
+        type: 3}
+      propertyPath: areaSprite.Array.data[13]
+      value: 
+      objectReference: {fileID: 1193023801}
+    - target: {fileID: 9156882081744837070, guid: 24f407d76ee4e0c4a944b14182310663,
+        type: 3}
+      propertyPath: areaSprite.Array.data[14]
+      value: 
+      objectReference: {fileID: 655227303}
     - target: {fileID: 9156882081744837071, guid: 24f407d76ee4e0c4a944b14182310663,
         type: 3}
       propertyPath: m_RootOrder
@@ -35638,7 +35718,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2035870457}
   - component: {fileID: 2035870458}
-  - component: {fileID: 2035870459}
   m_Layer: 10
   m_Name: Alley
   m_TagString: Untagged
@@ -35713,103 +35792,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &2035870459
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2035870456}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.28, y: 2.46}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -1.5699999, y: 0.02}
-      - {x: -1.5999999, y: 0.03}
-      - {x: -1.64, y: -0.01}
-      - {x: -1.64, y: -0.049999997}
-      - {x: -0.45999998, y: -1.23}
-      - {x: -0.42, y: -1.23}
-      - {x: -0.089999996, y: -0.9}
-      - {x: -0.089999996, y: -0.88}
-      - {x: -0.12, y: -0.87}
-    - - {x: -0.089999996, y: -0.84999996}
-      - {x: -0.089999996, y: -0.85999995}
-      - {x: -0.07, y: -0.88}
-      - {x: -0.06, y: -0.88}
-      - {x: -0.01, y: -0.83}
-      - {x: -0.01, y: -0.81}
-      - {x: -0.04, y: -0.79999995}
-    - - {x: -0.02, y: -0.78999996}
-      - {x: -0.02, y: -0.79999995}
-      - {x: 0, y: -0.82}
-      - {x: 0.01, y: -0.82}
-      - {x: 0.07, y: -0.76}
-      - {x: 0.07, y: -0.74}
-      - {x: 0.04, y: -0.72999996}
-    - - {x: 0.06, y: -0.71999997}
-      - {x: 0.06, y: -0.72999996}
-      - {x: 0.08, y: -0.75}
-      - {x: 0.089999996, y: -0.75}
-      - {x: 0.14, y: -0.7}
-      - {x: 0.14, y: -0.68}
-      - {x: 0.11, y: -0.66999996}
-    - - {x: 0.78999996, y: -0.02}
-      - {x: 0.77, y: -0.02}
-      - {x: 0.59, y: -0.19}
-      - {x: 0.59, y: -0.29}
-      - {x: 1.37, y: -0.59}
-      - {x: 1.4, y: -0.58}
-      - {x: 1.4, y: -0.56}
-      - {x: 1.05, y: -0.21}
-      - {x: 1.03, y: -0.21}
-    - - {x: 0.7, y: 0.96999997}
-      - {x: 0.68, y: 0.95}
-      - {x: 0.69, y: 0.91999996}
-      - {x: 1.62, y: 0.01}
-      - {x: 1.64, y: 0.02}
-      - {x: 1.64, y: 0.049999997}
-      - {x: 0.71999997, y: 0.96999997}
-    - - {x: -1.4399999, y: 0.24}
-      - {x: -1.4699999, y: 0.16}
-      - {x: -1.4699999, y: 0.12}
-      - {x: -1.42, y: 0.12}
-      - {x: -1.3299999, y: 0.16}
-      - {x: -0.96, y: 0.64}
-      - {x: -0.96, y: 0.66999996}
-      - {x: -0.98999995, y: 0.66999996}
-    - - {x: 0.55, y: 0.77}
-      - {x: 0.58, y: 0.78}
-      - {x: 0.58, y: 0.81}
-      - {x: 0.55, y: 0.82}
-      - {x: 0.53, y: 0.79999995}
-    - - {x: -0.13, y: 0.94}
-      - {x: -0.13, y: 0.93}
-      - {x: -0.11, y: 0.90999997}
-      - {x: -0.099999994, y: 0.90999997}
-      - {x: 0.17, y: 1.18}
-      - {x: 0.17, y: 1.1999999}
-      - {x: 0.14, y: 1.2099999}
-    - - {x: -0.41, y: 1.23}
-      - {x: -0.42, y: 1.2099999}
-      - {x: -0.25, y: 1.04}
-      - {x: -0.22, y: 1.05}
-      - {x: -0.22, y: 1.0699999}
-      - {x: -0.38, y: 1.23}
 --- !u!1001 &2036003048
 PrefabInstance:
   m_ObjectHideFlags: 0

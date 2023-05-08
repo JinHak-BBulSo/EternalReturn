@@ -1623,6 +1623,7 @@ MonoBehaviour:
   forbiddenDelay: 0
   forbiddenCountTxt: {fileID: 0}
   forbiddenEnterImage: {fileID: 0}
+  restrictSound: {fileID: 0}
   playerIndex: -1
   weaponStack: 0
   skillQ: {fileID: 634131373}
