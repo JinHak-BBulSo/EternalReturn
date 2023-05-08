@@ -67,18 +67,26 @@ public class ForbiddenAreaSelector : MonoBehaviourPun
     [PunRPC]
     public void EmergencyAreaSet(int firstArea_, int secondArea_)
     {
-        areaSprite[firstArea_].color = new Color(1, 197 / 255, 37 / 255, 180 / 255);
-        areaSprite[secondArea_].color = new Color(1, 197 / 255, 37 / 255, 180 / 255);
+        Debug.Log("일단 호출은 되긴 함??");
+        areaSprite[firstArea_].color = new Color(1, 197.0f / 255.0f, 37.0f / 255.0f, 180.0f / 255.0f);
+        areaSprite[secondArea_].color = new Color(1, 197.0f / 255.0f, 37.0f / 255.0f, 180.0f / 255.0f);
     }
     IEnumerator ForbiddenAreaSetStart(int areaIndex_)
     {
         yield return new WaitForSeconds(selectDelay);
-        areaSprite[areaIndex_].color = new Color(1, 0, 0, 180 / 255);
+        Debug.Log("설마 바로 여기오냐?");
+        areaSprite[areaIndex_].color = new Color(1, 0, 0, 180.0f / 255.0f);
 
         for (int i = 0; i < allArea[areaIndex_].transform.childCount; i++)
         {
-            allArea[areaIndex_].transform.GetChild(i).GetComponent<SafetyArea>().enabled = false;
-            allArea[areaIndex_].transform.GetChild(i).GetComponent<ForbiddenArea>().enabled = true;
+            if (i < allArea[areaIndex_].transform.childCount / 2)
+            {
+                allArea[areaIndex_].gameObject.SetActive(true);
+            }
+            else
+            {
+                allArea[areaIndex_].gameObject.SetActive(false);
+            }
         }
         announce.announceAudio.clip = announce.allAnnounce[2];
         announce.announceAudio.Play();
