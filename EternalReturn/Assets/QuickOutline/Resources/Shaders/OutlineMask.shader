@@ -1,4 +1,4 @@
-﻿//
+//
 //  OutlineMask.shader
 //  QuickOutline
 //
@@ -13,7 +13,7 @@ Shader "Custom/Outline Mask" {
 
   SubShader {
     Tags {
-      "Queue" = "Transparent+100"
+      "Queue" = "Overlay+100"
       "RenderType" = "Transparent"
     }
 
@@ -25,7 +25,7 @@ Shader "Custom/Outline Mask" {
       ColorMask 0
 
       Stencil {
-        Ref 1
+        Ref 4
         Pass Replace
       }
     }
