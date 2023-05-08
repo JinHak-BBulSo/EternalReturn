@@ -175,10 +175,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
             }
 
         }
-        else
-        {
-            playerStatusUi.playerHpBar.color = new Color(1, 0, 0, 1);
-        }
 
         if (photonView.IsMine && isInForbiddenArea)
         {

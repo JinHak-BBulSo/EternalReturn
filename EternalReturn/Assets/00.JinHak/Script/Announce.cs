@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class Announce : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public AudioClip[] allAnnounce = new AudioClip[3];
+    public AudioSource announceAudio = default;
+    private bool isGameStart = false;
     void Start()
     {
-        
+        announceAudio = GetComponent<AudioSource>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(PlayerManager.Instance.IsGameStart && !isGameStart)
+        {
+            isGameStart = true;
+
+            announceAudio.clip = allAnnounce[0];
+            announceAudio.Play();
+        }
     }
 }

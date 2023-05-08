@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ForbiddenArea : MonoBehaviour
 {
+    public int areaIndex = -1;
     private void Start()
     {
         this.enabled = false;
@@ -13,6 +14,7 @@ public class ForbiddenArea : MonoBehaviour
         if(other.gameObject == PlayerManager.Instance.Player)
         {
             other.GetComponent<PlayerBase>().isInForbiddenArea = true;
+            PlayerManager.Instance.areaIndex = areaIndex;
         }
     }
 }

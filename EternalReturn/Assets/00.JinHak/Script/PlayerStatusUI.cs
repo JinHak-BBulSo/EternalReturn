@@ -25,6 +25,11 @@ public class PlayerStatusUI : MonoBehaviour
         playerExpBar = mainUi.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>();
         playerLevelTxt = transform.GetChild(4).GetChild(0).GetComponent<Text>();
         playerHpBar.fillAmount = player.playerStat.nowHp / player.playerStat.maxHp;
+
+        if(player != PlayerManager.Instance.Player.GetComponent<PlayerBase>())
+        {
+            playerHpBar.color = new Color(1, 0, 0, 1);
+        }
     }
 
     private void Update()

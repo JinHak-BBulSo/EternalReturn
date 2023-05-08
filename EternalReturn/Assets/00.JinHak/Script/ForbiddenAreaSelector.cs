@@ -14,6 +14,7 @@ public class ForbiddenAreaSelector : MonoBehaviourPun
     private int first;
     private int second;
     private int selectCount = 0;
+    public Announce announce = default;
 
     void Start()
     {
@@ -78,6 +79,8 @@ public class ForbiddenAreaSelector : MonoBehaviourPun
             allArea[areaIndex_].transform.GetChild(i).GetComponent<SafetyArea>().enabled = false;
             allArea[areaIndex_].transform.GetChild(i).GetComponent<ForbiddenArea>().enabled = true;
         }
+        announce.announceAudio.clip = announce.allAnnounce[2];
+        announce.announceAudio.Play();
     }
     IEnumerator SelectDelay()
     {
