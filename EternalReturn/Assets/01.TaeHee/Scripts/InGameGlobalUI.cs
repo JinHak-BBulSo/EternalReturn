@@ -1,13 +1,22 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.Events;
 using UnityEngine.UI;
+
+public enum DayNightType
+{
+    Day = 0,
+    Night = 1
+}
 
 public class InGameGlobalUI : MonoBehaviour
 {
     private const string INGAME_SPRITES_PATH = "09.InGameUI/Sprite/";
     private const string DAY_SUN_NAME = "Ico_DaySun";
     private const string NIGHT_MOON_NAME = "Ico_NightMoon";
+
+    private static UnityEvent dayStartEvent = new UnityEvent();
+    private static UnityEvent nightStartEvent = new UnityEvent();
 
     [SerializeField] private Text timerText;
     [SerializeField] private Image dayNightImage;
@@ -24,6 +33,28 @@ public class InGameGlobalUI : MonoBehaviour
 
     private bool isNight = false;
 
+    private bool isGameStart = false;
+
+    public static void AddDayStartAction(UnityAction action)
+    {
+        dayStartEvent.AddListener(action);
+    }
+
+    public static void RemoveDayStartAction(UnityAction action)
+    {
+        dayStartEvent.RemoveListener(action);
+    }
+
+    public static void AddNightStartAction(UnityAction action)
+    {
+        nightStartEvent.AddListener(action);
+    }
+
+    public static void RemoveNightStartAction(UnityAction action)
+    {
+        nightStartEvent.RemoveListener(action);
+    }
+
     public void UpdateUserNumber(int currentUserNumber)
     {
         userNumberText.text = $"{currentUserNumber}";
@@ -31,18 +62,25 @@ public class InGameGlobalUI : MonoBehaviour
 
     private void Awake()
     {
-        dayNightIcons[0] = Resources.Load<Sprite>($"{INGAME_SPRITES_PATH}{DAY_SUN_NAME}");
-        dayNightIcons[1] = Resources.Load<Sprite>($"{INGAME_SPRITES_PATH}{NIGHT_MOON_NAME}");
+        dayNightIcons[(int)DayNightType.Day] = Resources.Load<Sprite>($"{INGAME_SPRITES_PATH}{DAY_SUN_NAME}");
+        dayNightIcons[(int)DayNightType.Night] = Resources.Load<Sprite>($"{INGAME_SPRITES_PATH}{NIGHT_MOON_NAME}");
 
         directionalLight = GameObject.Find("Directional Light").GetComponent<Light>();
         defaultLightColor = directionalLight.color;
 
+        dayStartEvent.AddListener(StartDay);
+        nightStartEvent.AddListener(StartNight);
+
         UpdateUserNumber(2);
     }
 
-    private void Start()
+    private void Update()
     {
-        StartCoroutine(TimerLoop());
+        if(PlayerManager.Instance.IsGameStart && !isGameStart)
+        {
+            isGameStart = true;
+            StartCoroutine(TimerLoop());
+        }
     }
 
     private void UpdateTimer()
@@ -52,7 +90,7 @@ public class InGameGlobalUI : MonoBehaviour
 
     private IEnumerator TimerLoop()
     {
-        WaitForSeconds waitForOneSecond = new WaitForSeconds(0.01f);
+        WaitForSeconds waitForOneSecond = new WaitForSeconds(1f);
 
         while (true)
         {
@@ -64,9 +102,15 @@ public class InGameGlobalUI : MonoBehaviour
                     minutes = 2;
                     seconds = 30;
                     isNight = !isNight;
-                    dayNightImage.sprite = isNight ? dayNightIcons[1] : dayNightIcons[0];
-                    dayText.text = isNight ? dayText.text : $"DAY {++dayCount}";
-                    directionalLight.color = isNight ? Color.grey : defaultLightColor;
+
+                    if (!isNight)
+                    {
+                        dayStartEvent?.Invoke();
+                    }
+                    else
+                    {
+                        nightStartEvent?.Invoke();
+                    }
 
                     UpdateTimer();
                     yield return waitForOneSecond;
@@ -80,5 +124,18 @@ public class InGameGlobalUI : MonoBehaviour
             UpdateTimer();
             yield return waitForOneSecond;
         }
+    }
+
+    private void StartDay()
+    {
+        dayText.text = $"DAY {++dayCount}";
+        dayNightImage.sprite = dayNightIcons[0];
+        directionalLight.color = defaultLightColor;
+    }
+
+    private void StartNight()
+    {
+        dayNightImage.sprite = dayNightIcons[1];
+        directionalLight.color = Color.gray;
     }
 }

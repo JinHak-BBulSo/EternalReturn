@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
 {
+
     private static FocusedItem focusedItem;
 
     private ItemStat item;
@@ -14,7 +15,6 @@ public class ItemSlot : MonoBehaviour
     {
         if (focusedItem == null)
         {
-            //
             //focusedItem = transform.root.GetChild(3).GetChild(3).GetComponent<FocusedItem>();
             focusedItem = GameObject.Find("Focused Item").GetComponent<FocusedItem>();
         }
@@ -27,7 +27,7 @@ public class ItemSlot : MonoBehaviour
     {
         item = newItem;
 
-        slotImage.sprite = WishListSetting.ItemBgSpritesRO[item.rare];
+        slotImage.sprite = UIResources.ItemBgSpritesRO[item.rare];
         itemImage.sprite = ItemManager.Instance.itemListObj[item.id].GetComponent<SpriteRenderer>().sprite;
     }
 

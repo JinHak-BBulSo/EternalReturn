@@ -110,11 +110,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemBoxIndex: -1
   itemPrefabs: []
   boxItems: []
-  playerItemBoxSlotList: []
-  contactPlayer: []
+  contactedPlayer: []
+  slotList: {fileID: 0}
   itemBoxAudio: {fileID: 0}
+  notOpenItemBoxImg: {fileID: 0}
 --- !u!114 &1313659352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,29 +131,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isClick: 0
   monster: {fileID: 0}
+  player: {fileID: 0}
   outlineMode: 0
   outlineColor: {r: 0, g: 0.99010324, b: 1, a: 1}
   outlineWidth: 2
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!1 &7932586884671050997 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 575eb873ce178c74e8ef3dc2b42f3e61,
-    type: 3}
-  m_PrefabInstance: {fileID: 7122262971122756004}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &6251228854078448213
+--- !u!82 &7401234555607725737
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7932586884671050997}
+  m_GameObject: {fileID: 806534641099202016}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: af3ba6e403ded5c4880f61492df9eb73, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

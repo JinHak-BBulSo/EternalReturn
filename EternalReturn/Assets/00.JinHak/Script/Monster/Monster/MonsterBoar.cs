@@ -26,6 +26,7 @@ public class MonsterBoar : Monster
     IEnumerator SkillReady()
     {
         audioSource.clip = sounds[4];
+        transform.LookAt(ExceptY.ExceptYPos(monsterController.monster.firstAttackPlayer.transform.position) + new Vector3(0, this.transform.position.y));
         StartCoroutine(SkillCoolTime(skillCoolTime));
         skillRange.SetActive(true);
         monsterController.monsterAni.SetBool("isSkillReady", true);
@@ -48,7 +49,6 @@ public class MonsterBoar : Monster
     {
         isAssult = false;
         monsterController.monsterRigid.velocity = Vector3.zero;
-        monsterController.navMeshAgent.enabled = true;
         monsterController.isInSkillUse = false;
         monsterController.monsterAni.SetBool("isSkill", false);
         collisionTarget.Clear();
@@ -67,13 +67,12 @@ public class MonsterBoar : Monster
             PlayerBase nowTargetPlayer_ = other.GetComponent<PlayerBase>();
             if (!collisionTarget.Contains(other.GetComponent<PlayerBase>()))
             {
-                DamageMessage dm = new DamageMessage(this.gameObject, 100);
+                DamageMessage dm = new DamageMessage(this.gameObject, monsterStatus.attackPower * 1.25f);
                 nowTargetPlayer_.TakeDamage(dm);
 
                 collisionTarget.Add(other.GetComponent<PlayerBase>());
-                Rigidbody rigid_ = other.GetComponent<Rigidbody>();
-                rigid_.AddForce(transform.forward * 45, ForceMode.Impulse);
-                StartCoroutine(NuckBackEnd(rigid_));
+                nowTargetPlayer_.playerRigid.AddForce(transform.forward * 37, ForceMode.Impulse);
+                StartCoroutine(NuckBackEnd(nowTargetPlayer_.playerRigid));
             }
         }
     }

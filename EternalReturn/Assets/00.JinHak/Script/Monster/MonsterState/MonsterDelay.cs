@@ -15,22 +15,25 @@ public class MonsterDelay : IMonsterState
 
     public void StateFixedUpdate()
     {
-        
+
     }
 
     public void StateUpdate()
     {
-        
+
     }
     public void StateExit()
     {
-        
+
     }
     IEnumerator Delay()
     {
         yield return new WaitForSeconds(1.1f);
+        monsterController.monsterRigid.velocity = Vector3.zero;
+        monsterController.navMeshAgent.enabled = true;
         monsterController.monsterAni.SetBool("isAttack", false);
         monsterController.monsterAni.SetBool("isSkill", false);
+        monsterController.isInSkillUse = false;
         monsterController.actionDelay = false;
     }
 }

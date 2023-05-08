@@ -73,6 +73,29 @@ MonoBehaviour:
   - SetPlayerStat
   - DebuffSet
   - MonsterBoxSet
+<<<<<<< HEAD
+=======
+  - BattleEnd
+  - BattleStart
+  - ContinousDamageEndSet
+  - ContinousDamageStarteSet
+  - Respawn
+  - SetNotOpenImg
+  - FirstAttackCheck
+  - SendWeaponExp
+  - DamageApply
+  - UpdateStatus
+  - LevelUp
+  - DieCheck
+  - GetDefExp
+  - SendLevelUp
+  - DieCheckMonster
+  - FirstSpawn
+  - ForbiddenAreaSelect
+  - ForbiddenAreaSet
+  - EmergencyAreaSet
+  - IndexSet
+>>>>>>> origin/Dev
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

@@ -225,3 +225,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monster: {fileID: 0}
+  firstSpawnDelay: 0
+  respawnDelay: 0

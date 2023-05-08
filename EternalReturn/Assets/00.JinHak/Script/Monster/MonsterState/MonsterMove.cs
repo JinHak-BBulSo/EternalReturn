@@ -32,7 +32,7 @@ public class MonsterMove : IMonsterState
         monsterController.monsterAni.SetBool("isMove", true);
         while (true)
         {
-            if (monsterController.monster.isDie)
+            if (monsterController.monster.isDie || monsterController.targetPlayer.PlayerController.playerState == PlayerController.PlayerState.DIE)
             {
                 yield break;
             }

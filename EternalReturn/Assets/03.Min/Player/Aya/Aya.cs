@@ -65,6 +65,10 @@ public class Aya : PlayerBase
     protected override void AttackEnd()
     {
         base.AttackEnd();
+        if (!photonView.IsMine || enemy == default)
+        {
+            return;
+        }
         if (enemy.GetComponent<Monster>() != null)
         {
             DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower);
@@ -194,15 +198,18 @@ public class Aya : PlayerBase
     {
         if (photonView.IsMine)
         {
-            if (enemy.GetComponent<Monster>() != null)
+            if (enemy != default)
             {
-                DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower + 60 + (55 * (skillSystem.skillInfos[0].CurrentLevel - 1)) + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.7f));
-                enemy.GetComponent<Monster>().TakeDamage(dm);
-            }
-            else if (enemy.GetComponent<PlayerBase>() != null)
-            {
-                DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower + 60 + (55 * (skillSystem.skillInfos[0].CurrentLevel - 1)) + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.7f));
-                enemy.GetComponent<PlayerBase>().TakeDamage(dm);
+                if (enemy.GetComponent<Monster>() != null)
+                {
+                    DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower + 60 + (55 * (skillSystem.skillInfos[0].CurrentLevel - 1)) + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.7f));
+                    enemy.GetComponent<Monster>().TakeDamage(dm);
+                }
+                else if (enemy.GetComponent<PlayerBase>() != null)
+                {
+                    DamageMessage dm = new DamageMessage(gameObject, playerTotalStat.attackPower + 60 + (55 * (skillSystem.skillInfos[0].CurrentLevel - 1)) + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.7f));
+                    enemy.GetComponent<PlayerBase>().TakeDamage(dm);
+                }
             }
         }
     }
@@ -216,11 +223,11 @@ public class Aya : PlayerBase
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 1);
         isWon = true;
-        StartCoroutine(SkillCooltime(1, skillSystem.skillInfos[1].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
+
         StartCoroutine(WSkill());
     }
 
-
+    public int shotRate = 0;
     private void Shot()
     {
         AyaBullet bullet = Instantiate(Bullet).GetComponent<AyaBullet>();
@@ -229,6 +236,7 @@ public class Aya : PlayerBase
         + (playerTotalStat.attackPower * (0.2f + (0.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))))
         + (playerTotalStat.skillPower * (0.25f + (0.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))));
         bullet.shootPlayer = this;
+        shotRate++;
         // if (!PhotonNetwork.IsMasterClient && photonView.IsMine)
         // {
         //     photonView.RPC("CallShot", RpcTarget.MasterClient);
@@ -244,7 +252,9 @@ public class Aya : PlayerBase
     {
         AyaBullet bullet = Instantiate(Bullet).GetComponent<AyaBullet>();
         bullet.transform.position = weapon.transform.position;
-        bullet.damage = 30 + (playerTotalStat.attackPower * 0.2f) + (playerTotalStat.skillPower * 0.25f);
+        bullet.damage = 30 + (25 * (skillSystem.skillInfos[1].CurrentLevel - 1))
+        + (playerTotalStat.attackPower * (0.2f + (0.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))))
+        + (playerTotalStat.skillPower * (0.25f + (0.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))));
         bullet.shootPlayer = this;
     }
 
@@ -253,18 +263,26 @@ public class Aya : PlayerBase
         float time = 0f;
         while (true)
         {
-            if (time >= 3.3f)
+            if (shotRate >= 10)
             {
+                shotRate = 0;
                 isWon = false;
                 playerAni.SetBool("isSkill", false);
                 playerController.ChangeState(new PlayerIdle());
+                playerAni.SetLayerWeight(1, 0f);
+                StartCoroutine(SkillCooltime(1, skillSystem.skillInfos[1].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
+                Debug.Log(skillSystem.skillInfos[1].cooltime);
                 yield break;
             }
             if (Input.GetKeyDown(KeyCode.W))
             {
+                shotRate = 0;
                 isWon = false;
                 playerAni.SetBool("isSkill", false);
                 playerController.ChangeState(new PlayerIdle());
+                playerAni.SetLayerWeight(1, 0f);
+                StartCoroutine(SkillCooltime(1, skillSystem.skillInfos[1].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
+                Debug.Log(skillSystem.skillInfos[1].cooltime);
                 yield break;
             }
             if (Input.GetMouseButtonDown(1))
@@ -305,7 +323,43 @@ public class Aya : PlayerBase
             if (currentCorner < corners.Count)
             {
                 var dir = corners[currentCorner] - transform.position;
+                Vector3 movePos = Vector3.Scale(dir.normalized, transform.forward);
+                Debug.Log(movePos.magnitude);
+                // if (movePos.magnitude < 0.1f)
+                // {
+                //     float moveDir = GetMoveDirection(movePos.x, movePos.z);
+                //     playerAni.SetFloat("MoveDir", moveDir);
+                // }
+                playerAni.SetFloat("MoveDirX", movePos.x);
+                playerAni.SetFloat("MoveDirZ", movePos.z);
+                // if (movePos.x >= 0)
+                // {
+                //     if (movePos.z <= 0)
+                //     {
+                //         playerAni.SetFloat("MoveDir", 0f);
+                //     }
+                //     else
+                //     {
+                //         playerAni.SetFloat("MoveDir", 2f);
+                //     }
+                // }
+                // else
+                // {
+                //     if (movePos.z <= 0)
+                //     {
+                //         playerAni.SetFloat("MoveDir", 3f);
+                //     }
+                //     else
+                //     {
+                //         playerAni.SetFloat("MoveDir", 1f);
+                //     }
+                // }
+                playerAni.SetLayerWeight(1, 1f);
                 transform.position += dir.normalized * Time.deltaTime * playerTotalStat.moveSpeed;
+            }
+            else
+            {
+                playerAni.SetLayerWeight(1, 0f);
             }
         }
     }
@@ -465,6 +519,18 @@ public class Aya : PlayerBase
         base.Skill_D();
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 4);
+        StartCoroutine(SkillCooltime(4, skillSystem.skillInfos[4].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
+    }
+
+    private void AyaWeaponSKill()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            if (i != 4)
+            {
+                skillSystem.skillInfos[i].currentCooltime *= 0.5f;
+            }
+        }
     }
 
     IEnumerator SkillCooltime(int skillType_, float cooltime_)
