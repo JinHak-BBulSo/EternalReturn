@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviourPun
         Skill_R,
         Skill_D,
         COLLECT,
-        CRAFT
+        CRAFT,
+        REST
 
     }
     public PlayerBase player = default;

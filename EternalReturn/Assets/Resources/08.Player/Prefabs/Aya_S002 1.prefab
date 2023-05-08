@@ -2079,6 +2079,11 @@ MonoBehaviour:
   playerKill: 0
   SkillPoint: 000000000000000000000000000000000000000000000000
   castingBar: {fileID: 0}
+  isInForbiddenArea: 0
+  forbiddenCount: 45
+  forbiddenDelay: 0
+  forbiddenCountTxt: {fileID: 0}
+  forbiddenEnterImage: {fileID: 0}
   playerIndex: -1
   isWon: 0
   RRange: {fileID: 3384395866084856133}
@@ -2154,9 +2159,6 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 0
     Name: MoveDirX
-  - Type: 1
-    SynchronizeType: 0
-    Name: MoveDirY
   - Type: 4
     SynchronizeType: 0
     Name: isRest

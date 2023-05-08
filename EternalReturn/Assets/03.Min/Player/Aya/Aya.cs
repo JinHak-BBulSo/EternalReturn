@@ -320,28 +320,36 @@ public class Aya : PlayerBase
             {
                 var dir = corners[currentCorner] - transform.position;
                 Vector3 movePos = Vector3.Scale(dir.normalized, transform.forward);
-                if (movePos.x >= 0)
-                {
-                    if (movePos.z <= 0)
-                    {
-                        playerAni.SetFloat("MoveDir", 0f);
-                    }
-                    else
-                    {
-                        playerAni.SetFloat("MoveDir", 2f);
-                    }
-                }
-                else
-                {
-                    if (movePos.z <= 0)
-                    {
-                        playerAni.SetFloat("MoveDir", 3f);
-                    }
-                    else
-                    {
-                        playerAni.SetFloat("MoveDir", 1f);
-                    }
-                }
+                Debug.Log(movePos.magnitude);
+                // if (movePos.magnitude < 0.1f)
+                // {
+                //     float moveDir = GetMoveDirection(movePos.x, movePos.z);
+                //     playerAni.SetFloat("MoveDir", moveDir);
+                // }
+                playerAni.SetFloat("MoveDirX", movePos.x);
+                playerAni.SetFloat("MoveDirZ", movePos.z);
+                // if (movePos.x >= 0)
+                // {
+                //     if (movePos.z <= 0)
+                //     {
+                //         playerAni.SetFloat("MoveDir", 0f);
+                //     }
+                //     else
+                //     {
+                //         playerAni.SetFloat("MoveDir", 2f);
+                //     }
+                // }
+                // else
+                // {
+                //     if (movePos.z <= 0)
+                //     {
+                //         playerAni.SetFloat("MoveDir", 3f);
+                //     }
+                //     else
+                //     {
+                //         playerAni.SetFloat("MoveDir", 1f);
+                //     }
+                // }
                 playerAni.SetLayerWeight(1, 1f);
                 transform.position += dir.normalized * Time.deltaTime * playerTotalStat.moveSpeed;
             }

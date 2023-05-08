@@ -9,13 +9,14 @@ public class PlayerRest : IPlayerState
     public void StateEnter(PlayerController controller_)
     {
         this.playerController = controller_;
-        playerController.playerState = PlayerController.PlayerState.Skill_D;
+        playerController.playerState = PlayerController.PlayerState.REST;
         playerController.ResetAni();
         playerController.ResetRange();
         playerController.player.playerAni.SetBool("isRest", true);
     }
     public void StateExit()
     {
+        playerController.player.isMove = false;
     }
 
     public void StateFixedUpdate()
@@ -40,5 +41,10 @@ public class PlayerRest : IPlayerState
             }
         }
         time += Time.deltaTime;
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            playerController.player.playerAni.SetBool("isRest", false);
+        }
     }
 }
