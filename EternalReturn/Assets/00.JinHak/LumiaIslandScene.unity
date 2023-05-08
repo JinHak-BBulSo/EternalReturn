@@ -11143,6 +11143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 511576524}
   - component: {fileID: 511576525}
+  - component: {fileID: 511576526}
   m_Layer: 0
   m_Name: ForbiddenArea
   m_TagString: Untagged
@@ -11227,6 +11228,28 @@ MonoBehaviour:
   - {fileID: 1193023801}
   - {fileID: 655227303}
   announce: {fileID: 360873530}
+--- !u!114 &511576526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511576523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 438
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!114 &511709048 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4789251681065659435, guid: 50f10cf74a4b00f44b224ad677e62278,
