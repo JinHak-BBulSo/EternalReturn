@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public Sprite[] characterSprite = new Sprite[2];
     private bool isGameEnd = false;
     private float gameEndTimer = 0;
-
+    public Announce announce = default;
     public void Start()
     {
         if(PlayerManager.Instance.characterNum == 0)
@@ -36,10 +36,14 @@ public class GameManager : MonoBehaviour
                 isGameEnd = true;
                 if(PlayerManager.Instance.Player.GetComponent<PlayerBase>().PlayerController.playerState != PlayerController.PlayerState.DIE)
                 {
+                    announce.announceAudio.clip = announce.allAnnounce[1];
+                    announce.announceAudio.Play();
                     gameEndUi[0].SetActive(true);
                 }
                 else
                 {
+                    announce.announceAudio.clip = announce.allAnnounce[3];
+                    announce.announceAudio.Play();
                     gameEndUi[1].SetActive(true);
                 }
             }

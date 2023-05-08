@@ -9098,6 +9098,7 @@ MonoBehaviour:
   characterSprite:
   - {fileID: 21300000, guid: dbc8a0c4d2e3e5b4ebff99d6ebf5a801, type: 3}
   - {fileID: 21300000, guid: f313df1d9d3955c409e968ac151d7410, type: 3}
+  announce: {fileID: 0}
 --- !u!4 &404901097
 Transform:
   m_ObjectHideFlags: 0
@@ -31619,6 +31620,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4435666504034737342, guid: 37b23caa221e01241988d30e06e69dc8,
+        type: 3}
+      propertyPath: allAnnounce.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435666504034737342, guid: 37b23caa221e01241988d30e06e69dc8,
+        type: 3}
+      propertyPath: allAnnounce.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: b6d3f56b0b76be24fa607e930458d32d, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37b23caa221e01241988d30e06e69dc8, type: 3}
 --- !u!114 &1372159543 stripped
