@@ -223,7 +223,7 @@ public class Aya : PlayerBase
         playerAni.SetBool("isSkill", true);
         playerAni.SetFloat("SkillType", 1);
         isWon = true;
-        StartCoroutine(SkillCooltime(1, skillSystem.skillInfos[1].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
+
         StartCoroutine(WSkill());
     }
 
@@ -270,6 +270,8 @@ public class Aya : PlayerBase
                 playerAni.SetBool("isSkill", false);
                 playerController.ChangeState(new PlayerIdle());
                 playerAni.SetLayerWeight(1, 0f);
+                StartCoroutine(SkillCooltime(1, skillSystem.skillInfos[1].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
+                Debug.Log(skillSystem.skillInfos[1].cooltime);
                 yield break;
             }
             if (Input.GetKeyDown(KeyCode.W))
@@ -279,6 +281,8 @@ public class Aya : PlayerBase
                 playerAni.SetBool("isSkill", false);
                 playerController.ChangeState(new PlayerIdle());
                 playerAni.SetLayerWeight(1, 0f);
+                StartCoroutine(SkillCooltime(1, skillSystem.skillInfos[1].cooltime * ((100 - playerTotalStat.coolDown) / 100)));
+                Debug.Log(skillSystem.skillInfos[1].cooltime);
                 yield break;
             }
             if (Input.GetMouseButtonDown(1))

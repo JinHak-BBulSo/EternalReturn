@@ -158,7 +158,13 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
         {
             ItemManager.Instance.Player = this;
             GetComponent<AudioListener>().enabled = true;
+            gameObject.AddComponent<AllyFowUnit>();
         }
+        else
+        {
+            gameObject.AddComponent<FoeFowUnit>();
+        }
+
         skillSystem = GetComponent<PlayerSkillSystem>();
         InitStat();
         SkillPoint[5] = 1;

@@ -362,16 +362,66 @@ public class Jackie : PlayerBase
 
     IEnumerator RbuffCool()
     {
+        float time_ = 0f;
         playerController.ChangeState(new PlayerIdle());
         playerAni.SetBool("isRbuff", true);
         playerAni.SetBool("isSkill", false);
-        yield return new WaitForSeconds(15f);
-        if (isRBuffOn)
+        while (true)
         {
-            RBuffOff();
+            if (time_ >= 15f && (playerController.playerState == PlayerController.PlayerState.IDLE || playerController.playerState == PlayerController.PlayerState.MOVE
+            || playerController.playerState == PlayerController.PlayerState.ATTACKMOVE))
+            {
+                RBuffOff(time_);
+                yield break;
+            }
+            time_ += Time.deltaTime;
+            yield return null;
         }
     }
 
+    private void RDamage(float time_)
+    {
+        RaycastHit[] hits;
+        hits = Physics.SphereCastAll(transform.position, 4.5f, Vector3.up, 0f);
+        foreach (var hit in hits)
+        {
+            if (hit.transform.gameObject.GetComponent<Monster>() != null)
+            {
+                enemyHunt.Add(hit.transform.gameObject.GetComponent<Monster>());
+            }
+            else if (hit.transform.gameObject.GetComponent<PlayerBase>() != null)
+            {
+                if (hit.transform.GetComponent<PlayerBase>() == this)
+                {
+
+                }
+                else
+                {
+                    enemyPlayer.Add(hit.transform.gameObject.GetComponent<PlayerBase>());
+                }
+            }
+        }
+        float damage = 0f;
+        float maxDamage = (250 + (125 * (skillSystem.skillInfos[3].CurrentLevel - 1)) + 1.2f * playerTotalStat.attackPower + playerTotalStat.skillPower);
+        float minDamage = (100 + (125 * (skillSystem.skillInfos[3].CurrentLevel - 1)) + 0.9f * playerTotalStat.attackPower + 0.8f * playerTotalStat.skillPower);
+        damage = maxDamage - minDamage * (time_ / 1.5f) + minDamage;
+        if (damage >= maxDamage)
+        {
+            damage = maxDamage;
+        }
+        // -(200 + 0.4f * playerTotalStat.attackPower + 0.6f * playerTotalStat.skillPower) * (time / 1.5f)
+        // + (200 + 0.4f * playerTotalStat.attackPower + 0.6f * playerTotalStat.skillPower);
+        DamageMessage dm = new DamageMessage(gameObject, damage);
+
+        for (int i = 0; i < enemyHunt.Count; i++)
+        {
+            enemyHunt[i].TakeDamage(dm);
+        }
+        for (int i = 0; i < enemyPlayer.Count; i++)
+        {
+            enemyPlayer[i].TakeDamage(dm);
+        }
+    }
     IEnumerator SkillCooltime(int skillType_, float cooltime_)
     {
         skillCooltimes[skillType_] = true;
@@ -388,8 +438,9 @@ public class Jackie : PlayerBase
         }
     }
 
-    private void RBuffOff()
+    private void RBuffOff(float time_)
     {
+        RDamage(time_);
         isRBuffOn = false;
         playerAni.SetBool("isRbuff", false);
         playerAni.SetBool("isSkill", false);
