@@ -478,10 +478,6 @@ public class PlayerBase : MonoBehaviourPun, IHitHandler
                 break;
         }
     }
-    public void Craft()
-    {
-
-    }
 
 
     public virtual void Attack()

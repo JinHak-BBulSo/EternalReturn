@@ -63,6 +63,7 @@ public class PlayerMove : IPlayerState
         playerController.Craft();
         playerController.ShowAllRange();
         playerController.SkillUse();
+        playerController.Rest();
 
 
     }

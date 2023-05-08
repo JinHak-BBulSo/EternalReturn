@@ -236,6 +236,7 @@ public class Aya : PlayerBase
         + (playerTotalStat.attackPower * (0.2f + (0.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))))
         + (playerTotalStat.skillPower * (0.25f + (0.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))));
         bullet.shootPlayer = this;
+        shotRate++;
         // if (!PhotonNetwork.IsMasterClient && photonView.IsMine)
         // {
         //     photonView.RPC("CallShot", RpcTarget.MasterClient);
@@ -255,7 +256,6 @@ public class Aya : PlayerBase
         + (playerTotalStat.attackPower * (0.2f + (0.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))))
         + (playerTotalStat.skillPower * (0.25f + (0.5f * (skillSystem.skillInfos[1].CurrentLevel - 1))));
         bullet.shootPlayer = this;
-        shotRate++;
     }
 
     IEnumerator WSkill()

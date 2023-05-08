@@ -79,6 +79,7 @@ public class PlayerController : MonoBehaviourPun
         player.playerAni.SetBool("skillStart", false);
         player.playerAni.SetBool("isCollect", false);
         player.playerAni.SetBool("isCraft", false);
+        player.playerAni.SetBool("isRest", false);
         player.ExtraAni();
     }
 
@@ -142,6 +143,14 @@ public class PlayerController : MonoBehaviourPun
                     }
                 }
             }
+        }
+    }
+    public void Rest()
+    {
+        if (!photonView.IsMine) { return; }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            ChangeState(new PlayerRest());
         }
     }
     public void Craft()

@@ -31,6 +31,7 @@ public class PlayerIdle : IPlayerState
         playerController.Craft();
         playerController.ShowAllRange();
         playerController.SkillUse();
+        playerController.Rest();
 
     }
 }
