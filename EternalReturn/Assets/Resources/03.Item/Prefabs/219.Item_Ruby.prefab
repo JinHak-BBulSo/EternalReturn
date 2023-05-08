@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 3123086379394840802}
   - component: {fileID: 3713076881870323687}
   - component: {fileID: 5164257549066696542}
+  - component: {fileID: 6573542494275951668}
   m_Layer: 0
   m_Name: 219.Item_Ruby
   m_TagString: Untagged
@@ -287,6 +288,19 @@ MonoBehaviour:
     isItemWishList: 0
   nameBg: {fileID: 0}
   wishListImg: {fileID: 0}
+--- !u!65 &6573542494275951668
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3993656914592541994}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 0.8, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9183653203978854318
 GameObject:
   m_ObjectHideFlags: 0

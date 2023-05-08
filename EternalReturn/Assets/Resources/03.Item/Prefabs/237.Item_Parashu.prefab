@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4110987916219376807}
   - component: {fileID: 4110987916219376804}
   - component: {fileID: 4110987916219376806}
+  - component: {fileID: -2045244740052339168}
   m_Layer: 0
   m_Name: 237.Item_Parashu
   m_TagString: Untagged
@@ -133,6 +134,19 @@ MonoBehaviour:
     isItemWishList: 0
   nameBg: {fileID: 0}
   wishListImg: {fileID: 0}
+--- !u!65 &-2045244740052339168
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4110987916219376805}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 0.8, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4110987916331502362
 GameObject:
   m_ObjectHideFlags: 0

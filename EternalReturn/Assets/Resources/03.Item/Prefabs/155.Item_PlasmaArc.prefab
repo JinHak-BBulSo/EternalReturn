@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 1737066191404898253}
   - component: {fileID: 1737066191404898251}
   - component: {fileID: 1737066191404898252}
+  - component: {fileID: -6065162012291529715}
   m_Layer: 0
   m_Name: 155.Item_PlasmaArc
   m_TagString: Untagged
@@ -291,6 +292,19 @@ MonoBehaviour:
     isItemWishList: 0
   nameBg: {fileID: 0}
   wishListImg: {fileID: 0}
+--- !u!65 &-6065162012291529715
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737066191404898254}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 0.8, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1737066191575188530
 GameObject:
   m_ObjectHideFlags: 0

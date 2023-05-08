@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8715423866971208757}
   - component: {fileID: 8715423866971208758}
   - component: {fileID: -5501886534215490354}
+  - component: {fileID: 1054306531003382482}
   m_Layer: 0
   m_Name: 09.Item_knuckle
   m_TagString: Untagged
@@ -133,6 +134,19 @@ MonoBehaviour:
     isItemWishList: 0
   nameBg: {fileID: 0}
   wishListImg: {fileID: 0}
+--- !u!65 &1054306531003382482
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8715423866971208756}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 0.8, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8715423867086559362
 GameObject:
   m_ObjectHideFlags: 0
