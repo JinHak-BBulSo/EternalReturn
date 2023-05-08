@@ -73,8 +73,6 @@ MonoBehaviour:
   - SetPlayerStat
   - DebuffSet
   - MonsterBoxSet
-<<<<<<< HEAD
-=======
   - BattleEnd
   - BattleStart
   - ContinousDamageEndSet
@@ -95,7 +93,6 @@ MonoBehaviour:
   - ForbiddenAreaSet
   - EmergencyAreaSet
   - IndexSet
->>>>>>> origin/Dev
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
