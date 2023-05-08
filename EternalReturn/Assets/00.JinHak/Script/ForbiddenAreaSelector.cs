@@ -33,7 +33,6 @@ public class ForbiddenAreaSelector : MonoBehaviourPun
             if (PhotonNetwork.IsMasterClient)
             {
                 ForbiddenAreaSelect();
-                photonView.RPC("ForbiddenAreaSet", RpcTarget.All, first, second);
             }
         }
     }
@@ -49,6 +48,7 @@ public class ForbiddenAreaSelector : MonoBehaviourPun
         areaIndex.Remove(second);
 
         photonView.RPC("IndexSet", RpcTarget.All, first_, second_);
+        photonView.RPC("ForbiddenAreaSet", RpcTarget.All, first_, second_);
     }
 
     [PunRPC]
