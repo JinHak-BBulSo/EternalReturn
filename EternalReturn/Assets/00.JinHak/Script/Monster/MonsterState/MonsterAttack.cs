@@ -39,7 +39,7 @@ public class MonsterAttack : IMonsterState
         if (monsterController.targetPlayer != default)
         {
             monsterController.navMeshAgent.enabled = false;
-            monsterController.transform.LookAt(ExceptY.ExceptYPos(monsterController.monster.firstAttackPlayer.transform.position) + new Vector3(0, monsterController.transform.position.y));
+            monsterController.transform.LookAt(ExceptY.ExceptYPos(monsterController.targetPlayer.transform.position) + new Vector3(0, monsterController.transform.position.y));
             monsterController.monsterAni.SetBool("isAttack", true);
         }
     }
