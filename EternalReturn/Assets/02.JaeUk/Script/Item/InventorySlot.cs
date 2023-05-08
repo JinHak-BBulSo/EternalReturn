@@ -80,7 +80,7 @@ public class InventorySlot : Slot, IDragHandler, IEndDragHandler, IBeginDragHand
         else
         {
             ItemManager.Instance.equipmentInven[idx] = ItemManager.Instance.inventory[order];
-            ItemManager.Instance.inventory.RemoveAt(order);
+            ItemManager.Instance.inventory[order] = new ItemStat();
         }
 
         ItemManager.Instance.SetequipmentTotalState();

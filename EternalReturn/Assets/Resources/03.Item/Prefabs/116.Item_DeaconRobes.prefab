@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4887956760003376583}
   - component: {fileID: 4887956760003376582}
   - component: {fileID: 4887956760003376581}
+  - component: {fileID: -8666318996113710897}
   m_Layer: 0
   m_Name: 116.Item_DeaconRobes
   m_TagString: Untagged
@@ -133,6 +134,19 @@ MonoBehaviour:
     isItemWishList: 0
   nameBg: {fileID: 0}
   wishListImg: {fileID: 0}
+--- !u!65 &-8666318996113710897
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4887956760003376576}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 0.8, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4887956760140916976
 GameObject:
   m_ObjectHideFlags: 0

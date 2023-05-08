@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 3750174488156821928}
   - component: {fileID: 3750174488156821942}
   - component: {fileID: 3750174488156821929}
+  - component: {fileID: -695297095039051440}
   m_Layer: 0
   m_Name: 179.Item_Doll
   m_TagString: Untagged
@@ -289,6 +290,19 @@ MonoBehaviour:
     isItemWishList: 0
   nameBg: {fileID: 0}
   wishListImg: {fileID: 0}
+--- !u!65 &-695297095039051440
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3750174488156821931}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 0.8, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3750174488268474599
 GameObject:
   m_ObjectHideFlags: 0

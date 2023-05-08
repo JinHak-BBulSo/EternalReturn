@@ -57,6 +57,20 @@ public class ItemController : MonoBehaviour
             wishListImg.SetActive(item.isItemWishList);
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player" && PlayerManager.Instance.Player == other.gameObject && this.enabled)
+        {
+            PlayerBase nowContactPlayer = other.GetComponent<PlayerBase>();
+
+            if (nowContactPlayer.clickTarget == this.gameObject)
+            {
+                ItemManager.Instance.GetItem(this.item);
+                Destroy(this.gameObject);
+
+            }
+        }
+    }
 
 
 
