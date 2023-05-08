@@ -19,6 +19,7 @@ public class CharacterSelect : MonoBehaviourPun
     public Text timer;
     public int ReadyPlayerNum;
     public float totalTime;
+    public AudioClip[] charaterSelectSound;
 
 
     // Start is called before the first frame update
@@ -60,10 +61,13 @@ public class CharacterSelect : MonoBehaviourPun
         PlayerSprite[0].sprite = ImageSprite[i - 1];
         selectPlayerBg.transform.GetChild(0).GetComponent<Image>().sprite = BgSprite[i - 1];
         selectNumber = i - 1;
+
         PlayerManager.Instance.characterNum = selectNumber;
     }
     public void OnClick()
     {
+        startBtn.transform.GetComponent<AudioSource>().clip = charaterSelectSound[selectNumber];
+        startBtn.transform.GetComponent<AudioSource>().Play();
         PlayerManager.Instance.IsSelect = true;
 
     }

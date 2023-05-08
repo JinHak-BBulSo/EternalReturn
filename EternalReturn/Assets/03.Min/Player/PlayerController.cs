@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviourPun
         Skill_R,
         Skill_D,
         COLLECT,
-        CRAFT
+        CRAFT,
+        REST
 
     }
     public PlayerBase player = default;
@@ -79,6 +80,7 @@ public class PlayerController : MonoBehaviourPun
         player.playerAni.SetBool("skillStart", false);
         player.playerAni.SetBool("isCollect", false);
         player.playerAni.SetBool("isCraft", false);
+        player.playerAni.SetBool("isRest", false);
         player.ExtraAni();
     }
 
@@ -111,7 +113,7 @@ public class PlayerController : MonoBehaviourPun
     private void ShowRange(int index_, KeyCode inputKey_)
     {
         if (!photonView.IsMine) { return; }
-        if (!player.skillCooltimes[index_])
+        if (!player.skillCooltimes[index_] && player.skillSystem.skillInfos[index_].CurrentLevel != 0)
         {
             if (Input.GetKeyDown(inputKey_))
             {
@@ -142,6 +144,14 @@ public class PlayerController : MonoBehaviourPun
                     }
                 }
             }
+        }
+    }
+    public void Rest()
+    {
+        if (!photonView.IsMine) { return; }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            ChangeState(new PlayerRest());
         }
     }
     public void Craft()

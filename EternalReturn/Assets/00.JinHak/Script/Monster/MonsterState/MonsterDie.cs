@@ -20,7 +20,7 @@ public class MonsterDie : IMonsterState
     }
     public void StateUpdate()
     {
-
+        monsterController.monsterRigid.velocity = Vector3.zero;
     }
     public void StateExit()
     {
@@ -31,15 +31,17 @@ public class MonsterDie : IMonsterState
     {
         yield return new WaitForSeconds(60);
         monsterController.gameObject.SetActive(false);
+        monsterController.monsterAni.SetBool("isDie", false);
     }
 
     public void Die()
     {
         monsterController.monster.isDie = true;
         monsterController.monster.monsterItemBox.enabled = true;
-        monsterController.monsterAni.SetTrigger("Die");
+        monsterController.monsterAni.SetBool("isDie", true);
         monsterController.navMeshAgent.enabled = false;
         monsterController.targetPlayer = default;
+        monsterController.monsterRigid.velocity = Vector3.zero;
         monsterController.monster.monsterStatusUi.SetActive(false);
     }
 }

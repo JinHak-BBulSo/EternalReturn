@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8382945453617515573}
   - component: {fileID: 4588504765372024993}
   - component: {fileID: 3107445128130807059}
+  - component: {fileID: 686836205975764320}
   m_Layer: 0
   m_Name: 221.Item_Poison
   m_TagString: Untagged
@@ -133,6 +134,19 @@ MonoBehaviour:
     isItemWishList: 0
   nameBg: {fileID: 0}
   wishListImg: {fileID: 0}
+--- !u!65 &686836205975764320
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532199788831469737}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 0.8, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2276653116795576928
 GameObject:
   m_ObjectHideFlags: 0

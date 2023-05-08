@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7927679140976838745}
   - component: {fileID: 7927679140976838747}
   - component: {fileID: 7927679140976838746}
+  - component: {fileID: 3397435223492441044}
   m_Layer: 0
   m_Name: 150.Item_VitalSignSensor
   m_TagString: Untagged
@@ -133,6 +134,19 @@ MonoBehaviour:
     isItemWishList: 0
   nameBg: {fileID: 0}
   wishListImg: {fileID: 0}
+--- !u!65 &3397435223492441044
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7927679140976838744}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 0.8, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7927679141103921436
 GameObject:
   m_ObjectHideFlags: 0

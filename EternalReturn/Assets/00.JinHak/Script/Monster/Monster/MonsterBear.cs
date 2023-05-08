@@ -22,6 +22,7 @@ public class MonsterBear : Monster
         base.Skill();
         audioSource.clip = sounds[5];
         monsterController.monsterAni.SetBool("isSkill", true);
+        monsterController.navMeshAgent.enabled = false;
         skillRange.SetActive(true);
     }
 
@@ -30,13 +31,14 @@ public class MonsterBear : Monster
         audioSource.clip = sounds[6];
         foreach (var player in bearSkillMesh.targetPlayers)
         {
-            DamageMessage dm = new DamageMessage(this.gameObject, 100, 3, 1.5f);
+            DamageMessage dm = new DamageMessage(this.gameObject, monsterStatus.attackPower * 1.2f);
             player.TakeDamage(dm);
             player.Debuff(2, 1.5f);
         }
         skillRange.SetActive(false);
         StartCoroutine(SkillCoolTime(skillCoolTime));
         monsterController.isInSkillUse = false;
+        monsterController.navMeshAgent.enabled = true;
         monsterController.monsterAni.SetBool("isSkill", false);
     }
 

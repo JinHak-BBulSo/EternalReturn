@@ -12,7 +12,7 @@ public class PlayerStatusUI : MonoBehaviour
     public Image playerExpBar = default;
     public Text playerLevelTxt = default;
     public PlayerBase player = default;
-    private Vector3 offset = new Vector3(0, 2.5f, 0);
+    private Vector3 offset = new Vector3(0, 3f, 0);
 
     private void Start()
     {
@@ -25,6 +25,11 @@ public class PlayerStatusUI : MonoBehaviour
         playerExpBar = mainUi.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>();
         playerLevelTxt = transform.GetChild(4).GetChild(0).GetComponent<Text>();
         playerHpBar.fillAmount = player.playerStat.nowHp / player.playerStat.maxHp;
+
+        if(player != PlayerManager.Instance.Player.GetComponent<PlayerBase>())
+        {
+            playerHpBar.color = new Color(1, 0, 0, 1);
+        }
     }
 
     private void Update()

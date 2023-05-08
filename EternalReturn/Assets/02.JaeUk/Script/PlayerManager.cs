@@ -7,6 +7,7 @@ public class PlayerManager : SingleTonBase<PlayerManager>
     public GameObject canvas;
     public GameObject Player;
     public int PlayerNumber = 1;
+    public int areaIndex = 6;
     public bool IsSelect;
     public int characterNum;
     public bool SelectChk;

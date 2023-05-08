@@ -49,6 +49,7 @@ public class MonsterRecall : IMonsterState
 
                 monsterController.monster.monsterHpBar.fillAmount =
                     monsterController.monster.monsterStatus.nowHp / monsterController.monster.monsterStatus.maxHp;
+                monsterController.monster.CallSetMonsterStat();
             }
 
             if (ExceptY.ExceptYDistance(monsterPos_, recallPos_) < 0.01f)
@@ -67,6 +68,7 @@ public class MonsterRecall : IMonsterState
     }
     public virtual void ExitRecall()
     {
+        monsterController.monster.monsterStatus.nowHp = monsterController.monster.monsterStatus.maxHp;
         monsterController.monster.firstAttackPlayer = default;
         monsterController.targetPlayer = default;
         monsterController.monster.isBattleAreaOut = false;

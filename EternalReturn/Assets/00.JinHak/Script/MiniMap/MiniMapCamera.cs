@@ -9,20 +9,24 @@ public class MiniMapCamera : MonoBehaviour
 {
     private Camera miniMapCamera = default;
 
+    private bool isExtended = false;
+
     private void Start()
     {
-        miniMapCamera = GetComponent<Camera>();
+        miniMapCamera = transform.GetChild(0).GetComponent<Camera>();
     }
 
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetKeyDown(KeyCode.Tab) && !isExtended)
         {
-            RaycastHit hit;
-
-            if (Physics.Raycast(miniMapCamera.ScreenPointToRay(Input.mousePosition), out hit))
+            if (miniMapCamera.gameObject.activeSelf)
             {
-                Camera.main.transform.position = hit.point;
+                miniMapCamera.gameObject.SetActive(false);
+            }
+            else
+            {
+                miniMapCamera.gameObject.SetActive(true);
             }
         }
     }

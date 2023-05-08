@@ -57,7 +57,7 @@ public class ItemBoxSlot : MonoBehaviourPun
             if (item.id == itemIndex_)
             {
                 allItemBox.allItemBoxes[itemBoxIndex_].boxItems.RemoveAt(index);
-                if(slotList.nowOpenItemBox.itemBoxIndex == itemBoxIndex_ && player.itemBoxUi.activeSelf)
+                if (slotList.nowOpenItemBox != default && player.itemBoxUi.activeSelf && slotList.nowOpenItemBox.itemBoxIndex == itemBoxIndex_)
                 {
                     slotList.nowOpenItemBox.ResetSlot();
                     slotList.nowOpenItemBox.SetSlot();

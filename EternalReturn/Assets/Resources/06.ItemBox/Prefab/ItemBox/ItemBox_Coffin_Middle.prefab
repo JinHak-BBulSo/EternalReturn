@@ -79,23 +79,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 795298f95decff24cab07bc0258d5994, type: 3}
---- !u!1 &415198469337390141 stripped
+--- !u!1 &861569382811213192 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 795298f95decff24cab07bc0258d5994,
+  m_CorrespondingSourceObject: {fileID: 213522782124358884, guid: 795298f95decff24cab07bc0258d5994,
     type: 3}
   m_PrefabInstance: {fileID: 649218869334450540}
   m_PrefabAsset: {fileID: 0}
---- !u!82 &-5380658793658684199
+--- !u!65 &1195510663
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861569382811213192}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0201288, y: 2.4616296, z: 0.9238787}
+  m_Center: {x: -0.090433195, y: 0.010036945, z: 0.4619393}
+--- !u!82 &311428158309410352
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 415198469337390141}
+  m_GameObject: {fileID: 861569382811213192}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 2f30c4c8c29b26c499d1cdde17aafb70, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -181,25 +194,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &861569382811213192 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 213522782124358884, guid: 795298f95decff24cab07bc0258d5994,
-    type: 3}
-  m_PrefabInstance: {fileID: 649218869334450540}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &1195510663
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861569382811213192}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.0201288, y: 2.4616296, z: 0.9238787}
-  m_Center: {x: -0.090433195, y: 0.010036945, z: 0.4619393}
 --- !u!114 &1195510664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,11 +206,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e42ff3cdbec2a14db84ced54b2590a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemBoxIndex: -1
   itemPrefabs: []
   boxItems: []
-  playerItemBoxSlotList: []
-  contactPlayer: []
+  contactedPlayer: []
+  slotList: {fileID: 0}
   itemBoxAudio: {fileID: 0}
+  notOpenItemBoxImg: {fileID: 0}
 --- !u!114 &1387465760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,6 +227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isClick: 0
   monster: {fileID: 0}
+  player: {fileID: 0}
   outlineMode: 0
   outlineColor: {r: 0, g: 0.99010324, b: 1, a: 1}
   outlineWidth: 2
