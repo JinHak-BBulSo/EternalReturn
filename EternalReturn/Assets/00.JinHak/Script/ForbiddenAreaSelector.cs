@@ -11,8 +11,6 @@ public class ForbiddenAreaSelector : MonoBehaviourPun
     public List<SpriteRenderer> areaSprite = new List<SpriteRenderer>();
     private float selectDelay = 300;
     private bool isGameStart = false;
-    private int first;
-    private int second;
     private int selectCount = 0;
     public Announce announce = default;
 
@@ -41,28 +39,20 @@ public class ForbiddenAreaSelector : MonoBehaviourPun
     {
         int r_ = Random.Range(0, areaIndex.Count);
         int first_ = areaIndex[r_];
-        areaIndex.Remove(first);
+        areaIndex.Remove(first_);
 
         int r2_ = Random.Range(0, areaIndex.Count);
         int second_ = areaIndex[r2_];
-        areaIndex.Remove(second);
+        areaIndex.Remove(second_);
 
-        photonView.RPC("IndexSet", RpcTarget.All, first_, second_);
         photonView.RPC("ForbiddenAreaSet", RpcTarget.All, first_, second_);
-    }
-
-    [PunRPC]
-    public void IndexSet(int first_, int second_)
-    {
-        first = first_;
-        second = second_;
     }
 
     [PunRPC]
     public void ForbiddenAreaSet(int firstArea_, int secondArea_)
     {
-        Debug.Log(first);
-        Debug.Log(second);
+        Debug.Log(firstArea_);
+        Debug.Log(secondArea_);
         photonView.RPC("EmergencyAreaSet", RpcTarget.All, firstArea_, secondArea_);
 
         StartCoroutine(ForbiddenAreaSetStart(firstArea_));
@@ -97,6 +87,5 @@ public class ForbiddenAreaSelector : MonoBehaviourPun
     {
         yield return new WaitForSeconds(selectDelay);
         ForbiddenAreaSelect();
-        photonView.RPC("ForbiddenAreaSet", RpcTarget.All, first, second);
     }
 }
