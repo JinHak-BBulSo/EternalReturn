@@ -67,7 +67,7 @@ public class Jackie : PlayerBase
         base.Update();
         if (!isWeaponPassiveOn)
         {
-            if (skillSystem.skillInfos[4].CurrentLevel >= 1)
+            if (skillSystem != null && skillSystem.skillInfos[4].CurrentLevel >= 1)
             {
                 isWeaponPassiveOn = true;
             }

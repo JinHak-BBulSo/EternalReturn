@@ -40,13 +40,17 @@ public class PlayerInstanate : MonoBehaviourPun
         {
             case 0:
                 PlayerManager.Instance.canvas = transform.gameObject;
-                GameObject playerClone = PhotonNetwork.Instantiate("08.Player/Prefabs/Aya_S002 1", PlayerManager.Instance.PlayerPos, Quaternion.identity, 0);
+                GameObject playerClone = Instantiate(PlayerManager.Instance.PlayerList[0]);
+                playerClone.transform.position = PlayerManager.Instance.PlayerPos;
+                Debug.Log($"Aya is Null? :{playerClone}");
                 PlayerManager.Instance.Player = playerClone;
                 playerClone.transform.SetParent(transform, false);
                 break;
             case 1:
                 PlayerManager.Instance.canvas = transform.gameObject;
-                playerClone = PhotonNetwork.Instantiate("08.Player/Prefabs/Jackie_S003", PlayerManager.Instance.PlayerPos, Quaternion.identity, 0);
+                playerClone = Instantiate(PlayerManager.Instance.PlayerList[1]);
+                Debug.Log($"Jackie is Null? :{playerClone}");
+                playerClone.transform.position = PlayerManager.Instance.PlayerPos;
                 PlayerManager.Instance.Player = playerClone;
                 playerClone.transform.SetParent(transform, false);
                 break;
