@@ -26,6 +26,7 @@ public class ObjsManager : MonoBehaviour
     }
     public GameObject itemCanvas;
     public GameObject CameraPivot;
+    public PlayerMaterialSelector materialSelector;
 
     private void Update()
     {
@@ -36,7 +37,7 @@ public class ObjsManager : MonoBehaviour
             CameraPivot.GetComponent<MoveCamera>().player = PlayerManager.Instance.Player.GetComponent<PlayerBase>();
             ItemManager.Instance.ItemCanvas = itemCanvas;
             PlayerUI.Instance.InitializeCharacterUI();
-            new PlayerMaterialSelector().InitializeMaterial();
+            materialSelector.InitializeMaterial();
             Destroy(this.gameObject);
         }
     }

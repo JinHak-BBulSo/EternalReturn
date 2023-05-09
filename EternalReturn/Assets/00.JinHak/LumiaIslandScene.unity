@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -24553,6 +24553,55 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1103128889}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1105077792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1105077794}
+  - component: {fileID: 1105077793}
+  m_Layer: 0
+  m_Name: PlayerMaterialSelector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1105077793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105077792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78256e77029937c4fb980245ce93d4f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  silhouetteMaterials:
+  - {fileID: 2100000, guid: 8a5ef9c3daced7b40a336fcd0918e68a, type: 2}
+  - {fileID: 2100000, guid: 9e43b5dd29e4f2947857be21b1e2e4fa, type: 2}
+  - {fileID: 2100000, guid: 359f9c59c02f32d4e86bcc8b945357fe, type: 2}
+  - {fileID: 2100000, guid: a70cc999720a29b4b8744a071bbd39b6, type: 2}
+--- !u!4 &1105077794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105077792}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 22
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1105434314
 GameObject:
   m_ObjectHideFlags: 0
@@ -80325,6 +80374,11 @@ PrefabInstance:
       propertyPath: CameraPivot
       value: 
       objectReference: {fileID: 1151239507}
+    - target: {fileID: 7353853871600879940, guid: 1d0c293878504574f9f5037d7dd1c967,
+        type: 3}
+      propertyPath: materialSelector
+      value: 
+      objectReference: {fileID: 1105077793}
     - target: {fileID: 7353853871600879946, guid: 1d0c293878504574f9f5037d7dd1c967,
         type: 3}
       propertyPath: m_Sprite

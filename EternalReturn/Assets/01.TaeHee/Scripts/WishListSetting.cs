@@ -110,8 +110,6 @@ public class WishListSetting : MonoBehaviour
 
     private void Awake()
     {
-        //itemSlotPrefab = Resources.Load(ITEM_SLOT_PREFAB_PATH) as GameObject;
-
         inputField = transform.GetChild(1).GetComponent<InputField>();
 
         itemSlotWidth = itemSlotPrefab.GetComponent<RectTransform>().rect.width;
