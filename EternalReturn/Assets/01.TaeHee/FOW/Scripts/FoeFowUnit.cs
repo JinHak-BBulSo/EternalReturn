@@ -43,8 +43,7 @@ public class FoeFowUnit : FowUnit
 
         if (monster != null && monster.isDie)
         {
-            isHidden = true;
-            monsterStatusUI?.SetActive(!isHidden);
+            monsterStatusUI?.SetActive(false);
         }
         else
         {
