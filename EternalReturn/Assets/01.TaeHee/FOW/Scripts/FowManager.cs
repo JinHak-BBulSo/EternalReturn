@@ -8,6 +8,7 @@ public class FowManager : SingleTonBase<FowManager>
 {
     private Material _fogMaterial;
     public GameObject _rendererPrefab;
+    public Shader averageBlur;
 
     void InitFogTexture()
     {
@@ -133,7 +134,7 @@ public class FowManager : SingleTonBase<FowManager>
         }
 
         Map = new FowMap();
-        Map.InitMap(heightMap);
+        Map.InitMap(averageBlur, heightMap);
     }
 
     /// <summary> 대상 유닛의 위치를 타일좌표(x, y, height)로 환산 </summary>

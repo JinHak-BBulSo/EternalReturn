@@ -24,7 +24,7 @@ public class FowMap
 
     public FowManager.FogAlpha AlphaData { get { return FowManager.Instance._fogAlpha; } }
 
-    public void InitMap(float[,] heightMap)
+    public void InitMap(Shader blur, float[,] heightMap)
     {
         map.Clear();
         mapWidth = heightMap.GetLength(0);
@@ -35,7 +35,7 @@ public class FowMap
         for (int i = 0; i < mapLength; i++)
             colorBuffer[i].a = AlphaData.fog;
 
-        blurMat = new Material(Shader.Find("FogOfWar/AverageBlur"));
+        blurMat = new Material(blur);
         texBuffer = new Texture2D(mapWidth, mapHeight, TextureFormat.ARGB32, false);
         texBuffer.wrapMode = TextureWrapMode.Clamp;
 

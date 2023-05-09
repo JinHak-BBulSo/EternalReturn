@@ -514,6 +514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51a5ee88b827c5648862ddebeead1126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiDefault: {fileID: 10770, guid: 0000000000000000f000000000000000, type: 0}
   playerHpBar: {fileID: 0}
   playerMpBar: {fileID: 0}
   playerExpBar: {fileID: 0}

@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rendererPrefab: {fileID: 1489479144709424, guid: 5f0349d33c8d8f54ca654b9828f90226,
     type: 3}
+  averageBlur: {fileID: 4800000, guid: 1ffdca7efc0743d49bf275a7526fb8b5, type: 3}
   _mapLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -54,6 +55,7 @@ MonoBehaviour:
   _tileSize: 1
   _updateCycle: 0.33
   _fogAlpha:
-    light: 0
-    dark: 0.96
-  _showGizmos: 1
+    sight: 0
+    fog: 0.96
+  _showSightGizmos: 1
+  _showMapGizmos: 1

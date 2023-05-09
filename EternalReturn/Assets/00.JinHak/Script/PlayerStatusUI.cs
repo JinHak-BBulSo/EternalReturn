@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerStatusUI : MonoBehaviour
 {
+    [SerializeField] Shader uiDefault;
+
     private GameObject mainUi = default;
     private GameObject playerStatusUi = default;
     public Image playerHpBar = default;
@@ -30,7 +32,7 @@ public class PlayerStatusUI : MonoBehaviour
         {
             playerHpBar.color = new Color(1, 0, 0, 1);
 
-            Material foeMaterial = new Material(Shader.Find("UI/Default"));
+            Material foeMaterial = new Material(uiDefault);
             foeMaterial.renderQueue = transform.GetChild(0).GetComponent<Image>().material.renderQueue - 50;
             foreach (var img in GetComponentsInChildren<Image>())
             {
