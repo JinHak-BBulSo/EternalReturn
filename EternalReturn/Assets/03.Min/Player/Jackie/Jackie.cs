@@ -603,7 +603,7 @@ public class Jackie : PlayerBase
         enemyHunt.Clear();
         for (int i = 0; i < hits.Length; i++)
         {
-            if (hits[i].transform.GetComponent<PlayerBase>() != null)
+            if (hits[i].transform.GetComponent<PlayerBase>() != null && hits[i].transform.gameObject != this.gameObject)
             {
                 enemyPlayer.Add(hits[i].transform.GetComponent<PlayerBase>());
             }
