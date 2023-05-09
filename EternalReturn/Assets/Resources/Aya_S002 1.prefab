@@ -2165,7 +2165,7 @@ MonoBehaviour:
     Name: isRest
   - Type: 1
     SynchronizeType: 0
-    Name: MoveDirY
+    Name: MoveDirZ
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

@@ -98,7 +98,7 @@ public class ItemBox : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player" && PlayerManager.Instance.Player == other.gameObject && this.enabled)
         {
@@ -121,8 +121,15 @@ public class ItemBox : MonoBehaviour
                     {
                         notOpenItemBoxImg.SetActive(false);
                     }
-                    nowContactPlayer.GetExp(50, PlayerStat.PlayerExpType.SEARCH);
+                    nowContactPlayer.GetExp(100, PlayerStat.PlayerExpType.SEARCH);
                 }
+            }
+            else if(nowContactPlayer.clickTarget != this.gameObject)
+            {
+                nowContactPlayer.itemBoxSlotList.nowOpenItemBox = default;
+                //Full Inven Txt 끄기
+                nowContactPlayer.itemBoxUi.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
+                nowContactPlayer.itemBoxUi.SetActive(false);
             }
         }
     }

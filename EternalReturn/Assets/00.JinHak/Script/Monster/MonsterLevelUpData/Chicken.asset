@@ -17,4 +17,4 @@ MonoBehaviour:
   attackPower: 25
   moveSpeed: 0.1
   defense: 4
-  levelUpCount: 90
+  levelUpCount: 135

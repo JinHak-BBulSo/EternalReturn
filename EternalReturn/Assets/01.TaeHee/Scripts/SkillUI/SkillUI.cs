@@ -98,9 +98,6 @@ public class SkillUI : MonoBehaviour
         PlayerUI.Instance.UpdateSkillLevelUpUI(playerSkillSystem.GetTotalSkillLevel(), playerSkillSystem.GetWeaponSkillLevel(), playerBase.playerStat.playerExp.level, playerBase.playerStat.weaponExp.level);
         playerBase.SkillPoint[index] = playerBase.skillSystem.skillInfos[index].CurrentLevel;
         playerBase.ItemChang();
-
-
-        Debug.Log($"SkillLv: {skillInfo.CurrentLevel}");
     }
 
     protected virtual bool IsInteractable(int totalSkillLevel, int playerLevel, int weaponMasteryLevel)

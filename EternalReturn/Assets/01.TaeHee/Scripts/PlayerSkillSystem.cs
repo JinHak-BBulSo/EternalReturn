@@ -12,6 +12,7 @@ public class PlayerSkillSystem : MonoBehaviour
         {
             skillInfos[i] = new SkillInfo(skillMaxLevels[i]);
         }
+        skillInfos[(int)SkillInfoType.Passive].AddLevel();
     }
 
     public int GetTotalSkillLevel()

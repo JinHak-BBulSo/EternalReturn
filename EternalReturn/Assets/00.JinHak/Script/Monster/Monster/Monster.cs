@@ -261,7 +261,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
     public void SendWeaponExp(int playerIndex_, int expAmount_)
     {
         PlayerBase player_ = PlayerList.Instance.playerDictionary[playerIndex_];
-        player_.GetExp(expAmount_, PlayerStat.PlayerExpType.WEAPON);
+        player_.GetExp(expAmount_ * 5, PlayerStat.PlayerExpType.WEAPON);
     }
     [PunRPC]
     public void DamageApply(float damageAmount_, int playerIndex_)

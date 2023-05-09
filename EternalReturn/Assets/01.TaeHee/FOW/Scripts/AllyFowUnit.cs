@@ -26,6 +26,8 @@ public class AllyFowUnit : FowUnit
         {
             DayNightSystem.AddDayStartAction(StartDay);
             DayNightSystem.AddNightStartAction(StartNight);
+            PlayerRest.PlayerRestStartEvent.AddListener(StartRest);
+            PlayerRest.PlayerRestEndEvent.AddListener(EndRest);
         }
     }
 
@@ -46,6 +48,19 @@ public class AllyFowUnit : FowUnit
         sightRange = DEFAULT_SIGHT_RANGE * dayNightCoefficient * restingCoefficient;
     }
 
+    private void StartRest()
+    {
+        restingCoefficient = DEFAULT_RESTING_COEF;
+        UpdateSightRange();
+    }
+
+    private void EndRest()
+    {
+        restingCoefficient = 1f;
+        UpdateSightRange();
+
+    }
+
     private void OnEnable() => FowManager.AddAllyUnit(this);
     private void OnDisable()
     {
@@ -54,6 +69,8 @@ public class AllyFowUnit : FowUnit
         {
             DayNightSystem.RemoveDayStartAction(StartDay);
             DayNightSystem.RemoveNightStartAction(StartNight);
+            PlayerRest.PlayerRestStartEvent.RemoveListener(StartRest);
+            PlayerRest.PlayerRestEndEvent.RemoveListener(EndRest);
         }
     }
     private void OnDestroy()
@@ -63,6 +80,8 @@ public class AllyFowUnit : FowUnit
         {
             DayNightSystem.RemoveDayStartAction(StartDay);
             DayNightSystem.RemoveNightStartAction(StartNight);
+            PlayerRest.PlayerRestStartEvent.RemoveListener(StartRest);
+            PlayerRest.PlayerRestEndEvent.RemoveListener(EndRest);
         }
     }
 }
