@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Announce : MonoBehaviour
 {
-    public AudioClip[] allAnnounce = new AudioClip[3];
+    public AudioClip[] allAnnounce = new AudioClip[4];
     public AudioSource announceAudio = default;
     private bool isGameStart = false;
     void Start()

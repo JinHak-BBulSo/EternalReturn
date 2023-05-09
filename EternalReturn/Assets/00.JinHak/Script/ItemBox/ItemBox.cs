@@ -121,7 +121,7 @@ public class ItemBox : MonoBehaviour
                     {
                         notOpenItemBoxImg.SetActive(false);
                     }
-                    nowContactPlayer.GetExp(20, PlayerStat.PlayerExpType.SEARCH);
+                    nowContactPlayer.GetExp(50, PlayerStat.PlayerExpType.SEARCH);
                 }
             }
         }
