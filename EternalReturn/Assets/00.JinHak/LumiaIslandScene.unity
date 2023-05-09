@@ -9098,7 +9098,7 @@ MonoBehaviour:
   characterSprite:
   - {fileID: 21300000, guid: dbc8a0c4d2e3e5b4ebff99d6ebf5a801, type: 3}
   - {fileID: 21300000, guid: f313df1d9d3955c409e968ac151d7410, type: 3}
-  announce: {fileID: 0}
+  announce: {fileID: 1372159543}
 --- !u!4 &404901097
 Transform:
   m_ObjectHideFlags: 0
