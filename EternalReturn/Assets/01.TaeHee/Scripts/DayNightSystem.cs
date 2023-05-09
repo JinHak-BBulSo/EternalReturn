@@ -11,9 +11,9 @@ public enum DayNightType
 
 public class DayNightSystem : MonoBehaviour
 {
-    private const string INGAME_SPRITES_PATH = "09.InGameUI/Sprite/";
-    private const string DAY_SUN_NAME = "Ico_DaySun";
-    private const string NIGHT_MOON_NAME = "Ico_NightMoon";
+    //private const string INGAME_SPRITES_PATH = "09.InGameUI/Sprite/";
+    //private const string DAY_SUN_NAME = "Ico_DaySun";
+    //private const string NIGHT_MOON_NAME = "Ico_NightMoon";
 
     private static UnityEvent dayStartEvent = new UnityEvent();
     private static UnityEvent nightStartEvent = new UnityEvent();
@@ -22,10 +22,10 @@ public class DayNightSystem : MonoBehaviour
     [SerializeField] private Image dayNightImage;
     [SerializeField] private Text dayText;
     [SerializeField] private Text userNumberText;
+    [SerializeField] private Sprite[] dayNightIcons = new Sprite[2];
 
     private Light directionalLight;
     private Color defaultLightColor;
-    private Sprite[] dayNightIcons = new Sprite[2];
 
     private int minutes = 2;
     private int seconds = 30;
@@ -62,8 +62,8 @@ public class DayNightSystem : MonoBehaviour
 
     private void Awake()
     {
-        dayNightIcons[(int)DayNightType.Day] = Resources.Load<Sprite>($"{INGAME_SPRITES_PATH}{DAY_SUN_NAME}");
-        dayNightIcons[(int)DayNightType.Night] = Resources.Load<Sprite>($"{INGAME_SPRITES_PATH}{NIGHT_MOON_NAME}");
+        //dayNightIcons[(int)DayNightType.Day] = Resources.Load<Sprite>($"{INGAME_SPRITES_PATH}{DAY_SUN_NAME}");
+        //dayNightIcons[(int)DayNightType.Night] = Resources.Load<Sprite>($"{INGAME_SPRITES_PATH}{NIGHT_MOON_NAME}");
 
         directionalLight = GameObject.Find("Directional Light").GetComponent<Light>();
         defaultLightColor = directionalLight.color;
