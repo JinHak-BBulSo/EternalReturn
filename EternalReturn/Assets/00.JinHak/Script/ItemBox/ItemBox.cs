@@ -106,6 +106,8 @@ public class ItemBox : MonoBehaviour
 
             if (nowContactPlayer.clickTarget == this.gameObject)
             {
+                if (nowContactPlayer.itemBoxSlotList.nowOpenItemBox == this) return;
+
                 nowContactPlayer.itemBoxSlotList.nowOpenItemBox = this;
                 nowContactPlayer.itemBoxUi.SetActive(true);
                 if (itemBoxAudio != default)
