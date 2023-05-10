@@ -51,6 +51,7 @@ public class GatheringItemBox : MonoBehaviourPun
         {
             dontGatherItemImg = Instantiate(dontGatherItemImgPrefab, worldCanvas.transform);
             dontGatherItemImg.transform.position = transform.position + new Vector3(0, 2.5f, 0);
+            dontGatherItemImg.SetActive(false);
             respawnItemTime = 180;
         }
         else if(itemType == GatherItemType.WATERPOINT)
@@ -66,6 +67,7 @@ public class GatheringItemBox : MonoBehaviourPun
     }
     IEnumerator RespawnItem(float respawnTime_)
     {
+        gatherItemImg.SetActive(false);
         if (itemType == GatherItemType.FISHING)
         {
             dontGatherItemImg.SetActive(true);
