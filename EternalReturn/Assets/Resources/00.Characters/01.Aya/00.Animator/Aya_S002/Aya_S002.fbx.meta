@@ -13,7 +13,7 @@ ModelImporter:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
-    optimizeGameObjects: 0
+    optimizeGameObjects: 1
     removeConstantScaleCurves: 1
     motionNodeName: 
     rigImportErrors: 
@@ -24,15 +24,300 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 1
+    animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
-    extraExposedTransformPaths: []
+    extraExposedTransformPaths:
+    - Aya_S002
+    - Aya_S002/Aya_S002_LOD1
+    - Aya_S002/Root
+    - Aya_S002/Root/Bip001
+    - Aya_S002/Root/Bip001/Bip001 Footsteps
+    - Aya_S002/Root/Bip001/Bip001 Pelvis
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Foot
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Foot/Bip001
+      L Toe0
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/Bip001 L Foot/Bip001
+      L Toe0/Bip001 L Toe0Nub
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/Bip001 L Calf/NS_PH_Knee_L
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/NS_BN_Pistol_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 L Thigh/NS_BN_Pistol_Spring_01/NS_BN_Pistol_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/Bip001 R Foot
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/Bip001 R Foot/Bip001
+      R Toe0
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/Bip001 R Foot/Bip001
+      R Toe0/Bip001 R Toe0Nub
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 R Thigh/Bip001 R Calf/NS_PH_Knee_R
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger0
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger0/Bip001
+      L Finger01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger0/Bip001
+      L Finger01/Bip001 L Finger0Nub
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger1
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger1/Bip001
+      L Finger11
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger1/Bip001
+      L Finger11/Bip001 L Finger1Nub
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger2
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger2/Bip001
+      L Finger21
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Bip001 L Finger2/Bip001
+      L Finger21/Bip001 L Finger2Nub
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Fx_Hand_L
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/NS_PH_FATwist_L
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Weapon_L
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Weapon_L/Craft_L_Cup
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Weapon_L/Craft_L_Fishing
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Weapon_L/Equip_L
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Weapon_L/Temp_L_04
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Weapon_L/Temp_L_5
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Weapon_L/Temp_L_6
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Weapon_L/Temp_L_7
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Weapon_L/Temp_L_8
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Weapon_L/Temp_L_9
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/Bip001 L Hand/Weapon_L/Temp_L_10
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/NS_BN_FATwist_L
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/NS_BN_Sleeve_L_NonSpring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/NS_BN_Sleeve_L_NonSpring_01/NS_BN_Sleeve_L_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/NS_BN_Sleeve_L_NonSpring_01/NS_BN_Sleeve_L_Spring_01/NS_BN_Sleeve_L_Spring_02
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/NS_BN_Sleeve_L_NonSpring_01/NS_BN_Sleeve_L_Spring_01/NS_BN_Sleeve_L_Spring_02/NS_BN_Sleeve_L_Spring_02_Nub
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/NS_BN_Sleeve_L_NonSpring_01/NS_BN_Sleeve_L_Spring_01/NS_BN_Sleeve_L_Spring_02/NS_BN_Sleeve_L_Spring_03
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/NS_BN_Sleeve_L_NonSpring_01/NS_BN_Sleeve_L_Spring_01/NS_BN_Sleeve_L_Spring_02/NS_BN_Sleeve_L_Spring_03/NS_BN_Sleeve_L_Spring_04
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/NS_BN_Sleeve_L_NonSpring_01/NS_BN_Sleeve_L_Spring_01/NS_BN_Sleeve_L_Spring_02/NS_BN_Sleeve_L_Spring_03/NS_BN_Sleeve_L_Spring_04/NS_BN_Sleeve_L_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/Bip001 L Forearm/NS_BN_SleeveTop_L_NonSpring
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/NS_BN_Sleeve_Auto_L
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/NS_BN_UATwist_L_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/NS_BN_UATwist_L_01/NS_BN_UATwist_L_02
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      L Clavicle/Bip001 L UpperArm/NS_PH_Sholder_L
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/Bip001 HeadNub
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/Fx_Top
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/NS_BN_Hair_Acce_R_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/NS_BN_Hair_Acce_R_Spring_01/NS_BN_Hair_Acce_R_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/NS_BN_Hair_B_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/NS_BN_Hair_B_Spring_01/NS_BN_Hair_B_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/NS_BN_Hair_Ribbone_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/NS_BN_Hair_Ribbone_Spring_01/NS_BN_Hair_Ribbone_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/NS_PH_Eye
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/NS_PH_Hair_Acce_Root
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/NS_PH_Hair_Acce_Root/NS_BN_Hair_Acce_L_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/NS_PH_Hair_Acce_Root/NS_BN_Hair_Acce_L_Spring_01/NS_BN_Hair_Acce_L_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/NS_PH_Hair_Acce_Root/NS_BN_Hair_Steel_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/NS_PH_Hair_Acce_Root/NS_BN_Hair_Steel_Spring_01/NS_BN_Hair_Steel_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/NS_PH_Hair_Acce_Root/NS_BN_Hair_String_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/NS_PH_Hair_Acce_Root/NS_BN_Hair_String_Spring_01/NS_BN_Hair_String_Spring_02
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      Neck/Bip001 Head/NS_PH_Hair_Acce_Root/NS_BN_Hair_String_Spring_01/NS_BN_Hair_String_Spring_02/NS_BN_Hair_String_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger0
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger0/Bip001
+      R Finger01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger0/Bip001
+      R Finger01/Bip001 R Finger0Nub
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger1
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger1/Bip001
+      R Finger11
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger1/Bip001
+      R Finger11/Bip001 R Finger1Nub
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger2
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger2/Bip001
+      R Finger21
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Bip001 R Finger2/Bip001
+      R Finger21/Bip001 R Finger2Nub
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Fx_Hand_R
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/NS_BN_Firework_NonSpring
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/NS_PH_FATwist_R
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Weapon_R
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Weapon_R/Craft_R_Driver
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Weapon_R/Craft_R_Fryingpan
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Weapon_R/Craft_R_Hammer
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Weapon_R/Equip_R
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Weapon_R/Temp_R_5
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Weapon_R/Temp_R_6
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Weapon_R/Temp_R_7
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Weapon_R/Temp_R_8
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Weapon_R/Temp_R_9
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/Bip001 R Hand/Weapon_R/Temp_R_10
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/NS_BN_FATwist_R
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/NS_BN_Sleeve_R_NonSpring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/NS_BN_Sleeve_R_NonSpring_01/NS_BN_Sleeve_R_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/NS_BN_Sleeve_R_NonSpring_01/NS_BN_Sleeve_R_Spring_01/NS_BN_Sleeve_R_Spring_02
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/NS_BN_Sleeve_R_NonSpring_01/NS_BN_Sleeve_R_Spring_01/NS_BN_Sleeve_R_Spring_02/NS_BN_Sleeve_R_Spring_02_Nub
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/NS_BN_Sleeve_R_NonSpring_01/NS_BN_Sleeve_R_Spring_01/NS_BN_Sleeve_R_Spring_02/NS_BN_Sleeve_R_Spring_03
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/NS_BN_Sleeve_R_NonSpring_01/NS_BN_Sleeve_R_Spring_01/NS_BN_Sleeve_R_Spring_02/NS_BN_Sleeve_R_Spring_03/NS_BN_Sleeve_R_Spring_04
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/NS_BN_Sleeve_R_NonSpring_01/NS_BN_Sleeve_R_Spring_01/NS_BN_Sleeve_R_Spring_02/NS_BN_Sleeve_R_Spring_03/NS_BN_Sleeve_R_Spring_04/NS_BN_Sleeve_R_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/Bip001 R Forearm/NS_BN_SleeveTop_R_NonSpring
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/NS_BN_Sleeve_Auto_R
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/NS_BN_UATwist_R_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/NS_BN_UATwist_R_01/NS_BN_UATwist_R_02
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/Bip001
+      R Clavicle/Bip001 R UpperArm/NS_PH_Sholder_R
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/NS_PH_Chest
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/NS_PH_Chest/NS_BN_Breast_L_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/NS_PH_Chest/NS_BN_Breast_L_Spring_01/NS_BN_Breast_L_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/NS_PH_Chest/NS_BN_Breast_R_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Bip001 Spine2/NS_PH_Chest/NS_BN_Breast_R_Spring_01/NS_BN_Breast_R_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/Fx_Center
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/NS_PH_B_Ribbone_T_Ctrl
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/NS_PH_B_Ribbone_T_Ctrl/NS_PH_B_Ribbone_T_Ctrl_L
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/NS_PH_B_Ribbone_T_Ctrl/NS_PH_B_Ribbone_T_Ctrl_L/NS_BN_B_Ribbone_T_R_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/NS_PH_B_Ribbone_T_Ctrl/NS_PH_B_Ribbone_T_Ctrl_L/NS_BN_B_Ribbone_T_R_Spring_01/NS_BN_B_Ribbone_T_R_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/NS_PH_B_Ribbone_T_Ctrl/NS_PH_B_Ribbone_T_Ctrl_R
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/NS_PH_B_Ribbone_T_Ctrl/NS_PH_B_Ribbone_T_Ctrl_R/NS_BN_B_Ribbone_T_L_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/NS_PH_B_Ribbone_T_Ctrl/NS_PH_B_Ribbone_T_Ctrl_R/NS_BN_B_Ribbone_T_L_Spring_01/NS_BN_B_Ribbone_T_L_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/NS_PH_F_Ribbone_Ctrl
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/NS_PH_F_Ribbone_Ctrl/NS_BN_F_Ribbone_Bell_NonSpring
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/NS_PH_F_Ribbone_Ctrl/NS_BN_F_Ribbone_L_NonSpring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/NS_PH_F_Ribbone_Ctrl/NS_BN_F_Ribbone_L_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/NS_PH_F_Ribbone_Ctrl/NS_BN_F_Ribbone_L_Spring_01/NS_BN_F_Ribbone_L_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/NS_PH_F_Ribbone_Ctrl/NS_BN_F_Ribbone_R_NonSpring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/NS_PH_F_Ribbone_Ctrl/NS_BN_F_Ribbone_R_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/Bip001 Spine1/NS_PH_F_Ribbone_Ctrl/NS_BN_F_Ribbone_R_Spring_01/NS_BN_F_Ribbone_R_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/NS_PH_B_Ribbone_D_Ctrl
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/NS_PH_B_Ribbone_D_Ctrl/NS_BN_B_Ribbone_D_L_NonSpring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/NS_PH_B_Ribbone_D_Ctrl/NS_BN_B_Ribbone_D_L_NonSpring_01/NS_BN_B_Ribbone_D_L_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/NS_PH_B_Ribbone_D_Ctrl/NS_BN_B_Ribbone_D_L_NonSpring_01/NS_BN_B_Ribbone_D_L_Spring_01/NS_BN_B_Ribbone_D_L_Spring_02
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/NS_PH_B_Ribbone_D_Ctrl/NS_BN_B_Ribbone_D_L_NonSpring_01/NS_BN_B_Ribbone_D_L_Spring_01/NS_BN_B_Ribbone_D_L_Spring_02/NS_BN_B_Ribbone_D_L_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/NS_PH_B_Ribbone_D_Ctrl/NS_BN_B_Ribbone_D_R_NonSpring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/NS_PH_B_Ribbone_D_Ctrl/NS_BN_B_Ribbone_D_R_NonSpring_01/NS_BN_B_Ribbone_D_R_Spring_01
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/NS_PH_B_Ribbone_D_Ctrl/NS_BN_B_Ribbone_D_R_NonSpring_01/NS_BN_B_Ribbone_D_R_Spring_01/NS_BN_B_Ribbone_D_R_Spring_02
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/Bip001 Spine/NS_PH_B_Ribbone_D_Ctrl/NS_BN_B_Ribbone_D_R_NonSpring_01/NS_BN_B_Ribbone_D_R_Spring_01/NS_BN_B_Ribbone_D_R_Spring_02/NS_BN_B_Ribbone_D_R_Spring_end
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/NS_BN_Skirt_B_NonSpring
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/NS_BN_Skirt_F_NonSpring
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/NS_BN_Skirt_FL_NonSpring
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/NS_BN_Skirt_FR_NonSpring
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/NS_BN_Skirt_L_NonSpring
+    - Aya_S002/Root/Bip001/Bip001 Pelvis/NS_BN_Skirt_R_NonSpring
+    - Aya_S002/Root/Craft_M_Burner
+    - Aya_S002/Root/Craft_M_Tool
+    - Aya_S002/Root/Fx_bottom
+    - Aya_S002/Root/Temp_M_01
+    - Aya_S002/Root/Temp_M_02
+    - Aya_S002/Root/Temp_M_03
+    - Aya_S002/Root/Temp_M_04
+    - Aya_S002/Root/Temp_M_05
+    - Aya_S002/Root/Weapon_Special_1
+    - Aya_S002/Root/Weapon_Special_2
+    - Aya_S002/Root/Weapon_Special_3
+    - Aya_S002/Root/Weapon_Special_4
+    - Aya_S002/Root/Weapon_Special_5
+    - Aya_S002/Root/Weapon_Special_6
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
@@ -89,15 +374,15 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
-    rootMotionBoneName: 
+    rootMotionBoneName: Aya_S002
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 2
+  animationType: 3
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
