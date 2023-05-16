@@ -23,10 +23,11 @@ public class MonsterController : MonoBehaviourPun
     //public Action skillActive = default;
 
     private Dictionary<MonsterState, IMonsterState> monsterStateDic = new Dictionary<MonsterState, IMonsterState>();
+    public Dictionary<MonsterState, IMonsterState> MonsterStateDic {  get { return monsterStateDic; } }
     public MonsterState monsterState = MonsterState.NONE;
 
-    private MonsterStateMachine monsterStateMachine = default;
-    public MonsterStateMachine MonsterStateMachine { get { return monsterStateMachine; } private set { } }
+    private MonsterStateMachine monsterStateMachine;
+    public MonsterStateMachine MonsterStateMachine { get { return monsterStateMachine; } }
 
     public Monster monster = default;
     public Rigidbody monsterRigid = default;
@@ -77,8 +78,16 @@ public class MonsterController : MonoBehaviourPun
         monsterStateMachine = new MonsterStateMachine(idle, this);
     }
 
+    public void SetStateMachine(MonsterStateMachine machine_)
+    {
+        monsterStateMachine = machine_;
+    }
     void Update()
     {
+        if(monsterStateMachine == null)
+        {
+            return;
+        }
         UpdateState();
         monsterStateMachine.DoUpdate();
     }
@@ -99,28 +108,19 @@ public class MonsterController : MonoBehaviourPun
         StopCoroutine(coroutine);
     }
 
+    // Animation Call
     public void Delay()
     {
         actionDelay = true;
+        monsterStateMachine.SetState(monsterStateDic[MonsterState.DELAY]);
     }
 
-    private void UpdateState()
+    public void UpdateState()
     {
+        // 공통 State 전이
         if (monster.isDie)
         {
             monsterStateMachine.SetState(monsterStateDic[MonsterState.DIE]);
-            return;
-        }
-
-        if (isInSkillUse)
-        {
-            monsterStateMachine.SetState(monsterStateDic[MonsterState.SKILL]);
-            return;
-        }
-
-        if (actionDelay)
-        {
-            monsterStateMachine.SetState(monsterStateDic[MonsterState.DELAY]);
             return;
         }
 
@@ -128,42 +128,6 @@ public class MonsterController : MonoBehaviourPun
         {
             monsterStateMachine.SetState(monsterStateDic[MonsterState.RECALL]);
             return;
-        }
-
-
-
-        if (targetPlayer == null && encountPlayerCount == 0)
-        {
-            monsterStateMachine.SetState(monsterStateDic[MonsterState.IDLE]);
-        }
-        else
-        {
-            if (encountPlayerCount != 0 && targetPlayer == null)
-            {
-                monsterStateMachine.SetState(monsterStateDic[MonsterState.BEWARE]);
-            }
-            else if (targetPlayer != null || !monster.isBattle)
-            {
-                if (Vector3.Distance(targetPlayer.transform.position, this.transform.position) > monster.monsterStatus.attackRange)
-                {
-                    monsterStateMachine.SetState(monsterStateDic[MonsterState.MOVE]);
-                }
-                else
-                {
-                    if (isSkillAble && !isInSkillUse && !isAttack)
-                    {
-                        monsterStateMachine.SetState(monsterStateDic[MonsterState.SKILL]);
-                        isInSkillUse = true;
-                        isSkillAble = false;
-
-                        return;
-                    }
-                    else
-                    {
-                        monsterStateMachine.SetState(monsterStateDic[MonsterState.ATTACk]);
-                    }
-                }
-            }
         }
     }
 }

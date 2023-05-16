@@ -31,6 +31,7 @@ public class MonsterDie : IMonsterState
     IEnumerator EraseMonster()
     {
         yield return new WaitForSeconds(60);
+        monsterController.MonsterStateMachine.SetState(monsterController.MonsterStateDic[MonsterController.MonsterState.IDLE]);
         monsterController.gameObject.SetActive(false);
         monsterController.monsterAni.SetBool("isDie", false);
     }

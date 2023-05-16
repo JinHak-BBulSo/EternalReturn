@@ -33,7 +33,6 @@ public class Monster : MonoBehaviourPun, IHitHandler
     public float[] debuffDamage = new float[2];        // 디버프 데미지
     
     public PlayerBase firstAttackPlayer = default;
-    public bool isBattle = default;
     public bool isDie = false;
 
     public GameObject worldCanvas = default;
@@ -121,7 +120,6 @@ public class Monster : MonoBehaviourPun, IHitHandler
         spawnPoint.monster = this;
         monsterBattleArea.monster = this;
         monsterController.monster.isDie = false;
-        isBattle = false;
 
         Appear();
         SetStatus();
@@ -203,12 +201,6 @@ public class Monster : MonoBehaviourPun, IHitHandler
     public virtual void Skill()
     {
         /* each monster override using */
-        
-        // 공격형 스킬의 경우 예시
-        /*GameObject target_ = monsterController.gameObject;
-        float damageAmount_ = monsterController.monster.monsterStatus.attackPower;
-        DamageMessage dm = new DamageMessage(target_, damageAmount_);
-        monsterController.targetPlayer.TakeDamage(dm);*/
     }
     public void SoundPlay()
     {
@@ -229,7 +221,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
     [PunRPC]
     public void FirstAttackCheck(int playerIndex_)
     {
-        if (firstAttackPlayer == default && !isBattle)
+        if (firstAttackPlayer == default)
         {
             firstAttackPlayer = PlayerList.Instance.playerDictionary[playerIndex_];
             monsterController.targetPlayer = firstAttackPlayer;

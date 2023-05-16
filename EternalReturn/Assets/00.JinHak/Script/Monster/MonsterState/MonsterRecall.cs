@@ -73,5 +73,6 @@ public class MonsterRecall : IMonsterState
         monsterController.targetPlayer = default;
         monsterController.monster.isBattleAreaOut = false;
         monsterController.monsterAni.SetBool("isMove", false);
+        monsterController.MonsterStateMachine.SetState(monsterController.MonsterStateDic[MonsterController.MonsterState.IDLE]);
     }
 }
