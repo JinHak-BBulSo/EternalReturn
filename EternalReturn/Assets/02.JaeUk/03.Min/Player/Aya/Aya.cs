@@ -322,6 +322,7 @@ public class Aya : PlayerBase
             {
                 var dir = corners[currentCorner] - transform.position;
                 Vector3 movePos = Vector3.Scale(dir.normalized, transform.forward);
+
                 playerAni.SetFloat("MoveDirX", movePos.x);
                 playerAni.SetFloat("MoveDirZ", movePos.z);
                 // if (movePos.x >= 0)

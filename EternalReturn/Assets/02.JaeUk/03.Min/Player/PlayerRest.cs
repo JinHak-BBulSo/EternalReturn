@@ -45,6 +45,7 @@ public class PlayerRest : IPlayerState
         if (Input.GetMouseButtonDown(1))
         {
             playerController.player.playerAni.SetBool("isRest", false);
+            playerController.player.isMove = false;
         }
     }
 }
