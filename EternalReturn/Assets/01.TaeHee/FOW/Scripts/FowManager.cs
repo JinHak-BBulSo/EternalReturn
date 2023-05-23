@@ -126,6 +126,13 @@ public class FowManager : SingleTonBase<FowManager>
                 float height = 0f;
                 if (Physics.Raycast(ro, rd, out var hit, 200f, _mapLayer))
                 {
+                    GameObject go = hit.collider.gameObject;
+                    if(go.GetComponent<MonsterSpawnPoint>() != default ||
+                        go.GetComponent<MonsterBattleArea>() != default ||
+                        go.tag == "AreaEntranceCol")
+                    {
+                        continue;
+                    }
                     height = hit.point.y;
                 }
 
@@ -142,7 +149,16 @@ public class FowManager : SingleTonBase<FowManager>
     {
         int x = (int)((unit.transform.position.x - transform.position.x + _fogWidthX * 0.5f) / _tileSize);
         int y = (int)((unit.transform.position.z - transform.position.z + _fogWidthZ * 0.5f) / _tileSize);
-        float height = unit.transform.position.y;
+
+        float height;
+        if (x < (int)(_fogWidthX / _tileSize) && y < (int)(_fogWidthZ / _tileSize))
+        {
+            height = heightMap[x, y];
+        }
+        else
+        {
+            height = unit.transform.position.y;
+        }
 
         return new TilePos(x, y, height);
     }

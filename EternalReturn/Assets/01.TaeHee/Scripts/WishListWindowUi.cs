@@ -8,10 +8,17 @@ public class WishListWindowUi : MonoBehaviour
     private GameObject wishListWindow = default;
     [SerializeField]
     private ItemWishList itemWishList = default;
-    void Start()
+
+    private void Awake()
     {
         wishListWindow = transform.GetChild(0).gameObject;
+        wishListWindow.SetActive(true);
+    }
+
+    void Start()
+    {
         itemWishList.SetWishList();
+        wishListWindow.SetActive(false);
     }
 
     void Update()

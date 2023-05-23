@@ -40,7 +40,15 @@ public class FoeFowUnit : FowUnit
             renderer.forceRenderingOff = isHidden;
         }
         playerStatusUI?.SetActive(!isHidden);
-        monsterStatusUI?.SetActive(!isHidden);
+
+        if (monster != null && monster.isDie)
+        {
+            monsterStatusUI?.SetActive(false);
+        }
+        else
+        {
+            monsterStatusUI?.SetActive(!isHidden);
+        }
     }
 
     private void OnEnable() => FowManager.AddFoeUnit(this);

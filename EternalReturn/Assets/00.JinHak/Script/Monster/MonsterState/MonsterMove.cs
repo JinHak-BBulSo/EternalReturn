@@ -41,6 +41,10 @@ public class MonsterMove : IMonsterState
                 || isMoveEnd || !monsterController.isMoveAble)
             {
                 monsterController.monsterAni.SetBool("isMove", false);
+                if (monsterController.targetPlayer != default)
+                {
+                    monsterController.MonsterStateMachine.SetState(monsterController.MonsterStateDic[MonsterController.MonsterState.ATTACk]);
+                }
                 yield break;
             }
             yield return null;

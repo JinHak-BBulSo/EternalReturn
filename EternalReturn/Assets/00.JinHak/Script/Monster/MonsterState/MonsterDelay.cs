@@ -35,5 +35,6 @@ public class MonsterDelay : IMonsterState
         monsterController.monsterAni.SetBool("isSkill", false);
         monsterController.isInSkillUse = false;
         monsterController.actionDelay = false;
+        monsterController.MonsterStateMachine.SetState(monsterController.MonsterStateDic[MonsterController.MonsterState.IDLE]);
     }
 }

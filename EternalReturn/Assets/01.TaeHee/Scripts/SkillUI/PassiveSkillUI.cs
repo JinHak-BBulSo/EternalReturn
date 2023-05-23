@@ -13,7 +13,6 @@ public class PassiveSkillUI : SkillUI
     protected override void Start()
     {
         base.Start();
-        skillInfo.AddLevel();
         image.color = Color.white;
         skillLevelBgRect.GetChild(skillInfo.CurrentLevel - 1).GetComponent<Image>().color = Color.white;
     }

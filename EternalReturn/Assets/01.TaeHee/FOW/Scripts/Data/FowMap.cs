@@ -35,7 +35,10 @@ public class FowMap
         for (int i = 0; i < mapLength; i++)
             colorBuffer[i].a = AlphaData.fog;
 
-        blurMat = new Material(blur);
+        if (blur != null)
+        {
+            blurMat = new Material(blur);
+        }
         texBuffer = new Texture2D(mapWidth, mapHeight, TextureFormat.ARGB32, false);
         texBuffer.wrapMode = TextureWrapMode.Clamp;
 

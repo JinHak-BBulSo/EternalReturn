@@ -5,13 +5,9 @@ using UnityEngine.UI;
 
 public class WeaponSkillUI : SkillUI
 {
-    private Image skillLevelUpUI;
-
     protected override void Awake()
     {
         base.Awake();
-        skillLevelUpUI = transform.GetChild(1).GetComponent<Image>();
-        skillLevelUpUI.color = Color.cyan;
     }
 
     protected override void Start()

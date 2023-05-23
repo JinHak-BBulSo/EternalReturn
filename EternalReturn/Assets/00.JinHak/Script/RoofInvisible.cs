@@ -7,7 +7,7 @@ public class RoofInvisible : MonoBehaviour
     [SerializeField]
     private GameObject[] roofObjects = default;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject == PlayerManager.Instance.Player)
         {

@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerRest : IPlayerState
 {
+    public static UnityEvent PlayerRestStartEvent = new UnityEvent();
+    public static UnityEvent PlayerRestEndEvent = new UnityEvent();
+
     private PlayerController playerController;
     private float time = 0f;
     public void StateEnter(PlayerController controller_)
@@ -13,10 +17,20 @@ public class PlayerRest : IPlayerState
         playerController.ResetAni();
         playerController.ResetRange();
         playerController.player.playerAni.SetBool("isRest", true);
+
+        if (PlayerRestStartEvent != null)
+        {
+            PlayerRestStartEvent.Invoke();
+        }
     }
     public void StateExit()
     {
         playerController.player.isMove = false;
+
+        if (PlayerRestEndEvent != null)
+        {
+            PlayerRestEndEvent.Invoke();
+        }
     }
 
     public void StateFixedUpdate()

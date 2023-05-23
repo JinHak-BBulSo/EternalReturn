@@ -42,15 +42,15 @@ public class PlayerCraft : IPlayerState
             {
                 case 1:
                     playerController.player.PlayAudio(PlayerBase.PlayerSound.CRAFTUNCOMMON);
-                    playerController.player.GetExp(100, PlayerStat.PlayerExpType.CRAFT);
+                    playerController.player.GetExp(400, PlayerStat.PlayerExpType.CRAFT);
                     break;
                 case 2:
                     playerController.player.PlayAudio(PlayerBase.PlayerSound.CRAFTRARE);
-                    playerController.player.GetExp(200, PlayerStat.PlayerExpType.CRAFT);
+                    playerController.player.GetExp(800, PlayerStat.PlayerExpType.CRAFT);
                     break;
                 case 3:
                     playerController.player.PlayAudio(PlayerBase.PlayerSound.CRAFTEPIC);
-                    playerController.player.GetExp(350, PlayerStat.PlayerExpType.CRAFT);
+                    playerController.player.GetExp(1200, PlayerStat.PlayerExpType.CRAFT);
                     break;
                 default:
                     break;

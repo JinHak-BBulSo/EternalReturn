@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static MonsterController;
 
 public class MonsterSkill : IMonsterState
 {
@@ -17,13 +18,9 @@ public class MonsterSkill : IMonsterState
     }
     public void StateUpdate()
     {
-
+        
     }
     public void StateExit()
-    {
-        ExitSkill();
-    }
-    public virtual void ExitSkill()
     {
         
     }
