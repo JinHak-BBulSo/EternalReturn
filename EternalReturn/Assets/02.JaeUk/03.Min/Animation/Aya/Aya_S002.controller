@@ -35,7 +35,7 @@ AnimatorStateMachine:
     m_Position: {x: -740, y: -70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3732848393725631194}
-    m_Position: {x: -520, y: -10, z: 0}
+    m_Position: {x: -470, y: 100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6352800500562929884}
     m_Position: {x: 130, y: 280, z: 0}
@@ -51,7 +51,7 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: -330, y: -180, z: 0}
+  m_AnyStatePosition: {x: -450, y: 230, z: 0}
   m_EntryPosition: {x: -270, y: 70, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
@@ -857,7 +857,7 @@ AnimatorController:
   - serializedVersion: 5
     m_Name: Base Layer
     m_StateMachine: {fileID: -8388391509798578066}
-    m_Mask: {fileID: 0}
+    m_Mask: {fileID: 31900000, guid: e6edbe4bc2f118f43bce1c86c18f162e, type: 2}
     m_Motions: []
     m_Behaviours: []
     m_BlendingMode: 0
@@ -1355,7 +1355,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 0d4ca0f7550d2e741af21446fb3bbc74, type: 2}
     m_Threshold: 0
-    m_Position: {x: 0, y: 1}
+    m_Position: {x: 0.5, y: 0.5}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: AttackType
@@ -1363,7 +1363,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: b22dedcc5ae52714f8649990a66a2a96, type: 2}
     m_Threshold: 1
-    m_Position: {x: 0, y: -1}
+    m_Position: {x: -0.5, y: -0.5}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: AttackType
@@ -1371,7 +1371,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 19efc0c18098f224ca0335cfc69ecafd, type: 2}
     m_Threshold: 2
-    m_Position: {x: -1, y: 0}
+    m_Position: {x: -0.5, y: 0.5}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: AttackType
@@ -1379,7 +1379,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 7400000, guid: 267b8368cbd0ba24082c51bc1af77f19, type: 2}
     m_Threshold: 3
-    m_Position: {x: 1, y: 0}
+    m_Position: {x: 0.5, y: -0.5}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: AttackType
