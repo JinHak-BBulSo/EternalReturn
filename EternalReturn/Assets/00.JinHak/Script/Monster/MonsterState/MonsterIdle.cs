@@ -19,6 +19,7 @@ public class MonsterIdle : IMonsterState
     {
         if (monsterController.targetPlayer == null && monsterController.encountPlayerCount == 0)
         {
+            monsterController.monsterRigid.velocity = Vector3.zero;
             monsterController.MonsterStateMachine.SetState(monsterController.MonsterStateDic[MonsterController.MonsterState.IDLE]);
         }
         else

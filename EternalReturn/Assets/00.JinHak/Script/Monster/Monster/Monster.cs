@@ -144,7 +144,7 @@ public class Monster : MonoBehaviourPun, IHitHandler
         //몬스터 아이템 셋팅
         monsterItemBox.SetItems(0);
 
-        if (monsterItemBox.itemPrefabs.Count > 1)
+        if (monsterItemBox.itemPrefabs.Count > 1 && PhotonNetwork.IsMasterClient)
         {
             int r_ = Random.Range(1, monsterItemBox.itemPrefabs.Count);
             int itemIndex_ = monsterItemBox.itemPrefabs[r_].GetComponent<ItemController>().item.id;
